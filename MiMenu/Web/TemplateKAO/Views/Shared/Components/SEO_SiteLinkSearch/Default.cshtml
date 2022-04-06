@@ -1,0 +1,75 @@
+﻿@using MI.Entity.Enums;
+@using TemplateKAO.Services.Zone.ViewModal
+@using TemplateKAO.Services.Article.ViewModel
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Http
+@using TemplateKAO.Services.Article.Repository
+@using TemplateKAO.Services.BannerAds.Repository
+@using TemplateKAO.Services.Zone.Repository
+@inject IHttpContextAccessor HttpContextAccessor
+@inject IArticleRepository articleRepository;
+@inject IZoneRepository zoneRepository;
+@inject IBannerAdsRepository bannerAdsRepository;
+@using Utils
+@{
+    var culture = Context.Features.Get<IRequestCultureFeature>().RequestCulture.Culture.TwoLetterISOLanguageName.ToLower();
+    var culture_code = Context.Features.Get<IRequestCultureFeature>().RequestCulture.Culture.ToString();
+    var base_uri_culture = "/" + culture;
+    var domain = Context.Request.Host.ToString();
+    var local_image = bannerAdsRepository.GetConfigByName(culture_code, "SeoPhoto");
+    var logo = bannerAdsRepository.GetConfigByName(culture_code, "Logo");
+    var address = bannerAdsRepository.GetConfigByName(culture_code, "Address");
+    var phone = bannerAdsRepository.GetConfigByName(culture_code, "HotLine");
+}
+
+<div style="display:none" itemscope itemtype="https://schema.org/WebSite">
+    <meta itemprop="url" content="@domain" />
+    <form itemprop="potentialAction" itemscope itemtype="https://schema.org/SearchAction">
+        <meta itemprop="target" content="@(domain + "/Product/Get?keyword={search_term_string}")" />
+        <input itemprop="query-input" type="text" name="search_term_string" required />
+        <input type="submit" />
+    </form>
+</div>
+
+<script type="application/ld+json">
+    {
+    "@("@context")": "https://schema.org",
+    "@("@type")": "Organization",
+    "url": "@domain",
+    "logo": "@logo"
+    }
+</script>
+<script type="application/ld+json">
+    {
+    "@("@context")": "https://schema.org",
+    "@("@type")": "Store",
+    "image": [
+    "@UIHelper.StoreFilePath(local_image, false)"
+    ],
+    "@("@id")": "@domain",
+    "name": "Janhome",
+    "address": {
+    "@("@type")": "PostalAddress",
+    "streetAddress": "@Utility.DecodeHtml(address)",
+    "addressLocality": "Hà Nội",
+    "addressRegion": "HN",
+    "postalCode": "10000",
+    "addressCountry": "VN"
+    },
+    "review": {
+    "@("@type")": "Review",
+    "reviewRating": {
+    "@("@type")": "Rating",
+    "ratingValue": "5",
+    "bestRating": "5"
+    },
+    "author": "admin"
+    },
+    "url": "@domain",
+    "telephone": "@phone",
+    "servesCuisine": "VietNam",
+    "priceRange": "$$$",
+    "acceptsReservations": "True"
+    }
+</script>

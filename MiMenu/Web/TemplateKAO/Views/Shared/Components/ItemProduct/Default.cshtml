@@ -1,0 +1,140 @@
+﻿@using TemplateKAO.Services.Product.ViewModel;
+@using Utils;
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+@using TemplateKAO.Utility
+@inject ICookieUtility cookieUtility
+@model ProductMinify;
+@{
+    var item = Model;
+    var link_ta = LinkRedirectUrlUtility.ProductDetailUrl(item.Url);
+    bool isLazy = ViewBag.IsLazy;
+}
+<div class="item-product" data-id="@item.ProductId" data-properties="@item.PropertyId">
+    <div class="tag-1">
+
+    </div>
+    @if (item.FlashSaleId > 0)
+    {
+        <div class="tag-flashsale">
+            <img src="~/images/tag-flash-111x34.svg" class=" w-100" />
+        </div>
+    }
+    <div class="image">
+        @if (isLazy)
+        {
+            <a href="@link_ta"><img asp-append-version="true" src="~/images/gray.jpg" data-src="@UIHelper.StoreFilePath(item.Avatar)?v=@WebHelper.Version()" class="lazy w-100 " alt="@item.Title" /></a>
+        }
+        @if (!isLazy)
+        {
+            <a href="@link_ta"><img asp-append-version="true" src="@UIHelper.StoreFilePath(item.Avatar)?v=@WebHelper.Version()" class="w-100 " alt="@item.Title" /></a>
+        }
+    </div>
+
+
+    @if (item.DiscountPercent > 0)
+    {
+        var g = string.Format("Giảm -{0}%", (int)item.DiscountPercent);
+        <div class="deal-tag d-flex">
+            <div class="image-deal">
+                <img src="~/images/img-bepvui/KM/flash.svg" alt="">
+            </div>
+            <div class="text-deal">
+                @g
+            </div>
+        </div>
+    }
+    @if (item.DiscountPercent <= 0)
+    {
+        <div class="deal-tag d-flex" style="background-color:white">
+            <div class="image-deal">
+                @*<img src="~/images/img-bepvui/KM/flash.svg" style="opacity:1" alt="">*@
+            </div>
+            <div class="text-deal">
+
+            </div>
+        </div>
+    }
+
+
+    <div class="">
+        <div class="loai-product">
+            @item.ZoneName
+        </div>
+        <h5 class="title">
+            <a href="@link_ta" title="@item.Title">
+                @item.Title
+            </a>
+        </h5>
+        <div class="price-sp">
+            @{
+                decimal up_price = 0;
+                decimal down_price = 0;
+                if (item.SalePrice > 0 && item.SalePrice < item.Price)
+                {
+                    up_price = item.SalePrice;
+                    down_price = item.Price;
+                }
+                if (item.SalePrice == 0 || item.SalePrice >= item.Price)
+                {
+                    up_price = item.Price;
+                    down_price = 0;
+                }
+            }
+            @if (item.FlashSaleId > 0)
+            {
+                <div class="price-old mr-2">
+                    @(item.SalePrice <= 0 ? Html.Raw("<pre>&nbsp;</pre>") : Html.Raw(UIHelper.FormatNumber(up_price)))
+                </div>
+                <div class="price-new">
+                    @UIHelper.FormatNumber(item.ProductPriceInFlashSale)
+                </div>
+            }
+            else
+            {
+                if (item.Quantity == 0)
+                {
+                    <div class="price-new">
+                        Hết hàng
+                    </div>
+                }
+                if (down_price > 0 && item.Quantity > 0)
+                {
+
+                    <div class="price-old mr-2">
+                        @(item.Price <= 0 ? Html.Raw("<pre>&nbsp;</pre>") : Html.Raw(UIHelper.FormatNumber(down_price)))
+                    </div>
+                    <div class="price-new">
+                        @UIHelper.FormatNumber(up_price)
+                    </div>
+                }
+                if (down_price == 0 && item.Quantity > 0)
+                {
+                    if (item.Price == 0 && item.SalePrice == 0)
+                    {
+                        <div class="price-new">
+                            Liên hệ
+                        </div>
+                    }
+                    if (item.Price > 0)
+                    {
+                        <div class="price-new">
+                            @UIHelper.FormatNumber(up_price)
+                        </div>
+                    }
+                }
+            }
+        </div>
+
+        <div class="review d-flex">
+            <div class="color-FFAB1B mr-2">
+                @System.Math.Round(item.Rate, 1)/5<i class="fas fa-star ml-1"></i>
+            </div>
+            <div class="color-828282">
+                @item.CountRate đánh giá
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,167 @@
+﻿@using MI.Entity.Enums;
+@using PhamGiaLandingPage.Web.Services.Zone.ViewModal
+@using PhamGiaLandingPage.Web.Services.Article.ViewModel
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Http
+@using PhamGiaLandingPage.Web.Services.Article.Repository
+@inject IHttpContextAccessor HttpContextAccessor
+@inject IArticleRepository articleRepository;
+@using Utils
+@using System.Linq
+@{
+    var culture = Context.Features.Get<IRequestCultureFeature>().RequestCulture.Culture.TwoLetterISOLanguageName.ToLower();
+    var culture_code = Context.Features.Get<IRequestCultureFeature>().RequestCulture.Culture.ToString();
+    var base_uri_culture = "/" + culture;
+    var domain = Context.Request.Host.ToString();
+}
+@{
+    ViewData["Title"] = "FilterArticleByTag";
+    Layout = "~/Views/Shared/_LayoutPublicHome.cshtml";
+    //background: url(~/images/change/banner-cate-1.jpg) no-repeat center;
+    var tag = ViewBag.Tag;
+    var total = ViewBag.Total;
+    var page_index = (int)ViewBag.PageIndex;
+    var page_size = (int)ViewBag.PageSize;
+    @model List<ArticleMinify>;
+}
+
+@section styles {
+    <style type="text/css">
+        /*.banner-page {
+            background: url(~/images/change/banner-cate-1.jpg) no-repeat center;
+            min-height: 200px;
+            background-size: cover;
+            display: flex;
+        }*/
+    </style>
+}
+
+<div class="banner-page py-3 mb-4">
+    <div class="container align-self-center">
+        <div class="row justify-content-center">
+            <div class="col-sm-10 col-12 ">
+                <h1 class="text-center">@tag</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row flex-md-row-reverse">
+        <div class="col-xl-3 col-lg-3 col-md-4 col-sm-12 col-12">
+            @await Component.InvokeAsync("MenuRightBlog")
+        </div>
+        @{ 
+            var list_article = Model; }
+        @if (list_article != null)
+        {
+            <div class="col-xl-9 col-lg-9 col-md-8 col-sm-12 col-12">
+                <div class="heading pb-2 border-bottom mb-3 d-flex">
+                    <div class="h5 font-weight-600 mb-0 ">
+                        Tìm theo @tag :
+                    </div>
+                </div>
+
+                <div class="slide-blog-cate swiper-container">
+                    <!-- Additional required wrapper -->
+                    <div class="swiper-wrapper">
+                        <!-- Slides -->
+                        @{ var article_in_slide = list_article.Skip(0).Take(3); }
+                        @foreach (var item in article_in_slide)
+                        {
+                            var link = string.Format("{0}/{1}.a{2}.html", base_uri_culture, item.Url, item.Id);
+                            <div class="swiper-slide">
+                                <div class="item mb-3">
+                                    <a href="@link" title="@item.Title"><img asp-append-version="true" src="@UIHelper.StoreFilePath(item.Avatar,false)" alt="@item.Title" /></a>
+                                    <h2 class="title">
+                                        <a href="@link" title="@item.Title">@item.Title</a>
+
+                                    </h2>
+                                </div>
+                            </div>
+                        }
+                    </div>
+
+                    <!-- If we need navigation buttons -->
+                    <div class="swiper-button-prev"><i class="fas fa-chevron-left"></i></div>
+                    <div class="swiper-button-next"><i class="fas fa-chevron-right"></i></div>
+                </div>
+
+
+                <div class="list-blog-cate-2 binding-blog">
+                    @{ var article_out_slide = list_article.Skip(3); }
+                    @foreach (var item in article_out_slide)
+                    {
+                        var link = string.Format("{0}/{1}.a{2}.html", base_uri_culture, item.Url, item.Id);
+                        <div class="item item-blog-km">
+                            <div class="row">
+                                <div class="col-lg-3 col-md-4 col-sm-4 col-12">
+                                    <div class="image mb-3 mb-sm-0">
+                                        <a href="@link" title="@item.Title">
+                                            <img asp-append-version="true" src="@UIHelper.StoreFilePath(item.Avatar)" class="img-fluid" alt="@item.Title" />
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="col-lg-9 col-md-8 col-sm-8  col-12">
+                                    <h5 class="title">
+                                        @item.Title
+                                    </h5>
+                                    <div class="time">
+                                        @item.CreatedDate.ToString("dd/MM/yyyy hh:mm")
+                                    </div>
+                                    <div class="des">
+                                        @item.Description
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                </div>
+                @{ var total_page = 0;
+                    if (total % page_size == 0)
+                    {
+                        total_page = total / page_size;
+                    }
+
+                    else
+                    {
+                        total_page = total / page_size + 1;
+                    }
+
+                }
+                <div class="jan-pagination text-right mb-4 ">
+                    <button class="btn btn-pagi preview_page" title="" data-zone-id="" data-page-index="@page_index" data-page-size="@page_size" data-min-page="1" data-type="@((int)TypeArticle.Blog)" data-alias=""><i class="fas fa-chevron-left "></i></button>
+                    <select class="select-page mr-2" data-page-size="@page_size" data-type="@((int)TypeArticle.Blog)" data-zone-id="" data-page-index="@page_index" data-alias="">
+                        @for (int i = 0; i < total_page; i++)
+                        {
+                            var s = i + 1 == page_index ? "selected" : "";
+                            if (i == 0)
+                            {
+                                <option value="@(i+1)">@(i + 1)</option>
+                            }
+                            else
+                            {
+                                <option value="@(i+1)">@(i + 1)</option>
+                            }
+
+                        }
+
+                    </select>
+
+                    <span class="color-828282">/@total_page</span>
+                    <button class="btn btn-pagi next_page" title="" data-zone-id="" data-page-index="@page_index" data-page-size="@page_size" data-max-page="@total_page" data-type="@((int)TypeArticle.Blog)" data-alias=""><i class="fas fa-chevron-right "></i></button>
+                </div>
+
+
+
+            </div>
+        }
+
+    </div>
+</div>
+
+
+
+

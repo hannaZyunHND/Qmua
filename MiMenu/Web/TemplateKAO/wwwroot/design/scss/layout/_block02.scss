@@ -1,0 +1,35 @@
+.block02{
+  &__fixed{
+
+  }
+  &__card{
+    background: $color4;
+    @include media-breakpoint-up('m'){
+
+    }
+    color: #ffffff;
+    &__desc{
+      @extend .fz-18;
+      line-height: 1.34;
+      color: #ffffff;
+    }
+    &__footer{
+      //height: 116px;
+      background-size: contain;
+      @include fluidx(116px,60px,height);
+    }
+    &__btn{
+      @extend .fz-18;
+      font-family: $font-Roboto-Medium;
+      &--01{
+        background: $color1;
+      }
+      &--02{
+        background: $color2;
+      }
+      &--vang{
+        background: $color3;
+      }
+    }
+  }
+}

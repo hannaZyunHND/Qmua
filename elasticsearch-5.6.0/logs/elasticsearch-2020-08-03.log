@@ -1,0 +1,62 @@
+[2020-08-03T09:46:23,353][INFO ][o.e.n.Node               ] [] initializing ...
+[2020-08-03T09:46:23,745][INFO ][o.e.e.NodeEnvironment    ] [hHj-txf] using [1] data paths, mounts [[Elements (E:)]], net usable_space [309.9gb], net total_space [465.7gb], spins? [unknown], types [NTFS]
+[2020-08-03T09:46:23,745][INFO ][o.e.e.NodeEnvironment    ] [hHj-txf] heap size [1.9gb], compressed ordinary object pointers [true]
+[2020-08-03T09:46:23,830][INFO ][o.e.n.Node               ] node name [hHj-txf] derived from node ID [hHj-txf9QGabFfsXAWjKpw]; set [node.name] to override
+[2020-08-03T09:46:23,831][INFO ][o.e.n.Node               ] version[5.6.0], pid[11592], build[781a835/2017-09-07T03:09:58.087Z], OS[Windows 10/10.0/amd64], JVM[Oracle Corporation/Java HotSpot(TM) 64-Bit Server VM/1.8.0_261/25.261-b12]
+[2020-08-03T09:46:23,832][INFO ][o.e.n.Node               ] JVM arguments [-Xms2g, -Xmx2g, -XX:+UseConcMarkSweepGC, -XX:CMSInitiatingOccupancyFraction=75, -XX:+UseCMSInitiatingOccupancyOnly, -XX:+AlwaysPreTouch, -Xss1m, -Djava.awt.headless=true, -Dfile.encoding=UTF-8, -Djna.nosys=true, -Djdk.io.permissionsUseCanonicalPath=true, -Dio.netty.noUnsafe=true, -Dio.netty.noKeySetOptimization=true, -Dio.netty.recycler.maxCapacityPerThread=0, -Dlog4j.shutdownHookEnabled=false, -Dlog4j2.disable.jmx=true, -Dlog4j.skipJansi=true, -XX:+HeapDumpOnOutOfMemoryError, -Delasticsearch, -Des.path.home=E:\DuAn\vnetcore\elasticsearch-5.6.0]
+[2020-08-03T09:46:28,346][INFO ][o.e.p.PluginsService     ] [hHj-txf] loaded module [aggs-matrix-stats]
+[2020-08-03T09:46:28,346][INFO ][o.e.p.PluginsService     ] [hHj-txf] loaded module [ingest-common]
+[2020-08-03T09:46:28,346][INFO ][o.e.p.PluginsService     ] [hHj-txf] loaded module [lang-expression]
+[2020-08-03T09:46:28,347][INFO ][o.e.p.PluginsService     ] [hHj-txf] loaded module [lang-groovy]
+[2020-08-03T09:46:28,347][INFO ][o.e.p.PluginsService     ] [hHj-txf] loaded module [lang-mustache]
+[2020-08-03T09:46:28,347][INFO ][o.e.p.PluginsService     ] [hHj-txf] loaded module [lang-painless]
+[2020-08-03T09:46:28,347][INFO ][o.e.p.PluginsService     ] [hHj-txf] loaded module [parent-join]
+[2020-08-03T09:46:28,347][INFO ][o.e.p.PluginsService     ] [hHj-txf] loaded module [percolator]
+[2020-08-03T09:46:28,347][INFO ][o.e.p.PluginsService     ] [hHj-txf] loaded module [reindex]
+[2020-08-03T09:46:28,347][INFO ][o.e.p.PluginsService     ] [hHj-txf] loaded module [transport-netty3]
+[2020-08-03T09:46:28,348][INFO ][o.e.p.PluginsService     ] [hHj-txf] loaded module [transport-netty4]
+[2020-08-03T09:46:28,348][INFO ][o.e.p.PluginsService     ] [hHj-txf] no plugins loaded
+[2020-08-03T09:46:33,880][INFO ][o.e.d.DiscoveryModule    ] [hHj-txf] using discovery type [zen]
+[2020-08-03T09:46:35,187][INFO ][o.e.n.Node               ] initialized
+[2020-08-03T09:46:35,187][INFO ][o.e.n.Node               ] [hHj-txf] starting ...
+[2020-08-03T09:46:36,343][INFO ][o.e.t.TransportService   ] [hHj-txf] publish_address {127.0.0.1:9300}, bound_addresses {127.0.0.1:9300}, {[::1]:9300}
+[2020-08-03T09:46:39,565][INFO ][o.e.c.s.ClusterService   ] [hHj-txf] new_master {hHj-txf}{hHj-txf9QGabFfsXAWjKpw}{Bft0bMx5QnK28W7QqSsKBQ}{127.0.0.1}{127.0.0.1:9300}, reason: zen-disco-elected-as-master ([0] nodes joined)
+[2020-08-03T09:46:40,428][INFO ][o.e.g.GatewayService     ] [hHj-txf] recovered [1] indices into cluster_state
+[2020-08-03T09:46:40,489][INFO ][o.e.h.n.Netty4HttpServerTransport] [hHj-txf] publish_address {127.0.0.1:9200}, bound_addresses {127.0.0.1:9200}, {[::1]:9200}
+[2020-08-03T09:46:40,502][INFO ][o.e.n.Node               ] [hHj-txf] started
+[2020-08-03T09:46:41,755][INFO ][o.e.c.r.a.AllocationService] [hHj-txf] Cluster health status changed from [RED] to [YELLOW] (reason: [shards started [[product_suggest][0]] ...]).
+[2020-08-03T09:58:01,093][INFO ][o.e.c.m.MetaDataDeleteIndexService] [hHj-txf] [product_suggest/Ed65vq8TQJWSb700Omjcsg] deleting index
+[2020-08-03T09:58:01,868][INFO ][o.e.c.m.MetaDataCreateIndexService] [hHj-txf] [product_suggest] creating index, cause [api], templates [], shards [5]/[1], mappings [productes]
+[2020-08-03T09:58:06,658][INFO ][o.e.c.m.MetaDataDeleteIndexService] [hHj-txf] [product_suggest/PwCmXshhQSeqAxVUeCcIZw] deleting index
+[2020-08-03T09:58:10,413][DEBUG][o.e.a.a.i.d.TransportDeleteIndexAction] [hHj-txf] failed to delete indices [[[product_suggest/PwCmXshhQSeqAxVUeCcIZw]]]
+org.elasticsearch.index.IndexNotFoundException: no such index
+	at org.elasticsearch.cluster.metadata.MetaData.getIndexSafe(MetaData.java:473) ~[elasticsearch-5.6.0.jar:5.6.0]
+	at org.elasticsearch.cluster.metadata.MetaDataDeleteIndexService.lambda$deleteIndices$0(MetaDataDeleteIndexService.java:89) ~[elasticsearch-5.6.0.jar:5.6.0]
+	at java.util.stream.ReferencePipeline$3$1.accept(Unknown Source) ~[?:1.8.0_261]
+	at java.util.HashMap$KeySpliterator.forEachRemaining(Unknown Source) ~[?:1.8.0_261]
+	at java.util.stream.AbstractPipeline.copyInto(Unknown Source) ~[?:1.8.0_261]
+	at java.util.stream.AbstractPipeline.wrapAndCopyInto(Unknown Source) ~[?:1.8.0_261]
+	at java.util.stream.ReduceOps$ReduceOp.evaluateSequential(Unknown Source) ~[?:1.8.0_261]
+	at java.util.stream.AbstractPipeline.evaluate(Unknown Source) ~[?:1.8.0_261]
+	at java.util.stream.ReferencePipeline.collect(Unknown Source) ~[?:1.8.0_261]
+	at org.elasticsearch.cluster.metadata.MetaDataDeleteIndexService.deleteIndices(MetaDataDeleteIndexService.java:89) ~[elasticsearch-5.6.0.jar:5.6.0]
+	at org.elasticsearch.cluster.metadata.MetaDataDeleteIndexService$1.execute(MetaDataDeleteIndexService.java:79) ~[elasticsearch-5.6.0.jar:5.6.0]
+	at org.elasticsearch.cluster.ClusterStateUpdateTask.execute(ClusterStateUpdateTask.java:45) ~[elasticsearch-5.6.0.jar:5.6.0]
+	at org.elasticsearch.cluster.service.ClusterService.executeTasks(ClusterService.java:634) ~[elasticsearch-5.6.0.jar:5.6.0]
+	at org.elasticsearch.cluster.service.ClusterService.calculateTaskOutputs(ClusterService.java:612) ~[elasticsearch-5.6.0.jar:5.6.0]
+	at org.elasticsearch.cluster.service.ClusterService.runTasks(ClusterService.java:571) [elasticsearch-5.6.0.jar:5.6.0]
+	at org.elasticsearch.cluster.service.ClusterService$ClusterServiceTaskBatcher.run(ClusterService.java:263) [elasticsearch-5.6.0.jar:5.6.0]
+	at org.elasticsearch.cluster.service.TaskBatcher.runIfNotProcessed(TaskBatcher.java:150) [elasticsearch-5.6.0.jar:5.6.0]
+	at org.elasticsearch.cluster.service.TaskBatcher$BatchedTask.run(TaskBatcher.java:188) [elasticsearch-5.6.0.jar:5.6.0]
+	at org.elasticsearch.common.util.concurrent.ThreadContext$ContextPreservingRunnable.run(ThreadContext.java:569) [elasticsearch-5.6.0.jar:5.6.0]
+	at org.elasticsearch.common.util.concurrent.PrioritizedEsThreadPoolExecutor$TieBreakingPrioritizedRunnable.runAndClean(PrioritizedEsThreadPoolExecutor.java:247) [elasticsearch-5.6.0.jar:5.6.0]
+	at org.elasticsearch.common.util.concurrent.PrioritizedEsThreadPoolExecutor$TieBreakingPrioritizedRunnable.run(PrioritizedEsThreadPoolExecutor.java:210) [elasticsearch-5.6.0.jar:5.6.0]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source) [?:1.8.0_261]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source) [?:1.8.0_261]
+	at java.lang.Thread.run(Unknown Source) [?:1.8.0_261]
+[2020-08-03T09:58:10,512][INFO ][o.e.c.m.MetaDataCreateIndexService] [hHj-txf] [product_suggest] creating index, cause [api], templates [], shards [5]/[1], mappings [productes]
+[2020-08-03T17:14:13,652][INFO ][o.e.b.Bootstrap          ] running graceful exit on windows
+[2020-08-03T17:14:13,677][INFO ][o.e.n.Node               ] [hHj-txf] stopping ...
+[2020-08-03T17:14:14,418][INFO ][o.e.n.Node               ] [hHj-txf] stopped
+[2020-08-03T17:14:14,419][INFO ][o.e.n.Node               ] [hHj-txf] closing ...
+[2020-08-03T17:14:14,486][INFO ][o.e.n.Node               ] [hHj-txf] closed

@@ -1,0 +1,53 @@
+﻿@using MI.Entity.Enums;
+@using PhamGiaLandingPage.Web.Services.Zone.ViewModal
+@using PhamGiaLandingPage.Web.Services.Article.ViewModel
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Http
+@using PhamGiaLandingPage.Web.Services.Article.Repository
+@using PhamGiaLandingPage.Web.Services.BannerAds.Repository
+@using PhamGiaLandingPage.Web.Services.Zone.Repository
+@inject IHttpContextAccessor HttpContextAccessor
+@inject IArticleRepository articleRepository;
+@inject IZoneRepository zoneRepository;
+@inject IBannerAdsRepository bannerAdsRepository;
+@using Utils
+@{
+    var culture = Context.Features.Get<IRequestCultureFeature>().RequestCulture.Culture.TwoLetterISOLanguageName.ToLower();
+    var culture_code = Context.Features.Get<IRequestCultureFeature>().RequestCulture.Culture.ToString();
+    var base_uri_culture = "/" + culture;
+    var domain = Context.Request.Host.ToString();
+    var domain_full = Context.Request.Scheme;
+    var detail = new ArticleDetail();
+    if (ViewBag.Detail != null)
+    {
+        detail = (ArticleDetail)ViewBag.Detail;
+    }
+
+}
+<script type="application/ld+json">
+    {
+    "@("@context")": "https://schema.org",
+    "@("@type")": "@detail.Title",
+    "mainEntityOfPage": {
+    "@("@type")": "WebPage",
+    "@("@id")": "@domain_full"
+    },
+    "headline": "@detail.Title",
+    "image": [
+    "@UIHelper.StoreFilePath(detail.Avatar, false)",
+    ],
+    "datePublished": "@detail.CreatedDate.ToString()",
+    "dateModified": "@detail.CreatedDate.ToString()",
+    "author": {
+    "@("@type")": "Person",
+    "name": "@detail.Author"
+    },
+    "publisher": {
+    "@("@type")": "Organization",
+    "name": "@detail.Title",
+    "logo": {
+    "@("@type")": "ImageObject",
+    "url": "@detail.Avatar"
+    }}}
+</script>

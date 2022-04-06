@@ -1,0 +1,118 @@
+﻿@using MI.Entity.Enums;
+@using PhamGiaLandingPage.Web.Services.Zone.ViewModal
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Http
+@using PhamGiaLandingPage.Web.Services.Article.Repository
+@using PhamGiaLandingPage.Web.Services.Zone.Repository
+@using PhamGiaLandingPage.Web.Utility
+@inject IHttpContextAccessor HttpContextAccessor
+@inject IArticleRepository articleRepository;
+@inject IZoneRepository zoneRepository;
+@model ZoneByTreeViewMinify;
+@using Utils
+@{
+    var culture = Context.Features.Get<IRequestCultureFeature>().RequestCulture.Culture.TwoLetterISOLanguageName.ToLower();
+    var culture_code = Context.Features.Get<IRequestCultureFeature>().RequestCulture.Culture.ToString();
+    //var base_uri_culture = "/" + culture;
+    var base_uri_culture = "/";
+    var domain = Context.Request.Host.ToString();
+    var path = Context.Request.Path.ToString();
+
+
+}
+@{
+    Layout = null;
+    var list_child = zoneRepository.GetZoneByTreeViewMinifies((int)TypeZone.AllButProduct, culture_code, Model.Id);
+    var lv1 = list_child.Where(r => r.level == Model.level + 1);
+}
+
+<div class="muc-news">
+    @Model.Name
+</div>
+<div class="accordion" id="accordionExample">
+    @{ var count = 1;}
+    @foreach (var it in lv1)
+    {
+        var link_tar = LinkRedirectUrlUtility.BlogLinkUrl(it.Url);
+        var lv2 = list_child.Where(r => r.ParentId == it.Id);
+        var isShow = false;
+        
+        <div class="card card-bepvui">
+            <div class="card-header cardhead-bep" id="heading@(count)">
+                @if (lv2.Count() > 0)
+                {
+                    foreach (var v in lv2)
+                    {
+
+                        if (v.Url.Equals(path.Replace("/","")))
+                        {
+                            isShow = true;
+                        }
+                    }
+                    <div class="menu-dihu">
+                        <button class="btn btn-link btn-bvui" type="button" data-toggle="collapse" data-target="#collapse@(count)" aria-expanded="@isShow.ToString().ToLower()" aria-controls="collapse@(count)">
+                            @it.Name
+                        </button>
+                        <i class="fal fa-angle-down"></i>
+                    </div>
+                }
+                @if (lv2.Count() <= 0)
+                {
+                    <div class="menu-dihu">
+                        <a class="btn btn-link btn-bvui" href="@link_tar">
+                            @it.Name
+                        </a>
+                    </div>
+                }
+            </div>
+            @foreach (var v in lv2)
+            {
+                var style_red = false;
+                var lk = LinkRedirectUrlUtility.BlogLinkUrl(v.Url);
+                if (v.Url.Equals(path.Replace("/", "")))
+                {
+                    style_red = true;
+                }
+
+                <div id="collapse@(count)" class="collapse @(isShow == true ? "show" :"")" aria-labelledby="heading@(count)" data-parent="#accordionExample">
+                    <div class="card-body cardbody-bep @(style_red == true ? "card-slt" : "")">
+                        <a href="@lk">
+                            @v.Name
+                        </a>
+                    </div>
+                </div>
+            }
+        </div>
+        count++;
+    }
+
+    @*<div class="card card-bepvui">
+            <div class="card-header cardhead-bep" id="headingTwo">
+                <h2 class="mb-0">
+                    <button class="btn btn-link collapsed btn-bvui" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        Mẹo vặt gia đình
+                    </button>
+                </h2>
+            </div>
+            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                <div class="card-body cardbody-bep">
+                    Mẹo vặt gia đình
+                </div>
+            </div>
+        </div>
+        <div class="card card-bepvui">
+            <div class="card-header cardhead-bep" id="headingThree">
+                <h2 class="mb-0">
+                    <button class="btn btn-link collapsed btn-bvui" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                        Mẹo vặt gia đình
+                    </button>
+                </h2>
+            </div>
+            <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+                <div class="card-body cardbody-bep">
+                    Mẹo vặt gia đình
+                </div>
+            </div>
+        </div>*@
+</div>

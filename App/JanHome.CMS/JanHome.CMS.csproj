@@ -1,0 +1,340 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <UserSecretsId>57a0f08e-092a-4817-ab39-9c48470b290a</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="ClientApp\components\treeviewtable\**" />
+    <Compile Remove="wwwroot\dist\**" />
+    <Compile Remove="_Logs\**" />
+    <Content Remove="ClientApp\components\treeviewtable\**" />
+    <Content Remove="wwwroot\dist\**" />
+    <Content Remove="_Logs\**" />
+    <EmbeddedResource Remove="ClientApp\components\treeviewtable\**" />
+    <EmbeddedResource Remove="wwwroot\dist\**" />
+    <EmbeddedResource Remove="_Logs\**" />
+    <None Remove="ClientApp\components\treeviewtable\**" />
+    <None Remove="wwwroot\dist\**" />
+    <None Remove="_Logs\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="ClientApp\assets\.gitkeep" />
+    <Content Include="ClientApp\assets\img\avatars\1.jpg" />
+    <Content Include="ClientApp\assets\img\avatars\2.jpg" />
+    <Content Include="ClientApp\assets\img\avatars\3.jpg" />
+    <Content Include="ClientApp\assets\img\avatars\4.jpg" />
+    <Content Include="ClientApp\assets\img\avatars\5.jpg" />
+    <Content Include="ClientApp\assets\img\avatars\6.jpg" />
+    <Content Include="ClientApp\assets\img\avatars\7.jpg" />
+    <Content Include="ClientApp\assets\img\avatars\8.jpg" />
+    <Content Include="ClientApp\assets\img\brand\logo.svg" />
+    <Content Include="ClientApp\assets\img\brand\sygnet.svg" />
+    <Content Include="ClientApp\assets\img\favicon.png" />
+    <Content Include="ClientApp\assets\img\flags\Afghanistan.png" />
+    <Content Include="ClientApp\assets\img\flags\African Union.png" />
+    <Content Include="ClientApp\assets\img\flags\Albania.png" />
+    <Content Include="ClientApp\assets\img\flags\Algeria.png" />
+    <Content Include="ClientApp\assets\img\flags\American Samoa.png" />
+    <Content Include="ClientApp\assets\img\flags\Andorra.png" />
+    <Content Include="ClientApp\assets\img\flags\Angola.png" />
+    <Content Include="ClientApp\assets\img\flags\Anguilla.png" />
+    <Content Include="ClientApp\assets\img\flags\Antarctica.png" />
+    <Content Include="ClientApp\assets\img\flags\Antigua &amp; Barbuda.png" />
+    <Content Include="ClientApp\assets\img\flags\Arab League.png" />
+    <Content Include="ClientApp\assets\img\flags\Argentina.png" />
+    <Content Include="ClientApp\assets\img\flags\Armenia.png" />
+    <Content Include="ClientApp\assets\img\flags\Aruba.png" />
+    <Content Include="ClientApp\assets\img\flags\ASEAN.png" />
+    <Content Include="ClientApp\assets\img\flags\Australia.png" />
+    <Content Include="ClientApp\assets\img\flags\Austria.png" />
+    <Content Include="ClientApp\assets\img\flags\Azerbaijan.png" />
+    <Content Include="ClientApp\assets\img\flags\Bahamas.png" />
+    <Content Include="ClientApp\assets\img\flags\Bahrain.png" />
+    <Content Include="ClientApp\assets\img\flags\Bangladesh.png" />
+    <Content Include="ClientApp\assets\img\flags\Barbados.png" />
+    <Content Include="ClientApp\assets\img\flags\Belarus.png" />
+    <Content Include="ClientApp\assets\img\flags\Belgium.png" />
+    <Content Include="ClientApp\assets\img\flags\Belize.png" />
+    <Content Include="ClientApp\assets\img\flags\Benin.png" />
+    <Content Include="ClientApp\assets\img\flags\Bermuda.png" />
+    <Content Include="ClientApp\assets\img\flags\Bhutan.png" />
+    <Content Include="ClientApp\assets\img\flags\Bolivia.png" />
+    <Content Include="ClientApp\assets\img\flags\Bosnia &amp; Herzegovina.png" />
+    <Content Include="ClientApp\assets\img\flags\Botswana.png" />
+    <Content Include="ClientApp\assets\img\flags\Brazil.png" />
+    <Content Include="ClientApp\assets\img\flags\Brunei.png" />
+    <Content Include="ClientApp\assets\img\flags\Bulgaria.png" />
+    <Content Include="ClientApp\assets\img\flags\Burkina Faso.png" />
+    <Content Include="ClientApp\assets\img\flags\Burundi.png" />
+    <Content Include="ClientApp\assets\img\flags\Cambodja.png" />
+    <Content Include="ClientApp\assets\img\flags\Cameroon.png" />
+    <Content Include="ClientApp\assets\img\flags\Canada.png" />
+    <Content Include="ClientApp\assets\img\flags\Cape Verde.png" />
+    <Content Include="ClientApp\assets\img\flags\CARICOM.png" />
+    <Content Include="ClientApp\assets\img\flags\Cayman Islands.png" />
+    <Content Include="ClientApp\assets\img\flags\Central African Republic.png" />
+    <Content Include="ClientApp\assets\img\flags\Chad.png" />
+    <Content Include="ClientApp\assets\img\flags\Chile.png" />
+    <Content Include="ClientApp\assets\img\flags\China.png" />
+    <Content Include="ClientApp\assets\img\flags\CIS.png" />
+    <Content Include="ClientApp\assets\img\flags\Colombia.png" />
+    <Content Include="ClientApp\assets\img\flags\Commonwealth.png" />
+    <Content Include="ClientApp\assets\img\flags\Comoros.png" />
+    <Content Include="ClientApp\assets\img\flags\Congo-Brazzaville.png" />
+    <Content Include="ClientApp\assets\img\flags\Congo-Kinshasa%28Zaire%29.png" />
+    <Content Include="ClientApp\assets\img\flags\Cook Islands.png" />
+    <Content Include="ClientApp\assets\img\flags\Costa Rica.png" />
+    <Content Include="ClientApp\assets\img\flags\Cote d%27Ivoire.png" />
+    <Content Include="ClientApp\assets\img\flags\Croatia.png" />
+    <Content Include="ClientApp\assets\img\flags\Cuba.png" />
+    <Content Include="ClientApp\assets\img\flags\Cyprus.png" />
+    <Content Include="ClientApp\assets\img\flags\Czech Republic.png" />
+    <Content Include="ClientApp\assets\img\flags\Denmark.png" />
+    <Content Include="ClientApp\assets\img\flags\Djibouti.png" />
+    <Content Include="ClientApp\assets\img\flags\Dominica.png" />
+    <Content Include="ClientApp\assets\img\flags\Dominican Republic.png" />
+    <Content Include="ClientApp\assets\img\flags\Ecuador.png" />
+    <Content Include="ClientApp\assets\img\flags\Egypt.png" />
+    <Content Include="ClientApp\assets\img\flags\El Salvador.png" />
+    <Content Include="ClientApp\assets\img\flags\England.png" />
+    <Content Include="ClientApp\assets\img\flags\Equatorial Guinea.png" />
+    <Content Include="ClientApp\assets\img\flags\Eritrea.png" />
+    <Content Include="ClientApp\assets\img\flags\Estonia.png" />
+    <Content Include="ClientApp\assets\img\flags\Ethiopia.png" />
+    <Content Include="ClientApp\assets\img\flags\European Union.png" />
+    <Content Include="ClientApp\assets\img\flags\Faroes.png" />
+    <Content Include="ClientApp\assets\img\flags\Fiji.png" />
+    <Content Include="ClientApp\assets\img\flags\Finland.png" />
+    <Content Include="ClientApp\assets\img\flags\France.png" />
+    <Content Include="ClientApp\assets\img\flags\Gabon.png" />
+    <Content Include="ClientApp\assets\img\flags\Gambia.png" />
+    <Content Include="ClientApp\assets\img\flags\Georgia.png" />
+    <Content Include="ClientApp\assets\img\flags\Germany.png" />
+    <Content Include="ClientApp\assets\img\flags\Ghana.png" />
+    <Content Include="ClientApp\assets\img\flags\Gibraltar.png" />
+    <Content Include="ClientApp\assets\img\flags\Greece.png" />
+    <Content Include="ClientApp\assets\img\flags\Greenland.png" />
+    <Content Include="ClientApp\assets\img\flags\Grenada.png" />
+    <Content Include="ClientApp\assets\img\flags\Guadeloupe.png" />
+    <Content Include="ClientApp\assets\img\flags\Guam.png" />
+    <Content Include="ClientApp\assets\img\flags\Guatemala.png" />
+    <Content Include="ClientApp\assets\img\flags\Guernsey.png" />
+    <Content Include="ClientApp\assets\img\flags\Guinea-Bissau.png" />
+    <Content Include="ClientApp\assets\img\flags\Guinea.png" />
+    <Content Include="ClientApp\assets\img\flags\Guyana.png" />
+    <Content Include="ClientApp\assets\img\flags\Haiti.png" />
+    <Content Include="ClientApp\assets\img\flags\Honduras.png" />
+    <Content Include="ClientApp\assets\img\flags\Hong Kong.png" />
+    <Content Include="ClientApp\assets\img\flags\Hungary.png" />
+    <Content Include="ClientApp\assets\img\flags\Iceland.png" />
+    <Content Include="ClientApp\assets\img\flags\India.png" />
+    <Content Include="ClientApp\assets\img\flags\Indonezia.png" />
+    <Content Include="ClientApp\assets\img\flags\Iran.png" />
+    <Content Include="ClientApp\assets\img\flags\Iraq.png" />
+    <Content Include="ClientApp\assets\img\flags\Ireland.png" />
+    <Content Include="ClientApp\assets\img\flags\Islamic Conference.png" />
+    <Content Include="ClientApp\assets\img\flags\Isle of Man.png" />
+    <Content Include="ClientApp\assets\img\flags\Israel.png" />
+    <Content Include="ClientApp\assets\img\flags\Italy.png" />
+    <Content Include="ClientApp\assets\img\flags\Jamaica.png" />
+    <Content Include="ClientApp\assets\img\flags\Japan.png" />
+    <Content Include="ClientApp\assets\img\flags\Jersey.png" />
+    <Content Include="ClientApp\assets\img\flags\Jordan.png" />
+    <Content Include="ClientApp\assets\img\flags\Kazakhstan.png" />
+    <Content Include="ClientApp\assets\img\flags\Kenya.png" />
+    <Content Include="ClientApp\assets\img\flags\Kiribati.png" />
+    <Content Include="ClientApp\assets\img\flags\Kosovo.png" />
+    <Content Include="ClientApp\assets\img\flags\Kuwait.png" />
+    <Content Include="ClientApp\assets\img\flags\Kyrgyzstan.png" />
+    <Content Include="ClientApp\assets\img\flags\Laos.png" />
+    <Content Include="ClientApp\assets\img\flags\Latvia.png" />
+    <Content Include="ClientApp\assets\img\flags\Lebanon.png" />
+    <Content Include="ClientApp\assets\img\flags\Lesotho.png" />
+    <Content Include="ClientApp\assets\img\flags\Liberia.png" />
+    <Content Include="ClientApp\assets\img\flags\Libya.png" />
+    <Content Include="ClientApp\assets\img\flags\Liechtenshein.png" />
+    <Content Include="ClientApp\assets\img\flags\Lithuania.png" />
+    <Content Include="ClientApp\assets\img\flags\Luxembourg.png" />
+    <Content Include="ClientApp\assets\img\flags\Macao.png" />
+    <Content Include="ClientApp\assets\img\flags\Macedonia.png" />
+    <Content Include="ClientApp\assets\img\flags\Madagascar.png" />
+    <Content Include="ClientApp\assets\img\flags\Malawi.png" />
+    <Content Include="ClientApp\assets\img\flags\Malaysia.png" />
+    <Content Include="ClientApp\assets\img\flags\Maldives.png" />
+    <Content Include="ClientApp\assets\img\flags\Mali.png" />
+    <Content Include="ClientApp\assets\img\flags\Malta.png" />
+    <Content Include="ClientApp\assets\img\flags\Marshall Islands.png" />
+    <Content Include="ClientApp\assets\img\flags\Martinique.png" />
+    <Content Include="ClientApp\assets\img\flags\Mauritania.png" />
+    <Content Include="ClientApp\assets\img\flags\Mauritius.png" />
+    <Content Include="ClientApp\assets\img\flags\Mexico.png" />
+    <Content Include="ClientApp\assets\img\flags\Micronesia.png" />
+    <Content Include="ClientApp\assets\img\flags\Moldova.png" />
+    <Content Include="ClientApp\assets\img\flags\Monaco.png" />
+    <Content Include="ClientApp\assets\img\flags\Mongolia.png" />
+    <Content Include="ClientApp\assets\img\flags\Montenegro.png" />
+    <Content Include="ClientApp\assets\img\flags\Montserrat.png" />
+    <Content Include="ClientApp\assets\img\flags\Morocco.png" />
+    <Content Include="ClientApp\assets\img\flags\Mozambique.png" />
+    <Content Include="ClientApp\assets\img\flags\Myanmar%28Burma%29.png" />
+    <Content Include="ClientApp\assets\img\flags\Namibia.png" />
+    <Content Include="ClientApp\assets\img\flags\NATO.png" />
+    <Content Include="ClientApp\assets\img\flags\Nauru.png" />
+    <Content Include="ClientApp\assets\img\flags\Nepal.png" />
+    <Content Include="ClientApp\assets\img\flags\Netherlands Antilles.png" />
+    <Content Include="ClientApp\assets\img\flags\Netherlands.png" />
+    <Content Include="ClientApp\assets\img\flags\New Caledonia.png" />
+    <Content Include="ClientApp\assets\img\flags\New Zealand.png" />
+    <Content Include="ClientApp\assets\img\flags\Nicaragua.png" />
+    <Content Include="ClientApp\assets\img\flags\Niger.png" />
+    <Content Include="ClientApp\assets\img\flags\Nigeria.png" />
+    <Content Include="ClientApp\assets\img\flags\North Korea.png" />
+    <Content Include="ClientApp\assets\img\flags\Northern Cyprus.png" />
+    <Content Include="ClientApp\assets\img\flags\Northern Ireland.png" />
+    <Content Include="ClientApp\assets\img\flags\Norway.png" />
+    <Content Include="ClientApp\assets\img\flags\Olimpic Movement.png" />
+    <Content Include="ClientApp\assets\img\flags\Oman.png" />
+    <Content Include="ClientApp\assets\img\flags\OPEC.png" />
+    <Content Include="ClientApp\assets\img\flags\Pakistan.png" />
+    <Content Include="ClientApp\assets\img\flags\Palau.png" />
+    <Content Include="ClientApp\assets\img\flags\Palestine.png" />
+    <Content Include="ClientApp\assets\img\flags\Panama.png" />
+    <Content Include="ClientApp\assets\img\flags\Papua New Guinea.png" />
+    <Content Include="ClientApp\assets\img\flags\Paraguay.png" />
+    <Content Include="ClientApp\assets\img\flags\Peru.png" />
+    <Content Include="ClientApp\assets\img\flags\Philippines.png" />
+    <Content Include="ClientApp\assets\img\flags\Poland.png" />
+    <Content Include="ClientApp\assets\img\flags\Portugal.png" />
+    <Content Include="ClientApp\assets\img\flags\Puerto Rico.png" />
+    <Content Include="ClientApp\assets\img\flags\Qatar.png" />
+    <Content Include="ClientApp\assets\img\flags\Red Cross.png" />
+    <Content Include="ClientApp\assets\img\flags\Reunion.png" />
+    <Content Include="ClientApp\assets\img\flags\Romania.png" />
+    <Content Include="ClientApp\assets\img\flags\Russia.png" />
+    <Content Include="ClientApp\assets\img\flags\Rwanda.png" />
+    <Content Include="ClientApp\assets\img\flags\Saint Lucia.png" />
+    <Content Include="ClientApp\assets\img\flags\Samoa.png" />
+    <Content Include="ClientApp\assets\img\flags\San Marino.png" />
+    <Content Include="ClientApp\assets\img\flags\Sao Tome &amp; Principe.png" />
+    <Content Include="ClientApp\assets\img\flags\Saudi Arabia.png" />
+    <Content Include="ClientApp\assets\img\flags\Scotland.png" />
+    <Content Include="ClientApp\assets\img\flags\Senegal.png" />
+    <Content Include="ClientApp\assets\img\flags\Serbia%28Yugoslavia%29.png" />
+    <Content Include="ClientApp\assets\img\flags\Seychelles.png" />
+    <Content Include="ClientApp\assets\img\flags\Sierra Leone.png" />
+    <Content Include="ClientApp\assets\img\flags\Singapore.png" />
+    <Content Include="ClientApp\assets\img\flags\Slovakia.png" />
+    <Content Include="ClientApp\assets\img\flags\Slovenia.png" />
+    <Content Include="ClientApp\assets\img\flags\Solomon Islands.png" />
+    <Content Include="ClientApp\assets\img\flags\Somalia.png" />
+    <Content Include="ClientApp\assets\img\flags\Somaliland.png" />
+    <Content Include="ClientApp\assets\img\flags\South Africa.png" />
+    <Content Include="ClientApp\assets\img\flags\South Korea.png" />
+    <Content Include="ClientApp\assets\img\flags\Spain.png" />
+    <Content Include="ClientApp\assets\img\flags\Sri Lanka.png" />
+    <Content Include="ClientApp\assets\img\flags\St Kitts &amp; Nevis.png" />
+    <Content Include="ClientApp\assets\img\flags\St Vincent &amp; the Grenadines.png" />
+    <Content Include="ClientApp\assets\img\flags\Sudan.png" />
+    <Content Include="ClientApp\assets\img\flags\Suriname.png" />
+    <Content Include="ClientApp\assets\img\flags\Swaziland.png" />
+    <Content Include="ClientApp\assets\img\flags\Sweden.png" />
+    <Content Include="ClientApp\assets\img\flags\Switzerland.png" />
+    <Content Include="ClientApp\assets\img\flags\Syria.png" />
+    <Content Include="ClientApp\assets\img\flags\Tahiti%28French Polinesia%29.png" />
+    <Content Include="ClientApp\assets\img\flags\Taiwan.png" />
+    <Content Include="ClientApp\assets\img\flags\Tajikistan.png" />
+    <Content Include="ClientApp\assets\img\flags\Tanzania.png" />
+    <Content Include="ClientApp\assets\img\flags\Thailand.png" />
+    <Content Include="ClientApp\assets\img\flags\Timor-Leste.png" />
+    <Content Include="ClientApp\assets\img\flags\Togo.png" />
+    <Content Include="ClientApp\assets\img\flags\Tonga.png" />
+    <Content Include="ClientApp\assets\img\flags\Trinidad &amp; Tobago.png" />
+    <Content Include="ClientApp\assets\img\flags\Tunisia.png" />
+    <Content Include="ClientApp\assets\img\flags\Turkey.png" />
+    <Content Include="ClientApp\assets\img\flags\Turkmenistan.png" />
+    <Content Include="ClientApp\assets\img\flags\Turks and Caicos Islands.png" />
+    <Content Include="ClientApp\assets\img\flags\Tuvalu.png" />
+    <Content Include="ClientApp\assets\img\flags\Uganda.png" />
+    <Content Include="ClientApp\assets\img\flags\Ukraine.png" />
+    <Content Include="ClientApp\assets\img\flags\United Arab Emirates.png" />
+    <Content Include="ClientApp\assets\img\flags\United Nations.png" />
+    <Content Include="ClientApp\assets\img\flags\United-Kingdom.png" />
+    <Content Include="ClientApp\assets\img\flags\Uruguay.png" />
+    <Content Include="ClientApp\assets\img\flags\USA.png" />
+    <Content Include="ClientApp\assets\img\flags\Uzbekistan.png" />
+    <Content Include="ClientApp\assets\img\flags\Vanutau.png" />
+    <Content Include="ClientApp\assets\img\flags\Vatican City.png" />
+    <Content Include="ClientApp\assets\img\flags\Venezuela.png" />
+    <Content Include="ClientApp\assets\img\flags\Viet Nam.png" />
+    <Content Include="ClientApp\assets\img\flags\Virgin Islands British.png" />
+    <Content Include="ClientApp\assets\img\flags\Virgin Islands US.png" />
+    <Content Include="ClientApp\assets\img\flags\Wales.png" />
+    <Content Include="ClientApp\assets\img\flags\Western Sahara.png" />
+    <Content Include="ClientApp\assets\img\flags\Yemen.png" />
+    <Content Include="ClientApp\assets\img\flags\Zambia.png" />
+    <Content Include="ClientApp\assets\img\flags\Zimbabwe.png" />
+    <Content Include="ClientApp\assets\img\logo-symbol.png" />
+    <Content Include="ClientApp\assets\img\logo.png" />
+    <Content Include="ClientApp\assets\scss\style.scss" />
+    <Content Include="ClientApp\assets\scss\tool-arraw.scss" />
+    <Content Include="ClientApp\assets\scss\vendors\chart.js\chart.scss" />
+    <Content Include="ClientApp\assets\scss\vendors\_variables.scss" />
+    <Content Include="ClientApp\assets\scss\_custom.scss" />
+    <Content Include="ClientApp\assets\scss\_ie-fix.scss" />
+    <Content Include="ClientApp\assets\scss\_variables.scss" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="EPPlus" Version="4.5.2.1" />
+    <PackageReference Include="GroupDocs.Watermark" Version="21.3.0" />
+    <PackageReference Include="LazZiya.ImageResize" Version="3.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.10" />
+    <PackageReference Include="NLog.Web.AspNetCore" Version="4.9.2" />
+    <PackageReference Include="NPOI" Version="2.5.1" />
+    <PackageReference Include="SixLabors.ImageSharp" Version="1.0.3" />
+    <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="2.4.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="2.4.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="2.4.0" />
+    <PackageReference Include="System.Drawing.Common" Version="4.7.0" />
+    <PackageReference Include="Z.EntityFramework.Extensions.EFCore" Version="2.7.32" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="ClientApp\common\vue\" />
+    <Folder Include="ClientApp\components\product\" />
+    <Folder Include="ClientApp\pages\manufacturer\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\DemoVoucher.xlsx" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Common\Utils\Utils.csproj" />
+    <ProjectReference Include="..\..\Core\IBo\MI.Bo.csproj" />
+    <ProjectReference Include="..\..\Core\IDal\MI.Dal.csproj" />
+    <ProjectReference Include="..\..\Core\IEntity\MI.Entity.csproj" />
+    <ProjectReference Include="..\..\Core\MI.Cache\MI.Cache.csproj" />
+    <ProjectReference Include="..\..\MI.Dapper.Data\MI.Dapper.Data.csproj" />
+    <ProjectReference Include="..\..\MI.ES\MI.ES.csproj" />
+    <ProjectReference Include="..\..\MI.Service\MI.Service.csproj" />
+  </ItemGroup>
+  <Target Name="RunWebpack" AfterTargets="ComputeFilesToPublish">
+    <!-- As part of publishing, ensure the JS resources are freshly built in production mode -->
+   
+
+    <!-- Include the newly-built files in the publish output -->
+    <ItemGroup>
+      <DistFiles Include="wwwroot\dist\**; ClientApp\dist\**" />
+      <ResolvedFileToPublish Include="@(DistFiles->'%(FullPath)')" Exclude="@(ResolvedFileToPublish)">
+        <RelativePath>%(DistFiles.Identity)</RelativePath>
+        <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      </ResolvedFileToPublish>
+    </ItemGroup>
+  </Target>
+</Project>

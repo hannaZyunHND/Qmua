@@ -1,0 +1,34 @@
+﻿@using PhamGiaLandingPage.Web.Utility
+@{
+    ViewData["Title"] = "P404";
+    Layout = "~/Views/Shared/_LayoutPublicHome.cshtml";
+}
+@inject IConfigSEOUtility configSEOUtility;
+@section styles{
+    @{
+
+        var bind_meta = "";
+        bind_meta += configSEOUtility.ConfigMeta("Không tìm thấy! - 404 ", "Không tìm thấy", "Không tìm thấy");
+    }
+    @Html.Raw(bind_meta)
+}
+<section class="404 text-center py-5" style="background: url(images/404.svg) no-repeat center;min-height: 70vh;display: flex;">
+    <div class="container align-self-center">
+        <div class="row justify-content-center">
+            <div class="col-xl-9  col-lg-10 col-md-10 col-12">
+                <p class="h4 font-weight-600">
+                    RẤT XIN LỖI BẠN, CHÚNG TÔI KHÔNG TÌM THẤY TRANG BẠN MUỐN TÌM!
+                </p>
+                <p>
+                </p><div>
+                    Trang bạn đã yêu cầu không thể được hiển thị, trang không tồn tại, hoặc đã bị xóa,
+                </div>
+                <div>
+                    hoặc do lỗi hiển thị tạm thời của máy chủ.
+                </div>
+                <p></p>
+                <a href="/" class="btn btn-save px-5 ">Trở về Trang chủ</a>
+            </div>
+        </div>
+    </div>
+</section>

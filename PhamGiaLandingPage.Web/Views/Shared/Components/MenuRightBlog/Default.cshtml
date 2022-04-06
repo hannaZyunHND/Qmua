@@ -1,0 +1,72 @@
+﻿@using MI.Entity.Enums;
+@using PhamGiaLandingPage.Web.Services.Zone.ViewModal
+@using PhamGiaLandingPage.Web.Services.Article.ViewModel
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Http
+@using PhamGiaLandingPage.Web.Services.Article.Repository
+@using PhamGiaLandingPage.Web.Services.Zone.Repository
+@using PhamGiaLandingPage.Web.Utility
+@inject IHttpContextAccessor HttpContextAccessor
+@inject IArticleRepository articleRepository;
+@inject IZoneRepository zoneRepository;
+@using Utils
+@{
+    var culture = Context.Features.Get<IRequestCultureFeature>().RequestCulture.Culture.TwoLetterISOLanguageName.ToLower();
+    var culture_code = Context.Features.Get<IRequestCultureFeature>().RequestCulture.Culture.ToString();
+    var base_uri_culture = "/" + culture;
+    var domain = Context.Request.Host.ToString();
+}
+
+@{
+    var list_zone_parents = zoneRepository.GetListZoneByParentId((int)TypeZone.AllButProduct, culture_code);
+
+}
+@section styles {
+
+
+}
+
+<div class="txt-news">
+    Tin mới
+</div>
+
+@{ 
+    var t = 0;
+    var list_newest = articleRepository.GetArticlesInZoneId_Minify_FullFilter(0, (int)TypeZone.AllButProduct, 0, 2, culture_code, "", 1, 5, out t);
+}
+
+
+
+<ul class="list-baiviet">
+    @foreach (var item in list_newest)
+            {
+                var link_Tar = LinkRedirectUrlUtility.BlogDetailUrl(item.Url);
+        <li class="row">
+            <div class="col-3 p-0">
+                <a href="#">
+                    <img src="@UIHelper.StoreFilePath(item.Avatar)" class="w-100" alt="@item.Title">
+                </a>
+            </div>
+            <div class="col-9">
+                <a href="@link_Tar">
+                    <div class="tit-news p-0" style="font-size: 14px;">
+                        @UIHelper.TrimByWord(item.Title, 10, "...")
+                    </div>
+                </a>
+
+                <div class="date-artic">
+                    <label>@UIHelper.GetLongDate(item.CreatedDate) </label>
+                </div>
+            </div>
+        </li>
+    }
+</ul>
+<div class="banner-qc">
+    <div class="py-2">
+        <img src="~/images/img-bepvui/news/banner-qc.png" class="w-100" alt="">
+    </div>
+    <div class="py-2">
+        <img src="~/images/img-bepvui/news/banner-qc2.png" class="w-100" alt="">
+    </div>
+</div>

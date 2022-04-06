@@ -1,0 +1,55 @@
+﻿@using TemplateKAO.Services.Zone.ViewModal
+@using TemplateKAO.Services.BannerAds.ViewModel
+@using TemplateKAO.Services.Extra.ViewModel
+@using TemplateKAO.Services.BannerAds.Repository
+@using MI.Entity.Models
+@using TemplateKAO.Services.Product.Repository
+@using TemplateKAO.Services.Extra.Repository
+@using Microsoft.AspNetCore.Http
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Utils
+@inject IHttpContextAccessor HttpContextAccessor
+@using TemplateKAO.Utility
+@using TemplateKAO.Services.Product.ViewModel;
+@inject ICookieUtility cookieUtility
+@inject IConfigSEOUtility configSEOUtility
+@inject IProductRepository productRepository
+@inject IBannerAdsRepository bannerAdsRepository
+@inject IExtraRepository extraRepository
+@{
+    //ViewData["Title"] = "FilterProductByRegion";
+    //Layout = "~/Views/Shared/_LayoutPublicHome.cshtml";
+    var cookie_location = cookieUtility.SetCookieDefault();
+    var location_id = cookie_location.LocationId;
+    var location_name = cookie_location.LocationName;
+    var culture = Context.Features.Get<IRequestCultureFeature>().RequestCulture.Culture.TwoLetterISOLanguageName.ToLower();
+    var culture_code = Context.Features.Get<IRequestCultureFeature>().RequestCulture.Culture.ToString();
+    var base_uri_culture = "/" + culture;
+    var domain = Context.Request.Host.ToString();
+    var total = (int)ViewBag.Total;
+    var size = (int)ViewBag.Size;
+    var index = (int)ViewBag.Index;
+    var url = ViewBag.Url;
+    //var zone_id = ViewBag.ZoneId;
+    var pageIndex = 1;
+}
+@model List<ProductMinify>;
+@if (Model != null)
+{
+    <div class="paging-container" data-total="@total" data-currentpage="@index" data-size="@size" style="display:none"></div>
+    @*<div class="set-total" data-total="@total" data-id="@id" data-is-rendered="@Model.Count()" data-index="@index" data-size="@size" style="display:none"></div>*@
+    <div class="row no-gutters mb-3 mb-md-0">
+        @foreach (var item in Model)
+        {
+            var link_tar = string.Format("/{0}.html", item.Url);
+            <div class="col-md-3 col-sm-3 col-6">
+                @await Component.InvokeAsync("ItemProduct", new { pr = item, isLazy = false })
+            </div>
+        }
+    </div>
+}
+@section scripts{
+
+    <script type="text/javascript" asp-append-version="true" src="~/js/controller/filterProductController.js"></script>
+}

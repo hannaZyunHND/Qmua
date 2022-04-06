@@ -1,0 +1,135 @@
+﻿@using MI.Entity.Enums;
+@using MI.Entity.Models
+@using PhamGiaLandingPage.Web.Services.Zone.ViewModal
+@using PhamGiaLandingPage.Web.Services.BannerAds.Repository
+@using PhamGiaLandingPage.Web.Services.FlashSale.ViewModel
+@using PhamGiaLandingPage.Web.Services.FlashSale.Repository
+@using PhamGiaLandingPage.Web.Services.Article.ViewModel
+@using PhamGiaLandingPage.Web.Services.Product.ViewModel
+@using PhamGiaLandingPage.Web.Services.Extra.ViewModel
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Http
+@using PhamGiaLandingPage.Web.Services.Article.Repository
+@using PhamGiaLandingPage.Web.Services.Extra.Repository
+@using PhamGiaLandingPage.Web.Services.Zone.Repository
+@using PhamGiaLandingPage.Web.Services.Product.Repository
+@inject IHttpContextAccessor HttpContextAccessor
+@inject IArticleRepository articleRepository;
+@inject IZoneRepository zoneRepository;
+@inject IExtraRepository extraRepository;
+@inject IProductRepository productRepository;
+@inject IFlashSaleRepository flashSaleRepository;
+@inject IBannerAdsRepository bannerAdsRepository;
+@inject PhamGiaLandingPage.Web.Utility.IConfigSEOUtility configSEOUtility;
+@using Utils
+@{
+    var culture = Context.Features.Get<IRequestCultureFeature>().RequestCulture.Culture.TwoLetterISOLanguageName.ToLower();
+    var culture_code = Context.Features.Get<IRequestCultureFeature>().RequestCulture.Culture.ToString();
+    var base_uri_culture = "/" + culture;
+    var domain = Context.Request.Host.ToString();
+    var Banner_Flash_Sale = new DetailBanerAds();
+    var Banner_Flash_Sale_Cahche = bannerAdsRepository.GetBannerAds_By_Code(culture_code, "Banner_FlashSale");
+    if (Banner_Flash_Sale_Cahche != null)
+    {
+        Banner_Flash_Sale = Newtonsoft.Json.JsonConvert.DeserializeObject<DetailBanerAds>(Banner_Flash_Sale_Cahche.MetaData);
+    }
+    var title = bannerAdsRepository.GetConfigByName(culture_code, "TitleHome");
+    var DesWeb = bannerAdsRepository.GetConfigByName(culture_code, "DesWeb");
+    var MetaKeyword = bannerAdsRepository.GetConfigByName(culture_code, "MetaKeyword");
+}
+@{
+    ViewData["Title"] = "FlashSale";
+    Layout = "~/Views/Shared/_LayoutPublicHome.cshtml";
+}
+
+@section styles{
+
+    @Html.Raw(configSEOUtility.ConfigMeta("Flash Sale", DesWeb, MetaKeyword))
+
+
+}
+@await Component.InvokeAsync("SEO_Breadcrumb", new { bread = new List<ZoneByTreeViewMinify>(), page = "flash-sale", type_page = "" })
+<div class="container ">
+    <div class="banner-page py-3" style="background: url(@UIHelper.StoreFilePath(Banner_Flash_Sale.Image,false)) no-repeat center;background-size:cover;">
+    </div>
+</div>
+@{
+    //Lay thong tin flash sale
+    var time = DateTime.Now;
+    var list_flash_sale = flashSaleRepository.GetFlashSaleByTime(time).Take(3);
+    var flash_sale_active = list_flash_sale.FirstOrDefault();
+
+}
+<div class="container mb-4">
+    <div class="row no-gutters">
+        <div class="col-xl-9 col-lg-9 col-md-9 col-sm-12 col-12">
+            <div class="row no-gutters tab-flash-sale">
+                @{ var count = 1;}
+                @foreach (var item in list_flash_sale)
+                {
+                    <div class="col-xl-4 col-sm-4 col-4">
+                        <a href="javascript:;" class="link-tab-flash-sale @(count ==1? "active" : "")" data-status="@item.Status" data-id="@item.Id" data-end-time="@item.EndTime.ToString("yyyy-MM-dd hh:mm:ss")" data-start-time="@item.StartTime.ToString("yyyy-MM-dd hh:mm:ss")">
+                            <div class="time">
+                                @item.StartTime.ToString("hh:mm")
+                            </div>
+                            <div class="time">
+                                <small>@item.StartTime.ToString("dd/MM/yyyy")</small>
+                            </div>
+                            <div class="status">
+                                @(item.Status == 2 ? "Đang bán" : "Sắp bán")
+                            </div>
+                        </a>
+                    </div>
+                    count++;
+                }
+
+            </div>
+        </div>
+        @{
+            var first_flash_sale = list_flash_sale.FirstOrDefault();
+            if (first_flash_sale != null)
+            {
+                <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12 align-self-center">
+                    <div class="timer-flash-sale" data-end-time="@first_flash_sale.EndTime.ToString("yyyy-MM-dd")">
+                        <label class="d-inline-block mr-3">Kết thúc trong:</label>
+                        <div class="timer d-inline-block">
+                            <div id="hour" class="d-inline-block">
+                                12
+                            </div>
+                            <div id="minute" class="d-inline-block">
+                                12
+                            </div>
+                            <div id="second" class="d-inline-block">
+                                12
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+
+    </div>
+</div>
+@if (flash_sale_active != null)
+{
+    <div class="list-flash-sale bg-fff ">
+        <div class="container">
+            <div class="row no-gutters _binding_flashsale">
+                @await Component.InvokeAsync("ProductInFlashSale", new { fSaleId = flash_sale_active.Id, pageIndex = 1, pageSize = 20 })
+            </div>
+            <div class="text-center my-5">
+                <a href="javascript:;" class="btn btn-outline-view-more flash-sale-view-more" data-page-index="1" data-page-size="20">Xem thêm<i class="fas fa-chevron-down ml-2 " aria-hidden="true"></i></a>
+            </div>
+        </div>
+    </div>
+}
+
+@section scripts{
+    <script type="text/javascript" src="~/js/libs/momentjs/momentJS.js" asp-append-version="true"></script>
+    <script type="text/javascript" src="~/js/libs/daterangepicker-master/daterangepicker.js" asp-append-version="true"></script>
+    <script type="text/javascript" src="~/js/libs/paginationjs/paginationJS.js" asp-append-version="true"></script>
+    <script type="text/javascript" asp-append-version="true" src="~/js/controller/flashsaleController.js"></script>
+
+}
+

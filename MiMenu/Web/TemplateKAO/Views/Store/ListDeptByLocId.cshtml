@@ -1,0 +1,17 @@
+﻿@using TemplateKAO.Services.Store.ViewModel
+@model List<StoreResponse>
+@{
+    Layout = null;
+}
+
+@if (Model != null)
+{
+    foreach (var item in Model)
+    {
+        <label class="label-checkbox mb-2 pr-4 dropdown-item cust-drop-item">
+            <span class="_address">@item.Address</span>
+            <input type="radio" name="department" class="_choosen" required/>
+            <span class="checkmark"></span>
+        </label>
+    }
+}

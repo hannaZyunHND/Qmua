@@ -1,0 +1,69 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+
+@using MI.Entity.Enums;
+@using TemplateKAO.Services.Zone.ViewModal
+@using TemplateKAO.Services.Article.ViewModel
+@using TemplateKAO.Services.Product.ViewModel
+@using TemplateKAO.Services.Extra.ViewModel
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Http
+@using TemplateKAO.Services.Article.Repository
+@using TemplateKAO.Services.Extra.Repository
+@using TemplateKAO.Services.Zone.Repository
+@using TemplateKAO.Services.Product.Repository
+@inject IHttpContextAccessor HttpContextAccessor
+@inject IArticleRepository articleRepository;
+@inject IZoneRepository zoneRepository;
+@inject IExtraRepository extraRepository;
+@inject IProductRepository productRepository;
+@using Utils
+@{
+    var culture = Context.Features.Get<IRequestCultureFeature>().RequestCulture.Culture.TwoLetterISOLanguageName.ToLower();
+    var culture_code = Context.Features.Get<IRequestCultureFeature>().RequestCulture.Culture.ToString();
+    var base_uri_culture = "/" + culture;
+    var domain = Context.Request.Host.ToString();
+}
+@{
+    var list_product = new List<ProductMinify>();
+    if (Model != null)
+    {
+        list_product = Model;
+    }
+    var total = ViewBag.Total;
+}
+
+
+@*<div class="filter-spec-total" data-total="@total" style="display:none"></div>*@
+@foreach (var item in list_product)
+{
+    var link_target = string.Format("/{0}.html", item.Url);
+    <div class="item-product-modal-2 d-flex">
+        <div class="image-product mr-3">
+            <img asp-append-version="true" src="@UIHelper.StoreFilePath(item.Avatar)" class="">
+        </div>
+        <div class="text align-self-center">
+            <div class="name-product font-weight-600 mb-1">
+                <a href="@link_target">
+                    @item.Title
+                </a>
+            </div>
+            <div>@item.SpecName: @item.SpecValue</div>
+            <div class="color-EE7D22 font-weight-600">@UIHelper.FormatNumber(item.SalePrice) đ/m2</div>
+        </div>
+        <div class="ml-auto align-self-center">
+            <button class="btn btn-save product-pick-item" data-avatar="@UIHelper.StoreFilePath(item.Avatar)"
+                    data-spec-name="@item.SpecName"
+                    data-spec-value="@item.SpecValue"
+                    data-id="@item.ProductId"
+                    data-title="@item.Title"
+                    data-sale-price="@item.SalePrice"
+                    data-price="@item.Price">
+                <i class="fas fa-plus"></i>
+            </button>
+        </div>
+    </div>
+}

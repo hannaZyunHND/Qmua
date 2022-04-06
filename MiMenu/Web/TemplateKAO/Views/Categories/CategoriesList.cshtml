@@ -1,0 +1,275 @@
+﻿@using MI.Entity.Enums;
+@using System.Linq;
+@using TemplateKAO.Services.Zone.ViewModal
+@using TemplateKAO.Services.Zone.Repository
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Http
+@using TemplateKAO.Services.Article.Repository
+@using TemplateKAO.Services.BannerAds.Repository
+@inject IHttpContextAccessor HttpContextAccessor
+@inject IArticleRepository articleRepository;
+@inject IZoneRepository zoneRepository
+@inject IBannerAdsRepository bannerAdsRepository
+@using MI.Entity.Models
+@using Utils
+@{
+    var culture = Context.Features.Get<IRequestCultureFeature>().RequestCulture.Culture.TwoLetterISOLanguageName.ToLower();
+    var culture_code = Context.Features.Get<IRequestCultureFeature>().RequestCulture.Culture.ToString();
+    var base_uri_culture = "/" + culture;
+    var domain = Context.Request.Host.ToString();
+}
+@{
+    ViewData["Title"] = "CategoriesList";
+    Layout = "~/Views/Shared/_LayoutPublicHome.cshtml";
+
+    var category_zone_list = zoneRepository.GetZoneByTreeViewMinifies((int)TypeZone.Categories, culture_code, 0);
+    var list_resutl = category_zone_list.Where(r => r.ParentId > 0).OrderBy(r => r.SortOrder).ToList();
+
+    var blog_zone_parent = category_zone_list.Where(r => r.ParentId == 0).SingleOrDefault();
+    var Banner_Blog = new DetailBanerAds();
+    var Banner_Blog_Cache = bannerAdsRepository.GetBannerAds_By_Code(culture_code, "Banner_Blog");
+    if (Banner_Blog_Cache != null)
+    {
+        Banner_Blog = Newtonsoft.Json.JsonConvert.DeserializeObject<DetailBanerAds>(Banner_Blog_Cache.MetaData);
+    }
+    var total_list = list_resutl.Count();
+}
+
+@section styles {
+    @if (blog_zone_parent != null)
+    {
+        <style type="text/css">
+        .banner-page {
+            background: url(@UIHelper.StoreFilePath(@Banner_Blog.Image)) no-repeat center;
+            min-height: 200px;
+            background-size: cover;
+            display: flex;
+        }
+        </style>
+    }
+}
+@if (blog_zone_parent != null)
+{
+    <div class="banner-page py-3 mb-4">
+        <div class="container align-self-center">
+            <div class="row justify-content-center">
+                <div class="col-sm-10 col-12 ">
+                    <h1 class="text-center">@blog_zone_parent.Name</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<div class="container">
+    <div class="row flex-md-row-reverse">
+        <div class="col-xl-3 col-lg-3 col-md-4 col-sm-12 col-12">
+            @await Component.InvokeAsync("MenuRightBlog")
+        </div>
+        <div class="col-xl-9 col-lg-9 col-md-8 col-sm-12 col-12">
+            @foreach (var item in list_resutl)
+            {
+                var link_target = string.Format("{0}/{1}.dc{2}.html", base_uri_culture, item.Url, item.Id);
+                <div class="mb-4">
+                    <div class="heading pb-2 border-bottom mb-4 d-flex position-relative">
+                        <div class="h4 font-weight-600 mb-0 ">
+                            @item.Name
+                        </div>
+                        <div class="ml-auto">
+                            <a href="@link_target" class="link-view-more">
+                                Xem thêm <i class="fas fa-chevron-right ml-1 small"></i>
+                            </a>
+                        </div>
+                        <div class="line-heading-2">
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table   jan-table">
+                            <tbody>
+                                @{
+                                    var total_list_cate = 0;
+                                    var list_cates = articleRepository.GetArticlesInZoneId_Minify_FullFilter(item.Id, (int)TypeZone.Categories, (int)TypeArticle.Blog, 2, culture_code, "", 1, 6, out total_list_cate);
+                                }
+                                @foreach (var c in list_cates)
+                                {
+                                    var l = "javascript:void(0)";
+                                    <tr>
+                                        <td>
+                                            <a href="@l">@c.Title</a>
+                                        </td>
+                                        <td>
+                                            <div class="time color-828282">
+                                                @c.CreatedDate.ToString("dd/MM/yyyy hh:mm")
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <a href="@c.UrlFileDownload" class="btn-link font-weight-600">
+                                                <img asp-append-version="true" src="~/images/download-table.svg" class="img-fluid mr-2" />Tải về
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            }
+            <!--Table download-->
+            @*<div class="mb-4">
+                    <div class="heading pb-2 border-bottom mb-4 d-flex position-relative">
+                        <div class="h4 font-weight-600 mb-0 ">
+                            Tải Category 3D
+                        </div>
+                        <div class="ml-auto">
+                            <a href="" class="link-view-more">
+                                Xem thêm <i class="fas fa-chevron-right ml-1 small"></i>
+                            </a>
+                        </div>
+                        <div class="line-heading-2">
+
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table   jan-table">
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <a href="">Category 3D quý II/2019 </a>
+                                    </td>
+                                    <td>
+                                        <div class="time color-828282">
+                                            12/23/2019 9:30:17 AM
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <a href="" class="btn-link font-weight-600">
+                                            <img asp-append-version="true" src="images/download-table.svg" class="img-fluid mr-2" />Tải về
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <a href="">Category 3D quý II/2019 </a>
+                                    </td>
+                                    <td>
+                                        <div class="time color-828282">
+                                            12/23/2019 9:30:17 AM
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <a href="" class="btn-link font-weight-600">
+                                            <img asp-append-version="true" src="images/download-table.svg" class="img-fluid mr-2" />Tải về
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <a href="">Category 3D quý II/2019 </a>
+                                    </td>
+                                    <td>
+                                        <div class="time color-828282">
+                                            12/23/2019 9:30:17 AM
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <a href="" class="btn-link font-weight-600">
+                                            <img asp-append-version="true" src="images/download-table.svg" class="img-fluid mr-2" />Tải về
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <a href="">Category 3D quý II/2019 </a>
+                                    </td>
+                                    <td>
+                                        <div class="time color-828282">
+                                            12/23/2019 9:30:17 AM
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <a href="" class="btn-link font-weight-600">
+                                            <img asp-append-version="true" src="images/download-table.svg" class="img-fluid mr-2" />Tải về
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <a href="">Category 3D quý II/2019 </a>
+                                    </td>
+                                    <td>
+                                        <div class="time color-828282">
+                                            12/23/2019 9:30:17 AM
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <a href="" class="btn-link font-weight-600">
+                                            <img asp-append-version="true" src="images/download-table.svg" class="img-fluid mr-2" />Tải về
+                                        </a>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="jan-pagination text-right mb-4 ">
+                    <button class="btn btn-pagi " title=""><i class="fas fa-chevron-left "></i></button>
+                    <select class="select-page mr-2">
+                        <option>1</option>
+                    </select>
+                    <span class="color-828282">/10</span>
+                    <button class="btn btn-pagi " title=""><i class="fas fa-chevron-right "></i></button>
+                </div>*@
+            <!--Gửi Comment-->
+            @*@await Component.InvokeAsync("Comment", new { object_id = blog_zone_parent.Id, object_type = (int)CommentType.ArticleZone });*@
+        </div>
+    </div>
+</div>
+
+<section class="service-home py-3">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-4 col-md-4 col-sm-4 col-12">
+                <div class="d-flex py-3 justify-content-center">
+                    <div class="image align-self-center">
+                        <img asp-append-version="true" src="images/shipment-international.svg" class="img-fluid" />
+                    </div>
+                    <div class="px-3 align-self-center">
+                        <label>Vận chuyển</label>
+                        <div class="small">
+                            Free shipping on all order
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4 col-md-4 col-sm-4 col-12">
+                <div class="d-flex py-3 justify-content-center">
+                    <div class="image align-self-center">
+                        <img asp-append-version="true" src="images/professions-man-telecommunicator.svg" class="img-fluid" />
+                    </div>
+                    <div class="px-3 align-self-center">
+                        <label>Support 24/7</label>
+                        <div class="small">
+                            Chúng tôi hỗ trợ bạn 24/7
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4 col-md-4 col-sm-4 col-12">
+                <div class="d-flex py-3 justify-content-center">
+                    <div class="image align-self-center">
+                        <img asp-append-version="true" src="images/saving-piggy-dollars.svg" class="img-fluid" />
+                    </div>
+                    <div class="px-3 align-self-center">
+                        <label>Dịch vụ đổi trả hàng</label>
+                        <div class="small">
+                            Đổi trả hàng trong vòng 7 ngày
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

@@ -1,0 +1,78 @@
+﻿@using TemplateKAO.Services.Zone.ViewModal
+@using Microsoft.AspNetCore.Localization
+@using Utils
+
+@model List<ZoneByTreeViewMinify>
+
+@{
+    var culture = Context.Features.Get<IRequestCultureFeature>().RequestCulture.Culture.TwoLetterISOLanguageName.ToLower();
+    var culture_code = Context.Features.Get<IRequestCultureFeature>().RequestCulture.Culture.ToString();
+    var base_uri_culture = "/" + culture;
+    var base_img_folder = "~/";
+    var domain = Context.Request.Host.ToString();
+
+}
+
+@{
+    var list_zone_first = Model.Where(r => r.ParentId == 0 && r.IsShowMenu == 1).OrderBy(r => r.SortOrder);
+}
+
+@foreach (var item in list_zone_first)
+{
+    var link_root = string.Format("{0}/{1}.c{2}.html", base_uri_culture, item.Url, item.Id);
+    <li class="list-group-item">
+        <a href="@link_root" class="link" title="@item.Name">
+            <img asp-append-version="true" src="~/@(item.Icon)"
+                 class="img-fluid mr-2" alt="@item.Name" />@item.Name
+            </a>
+            <div class="subcate  ">
+                <div class="row no-gutters">
+                    @{
+                        var list_zone_second = Model.Where(r => r.ParentId == item.Id).OrderBy(r => r.SortOrder);
+
+                    }
+                    @foreach (var item_1 in list_zone_second)
+                    {
+                        var list_zone_third = Model.Where(r => r.ParentId == item_1.Id).OrderBy(r => r.SortOrder);
+                        var link_root_1 = string.Format("{0}/{1}.c{2}.html",base_uri_culture,item_1.Url,item_1.Id);
+                        <div class="col-lg-4 col-md-6 col-12 px-3">
+                            <aside class="mb-4">
+                                <div class="font-weight-bold py-1 d-flex">
+                                    @*<a href="@link_root_1" title="@item_1.Name">@item_1.Name</a>*@
+                                    <a href="@link_root_1" title="@item_1.Name">@Html.Raw(UIHelper.CutLine(item_1.Name))</a>
+                                    @if (list_zone_third.Count() > 4)
+                                    {
+                                        <a href="@link_root_1" class="link-view-more ml-auto align-self-center"
+                                           style="font-size:12px ">
+                                            Xem tất cả <i class="fas fa-chevron-right ml-1 small"></i>
+                                        </a>
+                                    }
+
+                                </div>
+
+                                @foreach (var item_2 in list_zone_third.Skip(0).Take(4))
+                                {
+                                    var link_root_2 = string.Format("{0}/{1}.c{2}.html",base_uri_culture,item_2.Url,item_2.Id);
+                                    <div class="item-sub-link">
+                                        <a href="@link_root_2" class="" title="@item_2.Name">@item_2.Name</a>
+                                    </div>
+                                }
+                                @if (list_zone_third.Count() == 0)
+                                {
+                                    @for (int i = 0; i < 3; i++)
+                                    {
+                                        <div class="item-sub-link">
+                                            <a href="javascript:void(0)" class="">&nbsp;</a>
+                                        </div>
+                                    }
+                                }
+                            </aside>
+                        </div>
+                    }
+
+                </div>
+
+            </div>
+        </li>
+    }
+

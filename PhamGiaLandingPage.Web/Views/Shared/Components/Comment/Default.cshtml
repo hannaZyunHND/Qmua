@@ -1,0 +1,146 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@using MI.Entity.Enums;
+@using PhamGiaLandingPage.Web.Services.Zone.ViewModal
+@using PhamGiaLandingPage.Web.Services.Article.ViewModel
+@using PhamGiaLandingPage.Web.Services.Extra.ViewModel
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Http
+@using PhamGiaLandingPage.Web.Services.Article.Repository
+@using PhamGiaLandingPage.Web.Services.Extra.Repository
+@using PhamGiaLandingPage.Web.Services.Zone.Repository
+@inject IHttpContextAccessor HttpContextAccessor
+@inject IArticleRepository articleRepository;
+@inject IZoneRepository zoneRepository;
+@inject IExtraRepository extraRepository;
+@using Utils
+@{
+    var culture = Context.Features.Get<IRequestCultureFeature>().RequestCulture.Culture.TwoLetterISOLanguageName.ToLower();
+    var culture_code = Context.Features.Get<IRequestCultureFeature>().RequestCulture.Culture.ToString();
+    var base_uri_culture = "/" + culture;
+    var domain = Context.Request.Host.ToString();
+}
+
+@{
+    var obj_id = (int)ViewBag.ObjId;
+    var obj_type = (int)ViewBag.ObjType;
+    var index = (int)ViewBag.Index;
+    var size = (int)ViewBag.Size;
+    var comments = new List<CommentDetail>();
+    if (obj_id != null && obj_type != null)
+    {
+        comments = extraRepository.GetCommentPublisedByObjectId(obj_id, obj_type);
+    }
+    var list_comment_parents = comments.Where(r => r.ParentId == 0);
+    var total = list_comment_parents.Count();
+
+    var skip = (int)((index - 1) * size);
+    var res = list_comment_parents.Skip(skip).Take(size);
+
+    //var list_zone_parents = zoneRepository.GetListZoneByParentId((int)TypeZone.AllButProduct, culture_code);
+}
+<h4 class="uk-h4 mb-20 mb-42-m duan-detail__box7__title">@comments.Count() Bình Luận</h4>
+<form id="comment-form" data-type="comment" data-object-id="@obj_id" data-object-type="@obj_type" data-lang="@culture_code" class="uk-card duan-detail__box7 mb-20 mb-60-m">
+    <textarea class="uk-textarea txt_content" rows="4" placeholder="Type your topic here"></textarea>
+    <div class="uk-card-body uk-padding-small">
+        <div class="uk-grid-small" uk-grid>
+            <div class="uk-width-auto@s">
+                <div uk-form-custom>
+                    <input type="file" class="input-choose-file">
+                    <button type="button" class="uk-button uk-button-default duan-detail__box7__btn1"><span uk-icon="icon: camera; ratio: 1"></span></button>
+                </div>
+            </div>
+            <div class="uk-width-expand">
+                <input class="uk-input duan-detail__box7__input txt_name" type="text" placeholder="Tên (bắt buộc)">
+            </div>
+            <div class="uk-width-expand">
+                <input class="uk-input duan-detail__box7__input txt_phoneOrEmail" type="text" placeholder="Email (bắt buộc)">
+            </div>
+            <div class="uk-width-auto@s">
+                <button type="submit" class="uk-button uk-button-secondary duan-detail__box7__btnSend send-comment btn-save" data-type="comment" data-object-id="@obj_id" data-object-type="@obj_type" data-lang="@culture_code">Gửi</button>
+            </div>
+        </div>
+    </div>
+</form>
+<div class="mb-60-m mb-20 duan-detail__box8">
+    @{
+        foreach (var item in res)
+        {
+            @if (!string.IsNullOrEmpty(item.Avatar))
+            {
+                <img src="@UIHelper.StoreFilePath(item.Avatar.Replace("\\","/"),false,"","")" style="max-width:300px;max-height:300px" />
+            }
+            var list_comment_reply = comments.Where(r => r.ParentId == item.Id).OrderBy(r => r.CreatedDate);
+            <div class="duan-detail__box8__item comment_infomation media-body"  data-id="@item.Id" data-object-id="@obj_id" data-object-type="4">
+                <div class="uk-grid-small uk-grid-26-m" uk-grid>
+                    <div class="uk-width-auto">
+                        @*<div class="uk-cover-container uk-border-circle">
+                <img src="<?= $v['src'] ?>" alt="" uk-cover>
+                <canvas width="40" height="40"></canvas>
+            </div>*@
+                    </div>
+                    <div class="uk-width-expand">
+                        <div class="mb-7">
+                            <div class="duan-detail__box8__title">@item.Name</div>
+                            <div class="duan-detail__box8__desc">@item.Content</div>
+                        </div>
+                        <div class="uk-grid-small uk-child-width-auto" uk-grid>
+                            <div>
+                                @*reply_comment*@
+                                <a href="javascript:void(0)" class="duan-detail__box8__link ">Trả lời</a>
+                            </div>
+                            <div>
+                                <img src="images/item/discuss/24px/like.png" alt="">
+                                <a href="" class="duan-detail__box8__link">Thích</a>
+                            </div>
+                            <div>
+                                <span uk-icon="icon: calendar; ratio: 1"></span>
+                                <span class="duan-detail__box8__txt1">@item.CreatedDate.ToString("dd/MM/yyyy")</span>
+                            </div>
+                        </div>
+                        @foreach (var sub in list_comment_reply)
+                        {
+                            <div class="duan-detail__box8__rep">
+                                <div class="uk-grid-small uk-grid-26-m" uk-grid>
+                                    @*<div class="uk-width-auto">
+                            <div class="uk-cover-container uk-border-circle">
+                                <img src="<?= $v['src'] ?>" alt="" uk-cover>
+                                <canvas width="40" height="40"></canvas>
+                            </div>
+                        </div>*@
+                                    <div class="uk-width-expand">
+                                        <div class="mb-7">
+                                            <div class="duan-detail__box8__title">@sub.Name</div>
+                                            <div class="duan-detail__box8__desc">@sub.Content</div>
+                                        </div>
+                                        <div class="uk-grid-small uk-child-width-auto" uk-grid>
+                                            <div>
+                                                <a href="" class="duan-detail__box8__link">Trả lời</a>
+                                            </div>
+                                            <div>
+                                                <img src="images/item/discuss/24px/like.png" alt="">
+                                                <a href="" class="duan-detail__box8__link">Hài lòng</a>
+                                            </div>
+                                            <div>
+                                                <img src="images/item/discuss/24px/dislike.png" alt="">
+                                                <a href="" class="duan-detail__box8__link">Không hài lòng</a>
+                                            </div>
+                                            <div>
+                                                <span uk-icon="icon: calendar; ratio: 1"></span>
+                                                <span class="duan-detail__box8__txt1">@sub.CreatedDate.ToString("dd/MM/yyyy")</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <div class="_comment_reply"></div>
+                </div>
+            </div>
+
+        }
+    }
+</div>

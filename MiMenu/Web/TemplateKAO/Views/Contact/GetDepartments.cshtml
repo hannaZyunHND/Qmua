@@ -1,0 +1,26 @@
+﻿@using TemplateKAO.Services.Store.ViewModel
+@model List<StoreResponse>
+@{
+    Layout = null;
+}
+@if (Model != null)
+{
+    <div class="nd-showroom">
+        <div class="container">
+            <ul class="row showroom-detail">
+                @foreach (var item in Model)
+                {
+                    var link_map = "javascript:void(0)";
+                    <li class="col-md-3">
+                        <div class="nd-shr-detail">
+                            <div class="name-shr">@item.Name</div>
+                            <div class="hotline-shr">Hotline: <span style="color: #ee7d22;">@item.Hotline</span></div>
+                            <div class="email-shr"><b>Địa chỉ:</b> @item.Address</div>
+                            <a href="@link_map">Link Map</a>
+                        </div>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+}

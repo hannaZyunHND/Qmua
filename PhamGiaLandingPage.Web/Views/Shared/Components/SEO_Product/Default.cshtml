@@ -1,0 +1,76 @@
+﻿@using MI.Entity.Enums;
+@using PhamGiaLandingPage.Web.Services.Zone.ViewModal
+@using PhamGiaLandingPage.Web.Services.Article.ViewModel
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Http
+@using PhamGiaLandingPage.Web.Services.Article.Repository
+@using PhamGiaLandingPage.Web.Services.BannerAds.Repository
+@using PhamGiaLandingPage.Web.Services.Zone.Repository
+@inject IHttpContextAccessor HttpContextAccessor
+@inject IArticleRepository articleRepository;
+@inject IZoneRepository zoneRepository;
+@inject IBannerAdsRepository bannerAdsRepository;
+@using Utils
+@{
+    var culture = Context.Features.Get<IRequestCultureFeature>().RequestCulture.Culture.TwoLetterISOLanguageName.ToLower();
+    var culture_code = Context.Features.Get<IRequestCultureFeature>().RequestCulture.Culture.ToString();
+    var base_uri_culture = "/" + culture;
+    var domain = Context.Request.Host.ToString();
+    var domain_full = Context.Request.Scheme;
+    var detail = new PhamGiaLandingPage.Web.Services.Product.ViewModel.ProductDetail();
+    if (ViewBag.Detail != null)
+    {
+        detail = (PhamGiaLandingPage.Web.Services.Product.ViewModel.ProductDetail)ViewBag.Detail;
+    }
+
+}
+
+    <script type="application/ld+json">
+        {
+        "@("@context")": "https://schema.org/",
+        "@("@type")": "Product",
+        "name": "@detail.Title",
+        "image": [
+        "@UIHelper.StoreFilePath(detail.Avatar)"
+
+        @*@if(detail.AvatarArray != null)
+        {
+            foreach (var item in detail.AvatarArray.Split(",")) {
+                var r = UIHelper.StoreFilePath(item);
+                @(r);
+            }
+        }
+        "https://example.com/photos/4x3/photo.jpg",
+        "https://example.com/photos/16x9/photo.jpg"*@
+        ],
+        "description": "@detail.Description",
+        "sku": "@detail.Code",
+        
+        "review": {
+            "@("@type")": "Review",
+        "reviewRating": {
+                "@("@type")": "Rating",
+        "ratingValue": "@detail.RateAVG",
+        "bestRating": "5"
+        },
+        "author": {
+                "@("@type")": "Person",
+        "name": "admin"
+        },
+        
+        "aggregateRating": {
+            "@("@type")": "AggregateRating",
+        "ratingValue": "@detail.RateAVG",
+        "reviewCount": "@detail.TotalRate"
+        },
+        "offers": {
+            "@("@type")": "Offer",
+        "url": "@domain_full",
+        "priceCurrency": "VND",
+        "price": "@detail.Price",
+        "itemCondition": "https://schema.org/UsedCondition",
+        "availability": "https://schema.org/InStock",
+        }
+        }
+    </script>

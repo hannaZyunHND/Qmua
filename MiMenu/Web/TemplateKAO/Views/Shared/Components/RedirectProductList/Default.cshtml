@@ -1,0 +1,434 @@
+﻿@using TemplateKAO.Services.Zone.ViewModal
+@using TemplateKAO.Services.Zone.Repository
+@using TemplateKAO.Services.BannerAds.ViewModel
+@using TemplateKAO.Services.Extra.ViewModel
+@using TemplateKAO.Services.BannerAds.Repository
+@using MI.Entity.Models
+@using MI.Entity.Enums
+
+@using TemplateKAO.Services.Product.Repository
+@using TemplateKAO.Services.Extra.Repository
+@using Microsoft.AspNetCore.Http
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Utils
+@inject IHttpContextAccessor HttpContextAccessor
+@using TemplateKAO.Utility
+@inject ICookieUtility cookieUtility
+@inject IConfigSEOUtility configSEOUtility
+@inject IProductRepository productRepository
+@inject IZoneRepository zoneRepository
+@inject IBannerAdsRepository bannerAdsRepository
+@inject IExtraRepository extraRepository
+@{
+
+    //Layout = "~/Views/Shared/_LayoutPublicHome.cshtml";
+    var zone_tree_view = ViewBag.ZoneTreeView as List<ZoneByTreeViewMinify>;
+    var zone_detail = ViewBag.ZoneDetail as ZoneDetail;
+    var cookie_location = cookieUtility.SetCookieDefault();
+    var location_id = cookie_location.LocationId;
+    var location_name = cookie_location.LocationName;
+    var culture = Context.Features.Get<IRequestCultureFeature>().RequestCulture.Culture.TwoLetterISOLanguageName.ToLower();
+    var culture_code = Context.Features.Get<IRequestCultureFeature>().RequestCulture.Culture.ToString();
+    var base_uri_culture = "/" + culture;
+    var domain = Context.Request.Host.ToString();
+    var Banner_Danhmuc_Sanpham_Anhto = new DetailBanerAds();
+    var Banner_Danhmuc_Sanpham_Anhnho_tren = new DetailBanerAds();
+    var Banner_Danhmuc_Sanpham_Anhnho_duoi = new DetailBanerAds();
+    var Banner_Danhmuc_Sanpham_Anhto_Cache = bannerAdsRepository.GetBannerAds_By_Code(culture_code, "Banner_Danhmuc_Sanpham_Anhto");
+    var Banner_Danhmuc_Sanpham_Anhnho_tren_Cahche = bannerAdsRepository.GetBannerAds_By_Code(culture_code, "Banner_Danhmuc_Sanpham_Anhnho_tren");
+    var Banner_Danhmuc_Sanpham_Anhnho_duoi_Cahche = bannerAdsRepository.GetBannerAds_By_Code(culture_code, "Banner_Danhmuc_Sanpham_Anhnho_duoi");
+    if (Banner_Danhmuc_Sanpham_Anhto_Cache != null)
+    {
+        Banner_Danhmuc_Sanpham_Anhto = Newtonsoft.Json.JsonConvert.DeserializeObject<DetailBanerAds>(Banner_Danhmuc_Sanpham_Anhto_Cache.MetaData);
+    }
+    if (Banner_Danhmuc_Sanpham_Anhnho_tren_Cahche != null)
+    {
+        Banner_Danhmuc_Sanpham_Anhnho_tren = Newtonsoft.Json.JsonConvert.DeserializeObject<DetailBanerAds>(Banner_Danhmuc_Sanpham_Anhnho_tren_Cahche.MetaData);
+    }
+    if (Banner_Danhmuc_Sanpham_Anhnho_duoi_Cahche != null)
+    {
+        Banner_Danhmuc_Sanpham_Anhnho_duoi = Newtonsoft.Json.JsonConvert.DeserializeObject<DetailBanerAds>(Banner_Danhmuc_Sanpham_Anhnho_duoi_Cahche.MetaData);
+    }
+    var index = (int)ViewBag.Index;
+    var size = (int)ViewBag.Size;
+
+}
+@section styles{
+    @{ var bind_meta = "";}
+    @if (zone_detail != null)
+    {
+
+        bind_meta += configSEOUtility.ConfigMeta(zone_detail.MetaTitle, zone_detail.MetaDescription, zone_detail.MetaKeyword);
+        bind_meta += configSEOUtility.ConfigSocialMeta();
+    }
+    @Html.Raw(bind_meta)
+    <style>
+        .color-circle {
+            height: 20px;
+            width: 20px;
+            border-radius: 50%;
+            display: inline-block;
+            /*border: 1px solid #ffffff;*/
+        }
+
+        .picking-active {
+            border: 1px solid red !important;
+        }
+
+        .detail img {
+            max-width: 100%;
+        }
+    </style>
+}
+<div id="zone-current" data-id="@zone_detail.Id" style="display:none"></div>
+@{ var list_zone_first = zone_tree_view.Where(r => r.level == 1);
+    if (zone_tree_view.Count() == 1)
+    {
+        //list_zone_first = zone_tree_view.Where(r => r.level == 0);
+        list_zone_first = zoneRepository.GetZoneByTreeViewMinifies((int)TypeZone.Product, culture_code, (int)zone_detail.ParentId).Where(r => r.ParentId > 0 && r.ParentId == zone_detail.Id);
+    }
+}
+
+<div class="bg-f6f8f8">
+    <section class="container">
+        <div class="row">
+            <div class="col-lg-3 col-md-4 col-12">
+            </div>
+            <div class="col-lg-9 col-md-8  col-sm-12 col-12 pl-md-0 pr-lg-0 ">
+                <nav aria-label="breadcrumb">
+                    @await Component.InvokeAsync("Breadcrumb", new { zone_id = zone_detail.Id })
+                </nav>
+                <h1 class="cate-product">@zone_detail.Name</h1>
+                <p class="txt-banprod-bep">Giá cực tốt chỉ có trong tháng @DateTime.Now.Month</p>
+                <div class="banner-top-prod">
+                    <img src="/images/img-bepvui/product-cate/banner-top-c.png" class="w-100" alt="">
+                </div>
+                <div class="slide-prod">
+                    <div class="slide-prod-bep" data-count="@list_zone_first.Count()">
+                        @if (list_zone_first.Count() > 1)
+                        {
+                            foreach (var item in list_zone_first)
+                            {
+                                var avt = item.Icon;
+                                var linktar = "";
+                                if (item.ZoneSearchType == 0)
+                                {
+                                    linktar = LinkRedirectUrlUtility.ProductCategoryUrl(item.Url);
+                                }
+                                if (item.ZoneSearchType > 0)
+                                {
+                                    linktar = LinkRedirectUrlUtility.ProductCategoryUrl(zone_detail.Url);
+                                }
+                                <div class="atest-1">
+                                    <a class="img-slide-prod" href="@linktar">
+                                        @if (string.IsNullOrEmpty(avt))
+                                        {
+                                            <img src="/images/img-bepvui/product-cate/sp-slide.png" class="w-100" alt="">
+                                        }
+                                        else
+                                        {
+                                            <img src="@UIHelper.StoreFilePath(avt, false)" class="w-100" alt="">
+                                        }
+                                    </a>
+                                    <a href="@linktar">
+                                        <p class="sl-name-prod">@item.Name</p>
+                                    </a>
+                                </div>
+                            }
+
+                        }
+                    </div>
+                    <div class="pre-1" id="pre1">
+                        <i class="fal fa-angle-left"></i>
+                    </div>
+                    <div class="next-1" id="next1">
+                        <i class="fal fa-angle-right"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-4 col-12 ">
+                    <div class="main-boloc">
+                        <div class="txt-boloc">Bộ lọc</div>
+                        <div class="vung-thieu">
+                            @{
+                                var list_manufactures = extraRepository.GetManufacturesByZoneId(culture_code, zone_detail.Id);
+                            }
+                            <div class="py-1">Thương hiệu</div>
+                            <div class="row filter-item manufacture">
+                                @foreach (var item in list_manufactures)
+                                {
+                                    <div class="col-6">
+                                        <div class="loc-thiu">
+                                            <div class="col-md-1 col-2">
+                                                <input type="checkbox" data-filterd="manufacture" data-value="@item.Id" />
+                                            </div>
+                                            <div class="col-md-11 col-10">
+                                                <img asp-append-version="true" src="@UIHelper.StoreFilePath(item.Avatar, false)" class="img-fluid" alt="@item.Name" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                        <div class="vung-mucgia border-top">
+                            <div class="py-1">Mức giá</div>
+                            <div class="row filter-item price">
+                                @{
+                                    var ls_flt = zone_detail.Filter;
+                                    if (!string.IsNullOrEmpty(ls_flt))
+                                    {
+                                        var l = ls_flt.Split(',');
+                                        var count_filter = 1;
+                                        foreach (var item in l)
+                                        {
+                                            var st = int.Parse(item.Split('-')[0]);
+                                            var en = int.Parse(item.Split('-')[1]);
+                                            var value_builder = string.Format("{0}-{1}", st, en);
+                                            var text_builder = string.Format("{0} - {1}", UIHelper.ConvertMoneyText(st), UIHelper.ConvertMoneyText(en));
+                                            if (count_filter == 1)
+                                            {
+                                                text_builder = string.Format("Dưới {0}", UIHelper.ConvertMoneyText(en));
+                                            }
+                                            if (count_filter == l.Count())
+                                            {
+                                                text_builder = string.Format("Trên {0}", UIHelper.ConvertMoneyText(st));
+                                            }
+                                            <div class="col-6">
+                                                <div class="loc-thiu">
+                                                    <div class="box-check">
+                                                        <input type="checkbox" data-filterd="price" data-value="@value_builder" style="height: 20px;width: 20px;">
+                                                    </div>
+                                                    <div class="mucchon">
+                                                        @text_builder
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            count_filter++;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <div class="col-6">
+                                            <div class="loc-thiu">
+                                                <div class="box-check">
+                                                    <input type="checkbox" style="height: 20px; width: 20px;" data-filterd="price" data-value="0-200000">
+                                                </div>
+                                                <div class="mucchon">
+                                                    Từ 0 - 200k
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="loc-thiu">
+                                                <div class="box-check">
+                                                    <input type="checkbox" style="height: 20px; width: 20px;" data-filterd="price" data-value="200000-500000">
+                                                </div>
+                                                <div class="mucchon">
+                                                    200k - 500k
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="loc-thiu">
+                                                <div class="box-check">
+                                                    <input type="checkbox" style="height: 20px; width: 20px;" data-filterd="price" data-value="1000000-2000000">
+                                                </div>
+                                                <div class="mucchon">
+                                                    1tr - 2tr
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="loc-thiu">
+                                                <div class="box-check">
+                                                    <input type="checkbox" style="height: 20px; width: 20px;" data-filterd="price" data-value="2000000-5000000">
+                                                </div>
+                                                <div class="mucchon">
+                                                    2tr - 5tr
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                            </div>
+                            <div class="onoff-seemore">
+                                <a href="#">- Rút gọn</a>
+                            </div>
+                        </div>
+                        @{ var list_filter = productRepository.GetFilterProductByZoneId(zone_detail.Id, culture_code).Take(4);}
+                        @foreach (var item in list_filter)
+                        {
+                            <div class="vung-xuatxu border-top">
+                                <div class="py-1">@item.Name</div>
+                                <div class="row filter-item dynamic-filter">
+                                    @foreach (var i in item.Values)
+                                    {
+                                        <div class="col-6">
+                                            <div class="loc-thiu ">
+                                                <div class="box-check">
+                                                    <input type="checkbox" style="height: 20px;width: 20px;" data-filterd="spectification" data-value="@i.Value" data-spec="@i.SpectificationId">
+                                                </div>
+                                                <div class="mucchon">
+                                                    @i.Value
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                                <div class="onoff-seemore">
+                                    <a href="#">+ Xem thêm</a>
+                                </div>
+                            </div>
+                        }
+                        <div class="filter-mobie align-self-center">
+                            <div class="form-row">
+                                <div class="col-12">
+                                    <select class="form-control mb-2 mb-lg-0 filter-select dynamic-filter dynamic-filter-range-price">
+                                        <option hidden="" value="">Chọn mức giá</option>
+                                        @{
+                                            if (!string.IsNullOrEmpty(ls_flt))
+                                            {
+                                                var l = ls_flt.Split(',');
+                                                var count_filter = 1;
+                                                foreach (var item in l)
+                                                {
+                                                    var st = int.Parse(item.Split('-')[0]);
+                                                    var en = int.Parse(item.Split('-')[1]);
+                                                    var value_builder = string.Format("{0}-{1}", st, en);
+                                                    var text_builder = string.Format("{0} - {1}", UIHelper.ConvertMoneyText(st), UIHelper.ConvertMoneyText(en));
+                                                    if (count_filter == 1)
+                                                    {
+                                                        text_builder = string.Format("Dưới {0}", UIHelper.ConvertMoneyText(en));
+                                                    }
+                                                    if (count_filter == l.Count())
+                                                    {
+                                                        text_builder = string.Format("Trên {0}", UIHelper.ConvertMoneyText(st));
+                                                    }
+                                                    <option value="@value_builder">@text_builder</option>
+                                                    count_filter++;
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <option value="0-1000000">Dưới 1Tr</option>
+                                                <option value="1000000-3000000">1Tr - 3Tr</option>
+                                                <option value="3000000-5000000">3Tr - 5Tr</option>
+                                                <option value="5000000-100000000">Trên 5Tr</option>
+                                            }
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                @foreach (var item in list_filter)
+                                {
+                                    <div class="col-lg-2 col-md-4 col-sm-6 col-6">
+                                        <select class="form-control mb-2 mb-lg-0 filter-select dynamic-filter dynamic-filter-spectification" data-spec-id="@item.SpectificationId">
+                                            <option hidden="" value="">@item.Name</option>
+                                            @foreach (var i in item.Values)
+                                            {
+                                                <option value="@i.Value">@i.Value</option>
+                                            }
+                                        </select>
+                                    </div>
+                                }
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-9 col-md-8 col-sm-12 col-12 pl-md-0 pr-lg-0 ">
+                    <div class="setop-prod">
+                        @* <div>Ưu tiên xem</div> *@
+                        <ul class="nav nav-pills" id="pills-tab" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link sort-rate active" data-value="1">Nổi bật nhất</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link sort-price" data-value="0">Tăng dần</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link sort-price" data-value="1">Giảm dần</a>
+                            </li>
+                        </ul>
+                        <div class="customer">
+                            <div class="cus-name">
+                                <input type="text" name="txtName" id="filter-text" placeholder="Tìm kiếm trong.." class="w-100 ip-css">
+                                <label for="name-input" class="cus-ic-box">
+                                    <i class="fal fa-search"></i>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="append-filter">
+                        <section class="my-4 san-go-nb">
+                            <div class="bg-fff pt-3 border-r-4 mb-4">
+                                <div class="mb-3 mx-3">
+                                    <a href="@LinkRedirectUrlUtility.ProductCategoryUrl(zone_detail.Url)" class="h5 font-weight-bold ">@zone_detail.Name</a>
+                                </div>
+                                <div class="_binding_product">
+                                    @await Component.InvokeAsync("ProductList", new { zone_parent_id = zone_detail.Id, locationId = location_id, pageIndex = index, pageSize = size })
+                                </div>
+                                <div class="pagin">
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="container">
+        <div id="_binding_tim_kiem"></div>
+    </div>
+
+    @*//Bat dau find du lieu vao day*@
+    <div class="container ">
+        <div class="bg-fff p-3 p-xl-4 content-cate-intro">
+            <div class="row flex-row-reverse">
+                @*<div class="col-lg-5 col-md-5 col-sm-12 col-12">
+                        <div class="image text-center">
+                            <img asp-append-version="true" src="@UIHelper.StoreFilePath(zone_detail.Background, false)" class="img-fluid mb-3 mb-md-0"/>
+                        </div>
+                    </div>*@
+                <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                    <div class="detail">
+                        <h5 class="title font-weight-bold">Giới thiệu @zone_detail.Name</h5>
+                        <div class="review  d-inline-block  mb-3">
+                            <div class="star-rating h5 text-center mb-3" data-id="@zone_detail.Id">
+                                @{ var rating_rounded = (int)Math.Round(zone_detail.Rate);}
+                                @for (int i = 0; i < 5; i++)
+                                {
+                                    var class_text = "fas fa-star";
+                                    if (i + 1 <= rating_rounded)
+                                    {
+                                        class_text += "checked";
+                                    }
+                                    <i class="@class_text" aria-hidden="true"></i>
+                                }
+                            </div>
+                        </div>
+                        @Html.Raw(WebHelper.RenderLazyLoadBody(zone_detail.Content))
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="text-center py-3">
+            <a href="javascript:;" class="btn btn-outline-view-more" onclick="expand();">Xem thêm <i class="fal fa-plus ml-1"></i></a>
+        </div>
+    </div>
+    @*//Lay Zone theo treeview*@
+    <div id="append_tim_kiem"></div>
+</div>
+
+@*@section Scripts{
+        <script type="text/javascript" src="~/js/controller/productController.js" asp-append-version="true"></script>
+    }*@
+

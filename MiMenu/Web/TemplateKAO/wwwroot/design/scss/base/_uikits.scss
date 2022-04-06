@@ -1,0 +1,16 @@
+.uk{
+  &-background{
+    &-01{
+      background-color: $color1;
+    }
+    &-02{
+      background-color: $color2;
+    }
+    &-03{
+      background-color: $color3;
+    }
+    &-04{
+      background-color: $color4;
+    }
+  }
+}

@@ -1,0 +1,57 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+</head>
+<body>
+    <div style="width: 770px;padding: 20px 0;font-size: 14px;font-family: Helvetica;">
+        <div style="border-bottom: 1px solid #ddd; height: 30px; padding-bottom: 15px; text-align:center;">
+            <img src="https://jhcms.migroup.asia/uploads/2020/04/28/logo.png" style="width: 120px;" />
+        </div>
+        <p style="font-size: 16px;font-family: Helvetica;line-height: 30px;color: #000;">
+            Xin chào <span style="color: #ff3333">{UserName}</span>
+        </p>
+        <h3 style="font-weight:normal;">Janhome.vn xin trân trọng thông báo, Quý khách vừa thực hiện đặt hàng thành công qua website như sau:</h3>
+        <div>
+            <table border="0" style="width:100%">
+                <tr>
+                    <td style="width:200px;">Mã đơn hàng</td>
+                    <td>{CODE}</td>
+                </tr>
+                <tr>
+                    <td>Tổng phí phải thanh toán</td>
+                    <td>{TOTAL}</td>
+                </tr>
+                <tr>
+                    <td>Hình thức thanh toán</td>
+                    <td>{METHOD}</td>
+                </tr>
+            </table>
+        </div>
+        <h3 style="font-weight:normal;">Chi tiết đơn hàng</h3>
+        <div>
+            <table border="0" style="width:100%; border-collapse: collapse;" cellspacing="4" cellpadding="2">
+                <tr>
+                    <td>STT</td>
+                    <td style="width:200px;">Mã sản phẩm</td>
+                    <td>Sản phẩm</td>
+                    <td>Đơn giá</td>
+                    <td>Số lượng</td>
+                </tr>
+                {PRODUCTS}
+            </table>
+        </div>
+        <div style="margin-top:30px;">
+            <p style="color: #666;">
+                Cám ơn Quý khách đã đặt hàng tại janhome.vn, chúng tôi sẽ liên lạc với quý khách trong giây lát,
+            </p>
+            <p style="color: #666;">
+                Mọi thắc mắc Quý khách vui lòng liên hệ:
+            </p>
+            <p style="color: #666;">
+                Điện thoại: 0987233468 - Website: <a href="http://Janhome.vn">Janhome.vn</a>
+            </p>
+        </div>
+    </div>
+</body>
+</html>

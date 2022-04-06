@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Utils\Utils.csproj" />
+    <ProjectReference Include="..\Enterbuy.Data.SqlServer\Enterbuy.Data.SqlServer.csproj" />
+    <ProjectReference Include="..\Enterbuy.Data.Sql\Enterbuy.Data.Sql.csproj" />
+  </ItemGroup>
+
+</Project>

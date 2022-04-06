@@ -1,0 +1,117 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@using MI.Entity.Enums;
+@using PhamGiaLandingPage.Web.Services.Zone.ViewModal
+@using PhamGiaLandingPage.Web.Services.Article.ViewModel
+@using PhamGiaLandingPage.Web.Services.Extra.ViewModel
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Http
+@using PhamGiaLandingPage.Web.Services.Article.Repository
+@using PhamGiaLandingPage.Web.Services.Extra.Repository
+@using PhamGiaLandingPage.Web.Services.Zone.Repository
+@inject IHttpContextAccessor HttpContextAccessor
+@inject IArticleRepository articleRepository;
+@inject IZoneRepository zoneRepository;
+@inject IExtraRepository extraRepository;
+@using Utils
+@{
+    var culture = Context.Features.Get<IRequestCultureFeature>().RequestCulture.Culture.TwoLetterISOLanguageName.ToLower();
+    var culture_code = Context.Features.Get<IRequestCultureFeature>().RequestCulture.Culture.ToString();
+    var base_uri_culture = "/" + culture;
+    var domain = Context.Request.Host.ToString();
+}
+
+@{
+    var obj_id = ViewBag.ObjId;
+    var obj_type = ViewBag.ObjType;
+    var obj = articleRepository.GetArticleDetail(obj_id, culture_code);
+    var hTag = ViewBag.HTag;
+    var dict = (Dictionary<int, double>)ViewBag.dict;
+    var rate = extraRepository.GetRatingByObjectId(obj_id, obj_type);
+
+
+
+    //var list_zone_parents = zoneRepository.GetListZoneByParentId((int)TypeZone.AllButProduct, culture_code);
+}
+
+@{
+
+    var r_5 = dict.Where(r => r.Key == 5).FirstOrDefault().Value;
+    var r_4 = dict.Where(r => r.Key == 4).FirstOrDefault().Value;
+    var r_3 = dict.Where(r => r.Key == 3).FirstOrDefault().Value;
+    var r_2 = dict.Where(r => r.Key == 2).FirstOrDefault().Value;
+    var r_1 = dict.Where(r => r.Key == 1).FirstOrDefault().Value;
+
+
+    var x = r_5 + r_4 + r_3 + r_2 + r_1;
+    if (x == 0) { x = 1; }
+    var five_star_percent = Math.Round(((double)r_5 / (double)x) * 100, 1);
+    var four_star_percent = Math.Round(((double)r_4 / (double)x) * 100, 1);
+    var three_star_percent = Math.Round(((double)r_3 / (double)x) * 100, 1);
+    var two_star_percent = Math.Round(((double)r_2 / (double)x) * 100, 1);
+    var one_star_percent = Math.Round(((double)r_1 / (double)x) * 100, 1);
+
+    var converted_dict = new Dictionary<int, string>();
+    converted_dict.Add(5, string.Format("{0}_{1}", r_5, five_star_percent));
+    converted_dict.Add(4, string.Format("{0}_{1}", r_4, four_star_percent));
+    converted_dict.Add(3, string.Format("{0}_{1}", r_3, three_star_percent));
+    converted_dict.Add(2, string.Format("{0}_{1}", r_2, two_star_percent));
+    converted_dict.Add(1, string.Format("{0}_{1}", r_1, one_star_percent));
+
+}
+
+<div class="uk-card uk-card-body duan-detail__box6 mb-20 mb-58-m">
+    <div class="uk-grid-divider uk-grid-large uk-flex-middle" uk-grid>
+        <div class="uk-width-1-4@m">
+            <div class="uk-text-center">
+                <div class="duan-detail__box6__left__txt1">@rate</div>
+                <div class="duan-detail__box6__left__rate">
+                    @{ var rating_rounded = (int)Math.Round(rate);}
+                    <div class="star-rating @(hTag) text-center" data-id="@obj_id" data-type="@obj_type">
+                        @for (int i = 0; i < 5; i++)
+                        {
+                            var class_text = "fa fa-star";
+                            var styles = "color: #ddd";
+                            if (i + 1 <= rating_rounded)
+                            {
+                                class_text += " checked";
+                                styles = "color: #FFD100";
+                            }
+                            <i class="@class_text" aria-hidden="true"></i>
+                        }
+                    </div>
+                </div>
+                <div class="duan-detail__box6__left__txt2">@x  đánh giá</div>
+            </div>
+        </div>
+        <div class="uk-width-expand">
+            <div class="uk-grid-10 uk-grid-15-m" uk-grid>
+                @foreach (var item in converted_dict)
+                {
+                    var sl = item.Key;
+                    var per = item.Value.Split("_")[1];
+                    var tot = item.Value.Split("_")[0];
+
+                    <div class="uk-width-1-1">
+                        <div class="uk-flex-middle" uk-grid>
+                            <div class="uk-width-auto">
+                                <div class="duan-detail__box6__right__txt1">@item.Key</div>
+                            </div>
+                            <div class="uk-width-expand">
+                                @double.Parse(per) %
+                                <progress class="uk-progress duan-detail__box6__right__progress" value="@Math.Round(double.Parse(per))" max="100"></progress>
+                            </div>
+                            <div class="uk-width-auto">
+                                <div class="duan-detail__box6__right__txt2 uk-text-right">@double.Parse(tot) </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+

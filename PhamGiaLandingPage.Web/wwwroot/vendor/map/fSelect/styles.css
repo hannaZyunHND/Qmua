@@ -1,0 +1,54 @@
+﻿.FSelectField { display: none; }
+.FSelectWrapper { background: #fff none repeat scroll 0 0; border: 1px solid #ccc; font-size: 13px; height: 29px; position: relative; vertical-align: middle; }
+.FSelectWrapper * { -webkit-box-sizing: border-box; box-sizing: border-box; }
+.FSelectWrapperIn { height: 30px; }
+.FSelectedValue {  line-height: 27px; display: inline-block; text-align: left; border-radius: 1px; cursor: pointer; }
+.FSelectedValue.drop i { }
+.FSelectedValue b { display: inline-block; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; float: left; color: #333; text-indent: 10px; border-right: solid 1px #ddd; font-weight: normal; }
+.FSelectedValue i { background: rgba(0, 0, 0, 0) url("images/FSelectSprite.png") no-repeat scroll 0 3px; display: inline-block; float: right; height: 29px; width: 18px; }
+.FSelectSearchBox { height: 22px !important; margin-top: 5px; padding: 2px 0 !important; text-indent: 10px; width: 100% !important; border: solid 1px #ddd !important; border-left: 0 !important; border-right: 0 !important; background: url(images/FSelectSearchIcon.png) no-repeat center right #f7f7f7; outline: none; }
+.FSelectDropDown { background: none repeat scroll 0 0 #fff; border: 1px solid rgba(0, 0, 0, 0.2); border-radius: 0; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); position: absolute; top: 26px; display: none; width: 100%; z-index: 999; }
+.FSelectDropDown li { border-bottom: 1px solid #fff; color: #333; cursor: pointer; list-style: none outside none; margin: 0; padding: 3px 10px; position: relative; /*border-bottom: 1px solid #f1f1f1;*/ }
+.FSelectDropDown li.selected { color: #fff; background: #2073F0; }
+.FSelectDropDown li:hover { background: #2073F0; color: #fff; }
+.FSelectDropDown li.selected:hover { color: #fff; }
+.FSelectDropDown li.selected i { color: #fff; }
+.FSelectDropDown li.selected:hover i { color: #999; }
+.FSelectDropDown li.disabled { color: #ccc; cursor: not-allowed; }
+.FSelectDropDown li.disabled:hover { color: #ccc; background: #fff; }
+.FSelectDropDown li.disabled.selected:hover { color: #ccc; background: #fff; }
+.FSelectList { margin: 0; padding: 0; height: 300px; overflow-y: auto; overflow-x: hidden; margin-bottom: 10px; line-height: 20px; }
+.FParentNode { font-weight: bold; }
+.FChildNode span { display: inline-block; padding-left: 10px; }
+.FChildNode.FHasCheckbox span { display: inline-block; padding-left: 0px; }
+.FChildNode.FHasCheckbox .FSelectCheckboxWrapper { padding-left: 10px; }
+
+.FChildNode i { color: #999; float: right; font-style: normal; font-size: 10px; }
+.FSelectSearchHighLight { float: none !important; font-style: normal !important; text-decoration: underline; text-transform: none; font-size: 13px !important; }
+
+
+.FSelectMultipleValues { cursor: pointer; margin: 0; padding: 0; text-indent: 0; /*display: inline-block;*/ }
+.FSelectMultipleValues i { background: url("images/FSelectSprite.png") no-repeat scroll 0 4px rgba(0, 0, 0, 0); display: none; float: right; height: 30px; width: 16px; border-left: solid 1px #ddd; }
+.FSelectMultipleValues.noItemSelected { /*background: linear-gradient(#ffffff 20%, #f6f6f6 50%, #eeeeee 52%, #f4f4f4 100%) repeat scroll 0 0 rgba(0, 0, 0, 0); background: -webkit-linear-gradient(#ffffff 20%, #f6f6f6 50%, #eeeeee 52%, #f4f4f4 100%) repeat scroll 0 0 rgba(0, 0, 0, 0);*/ box-shadow: none; }
+.FSelectMultipleValues.noItemSelected i { display: inline-block; }
+.FSelectMultipleValueSearch { border: 0; height: 29px; line-height: 23px; background: transparent; text-indent: 10px; cursor: pointer; }
+.FSelectMultipleValues li { background: linear-gradient(#f4f4f4 20%, #f0f0f0 50%, #e8e8e8 52%, #eeeeee 100%) repeat scroll 0 0 rgba(0, 0, 0, 0); background: -webkit-linear-gradient(#f4f4f4 20%, #f0f0f0 50%, #e8e8e8 52%, #eeeeee 100%) repeat scroll 0 0 rgba(0, 0, 0, 0); border: 1px solid #ccc; border-radius: 3px; box-shadow: 0 0 2px white inset, 0 1px 0 rgba(0, 0, 0, 0.05); color: #333; float: left; list-style-type: none; margin: 2px; padding: 0.5px 5px; }
+.FMultiSelectRemove { background: url("images/FSelectSprite.png") no-repeat scroll -48px 1px rgba(0, 0, 0, 0); cursor: pointer; display: inline-block; float: right; height: 12px; margin-left: 3px; margin-top: 2px; width: 12px; }
+.FMultiSelectRemove:hover { background-position: -48px -10px; }
+
+/*fix chrome v39*/
+.FSelectMultipleValues li span:first-child, .FChildNode span, .FChildNode i { white-space: nowrap; }
+.FChildNode span { }
+.FSelectMultipleValues li span { float: left; }
+.FChildNodeLevel2 span { padding-left: 30px; }
+.FChildNodeLevel2.FHasCheckbox .FSelectCheckboxWrapper { padding-left: 30px; }
+.FChildNodeLevel3 span { padding-left: 60px; }
+.FChildNodeLevel3.FHasCheckbox .FSelectCheckboxWrapper { padding-left: 60px; }
+
+.FSelectCheckboxWrapper { float: left; }
+.FSelectCheckbox { border: solid 1px #dddddd; }
+/*Flat Fselect*/
+
+.FSelectField.FlatTheme { }
+.FlatTheme .FSelectedValue { background: none; }
+.FlatTheme .FSelectedValue, .FlatTheme .FSelectMultipleValues.noItemSelected, .FlatTheme .FSelectMultipleValues li { background: none; }

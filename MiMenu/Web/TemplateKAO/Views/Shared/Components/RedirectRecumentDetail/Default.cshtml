@@ -1,0 +1,182 @@
+﻿@using MI.Entity.Enums;
+@using TemplateKAO.Services.Zone.ViewModal
+@using TemplateKAO.Services.Article.ViewModel
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Http
+@using TemplateKAO.Services.Article.Repository
+@inject IHttpContextAccessor HttpContextAccessor
+@inject IArticleRepository articleRepository;
+@using Utils
+@using TemplateKAO.Services.BannerAds.Repository
+@using MI.Entity.Models
+@using TemplateKAO.Utility
+@using Microsoft.AspNetCore.Http.Extensions
+@inject IBannerAdsRepository bannerAdsRepository;
+
+@{
+    var culture = Context.Features.Get<IRequestCultureFeature>().RequestCulture.Culture.TwoLetterISOLanguageName.ToLower();
+    var culture_code = Context.Features.Get<IRequestCultureFeature>().RequestCulture.Culture.ToString();
+    var base_uri_culture = "/" + culture;
+    var domain = Context.Request.Host.ToString();
+    var domain_full = Context.Request.GetDisplayUrl();
+    var Banner_Tuyendung = new DetailBanerAds();
+    var Banner_Tuyendung_Cache = bannerAdsRepository.GetBannerAds_By_Code(culture_code, "Banner_Tuyendung");
+    if (Banner_Tuyendung_Cache != null)
+    {
+        Banner_Tuyendung = Newtonsoft.Json.JsonConvert.DeserializeObject<DetailBanerAds>(Banner_Tuyendung_Cache.MetaData);
+    }
+}
+@{
+    ViewData["Title"] = "RecruitmentDetail";
+}
+@{
+
+    var detail = ViewBag.Detail as ArticleDetail;
+}
+
+@section styles {
+    <style type="text/css">
+        .banner-page {
+            background: url(@UIHelper.StoreFilePath(Banner_Tuyendung.Image)) no-repeat center;
+            min-height: 200px;
+            background-size: cover;
+            display: flex;
+        }
+        /*.detail img {
+            max-width:100%;
+            height:auto;
+        }*/
+         .detail-recuments img {
+            max-width: 100% !important;
+        }
+    </style>
+
+}
+@if (detail != null)
+{
+    <div class="banner-page py-3 mb-4">
+        <div class="container align-self-center">
+            <div class="row justify-content-center">
+                <div class=" col-sm-10 col-12 ">
+                    <h1 class="text-center color-fff">BẠN MUỐN ĐỒNG HÀNH CÙNG JANHOME?</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row ">
+            <div class="col-xl-8 col-lg-8 col-md-8 col-sm-12 col-12">
+                <div class="recrui-content ">
+                    <h1 class="title">@detail.Title</h1>
+                    <div class="color-828282 mb-4" style="font-size: 14px;">
+                        @if (detail.ArticleRecruitment != null)
+                        {
+                            <span class="mr-3 mb-2">
+                                <img asp-append-version="true" src="/images/icon-sm-td-1.svg" class="img-fluid mr-2" />@detail.ArticleRecruitment.Position
+                            </span>
+                            <span class="mr-3  mb-2">
+                                <img asp-append-version="true" src="/images/icon-sm-td-2.svg" class="img-fluid mr-2" />@detail.ArticleRecruitment.Count
+                            </span>
+                            <span class="mr-3  mb-2">
+                                <img asp-append-version="true" src="/images/icon-sm-td-3.svg" class="img-fluid mr-2" />@detail.ArticleRecruitment.Salary
+                            </span>
+                        }
+                        else
+                        {
+                            <span class="mr-3 mb-2">
+                                <img asp-append-version="true" src="/images/icon-sm-td-1.svg" class="img-fluid mr-2" />
+                            </span>
+                            <span class="mr-3  mb-2">
+                                <img asp-append-version="true" src="/images/icon-sm-td-2.svg" class="img-fluid mr-2" />
+                            </span>
+                            <span class="mr-3  mb-2">
+                                <img asp-append-version="true" src="/images/icon-sm-td-3.svg" class="img-fluid mr-2" />
+                            </span>
+                        }
+
+                    </div>
+                    <div class="detail detail-recuments">
+                        <p>
+                            @Html.Raw(WebHelper.RenderLazyLoadBody(detail.Body))
+                        </p>
+
+                        <div class="d-flex facebook-btn justify-content-end my-4">
+                            <div class="small mr-3">
+                                <img asp-append-version="true" src="/images/eye.svg" class="img-fluid mr-2" />120 lượt xem
+                            </div>
+                            <button class="btn mr-2">
+                                <i class="fas fa-thumbs-up mr-1"></i>Thích
+                                <span>1.4K</span>
+                            </button>
+                            <button href="" class="btn">Chia sẻ</button>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12 pl-lg-5">
+                <div class="heading pb-2 border-bottom mb-4 ">
+                    <div class="h5 font-weight-600 mb-0 ">
+                        Ứng tuyển
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <form class="form-ung-tuyen">
+                        <div class="form-group">
+                            <div class="form-control py-2 " style="color: #007DFF;">Chuyên viên kinh doanh</div>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="" placeholder="Họ tên *">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="" placeholder="Email *">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="" placeholder="Số điện thoại *">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="" placeholder="Địa chỉ *">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="" placeholder="Mức lương mong muốn *">
+                        </div>
+                        <div class="form-group">
+                            <textarea type="text" rows="5" class="form-control" id=""
+                                      placeholder="Thông tin thêm"></textarea>
+                        </div>
+                        <div class="form-group form-row">
+                            <div class="col-sm-7 col-7 position-relative">
+                                <input type="text" class="form-control" id="" placeholder="Gửi hồ sơ ngay">
+                                <input type="file" class="form-control input-file">
+                            </div>
+                            <div class="col-sm-5 col-5">
+                                <button class="btn btn-save btn-file">Chọn hồ sơ</button>
+                                <input type="file" class="form-control input-file">
+
+                            </div>
+                            <div class="col-12">
+                                <small class="form-text text-muted color-828282">* File đính kèm dung lượng tối đa 5MB</small>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-save w-100">Ứng tuyển</button>
+                        </div>
+                    </form>
+
+                </div>
+
+            </div>
+            <div class="col-xl-8 col-lg-8 col-md-8 col-sm-12 col-12">
+                <!--Gửi Comment-->
+                @await Component.InvokeAsync("Comment", new { object_id = detail.Id, object_type = (int)CommentType.Article })
+                <div class="fb-comments" data-href="@domain_full" data-numposts="5" data-width=""></div>
+            </div>
+        </div>
+    </div>
+}
+
+

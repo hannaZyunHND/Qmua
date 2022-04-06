@@ -1,0 +1,45 @@
+.contact{
+  &__section1{
+    padding-top: 10px;
+    @include media-breakpoint-up('m'){
+      //padding-bottom: 31px;
+      padding-top: 40px;
+    }
+  }
+  &__section2{
+    @include media-breakpoint-up('m'){
+      //padding-bottom: 31px;
+    }
+  }
+  &__boxForm{
+    &__title{
+      @extend .fz-30;
+      color: #000;
+      font-family: $font-Roboto-Bold;
+      line-height: (35/30);
+    }
+    &__txtRadio{
+      @extend .fz-16;
+      color: #444444;
+      line-height: (16/14);
+    }
+    &__input{
+      @extend .fz-16;
+      color: #a7a7a7;
+      line-height: (16/14);
+    }
+    &__btn{
+      background: $color1;
+      @extend .fz-20;
+      font-family: $font-Roboto-Bold;
+    }
+  }
+  &__boxSocial{
+    &__txt{
+      color: #000;
+      @extend .fz-16;
+      line-height: (22/16);
+      font-family: $font-Roboto-Medium;
+    }
+  }
+}

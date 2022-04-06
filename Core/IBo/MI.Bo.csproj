@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="EFCore.BulkExtensions" Version="2.1.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\IDal\MI.Dal.csproj" />
+    <ProjectReference Include="..\IEntity\MI.Entity.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Serilog">
+      <HintPath>C:\Users\HIEPHV\.nuget\packages\serilog\2.6.0\lib\netstandard1.3\Serilog.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>

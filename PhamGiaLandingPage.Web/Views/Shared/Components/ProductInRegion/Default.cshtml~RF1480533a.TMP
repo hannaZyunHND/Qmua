@@ -1,0 +1,1057 @@
+﻿@using NhaBepVuiV2.Services.Product.Repository
+@using NhaBepVuiV2.Services.Product.ViewModel
+@using NhaBepVuiV2.Services.Zone.Repository
+@using NhaBepVuiV2.Services.Zone.ViewModal
+@using MI.Entity.Enums
+
+@using NhaBepVuiV2.Services.Zone.ViewModal
+@using NhaBepVuiV2.Services.Article.ViewModel
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Http
+@using NhaBepVuiV2.Services.Article.Repository
+@using NhaBepVuiV2.Utility
+@inject IHttpContextAccessor HttpContextAccessor
+@inject ICookieUtility cookieUtility
+
+@using Utils
+@{
+    var culture = Context.Features.Get<IRequestCultureFeature>().RequestCulture.Culture.TwoLetterISOLanguageName.ToLower();
+    var culture_code = Context.Features.Get<IRequestCultureFeature>().RequestCulture.Culture.ToString();
+    var base_uri_culture = "/" + culture;
+    var domain = Context.Request.Host.ToString();
+    var cookie_location = cookieUtility.SetCookieDefault();
+    var location_id = cookie_location.LocationId;
+    var location_name = cookie_location.LocationName;
+    var type = ViewBag.Type;
+}
+@inject IProductRepository productRepository
+@inject IZoneRepository zoneRepository
+
+@{
+    var list_zone_type_region = ViewBag.Zones as List<ZoneByTreeViewMinify>;
+    var region_parent = ViewBag.Parent as ZoneByTreeViewMinify;
+    var banner = ViewBag.Banner;
+    var style_div_with_banner = "";
+    if (!string.IsNullOrEmpty(banner))
+    {
+        style_div_with_banner = "style=\"background: url(/" + banner + ") no-repeat top center;background-size: cover;\"";
+    }
+    var slide = ViewBag.Slide;
+    var list_region_child = list_zone_type_region.Where(r => r.ParentId == region_parent.Id).OrderBy(r =>
+    r.SortOrder).ToList();
+    var count_item_five_part_two_line = 15;
+}
+
+@if (type == (int)HomeRegionEnum.FivePartOneLine)
+{
+    var link_view_more = string.Format("/danh-muc/{0}", region_parent.Url);
+    if (!string.IsNullOrEmpty(style_div_with_banner))
+    {
+        <section class="pb-4">
+            <div class="container ">
+                <div class="bg-fff main-giatot-ee" @Html.Raw(style_div_with_banner)>
+                    <div class="mb-3 no-gutters ">
+                        @* <div class="d-flex flex-wrap">
+                            <a href="" class="align-self-center h5 mr-3 text-uppercase mb-0" style="color: #fff;">
+                            <b>@region_parent.Name</b>
+                            </a>
+
+                            <a href="@link_view_more" class="btn btn-outline-light btn-sm px-lg-4 align-self-center">
+                            Xem thêm<i class="fas fa-chevron-right ml-2 "></i>
+                            </a>
+                            </div> *@
+                        <div class="txt-giatot">
+                            Giá cực tốt trong <span class="month-giatot">tháng @DateTime.Now.Month</span>
+                        </div>
+                    </div>
+                    <!-- Slider main container -->
+                    @* <div class="slide-product slide-@slide">
+                        <div class="swiper-container ">
+                        <!-- Additional required wrapper -->
+                        <div class="row">
+                        @{
+                        var total_1 = 0;
+                        var products_in_region_1 = productRepository.GetProductInRegionByZoneIdMinify(region_parent.Id, location_id,
+                        culture_code, 1, 5, out total_1).OrderBy(r => r.SortOrder).ToList();
+                        var row_left = products_in_region_1.Skip(0).Take(2);
+                        var row_rigth = products_in_region_1.Skip(2).Take(3);
+                        }
+                        <div class="col-md-5">
+                        <div class="row">
+                        @foreach (var item in row_left)
+                        {
+                        //var link_taget = string.Format("{0}/{1}.p{2}.html", base_uri_culture, item.Url, item.ProductId);
+                        var link_taget = string.Format("/{0}.html", item.Url);
+                        <div class="col-md-6">
+                        @await Component.InvokeAsync("ItemProduct", new { pr = item })
+                        </div>
+                        }
+                        </div>
+                        </div>
+                        <div class="col-md-7">
+                        <div class="row">
+                        @foreach (var item in row_rigth)
+                        {
+
+                        //var link_taget = string.Format("{0}/{1}.p{2}.html", base_uri_culture, item.Url, item.ProductId);
+                        var link_taget = string.Format("/{0}.html", item.Url);
+                        <div class="col-md-4">
+                        @await Component.InvokeAsync("ItemProduct", new { pr = item })
+
+                        </div>
+                        }
+                        </div>
+                        </div>
+                        </div>
+                        <!-- If we need navigation buttons -->
+
+                        </div>
+                        </div> *@
+                    @{
+                        var total_1 = 0;
+                        var products_in_region_1 = productRepository.GetProductInRegionByZoneIdMinify(region_parent.Id, location_id,
+                            culture_code, 1, 10, out total_1).OrderBy(r => r.SortOrder).ToList();
+                        var row_left = products_in_region_1.Skip(0).Take(2);
+                        var row_rigth = products_in_region_1.Skip(2).Take(3);
+                    }
+                    <div class="giatot-main" style="position: relative;">
+                        <div class="giatot-slide">
+                            @foreach (var item in products_in_region_1)
+                            {
+                                <div class="aitem">
+                                    @await Component.InvokeAsync("ItemProduct", new { pr = item, isLazy = false })
+                                </div>
+                            }
+                        </div>
+                        <div class="pre-3" id="pre-3">
+                            <i class="fal fa-angle-left"></i>
+                        </div>
+                        <div class="next-3" id="next-3">
+                            <i class="fal fa-angle-right"></i>
+                        </div>
+                    </div>
+
+                    <div class="see-giatot">
+                        <a href="@link_view_more" class="btn btn-outline-light btn-sm px-4 py-2 align-self-center">
+                            Xem thêm<i class="fas fa-chevron-right ml-2"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    }
+    else
+    {
+        <section class="my-4">
+            <div class="container ">
+                <div class="bg-fff pt-3 border-r-4">
+                    <div class="px-3">
+                        <div class="row mb-3 no-gutters ">
+                            <div class="col-8">
+                                <a href="@region_parent.BannerLink" class="h5 font-weight-bold ">@region_parent.Name</a>
+                            </div>
+                            <div class="col-4 text-right">
+                                <a href="@link_view_more" class="link-view-more">
+                                    Xem thêm <i class="fas fa-chevron-right ml-1 small"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Slider main container -->
+                    <div class="slide-product slide-@slide">
+                        <div class="swiper-container">
+                            <!-- Additional required wrapper -->
+                            <div class="row">
+                                @{
+                                    var total_1 = 0;
+                                    var products_in_region_1 = productRepository.GetProductInRegionByZoneIdMinify(region_parent.Id,
+                                        location_id, culture_code, 1, 5, out total_1).OrderBy(r => r.SortOrder).ToList();
+                                    var row_left = products_in_region_1.Skip(0).Take(2);
+                                    var row_rigth = products_in_region_1.Skip(2).Take(3);
+                                }
+                                <div class="col-md-5">
+                                    <div class="row">
+                                        @foreach (var item in row_left)
+                                        {
+                                            //var link_taget = string.Format("{0}/{1}.p{2}.html", base_uri_culture, item.Url,
+                                            @* item.ProductId); *@
+                                            var link_taget = string.Format("/{0}.html", item.Url);
+                                            <div class="col-md-6">
+                                                @await Component.InvokeAsync("ItemProduct", new { pr = item })
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                                <div class="col-md-7">
+                                    <div class="row">
+                                        @foreach (var item in row_rigth)
+                                        {
+                                            //var link_taget = string.Format("{0}/{1}.p{2}.html", base_uri_culture, item.Url,
+                                            @* item.ProductId); *@
+                                            var link_taget = string.Format("/{0}.html", item.Url);
+                                            <div class="col-md-4">
+                                                @await Component.InvokeAsync("ItemProduct", new { pr = item })
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- If we need navigation buttons -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    }
+}
+@if (type == (int)HomeRegionEnum.TwentyPart)
+{
+    var link_parent = "javascript:void(0)";
+    var page_size = 20;
+    var page_index = 1;
+    var first_childs = list_region_child.FirstOrDefault();
+    var total_first_child_1 = 0;
+    var products_in_first_child = productRepository.GetProductInRegionByZoneIdMinify(first_childs.Id, location_id,
+        culture_code, page_index, page_size, out total_first_child_1).OrderByDescending(r => r.IsHot).ToList();
+    link_parent = first_childs.UrlOld;
+    var link_view_more = string.Format("/danh-muc/{0}", region_parent.Url);
+
+    <section class="my-4 san-go-nb">
+        <div class="d-flex" style="align-items: center;">
+            <div class="line-km"></div>
+            <div class="txt-KM">Khuyến mại hot TRONG TUẦN</div>
+            <div class="line-km"></div>
+        </div>
+        <div class="container">
+            <div class="bg-fff border-r-4" @(string.IsNullOrEmpty(banner) ? "" : style_div_with_banner)>
+                    <ul class="row nav nav-tabs cust-tab20 no-gutters" id="myTab" role="tablist">
+                        @{
+                            int tt = 1;
+                        }
+                        @foreach (var item in list_region_child.Skip(0).Take(8))
+                        {
+                            <li class="col-md-2 col-3 nav-item" style="max-width: 130px;">
+                                <a class="nav-link cust-km-mb @(tt == 1 ? "active" : "") _switch_region"
+                                data-region-id="@item.Id">@item.Name</a>
+                            </li>
+                            tt++;
+                        }
+                    </ul>
+                @*Cat mang o day*@
+                <div class="_binding_product">
+                    @{
+                        var cutted_row = new List<ProductMinify>();
+                        var row_index = 1;
+                        var row_size = 5;
+                        var number_of_row = total_first_child_1 / row_size;
+                    }
+                    @if (total_first_child_1 > 0)
+                    {
+                        <div class="set-total" data-total="@total_first_child_1" data-id="@first_childs.Id"
+                        style="display:none"></div>
+                        @while (row_index <= number_of_row || (number_of_row == 0 && row_index <= 1))
+                        {
+                            var row_cutted_all = products_in_first_child.Skip((row_index - 1) * row_size).Take(row_size);
+                            var row_cutted_left = row_cutted_all.Skip(0).Take(2);
+                            var row_cutted_right = row_cutted_all.Skip(2).Take(3);
+                            <div class="row no-gutters">
+                                <div class="col-lg-5 col-md-12 col-sm-12 col-12">
+                                    <div class="row no-gutters">
+                                        @foreach (var item in row_cutted_left)
+                                        {
+                                            //var link_ta = string.Format("{0}/{1}.p{2}.html", base_uri_culture, item.Url,
+                                            @* item.ProductId); *@
+                                            var link_ta = string.Format("/{0}.html", item.Url);
+                                            <div class="col-md-6 col-sm-6 col-6">
+                                                @await Component.InvokeAsync("ItemProduct", new { pr = item })
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                                <div class="col-lg-7 col-md-12 col-sm-12 col-12">
+                                    <div class="row no-gutters">
+                                        @{
+                                            var checkmobile = 1;
+                                        }
+                                        @foreach (var item in row_cutted_right)
+                                        {
+                                            //var link_ta = string.Format("{0}/{1}.p{2}.html", base_uri_culture, item.Url,
+                                            @* item.ProductId); *@
+                                            var link_ta = string.Format("/{0}.html", item.Url);
+                                            <div class="col-md-4 col-sm-4 col-6 @(checkmobile%3==0?"d-none d-sm-block":"")">
+                                                @await Component.InvokeAsync("ItemProduct", new { pr = item })
+                                            </div>
+                                            checkmobile++;
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                            row_index++;
+                        }
+                    }
+                </div>
+                @*<a href="javascript:void(0)" class="link-view-more view-remain-product font-weight-normal "
+                    data-skip="@page_size" data-size="" data-id="">Xem thêm <span class="remain-product"
+                    data-page-size="@page_size"><b>@(total_first_child_1 - page_size)</b></span> sản phẩm</a>*@
+                @* <a href="javascript:void(0)" class="view-remain-product" data-skip="@page_size" data-size="" data-id=""
+                    data-url="">
+                    <div class="see-more"><i class="fas fa-angle-double-right"></i> Xem thêm </div>
+                    </a> *@
+                <div class="text-center py-3">
+                    <a href="javascript:void(0)" class="btn btn-outline-view-more view-more-region-nbv"
+                    data-zone-id="@first_childs.Id" data-index="@page_index" data-size="@page_size"
+                    data-loc="@location_id">Xem thêm <i class="fal fa-plus ml-1"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+}
+@if (type == (int)HomeRegionEnum.FivePartTwoLine)
+{
+    var link_view_more = string.Format("/danh-muc/{0}", region_parent.Url);
+    var total_1 = 0;
+    var products_in_region_1 = productRepository.GetProductInRegionByZoneIdMinify(region_parent.Id, location_id,
+        culture_code, 1, 15, out total_1).OrderBy(r => r.SortOrder).ToList();
+
+    if (!string.IsNullOrEmpty(style_div_with_banner))
+    {
+        <!-----------------silde-Gia soc----------------->
+        <section class="main-giasoc">
+            <div class="container">
+                <div class="price-sock" @Html.Raw(style_div_with_banner)>
+                    <div class="txt-price-sock">
+                        Giá sốc mỗi ngày
+                    </div>
+                    <div class="btn-seem d-mb-none">
+                        <a href="@link_view_more">Xem thêm +</a>
+                    </div>
+                    <div class="slide-sock">
+                        @for (int i = 0; i < products_in_region_1.Count; i += 5)
+                        {
+                            var row_left = products_in_region_1.Skip(i).Take(2);
+                            var row_rigth = products_in_region_1.Skip(i + 2).Take(3);
+                            <div class="atest">
+                                <div class="row">
+                                    @foreach (var item in row_left)
+                                    {
+                                        var link_it = LinkRedirectUrlUtility.ProductDetailUrl(item.Url);
+                                        <div class="col-md-6 col-12 pd-sm-2">
+                                            <div class="item-product custom-pd-slide" data-id="@item.ProductId"
+                                            data-properties="@item.PropertyId">
+                                                <div class="row">
+                                                    <div class="col-md-4 col-4">
+                                                        <div class="tag-1 d-mb-none"></div>
+                                                        @if (item.FlashSaleId > 0)
+                                                        {
+                                                            <div class="tag-flashsale">
+                                                                <img src="~/images/tag-flash-111x34.svg" class=" img-fluid" />
+                                                            </div>
+                                                        }
+                                                        <div class="image-">
+                                                            <a href="@link_it"><img src="@UIHelper.StoreFilePath(item.Avatar)"
+                                                                alt="@item.Title" class="w-100" /></a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-8 col-8">
+                                                        <div class="infosp-cust">
+                                                            <div class="loai-product-">
+                                                                @item.ZoneName
+                                                            </div>
+                                                            <h5 class="title-l">
+                                                                <a href="@link_it" title="@item.Title">
+                                                                    @item.Title
+                                                                </a>
+                                                            </h5>
+                                                            @{
+                                                                decimal up_price = 0;
+                                                                decimal down_price = 0;
+                                                                if (item.SalePrice > 0 && item.SalePrice < item.Price)
+                                                                {
+                                                                    up_price = item.SalePrice;
+                                                                    down_price = item.Price;
+                                                                }
+                                                                if (item.SalePrice == 0 || item.SalePrice >= item.Price)
+                                                                {
+                                                                    up_price = item.Price;
+                                                                    down_price = 0;
+                                                                }
+                                                            }
+                                                            <div class="d-flex align-items-center ">
+                                                                @if (item.FlashSaleId > 0)
+                                                                {
+                                                                    <div class="price-old mb-0 mr-2">
+                                                                        @(item.SalePrice <= 0 ? Html.Raw("<pre>&nbsp;</pre>") :
+                                                                                Html.Raw(UIHelper.FormatNumber(up_price)))
+                                                                    </div>
+                                                                    <div class="price-new mt-0">
+                                                                        @UIHelper.FormatNumber(item.ProductPriceInFlashSale)
+                                                                    </div>
+                                                                }
+                                                                else
+                                                                {
+                                                                    if (down_price > 0)
+                                                                    {
+                                                                        <div class="price-old mb-0 mr-2">
+                                                                            @(item.Price <= 0 ? Html.Raw("<pre>&nbsp;</pre>") :
+                                                                                    Html.Raw(UIHelper.FormatNumber(down_price)))
+                                                                        </div>
+                                                                        <div class="price-new mt-0">
+                                                                            @UIHelper.FormatNumber(up_price)
+                                                                        </div>
+                                                                    }
+                                                                    if (down_price == 0)
+                                                                    {
+                                                                        if (item.Price > 0)
+                                                                        {
+                                                                            <div class="price-new mt-0">
+                                                                                @UIHelper.FormatNumber(up_price)
+                                                                            </div>
+                                                                        }
+                                                                        if (item.Price == 0 && item.SalePrice == 0)
+                                                                        {
+                                                                            <div class="price-new mt-0">
+                                                                                Liên hệ
+                                                                            </div>
+                                                                        }
+                                                                    }
+                                                                }
+                                                                @if (item.DiscountPercent <= 0)
+                                                                {
+                                                                    @*<div class="deal d-flex ml-2">
+                                                                        <div class="image-deal">
+                                                                        <img src="~/images/img-bepvui/KM/flash.svg" alt="">
+                                                                        </div>
+                                                                        <div class="text-deal">
+                                                                        </div>
+                                                                        </div>*@
+                                                                }
+                                                                @if (item.DiscountPercent > 0)
+                                                                {
+                                                                    var g = string.Format("-{0}%", (int)item.DiscountPercent);
+                                                                    <div class="deal-tag d-flex">
+                                                                        <div class="image-deal">
+                                                                            <img src="~/images/img-bepvui/KM/flash.svg" alt="">
+                                                                        </div>
+                                                                        <div class="text-deal">
+                                                                            @g
+                                                                        </div>
+                                                                    </div>
+                                                                }
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                                <div class="row pt-3 d-mb-none">
+                                    @foreach (var item in row_rigth)
+                                    {
+                                        var link_it = LinkRedirectUrlUtility.ProductDetailUrl(item.Url);
+                                        <div class="col-md-4">
+                                            <div class="item-product custom-pd-slide" data-id="@item.ProductId"
+                                            data-properties="@item.PropertyId">
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        @* <div class="tag-1">
+                                                            </div> *@
+                                                        @if (item.FlashSaleId > 0)
+                                                        {
+                                                            <div class="tag-flashsale">
+                                                                <img src="~/images/tag-flash-111x34.svg" class=" img-fluid" />
+                                                            </div>
+                                                        }
+                                                        <div class="image-">
+                                                            <a href="@link_it"><img src="@UIHelper.StoreFilePath(item.Avatar)"
+                                                                alt="@item.Title" class="w-100" /></a>
+                                                            <!-- <div class="tag-2">
+                                                            <img src="images/change/tag-2-2.png" class="img-fluid"/>
+                                                            </div> -->
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-8">
+                                                        <div class="infosp-cust pt-0">
+                                                            <h5 class="title">
+                                                                <a href="@link_it" title="@item.Title">
+                                                                    @item.Title
+                                                                </a>
+                                                            </h5>
+                                                            @{
+                                                                decimal up_price = 0;
+                                                                decimal down_price = 0;
+                                                                if (item.SalePrice > 0 && item.SalePrice < item.Price)
+                                                                {
+                                                                    up_price = item.SalePrice;
+                                                                    down_price = item.Price;
+                                                                }
+                                                                if (item.SalePrice == 0 || item.SalePrice >= item.Price)
+                                                                {
+                                                                    up_price = item.Price;
+                                                                    down_price = 0;
+                                                                }
+                                                            }
+                                                            <div class="d-flex align-items-center ">
+                                                                @if (item.FlashSaleId > 0)
+                                                                {
+                                                                    <div class="price-old mb-0 mr-2">
+                                                                        @(item.SalePrice <= 0 ? Html.Raw("<pre>&nbsp;</pre>") :
+                                                                                Html.Raw(UIHelper.FormatNumber(up_price) ))
+                                                                    </div>
+                                                                    <div class="price-new mt-0">
+                                                                        @UIHelper.FormatNumber(item.ProductPriceInFlashSale)
+                                                                    </div>
+                                                                }
+                                                                else
+                                                                {
+                                                                    if (down_price > 0)
+                                                                    {
+                                                                        <div class="price-old mb-0 mr-2">
+                                                                            @(item.Price <= 0 ? Html.Raw("<pre>&nbsp;</pre>") :
+                                                                                    Html.Raw(UIHelper.FormatNumber(down_price) ))
+                                                                        </div>
+                                                                        <div class="price-new mt-0">
+                                                                            @UIHelper.FormatNumber(up_price)
+                                                                        </div>
+                                                                    }
+                                                                    if (down_price == 0)
+                                                                    {
+                                                                        if (item.Price > 0)
+                                                                        {
+                                                                            <div class="price-new mt-0">
+                                                                                @UIHelper.FormatNumber(up_price)
+                                                                            </div>
+                                                                        }
+                                                                        if (item.Price == 0 && item.SalePrice == 0)
+                                                                        {
+                                                                            <div class="price-new mt-0">
+                                                                                Liên hệ
+                                                                            </div>
+                                                                        }
+                                                                    }
+                                                                }
+                                                            </div>
+                                                            @if (item.DiscountPercent <= 0)
+                                                            {
+                                                                @*<div class="deal d-flex ml-2">
+                                                                    <div class="image-deal">
+                                                                    <img src="~/images/img-bepvui/KM/flash.svg" alt="">
+                                                                    </div>
+                                                                    <div class="text-deal">
+                                                                    </div>
+                                                                    </div>*@
+                                                            }
+                                                            @if (item.DiscountPercent > 0)
+                                                            {
+                                                                var g = string.Format("-{0}%", (int)item.DiscountPercent);
+                                                                <div class="deal-tag d-flex">
+                                                                    <div class="image-deal">
+                                                                        <img src="~/images/img-bepvui/KM/flash.svg" alt="">
+                                                                    </div>
+                                                                    <div class="text-deal">
+                                                                        @g
+                                                                    </div>
+                                                                </div>
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        }
+
+                    </div>
+                    <div class="pre-2" id="pre2">
+                        <i class="fal fa-angle-left"></i>
+                    </div>
+                    <div class="next-2" id="next2">
+                        <i class="fal fa-angle-right"></i>
+                    </div>
+                </div>
+            </div>
+        </section>
+    }
+    else
+    {
+        <section class="main-giasoc">
+            <div class="container">
+                <div class="price-sock">
+                    <div class="txt-price-sock">
+                        Giá sốc mỗi ngày
+                    </div>
+                    <div class="btn-seem">
+                        <a href="#">Xem thêm +</a>
+                    </div>
+                    <div class="slide-sock">
+                        <div class="atest">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="item-product custom-pd-slide">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="tag-1">
+                                                    Trả góp 0% - Trả trước 0đ
+                                                </div>
+                                                <div class="image">
+                                                    <a href=""><img src="~/images/img-bepvui/product-detail.png"
+                                                        class="w-100" /></a>
+                                                    <!-- <div class="tag-2">
+                                                    <img src="images/change/tag-2-2.png" class="img-fluid"/>
+                                                    </div> -->
+                                                </div>
+                                            </div>
+                                            <div class="col-md-8">
+                                                <div class="infosp-cust">
+                                                    <div class="loai-product">
+                                                        Kệ Nhà bếp
+                                                    </div>
+                                                    <h5 class="title">
+                                                        <a href="" title="">
+                                                            Lò Vi Sóng Balay 3WMB1918 Lò Vi Sóng Đĩa Quay Cao Cấp
+                                                        </a>
+                                                    </h5>
+                                                    <div class="d-flex align-items-center ">
+                                                        <div class="price-old mb-0 mr-2">
+                                                            225,000đ
+                                                        </div>
+                                                        <div class="price-new mt-0">
+                                                            5.290.000 ₫
+                                                        </div>
+                                                        <div class="deal d-flex ml-2">
+                                                            <div>
+                                                                <img src="~/images/img-bepvui/KM/flash.svg" alt="">
+                                                            </div>
+                                                            <div>
+                                                                Giảm -30%
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="review d-flex">
+                                                        <div class="color-FFAB1B mr-2">
+                                                            4.5/5<i class="fas fa-star ml-1"></i>
+                                                        </div>
+                                                        <div class="color-828282">
+                                                            (135)
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="item-product custom-pd-slide">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="tag-1">
+                                                    Trả góp 0% - Trả trước 0đ
+                                                </div>
+                                                <div class="image">
+                                                    <a href=""><img src="~/images/img-bepvui/product-detail.png"
+                                                        class="w-100" /></a>
+                                                    <!-- <div class="tag-2">
+                                                    <img src="images/change/tag-2-2.png" class="img-fluid"/>
+                                                    </div> -->
+                                                </div>
+                                            </div>
+                                            <div class="col-md-8">
+                                                <div class="infosp-cust">
+                                                    <div class="loai-product">
+                                                        Kệ Nhà bếp
+                                                    </div>
+                                                    <h5 class="title">
+                                                        <a href="" title="">
+                                                            Lò Vi Sóng Balay 3WMB1918 Lò Vi Sóng Đĩa Quay Cao Cấp
+                                                        </a>
+                                                    </h5>
+                                                    <div class="d-flex align-items-center ">
+                                                        <div class="price-old mb-0 mr-2">
+                                                            225,000đ
+                                                        </div>
+                                                        <div class="price-new mt-0">
+                                                            5.290.000 ₫
+                                                        </div>
+                                                        <div class="deal d-flex ml-2">
+                                                            <div>
+                                                                <img src="~/images/img-bepvui/KM/flash.svg" alt="">
+                                                            </div>
+                                                            <div>
+                                                                Giảm -30%
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="review d-flex">
+                                                        <div class="color-FFAB1B mr-2">
+                                                            4.5/5<i class="fas fa-star ml-1"></i>
+                                                        </div>
+                                                        <div class="color-828282">
+                                                            (135)
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row pt-3">
+                                <div class="col-md-4">
+                                    <div class="item-product custom-pd-slide">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="image">
+                                                    <a href=""><img src="~/images/img-bepvui/product-detail.png"
+                                                        class="w-100" /></a>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-8">
+                                                <div class="infosp-cust">
+
+                                                    <h5 class="title">
+                                                        <a href="" title="">
+                                                            Lò Vi Sóng Balay 3WMB1918 Lò Vi Sóng Đĩa Quay Cao Cấp
+                                                        </a>
+                                                    </h5>
+                                                    <div class="d-flex align-items-center ">
+                                                        <div class="price-old mb-0 mr-2">
+                                                            225,000đ
+                                                        </div>
+                                                        <div class="price-new mt-0">
+                                                            5.290.000 ₫
+                                                        </div>
+                                                    </div>
+                                                    <div class="deal d-flex">
+                                                        <div>
+                                                            <img src="~/images/img-bepvui/KM/flash.svg" alt="">
+                                                        </div>
+                                                        <div>
+                                                            Giảm -30%
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="item-product custom-pd-slide">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="image">
+                                                    <a href=""><img src="~/images/img-bepvui/product-detail.png"
+                                                        class="w-100" /></a>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-8">
+                                                <div class="infosp-cust">
+                                                    <h5 class="title">
+                                                        <a href="" title="">
+                                                            Lò Vi Sóng Balay 3WMB1918 Lò Vi Sóng Đĩa Quay Cao Cấp
+                                                        </a>
+                                                    </h5>
+                                                    <div class="d-flex align-items-center ">
+                                                        <div class="price-old mb-0 mr-2">
+                                                            225,000đ
+                                                        </div>
+                                                        <div class="price-new mt-0">
+                                                            5.290.000 ₫
+                                                        </div>
+                                                    </div>
+                                                    <div class="deal d-flex">
+                                                        <div>
+                                                            <img src="~/images/img-bepvui/KM/flash.svg" alt="">
+                                                        </div>
+                                                        <div>
+                                                            Giảm -30%
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="item-product custom-pd-slide">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="image">
+                                                    <a href=""><img src="~/images/img-bepvui/product-detail.png"
+                                                        class="w-100" /></a>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-8">
+                                                <div class="infosp-cust">
+
+                                                    <h5 class="title">
+                                                        <a href="" title="">
+                                                            Lò Vi Sóng Balay 3WMB1918 Lò Vi Sóng Đĩa Quay Cao Cấp
+                                                        </a>
+                                                    </h5>
+                                                    <div class="d-flex align-items-center ">
+                                                        <div class="price-old mb-0 mr-2">
+                                                            225,000đ
+                                                        </div>
+                                                        <div class="price-new mt-0">
+                                                            5.290.000 ₫
+                                                        </div>
+                                                    </div>
+                                                    <div class="deal d-flex">
+                                                        <div>
+                                                            <img src="~/images/img-bepvui/KM/flash.svg" alt="">
+                                                        </div>
+                                                        <div>
+                                                            Giảm -30%
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="atest">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="item-product custom-pd-slide">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="tag-1">
+                                                    Trả góp 0% - Trả trước 0đ
+                                                </div>
+                                                <div class="image">
+                                                    <a href=""><img src="~/images/img-bepvui/product-detail.png"
+                                                        class="w-100" /></a>
+                                                    <!-- <div class="tag-2">
+                                                    <img src="images/change/tag-2-2.png" class="img-fluid"/>
+                                                    </div> -->
+                                                </div>
+                                            </div>
+                                            <div class="col-md-8">
+                                                <div class="infosp-cust">
+                                                    <div class="loai-product">
+                                                        Kệ Nhà bếp
+                                                    </div>
+                                                    <h5 class="title">
+                                                        <a href="" title="">
+                                                            Lò Vi Sóng Balay 3WMB1918 Lò Vi Sóng Đĩa Quay Cao Cấp
+                                                        </a>
+                                                    </h5>
+                                                    <div class="d-flex align-items-center ">
+                                                        <div class="price-old mb-0 mr-2">
+                                                            225,000đ
+                                                        </div>
+                                                        <div class="price-new mt-0">
+                                                            5.290.000 ₫
+                                                        </div>
+                                                        <div class="deal d-flex ml-2">
+                                                            <div>
+                                                                <img src="~/images/img-bepvui/KM/flash.svg" alt="">
+                                                            </div>
+                                                            <div>
+                                                                Giảm -30%
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="review d-flex">
+                                                        <div class="color-FFAB1B mr-2">
+                                                            4.5/5<i class="fas fa-star ml-1"></i>
+                                                        </div>
+                                                        <div class="color-828282">
+                                                            (135)
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="item-product custom-pd-slide">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="tag-1">
+                                                    Trả góp 0% - Trả trước 0đ
+                                                </div>
+                                                <div class="image">
+                                                    <a href=""><img src="~/images/img-bepvui/product-detail.png"
+                                                        class="w-100" /></a>
+                                                    <!-- <div class="tag-2">
+                                                    <img src="images/change/tag-2-2.png" class="img-fluid"/>
+                                                    </div> -->
+                                                </div>
+                                            </div>
+                                            <div class="col-md-8">
+                                                <div class="infosp-cust">
+                                                    <div class="loai-product">
+                                                        Kệ Nhà bếp
+                                                    </div>
+                                                    <h5 class="title">
+                                                        <a href="" title="">
+                                                            Lò Vi Sóng Balay 3WMB1918 Lò Vi Sóng Đĩa Quay Cao Cấp
+                                                        </a>
+                                                    </h5>
+                                                    <div class="d-flex align-items-center ">
+                                                        <div class="price-old mb-0 mr-2">
+                                                            225,000đ
+                                                        </div>
+                                                        <div class="price-new mt-0">
+                                                            5.290.000 ₫
+                                                        </div>
+                                                        <div class="deal d-flex ml-2">
+                                                            <div>
+                                                                <img src="~/images/img-bepvui/KM/flash.svg" alt="">
+                                                            </div>
+                                                            <div>
+                                                                Giảm -30%
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="review d-flex">
+                                                        <div class="color-FFAB1B mr-2">
+                                                            4.5/5<i class="fas fa-star ml-1"></i>
+                                                        </div>
+                                                        <div class="color-828282">
+                                                            (135)
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row pt-3">
+                                <div class="col-md-4">
+                                    <div class="item-product custom-pd-slide">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="image">
+                                                    <a href=""><img src="~/images/img-bepvui/product-detail.png"
+                                                        class="w-100" /></a>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-8">
+                                                <div class="infosp-cust">
+
+                                                    <h5 class="title">
+                                                        <a href="" title="">
+                                                            Lò Vi Sóng Balay 3WMB1918 Lò Vi Sóng Đĩa Quay Cao Cấp
+                                                        </a>
+                                                    </h5>
+                                                    <div class="d-flex align-items-center ">
+                                                        <div class="price-old mb-0 mr-2">
+                                                            225,000đ
+                                                        </div>
+                                                        <div class="price-new mt-0">
+                                                            5.290.000 ₫
+                                                        </div>
+                                                    </div>
+                                                    <div class="deal d-flex">
+                                                        <div>
+                                                            <img src="~/images/img-bepvui/KM/flash.svg" alt="">
+                                                        </div>
+                                                        <div>
+                                                            Giảm -30%
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="item-product custom-pd-slide">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="image">
+                                                    <a href=""><img src="~/images/img-bepvui/product-detail.png"
+                                                        class="w-100" /></a>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-8">
+                                                <div class="infosp-cust">
+
+                                                    <h5 class="title">
+                                                        <a href="" title="">
+                                                            Lò Vi Sóng Balay 3WMB1918 Lò Vi Sóng Đĩa Quay Cao Cấp
+                                                        </a>
+                                                    </h5>
+                                                    <div class="d-flex align-items-center ">
+                                                        <div class="price-old mb-0 mr-2">
+                                                            225,000đ
+                                                        </div>
+                                                        <div class="price-new mt-0">
+                                                            5.290.000 ₫
+                                                        </div>
+                                                    </div>
+                                                    <div class="deal d-flex">
+                                                        <div>
+                                                            <img src="~/images/img-bepvui/KM/flash.svg" alt="">
+                                                        </div>
+                                                        <div>
+                                                            Giảm -30%
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="item-product custom-pd-slide">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="image">
+                                                    <a href=""><img src="~/images/img-bepvui/product-detail.png"
+                                                        class="w-100" /></a>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-8">
+                                                <div class="infosp-cust">
+
+                                                    <h5 class="title">
+                                                        <a href="" title="">
+                                                            Lò Vi Sóng Balay 3WMB1918 Lò Vi Sóng Đĩa Quay Cao Cấp
+                                                        </a>
+                                                    </h5>
+                                                    <div class="d-flex align-items-center ">
+                                                        <div class="price-old mb-0 mr-2">
+                                                            225,000đ
+                                                        </div>
+                                                        <div class="price-new mt-0">
+                                                            5.290.000 ₫
+                                                        </div>
+                                                    </div>
+                                                    <div class="deal d-flex">
+                                                        <div>
+                                                            <img src="~/images/img-bepvui/KM/flash.svg" alt="">
+                                                        </div>
+                                                        <div>
+                                                            Giảm -30%
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pre-2" id="pre2">
+                        <i class="fal fa-angle-left"></i>
+                    </div>
+                    <div class="next-2" id="next2">
+                        <i class="fal fa-angle-right"></i>
+                    </div>
+                </div>
+            </div>
+        </section>
+    }
+}

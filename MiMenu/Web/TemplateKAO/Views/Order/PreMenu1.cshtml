@@ -1,0 +1,372 @@
+﻿@using TemplateKAO.Services.Product.Repository
+@using TemplateKAO.Services.Zone.Repository
+@using MI.Entity.Enums
+@using TemplateKAO.Services.BannerAds.Repository
+@using TemplateKAO.Services.FlashSale.Repository
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.AspNetCore.Http
+@using TemplateKAO.Services.Article.Repository
+@using TemplateKAO.Services.Extra.Repository
+@using Newtonsoft.Json
+@using TemplateKAO.Utility
+@using Microsoft.AspNetCore.Mvc.RazorPages
+@using MI.Entity.Models
+@using TemplateKAO.Services.Extra.ViewModel
+@using TemplateKAO.Services.Extra.Repository
+@using Microsoft.AspNetCore.Http.Extensions
+@using MI.Dal.IDbContext
+
+@inject IHttpContextAccessor HttpContextAccessor
+@inject ICookieUtility cookieUtility
+@inject IConfigSEOUtility configSEOUtility
+@inject IArticleRepository articleRepository
+@inject IBannerAdsRepository bannerAdsRepository
+@inject IFlashSaleRepository flashSaleRepository
+@inject IExtraRepository extraRepository
+@inject IZoneRepository zoneRepository
+@inject IExtraRepository extraRepository
+@inject IViewLocalizer Localizer
+
+@using Utils
+@{
+    var culture = Context.Features.Get<IRequestCultureFeature>().RequestCulture.Culture.TwoLetterISOLanguageName.ToLower();
+    var culture_code = Context.Features.Get<IRequestCultureFeature>().RequestCulture.Culture.ToString();
+    var base_uri_culture = "/" + culture;
+    var domain = Context.Request.Host.ToString();
+    var domain_full = Context.Request.GetDisplayUrl();
+
+    const string CookieLocationId = "_LocationId";
+    const string CookieLocationName = "_LocationName";
+    var cookie_location = cookieUtility.SetCookieDefault();
+    var location_id = cookie_location.LocationId;
+    var location_name = cookie_location.LocationName;
+
+
+    var title = bannerAdsRepository.GetConfigByName(culture_code, "TitleHome");
+    var DesWeb = bannerAdsRepository.GetConfigByName(culture_code, "DesWeb");
+    var MetaKeyword = bannerAdsRepository.GetConfigByName(culture_code, "MetaKeyword");
+    var FacebookAppId = bannerAdsRepository.GetConfigByName(culture_code, "FacebookAppId");
+    var SEOGoogle = bannerAdsRepository.GetConfigByName(culture_code, "SeoPhoto");
+    var tendn = bannerAdsRepository.GetConfigByName(culture_code, "Name");
+    var diachi = bannerAdsRepository.GetConfigByName(culture_code, "Address");
+
+
+
+    //var FacebookAppId = bannerAdsRepository.GetConfigByName(culture_code, "FacebookAppId ");
+}
+@inject IProductRepository productRepository
+@inject IZoneRepository zoneRepository
+@{
+    //ViewData["Title"] = "IndexPublic";
+    Layout = "~/Views/Shared/_LayoutPublicHome.cshtml";
+}
+@section styles{
+    @Html.Raw(configSEOUtility.ConfigSocialMeta("default appID", domain_full, title, DesWeb, SEOGoogle))
+    @Html.Raw(configSEOUtility.ConfigMeta(title, DesWeb, MetaKeyword))
+    <style>
+        .ui-autocomplete {
+            background-color: #F8F8F8 !important;
+            width: 200px !important;
+        }
+    </style>
+}
+
+@{
+    var all_dm_sp = zoneRepository.GetZoneByTreeViewMinifies((int)TypeZone.Product, culture_code, 0);
+}
+@{
+    ViewData["Title"] = "PreMenu1";
+    Layout = "~/Views/Shared/_LayoutPublicHome.cshtml";
+}
+@{
+    var i = "design/images/05600a6dc19a37ef746fb267902398bf2.png";
+    var anhdaidien = bannerAdsRepository.GetBannerAds_By_Code(culture_code, "KAO_Menu_AnhDaiDien");
+    if (anhdaidien != null)
+    {
+        var a = Newtonsoft.Json.JsonConvert.DeserializeObject<DetailBanerAds>(anhdaidien.MetaData);
+        if (a != null)
+        {
+            i = UIHelper.StoreFilePath(a.Image, false);
+        }
+    }
+}
+
+<div class="uk-background-norepeat uk-visible@@m menu__section1 uk-position-relative uk-background-cover uk-light" data-src="@i" uk-img>
+    <div class="uk-position-cover menu__overlay"></div>
+    <div class="uk-position-relative uk-position-z-index uk-section-small uk-text-center">
+        <div class="uk-container">
+            <h1 class="uk-h1 menu__title2">Menu</h1>
+            <ul class="uk-breadcrumb">
+                <li><a href="">Home</a></li>
+                <li><a href="">Menu</a></li>
+                <li><span>@Localizer["Order"]</span></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="uk-section-xsmall uk-background-muted" uk-height-viewport="offset-bottom: true;offset-top: true">
+    <div class="uk-container">
+        <div class="uk-grid-5 uk-margin" uk-grid>
+            <div>
+                <span uk-icon="icon: location; ratio: 1"></span>
+            </div>
+            <div>
+                <span class="menu__txt1">@tendn, @diachi</span>
+            </div>
+        </div>
+        <div class="menu__card1 uk-margin uk-card uk-card-default uk-card-body uk-border-rounded uk-padding-small">
+            @{
+                using (IDbContext _db = new IDbContext())
+                {
+                    var cps = _db.Coupon.Where(r => r.StartDate <= DateTime.Now && r.EndDate >= DateTime.Now).OrderByDescending(r => r.Id).FirstOrDefault();
+                    if (cps != null)
+                    {
+                        var v = 0;
+                        var k = int.TryParse(cps.ValueDiscount, out v);
+                        var t = cps.DiscountOption.Value;
+                        if (t == 1)
+                        {
+                            <span class="menu__txt2">@Localizer["Code"] @cps.Code: @Localizer["Discount"] @v % @Localizer["Producs"]</span>
+                        }
+                        if (t != 1)
+                        {
+                            <span class="menu__txt2">@Localizer["Code"] @cps.Code: @Localizer["Discount"] @UIHelper.FormatNumber(v) @Localizer["Producs"]</span>
+                        }
+                    }
+                }
+            }
+        </div>
+        <div class="uk-grid-small uk-grid-20-m" uk-grid>
+            <div class="uk-width-expand">
+                <div class="uk-background-default uk-border-rounded menu__content">
+                    <nav uk-sticky="offset: 60;bottom: true;" class="uk-hidden@@m menu__nav2 uk-navbar-container uk-navbar-transparent uk-background-default" uk-navbar>
+                        <div class="nav-overlay uk-navbar-left uk-overflow-auto uk-flex-1">
+                            <ul class="uk-navbar-nav uk-flex-nowrap" uk-scrollspy-nav="closest: li; scroll: true;offset: 60;" style="width: max-content">
+                                @foreach (var item in all_dm_sp)
+                                {
+                                    var _href = item.Url + 1;
+                                    <li><a href="#@_href">@item.Name</a></li>
+                                }
+                            </ul>
+                        </div>
+                        <div class="nav-overlay uk-navbar-right">
+                            <a class="uk-navbar-toggle" uk-search-icon uk-toggle="target: .nav-overlay; animation: uk-animation-fade" href="#"></a>
+                        </div>
+                        <div class="nav-overlay uk-navbar-left uk-flex-1" hidden>
+                            <div class="uk-navbar-item uk-width-expand">
+                                <form class="uk-search uk-search-navbar uk-width-1-1">
+                                    <input class="uk-search-input tim-kiem-san-pham" type="search" placeholder="Search" autofocus>
+                                </form>
+                            </div>
+                            <a class="uk-navbar-toggle" uk-close uk-toggle="target: .nav-overlay; animation: uk-animation-fade" href="#"></a>
+                        </div>
+                    </nav>
+                    <div class="uk-grid-divider uk-grid-small uk-grid-match" uk-grid>
+                        <div class="uk-width-1-4@@m uk-visible@@m">
+                            <div class="uk-padding-small uk-padding-remove-bottom uk-padding-remove-top" uk-sticky="offset: 80;">
+                                <div class="uk-section-xsmall">
+                                    <h3 class="uk-h3 menu__titleThucdon">@Localizer["Menu"]</h3>
+                                    <ul class="uk-nav uk-nav-default menu__nav1" uk-scrollspy-nav="closest: li; scroll: true;offset: 80;">
+                                        @foreach (var item in all_dm_sp)
+                                        {
+                                            var _href = item.Url + 1;
+                                            <li><a href="#@_href">@item.Name</a></li>
+                                        }
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="uk-width-expand">
+                            <div class="uk-padding-small menu__padding1 uk-padding-remove-bottom uk-padding-remove-top">
+                                <div class="uk-section-xsmall">
+                                    <div class="uk-margin uk-visible@@m">
+                                        <form class="uk-search uk-search-default menu__boxSearch">
+                                            <span uk-search-icon></span>
+                                            <input class="uk-search-input tim-kiem-san-pham" type="text" placeholder="@Localizer["Quick Find"]">
+                                        </form>
+                                    </div>
+                                    @{
+                                        var cccc = 1;
+                                        foreach (var item in all_dm_sp)
+                                        {
+                                            var t = 0;
+                                            var _sp1 = productRepository.GetProductMinifiesTreeViewByZoneParentId(item.Id, culture_code, location_id, 1, 1000, out t);
+                                            var uk_toggle = "uk-toggle=\"cls: uk-margin-medium; mode: media; media: @m\"";
+                                            var uk_class = "uk-margin-medium";
+                                            <div class="@(cccc == 1 ? "" : uk_class)" uk-toggle="cls: uk-margin-medium; mode: media; media: @@m" id="@(item.Url+1)">
+                                                <h3 class="uk-h3 menu__title1" id="@item.Url" uk-sticky="bottom: #tea-another;offset: 100;media: @@m">@item.Name</h3>
+                                                <div class="uk-grid-small uk-grid-20-m" uk-grid>
+                                                    @foreach (var s in _sp1)
+                                                    {
+                                                        <div class="uk-width-1-1 container-san-pham" id="@UIHelper.RandomString(7)">
+                                                            <div class="uk-card menu__card2 uk-card-default uk-card-body uk-padding-small uk-border-rounded">
+                                                                <div class="uk-flex-middle" uk-grid>
+                                                                    <div class="uk-width-1-3 uk-width-auto@@m">
+                                                                        <div class="menu__card2__bg">
+                                                                            <img class="uk-responsive-height uk-responsive-width" src="@UIHelper.StoreFilePath(s.Avatar)" alt="">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="uk-width-expand">
+                                                                        <div class="menu__card2__title container-ten-san-pham" id="@UIHelper.RandomString(7)">@s.Title</div>
+                                                                        <div class="menu__card2__txt">VNĐ</div>
+                                                                        @{
+                                                                            var gia_sp = s.Price;
+                                                                            if (s.SalePrice > 0 && s.SalePrice < s.Price)
+                                                                            {
+                                                                                gia_sp = s.SalePrice;
+                                                                                <div class="menu__card2__price menu__card2__price__old"><del>@UIHelper.FormatNumber(s.Price)</del></div>
+                                                                            }
+                                                                        }
+                                                                        <div class="menu__card2__price menu__card2__price__new">@UIHelper.FormatNumber(gia_sp)</div>
+                                                                    </div>
+                                                                    <div class="uk-width-auto">
+                                                                        <a href="javascript:void(0)" class="menu__card2__link them_san_pham" data-idsp="@s.ProductId" data-ten="@s.Title" data-giasp="@gia_sp" uk-icon="icon: plus-circle; ratio: 1"></a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                </div>
+                                            </div>
+                                        }
+                                        cccc++;
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="uk-width-1-3@@m">
+                <div class="uk-card uk-visible@@m uk-card-default menu__card3 uk-overflow-hidden" uk-sticky="offset: 100;media: @@m;bottom: true;">
+                    <div class="uk-card-header">
+                        <h3 class="uk-h3 menu__titleThucdon">@Localizer["Selected item"]</h3>
+                    </div>
+                    <table class="uk-table uk-table-divider uk-table-small uk-table-middle uk-margin-remove">
+                        <tbody>
+                            @* day la dom mau *@
+                            <tr class="root" style="display: none;">
+                                <td>
+                                    <div class="uk-grid-5 uk-flex-middle" uk-grid>
+                                        <div>
+                                            <a href="javascript:void(0)" class="uk-icon-link cong_them_sp" uk-icon="icon:plus-circle;ratio:0.7"></a>
+                                        </div>
+                                        <div>
+                                            <div class="uk-position-relative menu__card3__table__w1">
+                                                <span class="uk-position-center menu__card3__table__txt2 so_luong">1</span>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <a href="javascript:void(0)" class="uk-icon-link tru_di_sp" uk-icon="icon:minus-circle;ratio:0.7"></a>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <a href="javascript:void(0)" class="uk-icon-link xoa_sp" uk-icon="icon:trash;ratio:0.7"></a>
+                                    <span class="uk-text-middle menu__card3__table__txt1 ten_sp">Coffee Capuchino</span>
+                                </td>
+                                <td>
+                                    <span class="menu__card3__table__txt1 gia_sp">50.000đ</span>
+                                </td>
+                            </tr>
+                            @* day la dom mau *@
+                            <tr>
+                                <td colspan="3">
+                                    <div class="uk-margin-small">
+                                        <div class="uk-position-relative">
+                                            <input class="uk-input menu__card3__box1__input uk-border-rounded ma_khuyen_mai" type="text" placeholder="@Localizer["Discount Code"]">
+                                            <button type="button" class="uk-button menu__card3__box1__btn uk-background-secondary uk-button-small uk-position-center-right uk-position-small uk-border-rounded ap_dung_ma_khuyen_mai">@Localizer["Use Code"]</button>
+                                        </div>
+                                    </div>
+                                    <div class="uk-margin-small tb_giam_gia" style="display:none">
+                                        <div class="uk-alert-success uk-margin-remove" uk-alert>
+                                            <a class="uk-alert-close menu__card3__box1__close" uk-close></a>
+                                            <p class="menu__card3__box1__txt">Bạn đã được giảm giá <span class="so_tien_giam_gia"></span> </p>
+                                        </div>
+                                    </div>
+                                    <a href="/dat-don-hang" class="uk-link-toggle">
+                                        <div class="menu__card3__table__btn">
+                                            <div class="uk-flex-middle" uk-grid>
+                                                <div class="uk-width-expand">
+                                                    <div class="menu__card3__submit__txt1 dh_so_mon"><span>0</span> @Localizer["Products"]</div>
+                                                    <div class="menu__card3__submit__txt2 dh_tien_gachngang"><del>0đ</del></div>
+                                                    <div class="menu__card3__submit__txt3 dh_tien_tt">0đ</div>
+                                                </div>
+                                                <div class="uk-width-auto">
+                                                    <span class="menu__card3__submit__txt4 uk-text-middle uk-margin-small-right">@Localizer["Order Now"]</span>
+                                                    <span uk-icon="icon: arrow-right; ratio: 1.2"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="uk-hidden@@m uk-position-fixed uk-position-bottom uk-padding-small uk-position-z-index">
+                    <a href="/dat-don-hang" class="uk-link-toggle">
+                        <div class="menu__card3__table__btn">
+                            <div class="uk-flex-middle" uk-grid>
+                                <div class="uk-width-expand">
+                                    <div class="menu__card3__submit__txt1 dh_so_mon"><span>0</span> @Localizer["Products"]</div>
+                                    <div class="menu__card3__submit__txt2 dh_tien_gachngang"><del>0đ</del></div>
+                                    <div class="menu__card3__submit__txt3 dh_tien_tt">0đ</div>
+                                </div>
+                                <div class="uk-width-auto">
+                                    <span class="menu__card3__submit__txt4 uk-text-middle uk-margin-small-right">@Localizer["ORDER NOW"]</span>
+                                    <span uk-icon="icon: arrow-right; ratio: 1.2"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    @*<script type="text/javascript" src="~/js/libs/momentjs/momentJS.js" asp-append-version="true"></script>*@
+    @*<script type="text/javascript" src="~/js/libs/daterangepicker-master/moment.min.js" asp-append-version="true"></script>*@
+    @*<script type="text/javascript" src="/js/libs/daterangepicker-master/daterangepicker.js?v=1" ></script>*@
+    <script>
+        $('.slide-sock').slick({
+            autoplay: false,
+            autoplaySpeed: 2500,
+            arrows: false,
+            slidesToShow: 1,
+            responsive: [{
+                breakpoint: 1024,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1
+                }
+            }, {
+                breakpoint: 480,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1
+                }
+            }]
+        });
+
+        $('.next-2').click(function () {
+            $(".slide-sock").slick('slickNext');
+        });
+        $('.pre-2').click(function () {
+            $(".slide-sock").slick('slickPrev');
+        });
+    </script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"
+            integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30="
+            crossorigin="anonymous"></script>
+    <script>
+        window.addEventListener("hashchange", function () {
+            window.scrollTo(window.scrollX, window.scrollY - 150);
+        });
+    </script>
+    <script type="text/javascript" src="~/js/controller/preMenuControrller.js"></script>
+}

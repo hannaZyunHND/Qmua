@@ -1,0 +1,266 @@
+﻿@using MI.Entity.Enums;
+@using PhamGiaLandingPage.Web.Services.Zone.ViewModal
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.AspNetCore.Http
+@using PhamGiaLandingPage.Web.Services.Article.Repository
+@using PhamGiaLandingPage.Web.Services.Extra.Repository
+@using PhamGiaLandingPage.Web.Services.Zone.Repository
+@using PhamGiaLandingPage.Web.Services.Product.Repository
+@inject IHttpContextAccessor HttpContextAccessor
+@inject IArticleRepository articleRepository;
+@inject IZoneRepository zoneRepository;
+@inject IExtraRepository extraRepository;
+@inject IProductRepository productRepository;
+@inject ICookieUtility cookieUtility;
+@inject IConfigSEOUtility configSEOUtility;
+@using Utils
+@using PhamGiaLandingPage.Web.Utility
+@{
+    ViewData["Title"] = "RedirectAction";
+    Layout = "~/Views/Shared/_LayoutPublicHome.cshtml";
+    var culture = Context.Features.Get<IRequestCultureFeature>().RequestCulture.Culture.TwoLetterISOLanguageName.ToLower();
+    var culture_code = Context.Features.Get<IRequestCultureFeature>().RequestCulture.Culture.ToString();
+    //var base_uri_culture = "/" + culture;
+    var base_uri_culture = "/";
+    var domain = Context.Request.Host.ToString();
+    var cookie_location = cookieUtility.SetCookieDefault();
+    var location_id = cookie_location.LocationId;
+    var location_name = cookie_location.LocationName;
+    var zone_type = ViewBag.Type;
+    var zone_id = ViewBag.ZoneId ?? 0;
+    var zone_parent = ViewBag.Parent;
+    var is_have_child = ViewBag.IsHaveChild;
+    var pageIndex = ViewBag.PageIndex;
+    var pageSize = ViewBag.PageSize;
+    var zone_detail = zoneRepository.GetZoneDetail(zone_id, culture_code) as ZoneDetail;
+}
+
+@if (zone_type == (int)TypeZone.Product)
+{
+    
+    if (zone_detail != null)
+    {
+        @section styles{
+            @{ var bind_meta = "";}
+            @if (zone_detail != null)
+            {
+                // lấy mặc định meta description, ko lấy content
+                //bind_meta += configSEOUtility.ConfigMeta(zone_detail.MetaTitle, string.IsNullOrEmpty(zone_detail.MetaDescription) ? UIHelper.TrimByWord(zone_detail.Content, 20, "...") : zone_detail.MetaDescription, zone_detail.MetaKeyword);
+                //bind_meta += configSEOUtility.ConfigSocialMeta("default app id", domain, zone_detail.MetaTitle, string.IsNullOrEmpty(zone_detail.MetaDescription) ? UIHelper.TrimByWord(zone_detail.Content, 20, "...") : zone_detail.MetaDescription, UIHelper.StoreFilePath(string.IsNullOrEmpty(zone_detail.Avatar) ? WebHelper.GetFirstImage(zone_detail.Content) : zone_detail.Avatar));
+
+
+
+                var x = "";
+                if (!string.IsNullOrEmpty(zone_detail.Content))
+                {
+                    x = UIHelper.ClearHtmlTag(zone_detail.Content);
+                }
+
+
+                bind_meta += configSEOUtility.ConfigMeta(zone_detail.MetaTitle, string.IsNullOrEmpty(zone_detail.MetaDescription) ? UIHelper.TrimByWord(x, 20, "...") : zone_detail.MetaDescription, zone_detail.MetaKeyword);
+                bind_meta += configSEOUtility.ConfigSocialMeta("default app id", domain, zone_detail.MetaTitle, string.IsNullOrEmpty(zone_detail.MetaDescription) ? UIHelper.TrimByWord(UIHelper.ClearHtmlTag(x), 20, "...") : zone_detail.MetaDescription, string.IsNullOrEmpty(zone_detail.Avatar) ? WebHelper.GetFirstImage(zone_detail.Content) : zone_detail.Avatar);
+
+            }
+            @Html.Raw(bind_meta)
+            <style>
+                .color-circle {
+                    height: 20px;
+                    width: 20px;
+                    border-radius: 50%;
+                    display: inline-block; /*border: 1px solid #ffffff;*/
+                }
+
+                .picking-active {
+                    border: 1px solid red !important;
+                }
+
+                .detail img {
+                    max-width: 100%;
+                    height: auto;
+                    margin-top: 10px;
+                }
+
+                .detail table {
+                    margin-top: 10px;
+                }
+
+                .detail .maintain-ul li::before {
+                    content: "\25AA";
+                    color: orange;
+                    font-weight: bold;
+                    font-size: 20px;
+                    display: inline-block;
+                    margin-right: 10px;
+                    /*content: "\2022";*/ /* Add content: \2022 is the CSS Code/unicode for a bullet */
+                    /*color: red;*/ /* Change the color */
+                    /*font-weight: bold;*/ /* If you want it to be bold */
+                    /*display: inline-block;*/ /* Needed to add space between the bullet and the text */
+                    /*width: 1em;*/ /* Also needed for space (tweak if needed) */
+                    /*margin-left: -1em;*/ /* Also needed for space (tweak if needed) */
+                }
+
+                .detail a {
+                    color: blue;
+                }
+
+                .detail .maintain-ul-smaller li::before {
+                    content: "\25AA";
+                    color: black;
+                    font-weight: bold;
+                    display: inline-block;
+                    font-size: 15px;
+                    margin-right: 10px;
+                    margin-left: 15px;
+                }
+
+                .detail h2 {
+                    font-size: 20px;
+                    display: inline-block;
+                }
+
+                .detail h3 {
+                    font-size: 18px;
+                    display: inline-block;
+                }
+
+                .detail h4 {
+                    font-size: 16px;
+                    display: inline-block;
+                }
+
+                .detail table tr td {
+                    padding: 0 10px;
+                }
+
+                .detail table tr th {
+                    text-align: center;
+                }
+                /*
+                .detail h5 {
+                    font-size: 14px;
+                }
+
+                .detail h6 {
+                    font-size: 12px;
+                }*/
+            </style>
+            <link href="~/css/tuananh.css" rel="stylesheet" />
+        }
+    }
+
+    @await Component.InvokeAsync("RedirectProductList", new { zoneDetal = zone_detail, pageIndex = pageIndex, pageSize = pageSize });
+    @section Scripts{
+        <script>
+            // ===================Slide-Background-Top==================
+            $(document).ready(function () {
+                var slt = $('.slide-prod-bep').find('.atest-1').length;
+                $('.slide-prod-bep').slick({
+                    autoplay: false,
+                    autoplaySpeed: 2500,
+                    infinite: true,
+                    arrows: false,
+                    slidesToShow: slt,
+                    responsive: [{
+                        breakpoint: 1024,
+                        settings: {
+                            slidesToShow: slt <= 4 ? slt : 4,
+                            slidesToScroll: 1
+                        }
+                    }, {
+                        breakpoint: 480,
+                        settings: {
+                            slidesToShow: slt <= 3 ? slt : 3,
+                            slidesToScroll: 1
+                        }
+                    }]
+                });
+                $('.next-1').click(function () {
+                    $(".slide-prod-bep").slick('slickNext');
+                });
+                $('.pre-1').click(function () {
+                    $(".slide-prod-bep").slick('slickPrev');
+                });
+            });
+        </script>
+        <script type="text/javascript" src="~/js/libs/momentjs/momentJS.js" asp-append-version="true"></script>
+        <script type="text/javascript" src="~/js/libs/daterangepicker-master/daterangepicker.js" asp-append-version="true"></script>
+        <script type="text/javascript" src="~/js/libs/paginationjs/paginationJS.js" asp-append-version="true"></script>
+        <script type="text/javascript" src="~/js/controller/productController.js" asp-append-version="true"></script>
+
+    }
+}
+
+@if (zone_type != (int)TypeZone.Product && zone_type != (int)TypeZone.Categories)
+{
+         @section styles{
+            @{ var bind_meta = "";}
+            @if (zone_detail != null)
+            {
+                // lấy mặc định meta description, ko lấy content
+                //bind_meta += configSEOUtility.ConfigMeta(zone_detail.MetaTitle, string.IsNullOrEmpty(zone_detail.MetaDescription) ? UIHelper.TrimByWord(zone_detail.Content, 20, "...") : zone_detail.MetaDescription, zone_detail.MetaKeyword);
+                //bind_meta += configSEOUtility.ConfigSocialMeta("default app id", domain, zone_detail.MetaTitle, string.IsNullOrEmpty(zone_detail.MetaDescription) ? UIHelper.TrimByWord(zone_detail.Content, 20, "...") : zone_detail.MetaDescription, UIHelper.StoreFilePath(string.IsNullOrEmpty(zone_detail.Avatar) ? WebHelper.GetFirstImage(zone_detail.Content) : zone_detail.Avatar));
+
+
+
+                var x = "";
+                if (!string.IsNullOrEmpty(zone_detail.Content))
+                {
+                    x = UIHelper.ClearHtmlTag(zone_detail.Content);
+                }
+
+
+                bind_meta += configSEOUtility.ConfigMeta(zone_detail.MetaTitle, string.IsNullOrEmpty(zone_detail.MetaDescription) ? UIHelper.TrimByWord(x, 20, "...") : zone_detail.MetaDescription, zone_detail.MetaKeyword);
+                bind_meta += configSEOUtility.ConfigSocialMeta("default app id", domain, zone_detail.MetaTitle, string.IsNullOrEmpty(zone_detail.MetaDescription) ? UIHelper.TrimByWord(UIHelper.ClearHtmlTag(x), 20, "...") : zone_detail.MetaDescription, string.IsNullOrEmpty(zone_detail.Avatar) ? WebHelper.GetFirstImage(zone_detail.Content) : zone_detail.Avatar);
+
+            }
+            @Html.Raw(bind_meta)
+            
+        }
+            var zz = new ZoneDetail();
+            if(zone_id > 0)
+            {
+                zz = zoneRepository.GetZoneDetail(zone_id, culture_code);
+            }
+        
+   
+        @await Component.InvokeAsync("RedirectBlogListProvider", new { zone = zz, pageIndex = pageIndex, pageSize = pageSize });
+        @section scripts {
+            <script type="text/javascript" src="~/js/libs/momentjs/momentJS.js" asp-append-version="true"></script>
+            <script type="text/javascript" src="~/js/libs/daterangepicker-master/daterangepicker.js" asp-append-version="true"></script>
+            <script type="text/javascript" src="~/js/libs/paginationjs/paginationJS.js" asp-append-version="true"></script>
+            <script type="text/javascript" src="~/js/controller/blogDetailController.js" asp-append-version="true"></script>
+            <script type="text/javascript" src="~/js/controller/blogList2Controller.js" asp-append-version="true"></script>
+
+        }
+        
+
+}
+
+
+@if (zone_type == (int)TypeZone.Categories && zone_parent == 0)
+{
+    @await Component.InvokeAsync("RedirectCategoriesList", new { zoneId = zone_id, pageIndex = pageIndex, pageSize = pageSize });
+    @section scripts {
+        <script type="text/javascript" src="~/js/libs/momentjs/momentJS.js" asp-append-version="true"></script>
+        <script type="text/javascript" src="~/js/libs/daterangepicker-master/daterangepicker.js" asp-append-version="true"></script>
+        <script type="text/javascript" src="~/js/libs/paginationjs/paginationJS.js" asp-append-version="true"></script>
+        <script type="text/javascript" src="~/js/controller/categoriesList1Controller.js" asp-append-version="true"></script>
+
+    }
+}
+@if (zone_type == (int)TypeZone.Categories && zone_parent > 0)
+{
+    @await Component.InvokeAsync("RedirectCategoriesList1", new { zoneId = zone_id, pageIndex = pageIndex, pageSize = pageSize });
+    @section scripts {
+        <script type="text/javascript" src="~/js/libs/momentjs/momentJS.js" asp-append-version="true"></script>
+        <script type="text/javascript" src="~/js/libs/daterangepicker-master/daterangepicker.js" asp-append-version="true"></script>
+        <script type="text/javascript" src="~/js/libs/paginationjs/paginationJS.js" asp-append-version="true"></script>
+        <script type="text/javascript" src="~/js/controller/categoriesList1Controller.js" asp-append-version="true"></script>
+
+    }
+}
+
+
+
+
+

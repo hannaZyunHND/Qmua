@@ -1,0 +1,369 @@
+﻿@using PhamGiaLandingPage.Web.Services.Product.Repository
+@using PhamGiaLandingPage.Web.Services.Zone.Repository
+@using MI.Entity.Enums
+@using PhamGiaLandingPage.Web.Services.BannerAds.Repository
+@using PhamGiaLandingPage.Web.Services.FlashSale.Repository
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.AspNetCore.Http
+@using PhamGiaLandingPage.Web.Services.Article.Repository
+@using Newtonsoft.Json
+@using PhamGiaLandingPage.Web.Utility
+@using Microsoft.AspNetCore.Mvc.RazorPages
+@using MI.Entity.Models
+@using PhamGiaLandingPage.Web.Services.Extra.ViewModel
+@using PhamGiaLandingPage.Web.Services.Extra.Repository
+@using Microsoft.AspNetCore.Http.Extensions
+
+@inject IHttpContextAccessor HttpContextAccessor
+@inject ICookieUtility cookieUtility
+@inject IConfigSEOUtility configSEOUtility
+@inject IArticleRepository articleRepository
+@inject IBannerAdsRepository bannerAdsRepository
+@inject IFlashSaleRepository flashSaleRepository
+@inject IExtraRepository extraRepository
+@inject IZoneRepository zoneRepository
+
+@using Utils
+@{
+    ViewData["Title"] = "DichVu";
+    Layout = "~/Views/Shared/_LayoutPublicHome.cshtml";
+    var culture = Context.Features.Get<IRequestCultureFeature>().RequestCulture.Culture.TwoLetterISOLanguageName.ToLower();
+    var culture_code = Context.Features.Get<IRequestCultureFeature>().RequestCulture.Culture.ToString();
+    var base_uri_culture = "/" + culture;
+    var path = Context.Request.Path.ToString().Split("/")[2];
+
+
+    var prefix = "";
+    var d = new Dictionary<string, string>();
+    d.Add("facebook", "Facebook");
+    d.Add("application-marketing", "ApplicationMarketing");
+    d.Add("tiktok", "TikTokMarketing");
+    d.Add("media-solution", "MeidaSolution");
+    foreach (var item in d)
+    {
+        if (path == item.Key)
+        {
+            prefix = item.Value;
+        }
+    }
+}
+
+<!--Banner-->
+
+@{
+    var banner = bannerAdsRepository.GetBannerAds_By_Code(culture_code, (string.Format("Cooken_{0}_Banner", prefix)));
+    if (banner != null)
+    {
+        var b = Newtonsoft.Json.JsonConvert.DeserializeObject<DetailBanerAds>(banner.MetaData);
+        if (b != null)
+        {
+            <div class="home__section05 uk-section uk-background-norepeat uk-background-bottom-center" uk-height-viewport="offset-top: true;" data-src="~/design/cooken-03-2021/images/Background1.png" uk-img>
+                <div class="uk-container uk-container-small">
+                    <div class="uk-flex-middle uk-child-width-1-2@m uk-flex-right@m uk-position-relative" uk-grid uk-scrollspy="target: .animation; cls: uk-animation-slide-bottom-small; delay: 500; repeat: false;">
+                        <div class="" uk-toggle="cls: uk-position-center-left; mode: media; media: @@m">
+                            <div class="home__section05__box1 facebook">
+                                <h1 class="uk-h1 home__section05__box1__title uk-margin animation">
+                                    @{
+                                        var t1 = b.Title.Split(" ")[0];
+                                        t1 = string.Join(" ", new List<string>() { b.Title.Split(" ")[0], b.Title.Split(" ")[1] });
+                                        var t2 = string.Join(" ", b.Title.Split(" ").Skip(2));
+                                        var css_class_color = "";
+                                        switch (path)
+                                        {
+                                            case "facebook":
+                                                css_class_color = "#246AD3";
+                                                break;
+
+                                            case "application-marketing":
+                                                css_class_color = "#0ECACA";
+                                                break;
+
+                                            case "tiktok":
+                                                css_class_color = "#9D1DCA";
+                                                break;
+
+                                            case "media-solution":
+                                                css_class_color = "#DAB700";
+                                                break;
+
+                                        }
+                                        var cuted = UIHelper.CutLine(t2, cuttedWord: 4);
+                                    }
+                                    <p style="color: @css_class_color;">@t1 </p>
+                                    @Html.Raw(cuted)
+                                </h1>
+                                <div class="home__section05__box1__box uk-margin">
+                                    @Html.Raw(b.Description)
+                                </div>
+                                <a href="@b.Url" class="home__section05__box1__btn uk-border-rounded uk-button uk-button-secondary animation">Xem thêm</a>
+                            </div>
+                        </div>
+                        <div class="uk-width-1-2@m">
+                            <div class="home__section05__box1__img animation" uk-scrollspy-class="uk-animation-scale-up">
+                                <img src="@UIHelper.StoreFilePath(b.Image, false)" alt="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+}
+@*<h1>@path</h1>*@
+<!--/Banner-->
+@{
+    var stem = bannerAdsRepository.GetBannerAds_By_Code(culture_code, string.Format("Cooken_{0}_KhoiStem", prefix));
+    if (stem != null)
+    {
+        var s = Newtonsoft.Json.JsonConvert.DeserializeObject<List<DetailBanerAds>>(stem.MetaData);
+        if (s.Count >= 1)
+        {
+
+            <div class="uk-section home__section06 uk-text-center uk-background-norepeat uk-background-top-center" data-src="~/design/cooken-03-2021/images/bg2.png" uk-img>
+                <div class="uk-container">
+                    <div class="uk-text-center uk-margin home__boxCommon mb-60-m">
+                        <h2 class="uk-h2 uk-text-uppercase home__boxCommon__title">@s[0].Title</h2>
+                    </div>
+                    <div class="uk-child-width-1-4@@m uk-grid-small uk-grid-20-m" uk-grid>
+
+                        @foreach (var item in s.Skip(1))
+                        {
+                            <div>
+                                <div class="uk-text-center">
+                                    <div class="facebook__box1__img">
+                                        <img src="@UIHelper.StoreFilePath(item.Image, false)" alt="">
+                                    </div>
+                                    <h5 class="uk-h5 facebook__box1__txt1">@item.Title</h5>
+                                    <div class="facebook__box1__txt2">@Html.Raw(item.Description)</div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    }
+}
+@{
+    var tab = bannerAdsRepository.GetBannerAds_By_Code(culture_code, string.Format("Cooken_{0}_KhoiTab", prefix));
+    if (tab != null)
+    {
+        var s = Newtonsoft.Json.JsonConvert.DeserializeObject<List<DetailBanerAds>>(tab.MetaData);
+        if (s.Count > 1)
+        {
+            <div class="uk-section home__section07" uk-height-viewport="offset-bottom: false">
+                <div class="uk-container uk-container-small">
+                    <div class="uk-text-center uk-margin home__boxCommon mb-40-m">
+                        <h2 class="uk-h2 uk-text-uppercase home__boxCommon__title">@s[0].Title</h2>
+                    </div>
+                    <ul class="uk-child-width-auto@@m uk-margin mb-60-m uk-grid-small uk-grid-30-m uk-flex-center" uk-grid uk-switcher="connect: .my-class">
+
+                        @foreach (var item in s.Skip(1).OrderBy(r => r.Order))
+                        {
+                            <li>
+                                <a href="" class="home__section07__box1__btn uk-button uk-button-default">@item.Title</a>
+                            </li>
+                        }
+
+                    </ul>
+                    <ul class="uk-switcher mb-60-m my-class">
+                        @foreach (var item in s.Skip(1).OrderBy(r => r.Order))
+                        {
+                            <li>
+                                <div class="uk-flex-middle uk-grid-small uk-grid-58-m" uk-grid uk-scrollspy="target: .animation; cls: uk-animation-slide-bottom-small; delay: 500; repeat: false;">
+                                    <div class="uk-width-expand">
+                                        <img src="@UIHelper.StoreFilePath(item.Image, false)" alt="">
+                                    </div>
+                                    <div class="uk-width-2-5@@m animation">
+                                        <h3 class="uk-h3 home__section07__box2__title uk-text-capitalize">@item.Title</h3>
+                                        <div class="mb-20 mb-32-m">
+                                            @Html.Raw(item.Description)
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </li>
+                        }
+                    </ul>
+
+                    @{
+                        var count = 0;
+                        var dongmo = bannerAdsRepository.GetBannerAds_By_Code(culture_code, string.Format("Cooken_{0}_KhoiDongMo", prefix));
+                        if (dongmo != null)
+                        {
+                            var dm = Newtonsoft.Json.JsonConvert.DeserializeObject<List<DetailBanerAds>>(dongmo.MetaData);
+                            if (dm.Count > 1)
+                            {
+
+                                <div class="uk-text-center uk-margin home__boxCommon mb-60-m">
+                                    <h2 class="uk-h2 uk-text-uppercase home__boxCommon__title">@dm[0].Title</h2>
+                                </div>
+                                <div class="uk-child-width-1-2@@m uk-grid-small uk-grid-21-m" uk-grid>
+                                    <div>
+                                        <ul class="home__section04__box1" uk-accordion uk-scrollspy="target: .animation; cls: uk-animation-slide-bottom-small; delay: 500; repeat: false;">
+                                            @foreach (var item in dm.Skip(1))
+                                            {
+                                                <li class="animation @(count == 0 ? "uk-open": "") ">
+                                                    <a class="uk-accordion-title home__section04__box1__title" href="#"><span class="home__section04__box1__title__txt">@item.Title</span></a>
+                                                    <div class="uk-accordion-content home__section04__box1__content uk-background-muted uk-padding-small">
+                                                        @Html.Raw(item.Description)
+                                                    </div>
+                                                </li>
+                                                count++;
+                                            }
+
+                                            <!--
+
+                                            -->
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <div class="uk-cover-container">
+                                            <img src="@UIHelper.StoreFilePath(dm[0].Image)" alt="@dm[0].Image" uk-cover>
+                                            <canvas width="910" height="992"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+
+                        }
+                    }
+
+
+                </div>
+            </div>
+        }
+    }
+}
+
+
+
+<!--DỊCH VỤ-->
+<!--/DỊCH VỤ-->
+<!--LỢI THẾ CỦA COOKEN AGENCY-->
+<div class="uk-section-xlarge home__section04 uk-background-norepeat uk-background-top-center" uk-height-viewport="offset-bottom: true" data-src="/design/cooken-03-2021/images/bg4.png" uk-img>
+    <div class="uk-container uk-container-small mb-30 mb-80-m">
+        <div class="uk-text-center uk-margin home__boxCommon mb-80-m">
+            <h2 class="uk-h2 uk-text-uppercase home__boxCommon__title">DỰ ÁN TIÊU BIỂU</h2>
+        </div>
+        <div class="" uk-scrollspy="cls: counter;">
+            <div id="counter" class="uk-child-width-1-2 uk-grid-small uk-grid-43-m" uk-grid uk-scrollspy="target: .home__section04__blog__box2; cls: uk-animation-fade; delay: 500">
+                @{
+                    var conso = bannerAdsRepository.GetBannerAds_By_Code(culture_code, string.Format("Cooken_{0}_ConSo", prefix));
+                    if (conso != null)
+                    {
+                        var cs = Newtonsoft.Json.JsonConvert.DeserializeObject<List<DetailBanerAds>>(conso.MetaData);
+                        if (cs != null)
+                        {
+                            foreach (var item in cs)
+                            {
+                                <div class="uk-width-auto@@m">
+                                    <div class="uk-text-center home__section04__blog__box2">
+                                        @{var cts = 0;}
+                                        <div class="home__section04__blog__box2__txt1"><span class="counter-value" data-count="@item.Title.Split(" ")[0]">@item.Title</span>@(int.TryParse(item.Title, out cts) ? "+" : "TRIỆU" )</div>
+                                        <div class="home__section04__blog__box2__txt2">@Html.Raw(item.Description)</div>
+                                    </div>
+                                </div>
+                            }
+                        }
+                    }
+                }
+            </div>
+        </div>
+    </div>
+    <div class="uk-container">
+        <div class="" uk-slider="finite: true;autoplay: true;">
+
+            <div class="uk-position-relative uk-visible-toggle" tabindex="-1">
+
+                <ul class="uk-slider-items uk-child-width-1-2 uk-child-width-1-3@@s uk-child-width-1-3@@m uk-flex-middle uk-grid-small uk-grid-20-m" uk-grid>
+                    @{
+                        var t = 0;
+                        @* var lsDuAn = articleRepository.GetArticlesInZoneId_Minify_FullFilter(0, (int)TypeZone.DuAn, 0, 2, culture_code, "", 1, 8, out t); *@
+                        var lsDuAn = bannerAdsRepository.GetBannerAds_By_Code(culture_code, string.Format("Cooken_{0}_DuAnTieuBieu", prefix));
+                        if (lsDuAn != null)
+                        {
+                            var l = Newtonsoft.Json.JsonConvert.DeserializeObject<List<DetailBanerAds>>(lsDuAn.MetaData);
+                            if (l != null)
+                            {
+                                for (int i = 0; i < l.Count; i++)
+                                {
+                                    <li>
+                                        <div class="uk-child-width-1-1 uk-grid-small uk-grid-40-m" uk-grid>
+                                            @if (l[i] != null)
+                                            {
+                                                <div>
+                                                    <div class="uk-inline-clip uk-transition-toggle facebook__box2 uk-light" tabindex="0">
+                                                        <div class="uk-cover-container uk-transition-scale-up uk-transition-opaque">
+                                                            <img src="@UIHelper.StoreFilePath(l[i].Image)" alt="" uk-cover>
+                                                            <canvas width="1080" height="873"></canvas>
+                                                        </div>
+                                                        <div class="uk-transition-fade uk-position-cover facebook__box2__overlay uk-overlay uk-overlay-default uk-flex uk-flex-center uk-flex-middle">
+
+                                                        </div>
+                                                        <div class="uk-position-center uk-text-center">
+                                                            <div class="uk-transition-slide-top-small mb-20 mb-27-m">
+                                                                <div class="facebook__box2__txt1">@l[i].Title</div>
+                                                                <h4 class="uk-margin-remove facebook__box2__txt2">@Html.Raw(l[i].Description)</h4>
+                                                            </div>
+                                                            <div class="uk-transition-slide-bottom-small">
+                                                                <a href="@l[i].Url" class="facebook__box2__btn uk-button uk-button-default uk-border-pill">XEM CHI TIẾT</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+                                            @if (l.Count > i + 2)
+                                            {
+                                                if (l[i + 2] != null)
+                                                {
+                                                    <div>
+                                                        <div class="uk-inline-clip uk-transition-toggle facebook__box2 uk-light" tabindex="0">
+                                                            <div class="uk-cover-container uk-transition-scale-up uk-transition-opaque">
+                                                                <img src="@UIHelper.StoreFilePath(l[i+2].Image)" alt="" uk-cover>
+                                                                <canvas width="1080" height="873"></canvas>
+                                                            </div>
+                                                            <div class="uk-transition-fade uk-position-cover facebook__box2__overlay uk-overlay uk-overlay-default uk-flex uk-flex-center uk-flex-middle">
+
+                                                            </div>
+                                                            <div class="uk-position-center uk-text-center">
+                                                                <div class="uk-transition-slide-top-small mb-20 mb-27-m">
+                                                                    <div class="facebook__box2__txt1">@l[i + 2].Title</div>
+                                                                    <h4 class="uk-margin-remove facebook__box2__txt2">@Html.Raw(l[i + 2].Description)</h4>
+                                                                </div>
+                                                                <div class="uk-transition-slide-bottom-small">
+                                                                    <a href="@l[i+2].Url" class="facebook__box2__btn uk-button uk-button-default uk-border-pill">XEM CHI TIẾT</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                }
+
+                                            }
+
+
+                                        </div>
+                                    </li>
+
+                                }
+                            }
+                        }
+
+
+                    }
+                </ul>
+
+                <!--
+                <a class="uk-position-center-left uk-position-small uk-hidden-hover" href="#" uk-slidenav-previous uk-slider-item="previous"></a>
+                <a class="uk-position-center-right uk-position-small uk-hidden-hover" href="#" uk-slidenav-next uk-slider-item="next"></a>
+                -->
+
+            </div>
+
+            <ul class="home__dot1 uk-slider-nav uk-dotnav uk-flex-center uk-margin mt-37-m"></ul>
+
+        </div>
+    </div>
+</div>
+<!--/LỢI THẾ CỦA COOKEN AGENCY-->

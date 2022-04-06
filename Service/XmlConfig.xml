@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<AppSettings>
+  <add key="DefaultConnection" value="Server=118.70.185.130;Database=enterbuy_merged;Trusted_Connection=False;User Id=ndev;password=asd123!@##@;" />
+  <add key="TimeWait" value="500" />
+  <add key="ApplicationName" value="Google Sheets Example" />
+  <add key="SheetName" value="sheet1" />
+  <add key="SpreadsheetId" value="1oY7HsMgT09lg8u7Cq9QfX4umRLNl9U8c1zmIBhsrh9k" />
+  <add key="RowNum" value="10" />
+  <MaxId>10</MaxId>
+</AppSettings>

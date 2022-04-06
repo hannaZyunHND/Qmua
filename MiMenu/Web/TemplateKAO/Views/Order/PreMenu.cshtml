@@ -1,0 +1,327 @@
+@using TemplateKAO.Services.Product.Repository
+@using TemplateKAO.Services.Zone.Repository
+@using MI.Entity.Enums
+@using TemplateKAO.Services.BannerAds.Repository
+@using TemplateKAO.Services.FlashSale.Repository
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.AspNetCore.Http
+@using TemplateKAO.Services.Article.Repository
+@using Newtonsoft.Json
+@using TemplateKAO.Utility
+@using Microsoft.AspNetCore.Mvc.RazorPages
+@using MI.Entity.Models
+@using TemplateKAO.Services.Extra.ViewModel
+@using TemplateKAO.Services.Extra.Repository
+@using Microsoft.AspNetCore.Http.Extensions
+
+@inject IHttpContextAccessor HttpContextAccessor
+@inject ICookieUtility cookieUtility
+@inject IConfigSEOUtility configSEOUtility
+@inject IArticleRepository articleRepository
+@inject IBannerAdsRepository bannerAdsRepository
+@inject IFlashSaleRepository flashSaleRepository
+@inject IExtraRepository extraRepository
+@inject IZoneRepository zoneRepository
+
+@using Utils
+@{
+    var culture = Context.Features.Get<IRequestCultureFeature>().RequestCulture.Culture.TwoLetterISOLanguageName.ToLower();
+    var culture_code = Context.Features.Get<IRequestCultureFeature>().RequestCulture.Culture.ToString();
+    var base_uri_culture = "/" + culture;
+    var domain = Context.Request.Host.ToString();
+    var domain_full = Context.Request.GetDisplayUrl();
+
+    const string CookieLocationId = "_LocationId";
+    const string CookieLocationName = "_LocationName";
+    var cookie_location = cookieUtility.SetCookieDefault();
+    var location_id = cookie_location.LocationId;
+    var location_name = cookie_location.LocationName;
+    
+
+    var title = bannerAdsRepository.GetConfigByName(culture_code, "TitleHome");
+    var DesWeb = bannerAdsRepository.GetConfigByName(culture_code, "DesWeb");
+    var MetaKeyword = bannerAdsRepository.GetConfigByName(culture_code, "MetaKeyword");
+    var FacebookAppId = bannerAdsRepository.GetConfigByName(culture_code, "FacebookAppId");
+    var SEOGoogle = bannerAdsRepository.GetConfigByName(culture_code, "SeoPhoto");
+    //var FacebookAppId = bannerAdsRepository.GetConfigByName(culture_code, "FacebookAppId ");
+}
+@inject IProductRepository productRepository
+@inject IZoneRepository zoneRepository
+@{
+    //ViewData["Title"] = "IndexPublic";
+    Layout = "~/Views/Shared/_LayoutPublicHome.cshtml";
+}
+@section styles{
+    @Html.Raw(configSEOUtility.ConfigSocialMeta("default appID", domain_full, title, DesWeb, SEOGoogle))
+    @Html.Raw(configSEOUtility.ConfigMeta(title, DesWeb, MetaKeyword))
+}
+
+@{
+    var all_dm_sp = zoneRepository.GetZoneByTreeViewMinifies((int)TypeZone.Product, culture_code, 0);
+}
+
+@*<cache expires-after="@TimeSpan.FromMinutes(5)">*@
+@*<cache expires-after="@TimeSpan.FromMinutes(30)" vary-by-cookie=".AspNetCore.Culture, _LocationId">*@
+
+@*<section id="app" class="uk-height-viewport uk-offcanvas-content uk-overflow-hidden uk-position-relative">
+    <div uk-sticky="" style="z-index: 1000;">
+        <header class="header uk-background-02">
+            <div class="uk-container uk-padding-remove">
+                <nav class="uk-navbar-container uk-navbar-transparent" uk-navbar>
+                    <div class="uk-navbar-left">
+                        <a href="." class="uk-navbar-item uk-logo"><img src="~/design/images/logo.png" alt=""></a>
+                    </div>
+                    <div class="uk-navbar-right">
+                        <ul class="uk-navbar-nav uk-visible@@m">
+                            <li class="uk-active"><a href=".">Trang chủ</a></li>
+                            <li><a href="menu.php">Menu</a></li>
+                            <li><a href="blog.php">Blog</a></li>
+                            <li><a href="contact.php">Liên hệ</a></li>
+                        </ul>
+                        <a href="#offcanvas-overlay-trekhoedep" class="uk-navbar-toggle uk-hidden@@m" uk-toggle>
+                            <div id="m_nav_menu" class="m_nav menu">
+                                <div class="m_nav_ham button_closed" id="m_ham_1"></div>
+                                <div class="m_nav_ham button_closed" id="m_ham_2"></div>
+                                <div class="m_nav_ham button_closed" id="m_ham_3"></div>
+                            </div>
+                        </a>
+                        <div>
+                            <a class="uk-navbar-toggle" href="#" uk-search-icon></a>
+                            <div class="uk-navbar-dropdown" uk-drop="mode: click; cls-drop: uk-navbar-dropdown; boundary: !nav">
+
+                                <div class="uk-grid-small uk-flex-middle" uk-grid>
+                                    <div class="uk-width-expand">
+                                        <form class="uk-search uk-search-navbar uk-width-1-1">
+                                            <input class="uk-search-input" type="search" placeholder="Search" autofocus>
+                                        </form>
+                                    </div>
+                                    <div class="uk-width-auto">
+                                        <a class="uk-navbar-dropdown-close" href="#" uk-close></a>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </header>
+    </div>*@
+
+@*<div class="uk-background-norepeat uk-visible@m menu__section1 uk-position-relative uk-background-cover uk-light" data-src="design/images/05600a6dc19a37ef746fb267902398bf2.png" uk-img>*@
+    <div class="uk-background-norepeat menu__section1 uk-position-relative uk-background-cover uk-light" data-src="design/images/05600a6dc19a37ef746fb267902398bf2.png" uk-img>
+    <div class="uk-position-cover menu__overlay"></div>
+    <div class="uk-position-relative uk-position-z-index uk-section-small uk-text-center">
+        <div class="uk-container">
+            <h1 class="uk-h1 menu__title2">Menu</h1>
+            <ul class="uk-breadcrumb">
+                <li><a href="">Home</a></li>
+                <li><a href="">Menu</a></li>
+                <li><span>Đặt hàng</span></li>
+            </ul>
+        </div>
+    </div>
+</div>
+    <div class="uk-section-xsmall uk-background-muted" uk-height-viewport="offset-bottom: true;offset-top: true">
+        <div class="uk-container">
+            <div class="uk-grid-5 uk-margin" uk-grid>
+                <div>
+                    <span uk-icon="icon: location; ratio: 1"></span>
+                </div>
+                <div>
+                    <span class="menu__txt1">KAO Coffee, Phường Điện Bàn, Đà Nẵng</span>
+                </div>
+            </div>
+            <div class="menu__card1 uk-margin uk-card uk-card-default uk-card-body uk-border-rounded uk-padding-small">
+                <span class="menu__txt2">Nhập mã VANPHONGVUI: Giảm giá 10,000đ các sản phẩm</span>
+            </div>
+            <div class="uk-grid-small uk-grid-20-m" uk-grid>
+                <div class="uk-width-expand">
+                    <div class="uk-background-default uk-border-rounded menu__content">
+                        <div class="uk-grid-divider uk-grid-small uk-grid-match" uk-grid>
+                            <div class="uk-width-1-4@@m">
+                                <div class="uk-padding-small uk-padding-remove-bottom uk-padding-remove-top" uk-sticky="offset: 80;media: @@m;bottom: true;">
+                                    <div class="uk-section-xsmall">
+                                        <h3 class="uk-h3 menu__titleThucdon">Thực đơn</h3>
+                                        <ul class="uk-nav uk-nav-default menu__nav1" uk-scrollspy-nav="closest: li; scroll: true;offset: 80;">
+                                            @{
+                                                foreach(var item in all_dm_sp){
+                                                    <li><a href="#@item.Url">@item.Name</a></li>
+                                                }
+                                            }
+                                            
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="uk-width-expand">
+                                <div class="uk-padding-small menu__padding1 uk-padding-remove-bottom uk-padding-remove-top">
+                                    <div class="uk-section-xsmall">
+                                        <div class="uk-margin">
+                                            <form class="uk-search uk-search-default menu__boxSearch">
+                                                <span uk-search-icon></span>
+                                                <input class="uk-search-input" type="search" placeholder="Tìm món nhanh">
+                                            </form>
+                                        </div>
+                                        @foreach (var item in all_dm_sp)
+                                        {
+                                        <div class="uk-margin-medium" id="@(item.Url)1">
+                                            <h3 class="uk-h3 menu__title1" id="@item.Url" uk-sticky="bottom: #tea-another;offset: 100;media: @@m">@item.Name</h3>
+                                            <div class="uk-grid-small uk-grid-20-m" uk-grid>
+
+                                                @{
+                                                    var t = 0;
+                                                    var _sp1 = productRepository.GetProductMinifiesTreeViewByZoneParentId(item.Id, culture_code, location_id, 1,1000, out t);
+                                                }
+                                                
+                                                    
+                                                    @foreach(var s in _sp1)
+                                                    {
+                                                        <div class="uk-width-1-1">
+                                                    <div class="uk-card menu__card2 uk-card-default uk-card-body uk-padding-small uk-border-rounded">
+                                                        <div class="uk-flex-middle" uk-grid>
+                                                            <div class="uk-width-auto@@m">
+                                                                <div class="menu__card2__bg">
+                                                                    <img class="uk-responsive-height uk-responsive-width" src="~/design/images/mug_coffee_PNG168241.png" alt="">
+                                                                </div>
+                                                            </div>
+                                                            <div class="uk-width-expand">
+                                                                <div class="menu__card2__title">@s.Title</div>
+                                                                <div class="menu__card2__txt">VNĐ</div>
+                                                                @{
+                                                                    var gia_sp = s.Price;
+                                                                    if(s.SalePrice > 0 && s.SalePrice < s.Price){
+                                                                        gia_sp = s.SalePrice;
+                                                                        <div class="menu__card2__price menu__card2__price__old"><del>@UIHelper.FormatNumber(s.Price)</del></div>        
+                                                                    }
+                                                                }
+                                                                <div class="menu__card2__price menu__card2__price__new">@UIHelper.FormatNumber(gia_sp)</div>
+                                                            </div>
+                                                            <div class="uk-width-auto@@m">
+                                                                <a href="javascript:void(0)" class="menu__card2__link them_san_pham" data-idsp="@s.ProductId" data-ten="@s.Title" data-giasp="@gia_sp" uk-icon="icon: plus-circle; ratio: 1"></a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                    }
+                                            </div>
+                                        </div>    
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="uk-width-1-3@@m">
+                    <div class="uk-card uk-card-default menu__card3 uk-overflow-hidden html-gio-hang" uk-sticky="offset: 100;media: @@m;bottom: true;">
+                        <div class="uk-card-header">
+                            <h3 class="uk-h3 menu__titleThucdon">Món chọn</h3>
+                        </div>
+                        <table class="uk-table uk-table-divider uk-table-small uk-table-middle uk-margin-remove">
+                            <tbody>
+                                @* day la dom mau *@
+                            <tr class="root" style="display: none;" >
+                                <td>
+                                    <div class="uk-grid-5 uk-flex-middle" uk-grid>
+                                        <div>
+                                            <a href="javascript:void(0)" class="uk-icon-link cong_them_sp" uk-icon="icon:plus-circle;ratio:0.7"></a>
+                                        </div>
+                                        <div>
+                                            <div class="uk-position-relative menu__card3__table__w1">
+                                                <span class="uk-position-center menu__card3__table__txt2 so_luong">1</span>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <a href="javascript:void(0)" class="uk-icon-link tru_di_sp" uk-icon="icon:minus-circle;ratio:0.7"></a>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <a href="javascript:void(0)" class="uk-icon-link xoa_sp" uk-icon="icon:trash;ratio:0.7"></a>
+                                    <span class="uk-text-middle menu__card3__table__txt1 ten_sp">Coffee Capuchino</span>
+                                </td>
+                                <td>
+                                    <span class="menu__card3__table__txt1 gia_sp">50.000đ</span>
+                                </td>
+                            </tr>
+                                @* day la dom mau *@
+                            @* day la het phan san pham trong gio hang *@
+                            <tr>
+                                <td colspan="3">
+                                    <div class="uk-margin-small">
+                                        <div class="uk-position-relative">
+                                            <input class="uk-input menu__card3__box1__input uk-border-rounded ma_khuyen_mai" type="text" placeholder="Mã khuyến mãi của bạn">
+                                            <button type="button" class="uk-button menu__card3__box1__btn uk-background-secondary uk-button-small uk-position-center-right uk-position-small uk-border-rounded ap_dung_ma_khuyen_mai">ÁP DỤNG</button>
+                                        </div>
+                                    </div>
+                                    <div class="uk-margin-small tb_giam_gia" style="display:none">
+                                        <div class="uk-alert-success uk-margin-remove" uk-alert>
+                                            <a class="uk-alert-close menu__card3__box1__close" uk-close></a>
+                                            <p class="menu__card3__box1__txt">Bạn đã được giảm giá <span class="so_tien_giam_gia"></span> đ</p>
+                                        </div>
+                                    </div>
+                                    <a href="/dat-don-hang" class="uk-link-toggle">
+                                        <div class="menu__card3__table__btn">
+                                            <div class="uk-flex-middle" uk-grid>
+                                                <div class="uk-width-expand">
+                                                    <div class="menu__card3__submit__txt1 dh_so_mon"><span>0</span> món</div>
+                                                    <div class="menu__card3__submit__txt2 dh_tien_gachngang"><del>150.000đ</del></div>
+                                                    <div class="menu__card3__submit__txt3 dh_tien_tt">140.000đ</div>
+                                                </div>
+                                                <div class="uk-width-auto">
+                                                    <span class="menu__card3__submit__txt4 uk-text-middle uk-margin-small-right">ĐẶT NGAY</span>
+                                                    <span uk-icon="icon: arrow-right; ratio: 1.2"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+@*</cache>*@
+
+@*</cache>*@
+
+@section scripts{
+    @*<script type="text/javascript" src="~/js/libs/momentjs/momentJS.js" asp-append-version="true"></script>*@
+    @*<script type="text/javascript" src="~/js/libs/daterangepicker-master/moment.min.js" asp-append-version="true"></script>*@
+    @*<script type="text/javascript" src="/js/libs/daterangepicker-master/daterangepicker.js?v=1" ></script>*@
+    <script>
+        $('.slide-sock').slick({
+            autoplay: false,
+            autoplaySpeed: 2500,
+            arrows: false,
+            slidesToShow: 1,
+            responsive: [{
+                breakpoint: 1024,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1
+                }
+            }, {
+                breakpoint: 480,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1
+                }
+            }]
+        });
+
+        $('.next-2').click(function () {
+            $(".slide-sock").slick('slickNext');
+        });
+        $('.pre-2').click(function () {
+            $(".slide-sock").slick('slickPrev');
+        });
+    </script>
+    <script type="text/javascript" src="~/js/controller/preMenuControrller.js"></script>
+}

@@ -1,0 +1,51 @@
+.header{
+  .uk-sticky-below &{
+    background-color: $color2;
+    box-shadow: 0 2px 8px rgba(0,0,0,.08);
+  }
+  .uk-search-icon{
+    svg{
+      >*{
+        stroke: #ffffff !important;
+      }
+    }
+  }
+  &__navitem{
+    transition: all .3s;
+    min-height: 60px;
+    @include media-breakpoint-up('m'){
+      min-height: 120px;
+      .uk-sticky-below &{
+        min-height: 80px;
+      }
+    }
+  }
+  .uk-navbar-toggle,
+  .uk-navbar-item{
+    @extend .header__navitem;
+  }
+  .uk-logo{
+    img{
+      height: 30px;
+      @include media-breakpoint-up('m'){
+        height: 48px;
+      }
+      transition: all .3s;
+      .uk-sticky-below &{
+        @include media-breakpoint-up('m'){
+          height: 40px;
+        }
+      }
+    }
+  }
+  .uk-navbar-nav{
+    >li{
+      >a{
+        text-transform: inherit;
+        @extend .fz-18;
+        color: #ffffff;
+        @extend .header__navitem;
+      }
+    }
+  }
+}

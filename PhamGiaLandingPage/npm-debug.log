@@ -1,0 +1,2780 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'C:\\Program Files\\nodejs\\\\node.exe',
+1 verbose cli   'C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js',
+1 verbose cli   'install' ]
+2 info using npm@1.3.2
+3 info using node@v0.10.13
+4 verbose node symlink C:\Program Files\nodejs\\node.exe
+5 verbose readDependencies using package.json deps
+6 verbose install where, deps [ 'C:\\Work\\Website\\webcore_v1\\Web\\Lavista\\CMS\\Lavista.CMS',
+6 verbose install   [ '@babel/polyfill',
+6 verbose install     '@coreui/coreui',
+6 verbose install     '@coreui/coreui-plugin-chartjs-custom-tooltips',
+6 verbose install     '@coreui/icons',
+6 verbose install     '@coreui/vue',
+6 verbose install     '@johmun/vue-tags-input',
+6 verbose install     '@riophae/vue-treeselect',
+6 verbose install     'ajv',
+6 verbose install     'axios',
+6 verbose install     'bootstrap-vue',
+6 verbose install     'chart.js',
+6 verbose install     'ckeditor4-vue',
+6 verbose install     'clean-webpack-plugin',
+6 verbose install     'core-js',
+6 verbose install     'cross-spawn',
+6 verbose install     'font-awesome',
+6 verbose install     'loader-utils',
+6 verbose install     'lodash.orderby',
+6 verbose install     'perfect-scrollbar',
+6 verbose install     'rxjs',
+6 verbose install     'simple-line-icons',
+6 verbose install     'uglifyjs-webpack-plugin',
+6 verbose install     'vue',
+6 verbose install     'vue-awesome',
+6 verbose install     'vue-chartjs',
+6 verbose install     'vue-dynamic-select',
+6 verbose install     'vue-input-tag',
+6 verbose install     'vue-loader-plugin',
+6 verbose install     'vue-loading-overlay',
+6 verbose install     'vue-router',
+6 verbose install     'vue-select',
+6 verbose install     'vue-server-renderer',
+6 verbose install     'vue-simple-spinner',
+6 verbose install     'vue-style-loader',
+6 verbose install     'vue-tabs-component',
+6 verbose install     'vue-template-compiler',
+6 verbose install     'vue-toastification',
+6 verbose install     'vue2-daterange-picker',
+6 verbose install     'vuedraggable',
+6 verbose install     'vuelidate',
+6 verbose install     'vuex',
+6 verbose install     'vuex-router-sync',
+6 verbose install     'webpack-merge',
+6 verbose install     'xlsx',
+6 verbose install     'aspnet-webpack',
+6 verbose install     'babel-core',
+6 verbose install     'babel-loader',
+6 verbose install     'babel-plugin-transform-async-to-generator',
+6 verbose install     'babel-plugin-transform-runtime',
+6 verbose install     'babel-preset-es2015',
+6 verbose install     'babel-preset-stage-2',
+6 verbose install     'babel-register',
+6 verbose install     'bootstrap',
+6 verbose install     'cross-env',
+6 verbose install     'css-loader',
+6 verbose install     'event-source-polyfill',
+6 verbose install     'extract-text-webpack-plugin',
+6 verbose install     'file-loader',
+6 verbose install     'jquery',
+6 verbose install     'node-sass',
+6 verbose install     'optimize-css-assets-webpack-plugin',
+6 verbose install     'sass-loader',
+6 verbose install     'style-loader',
+6 verbose install     'url-loader',
+6 verbose install     'vue-loader',
+6 verbose install     'vue-test-utils',
+6 verbose install     'webpack',
+6 verbose install     'webpack-cli',
+6 verbose install     'webpack-hot-middleware' ] ]
+7 info preinstall janhome-cms@
+8 verbose readDependencies using package.json deps
+9 verbose cache add [ '@babel/polyfill@^7.10.4', null ]
+10 verbose cache add name=undefined spec="@babel/polyfill@^7.10.4" args=["@babel/polyfill@^7.10.4",null]
+11 verbose parsed url { protocol: null,
+11 verbose parsed url   slashes: null,
+11 verbose parsed url   auth: null,
+11 verbose parsed url   host: null,
+11 verbose parsed url   port: null,
+11 verbose parsed url   hostname: null,
+11 verbose parsed url   hash: null,
+11 verbose parsed url   search: null,
+11 verbose parsed url   query: null,
+11 verbose parsed url   pathname: '@babel/polyfill@^7.10.4',
+11 verbose parsed url   path: '@babel/polyfill@^7.10.4',
+11 verbose parsed url   href: '@babel/polyfill@^7.10.4' }
+12 verbose cache add name="" spec="babel/polyfill@^7.10.4" args=["","babel/polyfill@^7.10.4"]
+13 verbose parsed url { protocol: null,
+13 verbose parsed url   slashes: null,
+13 verbose parsed url   auth: null,
+13 verbose parsed url   host: null,
+13 verbose parsed url   port: null,
+13 verbose parsed url   hostname: null,
+13 verbose parsed url   hash: null,
+13 verbose parsed url   search: null,
+13 verbose parsed url   query: null,
+13 verbose parsed url   pathname: 'babel/polyfill@^7.10.4',
+13 verbose parsed url   path: 'babel/polyfill@^7.10.4',
+13 verbose parsed url   href: 'babel/polyfill@^7.10.4' }
+14 verbose cache add name="babel/polyfill" spec="^7.10.4" args=["babel/polyfill","^7.10.4"]
+15 verbose parsed url { protocol: null,
+15 verbose parsed url   slashes: null,
+15 verbose parsed url   auth: null,
+15 verbose parsed url   host: null,
+15 verbose parsed url   port: null,
+15 verbose parsed url   hostname: null,
+15 verbose parsed url   hash: null,
+15 verbose parsed url   search: null,
+15 verbose parsed url   query: null,
+15 verbose parsed url   pathname: '^7.10.4',
+15 verbose parsed url   path: '^7.10.4',
+15 verbose parsed url   href: '^7.10.4' }
+16 verbose addNamed [ 'babel/polyfill', '^7.10.4' ]
+17 verbose addNamed [ null, null ]
+18 verbose cache add [ '@coreui/coreui@^2.1.16', null ]
+19 verbose cache add name=undefined spec="@coreui/coreui@^2.1.16" args=["@coreui/coreui@^2.1.16",null]
+20 verbose parsed url { protocol: null,
+20 verbose parsed url   slashes: null,
+20 verbose parsed url   auth: null,
+20 verbose parsed url   host: null,
+20 verbose parsed url   port: null,
+20 verbose parsed url   hostname: null,
+20 verbose parsed url   hash: null,
+20 verbose parsed url   search: null,
+20 verbose parsed url   query: null,
+20 verbose parsed url   pathname: '@coreui/coreui@^2.1.16',
+20 verbose parsed url   path: '@coreui/coreui@^2.1.16',
+20 verbose parsed url   href: '@coreui/coreui@^2.1.16' }
+21 verbose cache add name="" spec="coreui/coreui@^2.1.16" args=["","coreui/coreui@^2.1.16"]
+22 verbose parsed url { protocol: null,
+22 verbose parsed url   slashes: null,
+22 verbose parsed url   auth: null,
+22 verbose parsed url   host: null,
+22 verbose parsed url   port: null,
+22 verbose parsed url   hostname: null,
+22 verbose parsed url   hash: null,
+22 verbose parsed url   search: null,
+22 verbose parsed url   query: null,
+22 verbose parsed url   pathname: 'coreui/coreui@^2.1.16',
+22 verbose parsed url   path: 'coreui/coreui@^2.1.16',
+22 verbose parsed url   href: 'coreui/coreui@^2.1.16' }
+23 verbose cache add name="coreui/coreui" spec="^2.1.16" args=["coreui/coreui","^2.1.16"]
+24 verbose parsed url { protocol: null,
+24 verbose parsed url   slashes: null,
+24 verbose parsed url   auth: null,
+24 verbose parsed url   host: null,
+24 verbose parsed url   port: null,
+24 verbose parsed url   hostname: null,
+24 verbose parsed url   hash: null,
+24 verbose parsed url   search: null,
+24 verbose parsed url   query: null,
+24 verbose parsed url   pathname: '^2.1.16',
+24 verbose parsed url   path: '^2.1.16',
+24 verbose parsed url   href: '^2.1.16' }
+25 verbose addNamed [ 'coreui/coreui', '^2.1.16' ]
+26 verbose addNamed [ null, null ]
+27 verbose cache add [ '@coreui/coreui-plugin-chartjs-custom-tooltips@^1.3.1', null ]
+28 verbose cache add name=undefined spec="@coreui/coreui-plugin-chartjs-custom-tooltips@^1.3.1" args=["@coreui/coreui-plugin-chartjs-custom-tooltips@^1.3.1",null]
+29 verbose parsed url { protocol: null,
+29 verbose parsed url   slashes: null,
+29 verbose parsed url   auth: null,
+29 verbose parsed url   host: null,
+29 verbose parsed url   port: null,
+29 verbose parsed url   hostname: null,
+29 verbose parsed url   hash: null,
+29 verbose parsed url   search: null,
+29 verbose parsed url   query: null,
+29 verbose parsed url   pathname: '@coreui/coreui-plugin-chartjs-custom-tooltips@^1.3.1',
+29 verbose parsed url   path: '@coreui/coreui-plugin-chartjs-custom-tooltips@^1.3.1',
+29 verbose parsed url   href: '@coreui/coreui-plugin-chartjs-custom-tooltips@^1.3.1' }
+30 verbose cache add name="" spec="coreui/coreui-plugin-chartjs-custom-tooltips@^1.3.1" args=["","coreui/coreui-plugin-chartjs-custom-tooltips@^1.3.1"]
+31 verbose parsed url { protocol: null,
+31 verbose parsed url   slashes: null,
+31 verbose parsed url   auth: null,
+31 verbose parsed url   host: null,
+31 verbose parsed url   port: null,
+31 verbose parsed url   hostname: null,
+31 verbose parsed url   hash: null,
+31 verbose parsed url   search: null,
+31 verbose parsed url   query: null,
+31 verbose parsed url   pathname: 'coreui/coreui-plugin-chartjs-custom-tooltips@^1.3.1',
+31 verbose parsed url   path: 'coreui/coreui-plugin-chartjs-custom-tooltips@^1.3.1',
+31 verbose parsed url   href: 'coreui/coreui-plugin-chartjs-custom-tooltips@^1.3.1' }
+32 verbose cache add name="coreui/coreui-plugin-chartjs-custom-tooltips" spec="^1.3.1" args=["coreui/coreui-plugin-chartjs-custom-tooltips","^1.3.1"]
+33 verbose parsed url { protocol: null,
+33 verbose parsed url   slashes: null,
+33 verbose parsed url   auth: null,
+33 verbose parsed url   host: null,
+33 verbose parsed url   port: null,
+33 verbose parsed url   hostname: null,
+33 verbose parsed url   hash: null,
+33 verbose parsed url   search: null,
+33 verbose parsed url   query: null,
+33 verbose parsed url   pathname: '^1.3.1',
+33 verbose parsed url   path: '^1.3.1',
+33 verbose parsed url   href: '^1.3.1' }
+34 verbose addNamed [ 'coreui/coreui-plugin-chartjs-custom-tooltips', '^1.3.1' ]
+35 verbose addNamed [ null, null ]
+36 verbose cache add [ '@coreui/icons@0.3.0', null ]
+37 verbose cache add name=undefined spec="@coreui/icons@0.3.0" args=["@coreui/icons@0.3.0",null]
+38 verbose parsed url { protocol: null,
+38 verbose parsed url   slashes: null,
+38 verbose parsed url   auth: null,
+38 verbose parsed url   host: null,
+38 verbose parsed url   port: null,
+38 verbose parsed url   hostname: null,
+38 verbose parsed url   hash: null,
+38 verbose parsed url   search: null,
+38 verbose parsed url   query: null,
+38 verbose parsed url   pathname: '@coreui/icons@0.3.0',
+38 verbose parsed url   path: '@coreui/icons@0.3.0',
+38 verbose parsed url   href: '@coreui/icons@0.3.0' }
+39 verbose cache add name="" spec="coreui/icons@0.3.0" args=["","coreui/icons@0.3.0"]
+40 verbose parsed url { protocol: null,
+40 verbose parsed url   slashes: null,
+40 verbose parsed url   auth: null,
+40 verbose parsed url   host: null,
+40 verbose parsed url   port: null,
+40 verbose parsed url   hostname: null,
+40 verbose parsed url   hash: null,
+40 verbose parsed url   search: null,
+40 verbose parsed url   query: null,
+40 verbose parsed url   pathname: 'coreui/icons@0.3.0',
+40 verbose parsed url   path: 'coreui/icons@0.3.0',
+40 verbose parsed url   href: 'coreui/icons@0.3.0' }
+41 verbose cache add name="coreui/icons" spec="0.3.0" args=["coreui/icons","0.3.0"]
+42 verbose parsed url { protocol: null,
+42 verbose parsed url   slashes: null,
+42 verbose parsed url   auth: null,
+42 verbose parsed url   host: null,
+42 verbose parsed url   port: null,
+42 verbose parsed url   hostname: null,
+42 verbose parsed url   hash: null,
+42 verbose parsed url   search: null,
+42 verbose parsed url   query: null,
+42 verbose parsed url   pathname: '0.3.0',
+42 verbose parsed url   path: '0.3.0',
+42 verbose parsed url   href: '0.3.0' }
+43 verbose addNamed [ 'coreui/icons', '0.3.0' ]
+44 verbose addNamed [ '0.3.0', '0.3.0' ]
+45 verbose cache add [ '@coreui/vue@^2.1.2', null ]
+46 verbose cache add name=undefined spec="@coreui/vue@^2.1.2" args=["@coreui/vue@^2.1.2",null]
+47 verbose parsed url { protocol: null,
+47 verbose parsed url   slashes: null,
+47 verbose parsed url   auth: null,
+47 verbose parsed url   host: null,
+47 verbose parsed url   port: null,
+47 verbose parsed url   hostname: null,
+47 verbose parsed url   hash: null,
+47 verbose parsed url   search: null,
+47 verbose parsed url   query: null,
+47 verbose parsed url   pathname: '@coreui/vue@^2.1.2',
+47 verbose parsed url   path: '@coreui/vue@^2.1.2',
+47 verbose parsed url   href: '@coreui/vue@^2.1.2' }
+48 verbose cache add name="" spec="coreui/vue@^2.1.2" args=["","coreui/vue@^2.1.2"]
+49 verbose parsed url { protocol: null,
+49 verbose parsed url   slashes: null,
+49 verbose parsed url   auth: null,
+49 verbose parsed url   host: null,
+49 verbose parsed url   port: null,
+49 verbose parsed url   hostname: null,
+49 verbose parsed url   hash: null,
+49 verbose parsed url   search: null,
+49 verbose parsed url   query: null,
+49 verbose parsed url   pathname: 'coreui/vue@^2.1.2',
+49 verbose parsed url   path: 'coreui/vue@^2.1.2',
+49 verbose parsed url   href: 'coreui/vue@^2.1.2' }
+50 verbose cache add name="coreui/vue" spec="^2.1.2" args=["coreui/vue","^2.1.2"]
+51 verbose parsed url { protocol: null,
+51 verbose parsed url   slashes: null,
+51 verbose parsed url   auth: null,
+51 verbose parsed url   host: null,
+51 verbose parsed url   port: null,
+51 verbose parsed url   hostname: null,
+51 verbose parsed url   hash: null,
+51 verbose parsed url   search: null,
+51 verbose parsed url   query: null,
+51 verbose parsed url   pathname: '^2.1.2',
+51 verbose parsed url   path: '^2.1.2',
+51 verbose parsed url   href: '^2.1.2' }
+52 verbose addNamed [ 'coreui/vue', '^2.1.2' ]
+53 verbose addNamed [ null, null ]
+54 verbose cache add [ '@johmun/vue-tags-input@^2.1.0', null ]
+55 verbose cache add name=undefined spec="@johmun/vue-tags-input@^2.1.0" args=["@johmun/vue-tags-input@^2.1.0",null]
+56 verbose parsed url { protocol: null,
+56 verbose parsed url   slashes: null,
+56 verbose parsed url   auth: null,
+56 verbose parsed url   host: null,
+56 verbose parsed url   port: null,
+56 verbose parsed url   hostname: null,
+56 verbose parsed url   hash: null,
+56 verbose parsed url   search: null,
+56 verbose parsed url   query: null,
+56 verbose parsed url   pathname: '@johmun/vue-tags-input@^2.1.0',
+56 verbose parsed url   path: '@johmun/vue-tags-input@^2.1.0',
+56 verbose parsed url   href: '@johmun/vue-tags-input@^2.1.0' }
+57 verbose cache add name="" spec="johmun/vue-tags-input@^2.1.0" args=["","johmun/vue-tags-input@^2.1.0"]
+58 verbose parsed url { protocol: null,
+58 verbose parsed url   slashes: null,
+58 verbose parsed url   auth: null,
+58 verbose parsed url   host: null,
+58 verbose parsed url   port: null,
+58 verbose parsed url   hostname: null,
+58 verbose parsed url   hash: null,
+58 verbose parsed url   search: null,
+58 verbose parsed url   query: null,
+58 verbose parsed url   pathname: 'johmun/vue-tags-input@^2.1.0',
+58 verbose parsed url   path: 'johmun/vue-tags-input@^2.1.0',
+58 verbose parsed url   href: 'johmun/vue-tags-input@^2.1.0' }
+59 verbose cache add name="johmun/vue-tags-input" spec="^2.1.0" args=["johmun/vue-tags-input","^2.1.0"]
+60 verbose parsed url { protocol: null,
+60 verbose parsed url   slashes: null,
+60 verbose parsed url   auth: null,
+60 verbose parsed url   host: null,
+60 verbose parsed url   port: null,
+60 verbose parsed url   hostname: null,
+60 verbose parsed url   hash: null,
+60 verbose parsed url   search: null,
+60 verbose parsed url   query: null,
+60 verbose parsed url   pathname: '^2.1.0',
+60 verbose parsed url   path: '^2.1.0',
+60 verbose parsed url   href: '^2.1.0' }
+61 verbose addNamed [ 'johmun/vue-tags-input', '^2.1.0' ]
+62 verbose addNamed [ null, null ]
+63 verbose cache add [ '@riophae/vue-treeselect@^0.4.0', null ]
+64 verbose cache add name=undefined spec="@riophae/vue-treeselect@^0.4.0" args=["@riophae/vue-treeselect@^0.4.0",null]
+65 verbose parsed url { protocol: null,
+65 verbose parsed url   slashes: null,
+65 verbose parsed url   auth: null,
+65 verbose parsed url   host: null,
+65 verbose parsed url   port: null,
+65 verbose parsed url   hostname: null,
+65 verbose parsed url   hash: null,
+65 verbose parsed url   search: null,
+65 verbose parsed url   query: null,
+65 verbose parsed url   pathname: '@riophae/vue-treeselect@^0.4.0',
+65 verbose parsed url   path: '@riophae/vue-treeselect@^0.4.0',
+65 verbose parsed url   href: '@riophae/vue-treeselect@^0.4.0' }
+66 verbose cache add name="" spec="riophae/vue-treeselect@^0.4.0" args=["","riophae/vue-treeselect@^0.4.0"]
+67 verbose parsed url { protocol: null,
+67 verbose parsed url   slashes: null,
+67 verbose parsed url   auth: null,
+67 verbose parsed url   host: null,
+67 verbose parsed url   port: null,
+67 verbose parsed url   hostname: null,
+67 verbose parsed url   hash: null,
+67 verbose parsed url   search: null,
+67 verbose parsed url   query: null,
+67 verbose parsed url   pathname: 'riophae/vue-treeselect@^0.4.0',
+67 verbose parsed url   path: 'riophae/vue-treeselect@^0.4.0',
+67 verbose parsed url   href: 'riophae/vue-treeselect@^0.4.0' }
+68 verbose cache add name="riophae/vue-treeselect" spec="^0.4.0" args=["riophae/vue-treeselect","^0.4.0"]
+69 verbose parsed url { protocol: null,
+69 verbose parsed url   slashes: null,
+69 verbose parsed url   auth: null,
+69 verbose parsed url   host: null,
+69 verbose parsed url   port: null,
+69 verbose parsed url   hostname: null,
+69 verbose parsed url   hash: null,
+69 verbose parsed url   search: null,
+69 verbose parsed url   query: null,
+69 verbose parsed url   pathname: '^0.4.0',
+69 verbose parsed url   path: '^0.4.0',
+69 verbose parsed url   href: '^0.4.0' }
+70 verbose addNamed [ 'riophae/vue-treeselect', '^0.4.0' ]
+71 verbose addNamed [ null, null ]
+72 verbose cache add [ 'ajv@^6.9.1', null ]
+73 verbose cache add name=undefined spec="ajv@^6.9.1" args=["ajv@^6.9.1",null]
+74 verbose parsed url { protocol: null,
+74 verbose parsed url   slashes: null,
+74 verbose parsed url   auth: null,
+74 verbose parsed url   host: null,
+74 verbose parsed url   port: null,
+74 verbose parsed url   hostname: null,
+74 verbose parsed url   hash: null,
+74 verbose parsed url   search: null,
+74 verbose parsed url   query: null,
+74 verbose parsed url   pathname: 'ajv@^6.9.1',
+74 verbose parsed url   path: 'ajv@^6.9.1',
+74 verbose parsed url   href: 'ajv@^6.9.1' }
+75 verbose cache add name="ajv" spec="^6.9.1" args=["ajv","^6.9.1"]
+76 verbose parsed url { protocol: null,
+76 verbose parsed url   slashes: null,
+76 verbose parsed url   auth: null,
+76 verbose parsed url   host: null,
+76 verbose parsed url   port: null,
+76 verbose parsed url   hostname: null,
+76 verbose parsed url   hash: null,
+76 verbose parsed url   search: null,
+76 verbose parsed url   query: null,
+76 verbose parsed url   pathname: '^6.9.1',
+76 verbose parsed url   path: '^6.9.1',
+76 verbose parsed url   href: '^6.9.1' }
+77 verbose addNamed [ 'ajv', '^6.9.1' ]
+78 verbose addNamed [ null, null ]
+79 verbose cache add [ 'axios@^0.15.3', null ]
+80 verbose cache add name=undefined spec="axios@^0.15.3" args=["axios@^0.15.3",null]
+81 verbose parsed url { protocol: null,
+81 verbose parsed url   slashes: null,
+81 verbose parsed url   auth: null,
+81 verbose parsed url   host: null,
+81 verbose parsed url   port: null,
+81 verbose parsed url   hostname: null,
+81 verbose parsed url   hash: null,
+81 verbose parsed url   search: null,
+81 verbose parsed url   query: null,
+81 verbose parsed url   pathname: 'axios@^0.15.3',
+81 verbose parsed url   path: 'axios@^0.15.3',
+81 verbose parsed url   href: 'axios@^0.15.3' }
+82 verbose cache add name="axios" spec="^0.15.3" args=["axios","^0.15.3"]
+83 verbose parsed url { protocol: null,
+83 verbose parsed url   slashes: null,
+83 verbose parsed url   auth: null,
+83 verbose parsed url   host: null,
+83 verbose parsed url   port: null,
+83 verbose parsed url   hostname: null,
+83 verbose parsed url   hash: null,
+83 verbose parsed url   search: null,
+83 verbose parsed url   query: null,
+83 verbose parsed url   pathname: '^0.15.3',
+83 verbose parsed url   path: '^0.15.3',
+83 verbose parsed url   href: '^0.15.3' }
+84 verbose addNamed [ 'axios', '^0.15.3' ]
+85 verbose addNamed [ null, null ]
+86 verbose cache add [ 'bootstrap-vue@2.0.0-rc.24', null ]
+87 verbose cache add name=undefined spec="bootstrap-vue@2.0.0-rc.24" args=["bootstrap-vue@2.0.0-rc.24",null]
+88 verbose parsed url { protocol: null,
+88 verbose parsed url   slashes: null,
+88 verbose parsed url   auth: null,
+88 verbose parsed url   host: null,
+88 verbose parsed url   port: null,
+88 verbose parsed url   hostname: null,
+88 verbose parsed url   hash: null,
+88 verbose parsed url   search: null,
+88 verbose parsed url   query: null,
+88 verbose parsed url   pathname: 'bootstrap-vue@2.0.0-rc.24',
+88 verbose parsed url   path: 'bootstrap-vue@2.0.0-rc.24',
+88 verbose parsed url   href: 'bootstrap-vue@2.0.0-rc.24' }
+89 verbose cache add name="bootstrap-vue" spec="2.0.0-rc.24" args=["bootstrap-vue","2.0.0-rc.24"]
+90 verbose parsed url { protocol: null,
+90 verbose parsed url   slashes: null,
+90 verbose parsed url   auth: null,
+90 verbose parsed url   host: null,
+90 verbose parsed url   port: null,
+90 verbose parsed url   hostname: null,
+90 verbose parsed url   hash: null,
+90 verbose parsed url   search: null,
+90 verbose parsed url   query: null,
+90 verbose parsed url   pathname: '2.0.0-rc.24',
+90 verbose parsed url   path: '2.0.0-rc.24',
+90 verbose parsed url   href: '2.0.0-rc.24' }
+91 verbose addNamed [ 'bootstrap-vue', '2.0.0-rc.24' ]
+92 verbose addNamed [ '2.0.0-rc.24', '2.0.0-rc.24' ]
+93 verbose cache add [ 'chart.js@^2.9.3', null ]
+94 verbose cache add name=undefined spec="chart.js@^2.9.3" args=["chart.js@^2.9.3",null]
+95 verbose parsed url { protocol: null,
+95 verbose parsed url   slashes: null,
+95 verbose parsed url   auth: null,
+95 verbose parsed url   host: null,
+95 verbose parsed url   port: null,
+95 verbose parsed url   hostname: null,
+95 verbose parsed url   hash: null,
+95 verbose parsed url   search: null,
+95 verbose parsed url   query: null,
+95 verbose parsed url   pathname: 'chart.js@^2.9.3',
+95 verbose parsed url   path: 'chart.js@^2.9.3',
+95 verbose parsed url   href: 'chart.js@^2.9.3' }
+96 verbose cache add name="chart.js" spec="^2.9.3" args=["chart.js","^2.9.3"]
+97 verbose parsed url { protocol: null,
+97 verbose parsed url   slashes: null,
+97 verbose parsed url   auth: null,
+97 verbose parsed url   host: null,
+97 verbose parsed url   port: null,
+97 verbose parsed url   hostname: null,
+97 verbose parsed url   hash: null,
+97 verbose parsed url   search: null,
+97 verbose parsed url   query: null,
+97 verbose parsed url   pathname: '^2.9.3',
+97 verbose parsed url   path: '^2.9.3',
+97 verbose parsed url   href: '^2.9.3' }
+98 verbose addNamed [ 'chart.js', '^2.9.3' ]
+99 verbose addNamed [ null, null ]
+100 verbose cache add [ 'ckeditor4-vue@^0.2.0', null ]
+101 verbose cache add name=undefined spec="ckeditor4-vue@^0.2.0" args=["ckeditor4-vue@^0.2.0",null]
+102 verbose parsed url { protocol: null,
+102 verbose parsed url   slashes: null,
+102 verbose parsed url   auth: null,
+102 verbose parsed url   host: null,
+102 verbose parsed url   port: null,
+102 verbose parsed url   hostname: null,
+102 verbose parsed url   hash: null,
+102 verbose parsed url   search: null,
+102 verbose parsed url   query: null,
+102 verbose parsed url   pathname: 'ckeditor4-vue@^0.2.0',
+102 verbose parsed url   path: 'ckeditor4-vue@^0.2.0',
+102 verbose parsed url   href: 'ckeditor4-vue@^0.2.0' }
+103 verbose cache add name="ckeditor4-vue" spec="^0.2.0" args=["ckeditor4-vue","^0.2.0"]
+104 verbose parsed url { protocol: null,
+104 verbose parsed url   slashes: null,
+104 verbose parsed url   auth: null,
+104 verbose parsed url   host: null,
+104 verbose parsed url   port: null,
+104 verbose parsed url   hostname: null,
+104 verbose parsed url   hash: null,
+104 verbose parsed url   search: null,
+104 verbose parsed url   query: null,
+104 verbose parsed url   pathname: '^0.2.0',
+104 verbose parsed url   path: '^0.2.0',
+104 verbose parsed url   href: '^0.2.0' }
+105 verbose addNamed [ 'ckeditor4-vue', '^0.2.0' ]
+106 verbose addNamed [ null, null ]
+107 verbose cache add [ 'clean-webpack-plugin@^3.0.0', null ]
+108 verbose cache add name=undefined spec="clean-webpack-plugin@^3.0.0" args=["clean-webpack-plugin@^3.0.0",null]
+109 verbose parsed url { protocol: null,
+109 verbose parsed url   slashes: null,
+109 verbose parsed url   auth: null,
+109 verbose parsed url   host: null,
+109 verbose parsed url   port: null,
+109 verbose parsed url   hostname: null,
+109 verbose parsed url   hash: null,
+109 verbose parsed url   search: null,
+109 verbose parsed url   query: null,
+109 verbose parsed url   pathname: 'clean-webpack-plugin@^3.0.0',
+109 verbose parsed url   path: 'clean-webpack-plugin@^3.0.0',
+109 verbose parsed url   href: 'clean-webpack-plugin@^3.0.0' }
+110 verbose cache add name="clean-webpack-plugin" spec="^3.0.0" args=["clean-webpack-plugin","^3.0.0"]
+111 verbose parsed url { protocol: null,
+111 verbose parsed url   slashes: null,
+111 verbose parsed url   auth: null,
+111 verbose parsed url   host: null,
+111 verbose parsed url   port: null,
+111 verbose parsed url   hostname: null,
+111 verbose parsed url   hash: null,
+111 verbose parsed url   search: null,
+111 verbose parsed url   query: null,
+111 verbose parsed url   pathname: '^3.0.0',
+111 verbose parsed url   path: '^3.0.0',
+111 verbose parsed url   href: '^3.0.0' }
+112 verbose addNamed [ 'clean-webpack-plugin', '^3.0.0' ]
+113 verbose addNamed [ null, null ]
+114 verbose cache add [ 'core-js@^2.4.1', null ]
+115 verbose cache add name=undefined spec="core-js@^2.4.1" args=["core-js@^2.4.1",null]
+116 verbose parsed url { protocol: null,
+116 verbose parsed url   slashes: null,
+116 verbose parsed url   auth: null,
+116 verbose parsed url   host: null,
+116 verbose parsed url   port: null,
+116 verbose parsed url   hostname: null,
+116 verbose parsed url   hash: null,
+116 verbose parsed url   search: null,
+116 verbose parsed url   query: null,
+116 verbose parsed url   pathname: 'core-js@^2.4.1',
+116 verbose parsed url   path: 'core-js@^2.4.1',
+116 verbose parsed url   href: 'core-js@^2.4.1' }
+117 verbose cache add name="core-js" spec="^2.4.1" args=["core-js","^2.4.1"]
+118 verbose parsed url { protocol: null,
+118 verbose parsed url   slashes: null,
+118 verbose parsed url   auth: null,
+118 verbose parsed url   host: null,
+118 verbose parsed url   port: null,
+118 verbose parsed url   hostname: null,
+118 verbose parsed url   hash: null,
+118 verbose parsed url   search: null,
+118 verbose parsed url   query: null,
+118 verbose parsed url   pathname: '^2.4.1',
+118 verbose parsed url   path: '^2.4.1',
+118 verbose parsed url   href: '^2.4.1' }
+119 verbose addNamed [ 'core-js', '^2.4.1' ]
+120 verbose addNamed [ null, null ]
+121 verbose cache add [ 'cross-spawn@^7.0.3', null ]
+122 verbose cache add name=undefined spec="cross-spawn@^7.0.3" args=["cross-spawn@^7.0.3",null]
+123 verbose parsed url { protocol: null,
+123 verbose parsed url   slashes: null,
+123 verbose parsed url   auth: null,
+123 verbose parsed url   host: null,
+123 verbose parsed url   port: null,
+123 verbose parsed url   hostname: null,
+123 verbose parsed url   hash: null,
+123 verbose parsed url   search: null,
+123 verbose parsed url   query: null,
+123 verbose parsed url   pathname: 'cross-spawn@^7.0.3',
+123 verbose parsed url   path: 'cross-spawn@^7.0.3',
+123 verbose parsed url   href: 'cross-spawn@^7.0.3' }
+124 verbose cache add name="cross-spawn" spec="^7.0.3" args=["cross-spawn","^7.0.3"]
+125 verbose parsed url { protocol: null,
+125 verbose parsed url   slashes: null,
+125 verbose parsed url   auth: null,
+125 verbose parsed url   host: null,
+125 verbose parsed url   port: null,
+125 verbose parsed url   hostname: null,
+125 verbose parsed url   hash: null,
+125 verbose parsed url   search: null,
+125 verbose parsed url   query: null,
+125 verbose parsed url   pathname: '^7.0.3',
+125 verbose parsed url   path: '^7.0.3',
+125 verbose parsed url   href: '^7.0.3' }
+126 verbose addNamed [ 'cross-spawn', '^7.0.3' ]
+127 verbose addNamed [ null, null ]
+128 verbose cache add [ 'font-awesome@^4.7.0', null ]
+129 verbose cache add name=undefined spec="font-awesome@^4.7.0" args=["font-awesome@^4.7.0",null]
+130 verbose parsed url { protocol: null,
+130 verbose parsed url   slashes: null,
+130 verbose parsed url   auth: null,
+130 verbose parsed url   host: null,
+130 verbose parsed url   port: null,
+130 verbose parsed url   hostname: null,
+130 verbose parsed url   hash: null,
+130 verbose parsed url   search: null,
+130 verbose parsed url   query: null,
+130 verbose parsed url   pathname: 'font-awesome@^4.7.0',
+130 verbose parsed url   path: 'font-awesome@^4.7.0',
+130 verbose parsed url   href: 'font-awesome@^4.7.0' }
+131 verbose cache add name="font-awesome" spec="^4.7.0" args=["font-awesome","^4.7.0"]
+132 verbose parsed url { protocol: null,
+132 verbose parsed url   slashes: null,
+132 verbose parsed url   auth: null,
+132 verbose parsed url   host: null,
+132 verbose parsed url   port: null,
+132 verbose parsed url   hostname: null,
+132 verbose parsed url   hash: null,
+132 verbose parsed url   search: null,
+132 verbose parsed url   query: null,
+132 verbose parsed url   pathname: '^4.7.0',
+132 verbose parsed url   path: '^4.7.0',
+132 verbose parsed url   href: '^4.7.0' }
+133 verbose addNamed [ 'font-awesome', '^4.7.0' ]
+134 verbose addNamed [ null, null ]
+135 verbose cache add [ 'loader-utils@^1.4.0', null ]
+136 verbose cache add name=undefined spec="loader-utils@^1.4.0" args=["loader-utils@^1.4.0",null]
+137 verbose parsed url { protocol: null,
+137 verbose parsed url   slashes: null,
+137 verbose parsed url   auth: null,
+137 verbose parsed url   host: null,
+137 verbose parsed url   port: null,
+137 verbose parsed url   hostname: null,
+137 verbose parsed url   hash: null,
+137 verbose parsed url   search: null,
+137 verbose parsed url   query: null,
+137 verbose parsed url   pathname: 'loader-utils@^1.4.0',
+137 verbose parsed url   path: 'loader-utils@^1.4.0',
+137 verbose parsed url   href: 'loader-utils@^1.4.0' }
+138 verbose cache add name="loader-utils" spec="^1.4.0" args=["loader-utils","^1.4.0"]
+139 verbose parsed url { protocol: null,
+139 verbose parsed url   slashes: null,
+139 verbose parsed url   auth: null,
+139 verbose parsed url   host: null,
+139 verbose parsed url   port: null,
+139 verbose parsed url   hostname: null,
+139 verbose parsed url   hash: null,
+139 verbose parsed url   search: null,
+139 verbose parsed url   query: null,
+139 verbose parsed url   pathname: '^1.4.0',
+139 verbose parsed url   path: '^1.4.0',
+139 verbose parsed url   href: '^1.4.0' }
+140 verbose addNamed [ 'loader-utils', '^1.4.0' ]
+141 verbose addNamed [ null, null ]
+142 verbose cache add [ 'lodash.orderby@^4.6.0', null ]
+143 verbose cache add name=undefined spec="lodash.orderby@^4.6.0" args=["lodash.orderby@^4.6.0",null]
+144 verbose parsed url { protocol: null,
+144 verbose parsed url   slashes: null,
+144 verbose parsed url   auth: null,
+144 verbose parsed url   host: null,
+144 verbose parsed url   port: null,
+144 verbose parsed url   hostname: null,
+144 verbose parsed url   hash: null,
+144 verbose parsed url   search: null,
+144 verbose parsed url   query: null,
+144 verbose parsed url   pathname: 'lodash.orderby@^4.6.0',
+144 verbose parsed url   path: 'lodash.orderby@^4.6.0',
+144 verbose parsed url   href: 'lodash.orderby@^4.6.0' }
+145 verbose cache add name="lodash.orderby" spec="^4.6.0" args=["lodash.orderby","^4.6.0"]
+146 verbose parsed url { protocol: null,
+146 verbose parsed url   slashes: null,
+146 verbose parsed url   auth: null,
+146 verbose parsed url   host: null,
+146 verbose parsed url   port: null,
+146 verbose parsed url   hostname: null,
+146 verbose parsed url   hash: null,
+146 verbose parsed url   search: null,
+146 verbose parsed url   query: null,
+146 verbose parsed url   pathname: '^4.6.0',
+146 verbose parsed url   path: '^4.6.0',
+146 verbose parsed url   href: '^4.6.0' }
+147 verbose addNamed [ 'lodash.orderby', '^4.6.0' ]
+148 verbose addNamed [ null, null ]
+149 verbose cache add [ 'perfect-scrollbar@^1.3.0', null ]
+150 verbose cache add name=undefined spec="perfect-scrollbar@^1.3.0" args=["perfect-scrollbar@^1.3.0",null]
+151 verbose parsed url { protocol: null,
+151 verbose parsed url   slashes: null,
+151 verbose parsed url   auth: null,
+151 verbose parsed url   host: null,
+151 verbose parsed url   port: null,
+151 verbose parsed url   hostname: null,
+151 verbose parsed url   hash: null,
+151 verbose parsed url   search: null,
+151 verbose parsed url   query: null,
+151 verbose parsed url   pathname: 'perfect-scrollbar@^1.3.0',
+151 verbose parsed url   path: 'perfect-scrollbar@^1.3.0',
+151 verbose parsed url   href: 'perfect-scrollbar@^1.3.0' }
+152 verbose cache add name="perfect-scrollbar" spec="^1.3.0" args=["perfect-scrollbar","^1.3.0"]
+153 verbose parsed url { protocol: null,
+153 verbose parsed url   slashes: null,
+153 verbose parsed url   auth: null,
+153 verbose parsed url   host: null,
+153 verbose parsed url   port: null,
+153 verbose parsed url   hostname: null,
+153 verbose parsed url   hash: null,
+153 verbose parsed url   search: null,
+153 verbose parsed url   query: null,
+153 verbose parsed url   pathname: '^1.3.0',
+153 verbose parsed url   path: '^1.3.0',
+153 verbose parsed url   href: '^1.3.0' }
+154 verbose addNamed [ 'perfect-scrollbar', '^1.3.0' ]
+155 verbose addNamed [ null, null ]
+156 verbose cache add [ 'rxjs@^6.6.0', null ]
+157 verbose cache add name=undefined spec="rxjs@^6.6.0" args=["rxjs@^6.6.0",null]
+158 verbose parsed url { protocol: null,
+158 verbose parsed url   slashes: null,
+158 verbose parsed url   auth: null,
+158 verbose parsed url   host: null,
+158 verbose parsed url   port: null,
+158 verbose parsed url   hostname: null,
+158 verbose parsed url   hash: null,
+158 verbose parsed url   search: null,
+158 verbose parsed url   query: null,
+158 verbose parsed url   pathname: 'rxjs@^6.6.0',
+158 verbose parsed url   path: 'rxjs@^6.6.0',
+158 verbose parsed url   href: 'rxjs@^6.6.0' }
+159 verbose cache add name="rxjs" spec="^6.6.0" args=["rxjs","^6.6.0"]
+160 verbose parsed url { protocol: null,
+160 verbose parsed url   slashes: null,
+160 verbose parsed url   auth: null,
+160 verbose parsed url   host: null,
+160 verbose parsed url   port: null,
+160 verbose parsed url   hostname: null,
+160 verbose parsed url   hash: null,
+160 verbose parsed url   search: null,
+160 verbose parsed url   query: null,
+160 verbose parsed url   pathname: '^6.6.0',
+160 verbose parsed url   path: '^6.6.0',
+160 verbose parsed url   href: '^6.6.0' }
+161 verbose addNamed [ 'rxjs', '^6.6.0' ]
+162 verbose addNamed [ null, null ]
+163 verbose cache add [ 'simple-line-icons@^2.4.1', null ]
+164 verbose cache add name=undefined spec="simple-line-icons@^2.4.1" args=["simple-line-icons@^2.4.1",null]
+165 verbose parsed url { protocol: null,
+165 verbose parsed url   slashes: null,
+165 verbose parsed url   auth: null,
+165 verbose parsed url   host: null,
+165 verbose parsed url   port: null,
+165 verbose parsed url   hostname: null,
+165 verbose parsed url   hash: null,
+165 verbose parsed url   search: null,
+165 verbose parsed url   query: null,
+165 verbose parsed url   pathname: 'simple-line-icons@^2.4.1',
+165 verbose parsed url   path: 'simple-line-icons@^2.4.1',
+165 verbose parsed url   href: 'simple-line-icons@^2.4.1' }
+166 verbose cache add name="simple-line-icons" spec="^2.4.1" args=["simple-line-icons","^2.4.1"]
+167 verbose parsed url { protocol: null,
+167 verbose parsed url   slashes: null,
+167 verbose parsed url   auth: null,
+167 verbose parsed url   host: null,
+167 verbose parsed url   port: null,
+167 verbose parsed url   hostname: null,
+167 verbose parsed url   hash: null,
+167 verbose parsed url   search: null,
+167 verbose parsed url   query: null,
+167 verbose parsed url   pathname: '^2.4.1',
+167 verbose parsed url   path: '^2.4.1',
+167 verbose parsed url   href: '^2.4.1' }
+168 verbose addNamed [ 'simple-line-icons', '^2.4.1' ]
+169 verbose addNamed [ null, null ]
+170 verbose cache add [ 'uglifyjs-webpack-plugin@^1.3.0', null ]
+171 verbose cache add name=undefined spec="uglifyjs-webpack-plugin@^1.3.0" args=["uglifyjs-webpack-plugin@^1.3.0",null]
+172 verbose parsed url { protocol: null,
+172 verbose parsed url   slashes: null,
+172 verbose parsed url   auth: null,
+172 verbose parsed url   host: null,
+172 verbose parsed url   port: null,
+172 verbose parsed url   hostname: null,
+172 verbose parsed url   hash: null,
+172 verbose parsed url   search: null,
+172 verbose parsed url   query: null,
+172 verbose parsed url   pathname: 'uglifyjs-webpack-plugin@^1.3.0',
+172 verbose parsed url   path: 'uglifyjs-webpack-plugin@^1.3.0',
+172 verbose parsed url   href: 'uglifyjs-webpack-plugin@^1.3.0' }
+173 verbose cache add name="uglifyjs-webpack-plugin" spec="^1.3.0" args=["uglifyjs-webpack-plugin","^1.3.0"]
+174 verbose parsed url { protocol: null,
+174 verbose parsed url   slashes: null,
+174 verbose parsed url   auth: null,
+174 verbose parsed url   host: null,
+174 verbose parsed url   port: null,
+174 verbose parsed url   hostname: null,
+174 verbose parsed url   hash: null,
+174 verbose parsed url   search: null,
+174 verbose parsed url   query: null,
+174 verbose parsed url   pathname: '^1.3.0',
+174 verbose parsed url   path: '^1.3.0',
+174 verbose parsed url   href: '^1.3.0' }
+175 verbose addNamed [ 'uglifyjs-webpack-plugin', '^1.3.0' ]
+176 verbose addNamed [ null, null ]
+177 verbose cache add [ 'vue@^2.6.10', null ]
+178 verbose cache add name=undefined spec="vue@^2.6.10" args=["vue@^2.6.10",null]
+179 verbose parsed url { protocol: null,
+179 verbose parsed url   slashes: null,
+179 verbose parsed url   auth: null,
+179 verbose parsed url   host: null,
+179 verbose parsed url   port: null,
+179 verbose parsed url   hostname: null,
+179 verbose parsed url   hash: null,
+179 verbose parsed url   search: null,
+179 verbose parsed url   query: null,
+179 verbose parsed url   pathname: 'vue@^2.6.10',
+179 verbose parsed url   path: 'vue@^2.6.10',
+179 verbose parsed url   href: 'vue@^2.6.10' }
+180 verbose cache add name="vue" spec="^2.6.10" args=["vue","^2.6.10"]
+181 verbose parsed url { protocol: null,
+181 verbose parsed url   slashes: null,
+181 verbose parsed url   auth: null,
+181 verbose parsed url   host: null,
+181 verbose parsed url   port: null,
+181 verbose parsed url   hostname: null,
+181 verbose parsed url   hash: null,
+181 verbose parsed url   search: null,
+181 verbose parsed url   query: null,
+181 verbose parsed url   pathname: '^2.6.10',
+181 verbose parsed url   path: '^2.6.10',
+181 verbose parsed url   href: '^2.6.10' }
+182 verbose addNamed [ 'vue', '^2.6.10' ]
+183 verbose addNamed [ null, null ]
+184 verbose cache add [ 'vue-awesome@^4.0.2', null ]
+185 verbose cache add name=undefined spec="vue-awesome@^4.0.2" args=["vue-awesome@^4.0.2",null]
+186 verbose parsed url { protocol: null,
+186 verbose parsed url   slashes: null,
+186 verbose parsed url   auth: null,
+186 verbose parsed url   host: null,
+186 verbose parsed url   port: null,
+186 verbose parsed url   hostname: null,
+186 verbose parsed url   hash: null,
+186 verbose parsed url   search: null,
+186 verbose parsed url   query: null,
+186 verbose parsed url   pathname: 'vue-awesome@^4.0.2',
+186 verbose parsed url   path: 'vue-awesome@^4.0.2',
+186 verbose parsed url   href: 'vue-awesome@^4.0.2' }
+187 verbose cache add name="vue-awesome" spec="^4.0.2" args=["vue-awesome","^4.0.2"]
+188 verbose parsed url { protocol: null,
+188 verbose parsed url   slashes: null,
+188 verbose parsed url   auth: null,
+188 verbose parsed url   host: null,
+188 verbose parsed url   port: null,
+188 verbose parsed url   hostname: null,
+188 verbose parsed url   hash: null,
+188 verbose parsed url   search: null,
+188 verbose parsed url   query: null,
+188 verbose parsed url   pathname: '^4.0.2',
+188 verbose parsed url   path: '^4.0.2',
+188 verbose parsed url   href: '^4.0.2' }
+189 verbose addNamed [ 'vue-awesome', '^4.0.2' ]
+190 verbose addNamed [ null, null ]
+191 verbose cache add [ 'vue-chartjs@^3.5.0', null ]
+192 verbose cache add name=undefined spec="vue-chartjs@^3.5.0" args=["vue-chartjs@^3.5.0",null]
+193 verbose parsed url { protocol: null,
+193 verbose parsed url   slashes: null,
+193 verbose parsed url   auth: null,
+193 verbose parsed url   host: null,
+193 verbose parsed url   port: null,
+193 verbose parsed url   hostname: null,
+193 verbose parsed url   hash: null,
+193 verbose parsed url   search: null,
+193 verbose parsed url   query: null,
+193 verbose parsed url   pathname: 'vue-chartjs@^3.5.0',
+193 verbose parsed url   path: 'vue-chartjs@^3.5.0',
+193 verbose parsed url   href: 'vue-chartjs@^3.5.0' }
+194 verbose cache add name="vue-chartjs" spec="^3.5.0" args=["vue-chartjs","^3.5.0"]
+195 verbose parsed url { protocol: null,
+195 verbose parsed url   slashes: null,
+195 verbose parsed url   auth: null,
+195 verbose parsed url   host: null,
+195 verbose parsed url   port: null,
+195 verbose parsed url   hostname: null,
+195 verbose parsed url   hash: null,
+195 verbose parsed url   search: null,
+195 verbose parsed url   query: null,
+195 verbose parsed url   pathname: '^3.5.0',
+195 verbose parsed url   path: '^3.5.0',
+195 verbose parsed url   href: '^3.5.0' }
+196 verbose addNamed [ 'vue-chartjs', '^3.5.0' ]
+197 verbose addNamed [ null, null ]
+198 verbose cache add [ 'vue-dynamic-select@^1.0.16', null ]
+199 verbose cache add name=undefined spec="vue-dynamic-select@^1.0.16" args=["vue-dynamic-select@^1.0.16",null]
+200 verbose parsed url { protocol: null,
+200 verbose parsed url   slashes: null,
+200 verbose parsed url   auth: null,
+200 verbose parsed url   host: null,
+200 verbose parsed url   port: null,
+200 verbose parsed url   hostname: null,
+200 verbose parsed url   hash: null,
+200 verbose parsed url   search: null,
+200 verbose parsed url   query: null,
+200 verbose parsed url   pathname: 'vue-dynamic-select@^1.0.16',
+200 verbose parsed url   path: 'vue-dynamic-select@^1.0.16',
+200 verbose parsed url   href: 'vue-dynamic-select@^1.0.16' }
+201 verbose cache add name="vue-dynamic-select" spec="^1.0.16" args=["vue-dynamic-select","^1.0.16"]
+202 verbose parsed url { protocol: null,
+202 verbose parsed url   slashes: null,
+202 verbose parsed url   auth: null,
+202 verbose parsed url   host: null,
+202 verbose parsed url   port: null,
+202 verbose parsed url   hostname: null,
+202 verbose parsed url   hash: null,
+202 verbose parsed url   search: null,
+202 verbose parsed url   query: null,
+202 verbose parsed url   pathname: '^1.0.16',
+202 verbose parsed url   path: '^1.0.16',
+202 verbose parsed url   href: '^1.0.16' }
+203 verbose addNamed [ 'vue-dynamic-select', '^1.0.16' ]
+204 verbose addNamed [ null, null ]
+205 verbose cache add [ 'vue-input-tag@^2.0.6', null ]
+206 verbose cache add name=undefined spec="vue-input-tag@^2.0.6" args=["vue-input-tag@^2.0.6",null]
+207 verbose parsed url { protocol: null,
+207 verbose parsed url   slashes: null,
+207 verbose parsed url   auth: null,
+207 verbose parsed url   host: null,
+207 verbose parsed url   port: null,
+207 verbose parsed url   hostname: null,
+207 verbose parsed url   hash: null,
+207 verbose parsed url   search: null,
+207 verbose parsed url   query: null,
+207 verbose parsed url   pathname: 'vue-input-tag@^2.0.6',
+207 verbose parsed url   path: 'vue-input-tag@^2.0.6',
+207 verbose parsed url   href: 'vue-input-tag@^2.0.6' }
+208 verbose cache add name="vue-input-tag" spec="^2.0.6" args=["vue-input-tag","^2.0.6"]
+209 verbose parsed url { protocol: null,
+209 verbose parsed url   slashes: null,
+209 verbose parsed url   auth: null,
+209 verbose parsed url   host: null,
+209 verbose parsed url   port: null,
+209 verbose parsed url   hostname: null,
+209 verbose parsed url   hash: null,
+209 verbose parsed url   search: null,
+209 verbose parsed url   query: null,
+209 verbose parsed url   pathname: '^2.0.6',
+209 verbose parsed url   path: '^2.0.6',
+209 verbose parsed url   href: '^2.0.6' }
+210 verbose addNamed [ 'vue-input-tag', '^2.0.6' ]
+211 verbose addNamed [ null, null ]
+212 verbose cache add [ 'vue-loader-plugin@^1.3.0', null ]
+213 verbose cache add name=undefined spec="vue-loader-plugin@^1.3.0" args=["vue-loader-plugin@^1.3.0",null]
+214 verbose parsed url { protocol: null,
+214 verbose parsed url   slashes: null,
+214 verbose parsed url   auth: null,
+214 verbose parsed url   host: null,
+214 verbose parsed url   port: null,
+214 verbose parsed url   hostname: null,
+214 verbose parsed url   hash: null,
+214 verbose parsed url   search: null,
+214 verbose parsed url   query: null,
+214 verbose parsed url   pathname: 'vue-loader-plugin@^1.3.0',
+214 verbose parsed url   path: 'vue-loader-plugin@^1.3.0',
+214 verbose parsed url   href: 'vue-loader-plugin@^1.3.0' }
+215 verbose cache add name="vue-loader-plugin" spec="^1.3.0" args=["vue-loader-plugin","^1.3.0"]
+216 verbose parsed url { protocol: null,
+216 verbose parsed url   slashes: null,
+216 verbose parsed url   auth: null,
+216 verbose parsed url   host: null,
+216 verbose parsed url   port: null,
+216 verbose parsed url   hostname: null,
+216 verbose parsed url   hash: null,
+216 verbose parsed url   search: null,
+216 verbose parsed url   query: null,
+216 verbose parsed url   pathname: '^1.3.0',
+216 verbose parsed url   path: '^1.3.0',
+216 verbose parsed url   href: '^1.3.0' }
+217 verbose addNamed [ 'vue-loader-plugin', '^1.3.0' ]
+218 verbose addNamed [ null, null ]
+219 verbose cache add [ 'vue-loading-overlay@^3.3.2', null ]
+220 verbose cache add name=undefined spec="vue-loading-overlay@^3.3.2" args=["vue-loading-overlay@^3.3.2",null]
+221 verbose parsed url { protocol: null,
+221 verbose parsed url   slashes: null,
+221 verbose parsed url   auth: null,
+221 verbose parsed url   host: null,
+221 verbose parsed url   port: null,
+221 verbose parsed url   hostname: null,
+221 verbose parsed url   hash: null,
+221 verbose parsed url   search: null,
+221 verbose parsed url   query: null,
+221 verbose parsed url   pathname: 'vue-loading-overlay@^3.3.2',
+221 verbose parsed url   path: 'vue-loading-overlay@^3.3.2',
+221 verbose parsed url   href: 'vue-loading-overlay@^3.3.2' }
+222 verbose cache add name="vue-loading-overlay" spec="^3.3.2" args=["vue-loading-overlay","^3.3.2"]
+223 verbose parsed url { protocol: null,
+223 verbose parsed url   slashes: null,
+223 verbose parsed url   auth: null,
+223 verbose parsed url   host: null,
+223 verbose parsed url   port: null,
+223 verbose parsed url   hostname: null,
+223 verbose parsed url   hash: null,
+223 verbose parsed url   search: null,
+223 verbose parsed url   query: null,
+223 verbose parsed url   pathname: '^3.3.2',
+223 verbose parsed url   path: '^3.3.2',
+223 verbose parsed url   href: '^3.3.2' }
+224 verbose addNamed [ 'vue-loading-overlay', '^3.3.2' ]
+225 verbose addNamed [ null, null ]
+226 verbose cache add [ 'vue-router@^3.0.0', null ]
+227 verbose cache add name=undefined spec="vue-router@^3.0.0" args=["vue-router@^3.0.0",null]
+228 verbose parsed url { protocol: null,
+228 verbose parsed url   slashes: null,
+228 verbose parsed url   auth: null,
+228 verbose parsed url   host: null,
+228 verbose parsed url   port: null,
+228 verbose parsed url   hostname: null,
+228 verbose parsed url   hash: null,
+228 verbose parsed url   search: null,
+228 verbose parsed url   query: null,
+228 verbose parsed url   pathname: 'vue-router@^3.0.0',
+228 verbose parsed url   path: 'vue-router@^3.0.0',
+228 verbose parsed url   href: 'vue-router@^3.0.0' }
+229 verbose cache add name="vue-router" spec="^3.0.0" args=["vue-router","^3.0.0"]
+230 verbose parsed url { protocol: null,
+230 verbose parsed url   slashes: null,
+230 verbose parsed url   auth: null,
+230 verbose parsed url   host: null,
+230 verbose parsed url   port: null,
+230 verbose parsed url   hostname: null,
+230 verbose parsed url   hash: null,
+230 verbose parsed url   search: null,
+230 verbose parsed url   query: null,
+230 verbose parsed url   pathname: '^3.0.0',
+230 verbose parsed url   path: '^3.0.0',
+230 verbose parsed url   href: '^3.0.0' }
+231 verbose addNamed [ 'vue-router', '^3.0.0' ]
+232 verbose addNamed [ null, null ]
+233 verbose cache add [ 'vue-select@^3.10.5', null ]
+234 verbose cache add name=undefined spec="vue-select@^3.10.5" args=["vue-select@^3.10.5",null]
+235 verbose parsed url { protocol: null,
+235 verbose parsed url   slashes: null,
+235 verbose parsed url   auth: null,
+235 verbose parsed url   host: null,
+235 verbose parsed url   port: null,
+235 verbose parsed url   hostname: null,
+235 verbose parsed url   hash: null,
+235 verbose parsed url   search: null,
+235 verbose parsed url   query: null,
+235 verbose parsed url   pathname: 'vue-select@^3.10.5',
+235 verbose parsed url   path: 'vue-select@^3.10.5',
+235 verbose parsed url   href: 'vue-select@^3.10.5' }
+236 verbose cache add name="vue-select" spec="^3.10.5" args=["vue-select","^3.10.5"]
+237 verbose parsed url { protocol: null,
+237 verbose parsed url   slashes: null,
+237 verbose parsed url   auth: null,
+237 verbose parsed url   host: null,
+237 verbose parsed url   port: null,
+237 verbose parsed url   hostname: null,
+237 verbose parsed url   hash: null,
+237 verbose parsed url   search: null,
+237 verbose parsed url   query: null,
+237 verbose parsed url   pathname: '^3.10.5',
+237 verbose parsed url   path: '^3.10.5',
+237 verbose parsed url   href: '^3.10.5' }
+238 verbose addNamed [ 'vue-select', '^3.10.5' ]
+239 verbose addNamed [ null, null ]
+240 verbose cache add [ 'vue-server-renderer@^2.1.8', null ]
+241 verbose cache add name=undefined spec="vue-server-renderer@^2.1.8" args=["vue-server-renderer@^2.1.8",null]
+242 verbose parsed url { protocol: null,
+242 verbose parsed url   slashes: null,
+242 verbose parsed url   auth: null,
+242 verbose parsed url   host: null,
+242 verbose parsed url   port: null,
+242 verbose parsed url   hostname: null,
+242 verbose parsed url   hash: null,
+242 verbose parsed url   search: null,
+242 verbose parsed url   query: null,
+242 verbose parsed url   pathname: 'vue-server-renderer@^2.1.8',
+242 verbose parsed url   path: 'vue-server-renderer@^2.1.8',
+242 verbose parsed url   href: 'vue-server-renderer@^2.1.8' }
+243 verbose cache add name="vue-server-renderer" spec="^2.1.8" args=["vue-server-renderer","^2.1.8"]
+244 verbose parsed url { protocol: null,
+244 verbose parsed url   slashes: null,
+244 verbose parsed url   auth: null,
+244 verbose parsed url   host: null,
+244 verbose parsed url   port: null,
+244 verbose parsed url   hostname: null,
+244 verbose parsed url   hash: null,
+244 verbose parsed url   search: null,
+244 verbose parsed url   query: null,
+244 verbose parsed url   pathname: '^2.1.8',
+244 verbose parsed url   path: '^2.1.8',
+244 verbose parsed url   href: '^2.1.8' }
+245 verbose addNamed [ 'vue-server-renderer', '^2.1.8' ]
+246 verbose addNamed [ null, null ]
+247 verbose cache add [ 'vue-simple-spinner@^1.2.10', null ]
+248 verbose cache add name=undefined spec="vue-simple-spinner@^1.2.10" args=["vue-simple-spinner@^1.2.10",null]
+249 verbose parsed url { protocol: null,
+249 verbose parsed url   slashes: null,
+249 verbose parsed url   auth: null,
+249 verbose parsed url   host: null,
+249 verbose parsed url   port: null,
+249 verbose parsed url   hostname: null,
+249 verbose parsed url   hash: null,
+249 verbose parsed url   search: null,
+249 verbose parsed url   query: null,
+249 verbose parsed url   pathname: 'vue-simple-spinner@^1.2.10',
+249 verbose parsed url   path: 'vue-simple-spinner@^1.2.10',
+249 verbose parsed url   href: 'vue-simple-spinner@^1.2.10' }
+250 verbose cache add name="vue-simple-spinner" spec="^1.2.10" args=["vue-simple-spinner","^1.2.10"]
+251 verbose parsed url { protocol: null,
+251 verbose parsed url   slashes: null,
+251 verbose parsed url   auth: null,
+251 verbose parsed url   host: null,
+251 verbose parsed url   port: null,
+251 verbose parsed url   hostname: null,
+251 verbose parsed url   hash: null,
+251 verbose parsed url   search: null,
+251 verbose parsed url   query: null,
+251 verbose parsed url   pathname: '^1.2.10',
+251 verbose parsed url   path: '^1.2.10',
+251 verbose parsed url   href: '^1.2.10' }
+252 verbose addNamed [ 'vue-simple-spinner', '^1.2.10' ]
+253 verbose addNamed [ null, null ]
+254 verbose cache add [ 'vue-style-loader@^4.1.2', null ]
+255 verbose cache add name=undefined spec="vue-style-loader@^4.1.2" args=["vue-style-loader@^4.1.2",null]
+256 verbose parsed url { protocol: null,
+256 verbose parsed url   slashes: null,
+256 verbose parsed url   auth: null,
+256 verbose parsed url   host: null,
+256 verbose parsed url   port: null,
+256 verbose parsed url   hostname: null,
+256 verbose parsed url   hash: null,
+256 verbose parsed url   search: null,
+256 verbose parsed url   query: null,
+256 verbose parsed url   pathname: 'vue-style-loader@^4.1.2',
+256 verbose parsed url   path: 'vue-style-loader@^4.1.2',
+256 verbose parsed url   href: 'vue-style-loader@^4.1.2' }
+257 verbose cache add name="vue-style-loader" spec="^4.1.2" args=["vue-style-loader","^4.1.2"]
+258 verbose parsed url { protocol: null,
+258 verbose parsed url   slashes: null,
+258 verbose parsed url   auth: null,
+258 verbose parsed url   host: null,
+258 verbose parsed url   port: null,
+258 verbose parsed url   hostname: null,
+258 verbose parsed url   hash: null,
+258 verbose parsed url   search: null,
+258 verbose parsed url   query: null,
+258 verbose parsed url   pathname: '^4.1.2',
+258 verbose parsed url   path: '^4.1.2',
+258 verbose parsed url   href: '^4.1.2' }
+259 verbose addNamed [ 'vue-style-loader', '^4.1.2' ]
+260 verbose addNamed [ null, null ]
+261 verbose cache add [ 'vue-tabs-component@^1.5.0', null ]
+262 verbose cache add name=undefined spec="vue-tabs-component@^1.5.0" args=["vue-tabs-component@^1.5.0",null]
+263 verbose parsed url { protocol: null,
+263 verbose parsed url   slashes: null,
+263 verbose parsed url   auth: null,
+263 verbose parsed url   host: null,
+263 verbose parsed url   port: null,
+263 verbose parsed url   hostname: null,
+263 verbose parsed url   hash: null,
+263 verbose parsed url   search: null,
+263 verbose parsed url   query: null,
+263 verbose parsed url   pathname: 'vue-tabs-component@^1.5.0',
+263 verbose parsed url   path: 'vue-tabs-component@^1.5.0',
+263 verbose parsed url   href: 'vue-tabs-component@^1.5.0' }
+264 verbose cache add name="vue-tabs-component" spec="^1.5.0" args=["vue-tabs-component","^1.5.0"]
+265 verbose parsed url { protocol: null,
+265 verbose parsed url   slashes: null,
+265 verbose parsed url   auth: null,
+265 verbose parsed url   host: null,
+265 verbose parsed url   port: null,
+265 verbose parsed url   hostname: null,
+265 verbose parsed url   hash: null,
+265 verbose parsed url   search: null,
+265 verbose parsed url   query: null,
+265 verbose parsed url   pathname: '^1.5.0',
+265 verbose parsed url   path: '^1.5.0',
+265 verbose parsed url   href: '^1.5.0' }
+266 verbose addNamed [ 'vue-tabs-component', '^1.5.0' ]
+267 verbose addNamed [ null, null ]
+268 verbose cache add [ 'vue-template-compiler@^2.1.8', null ]
+269 verbose cache add name=undefined spec="vue-template-compiler@^2.1.8" args=["vue-template-compiler@^2.1.8",null]
+270 verbose parsed url { protocol: null,
+270 verbose parsed url   slashes: null,
+270 verbose parsed url   auth: null,
+270 verbose parsed url   host: null,
+270 verbose parsed url   port: null,
+270 verbose parsed url   hostname: null,
+270 verbose parsed url   hash: null,
+270 verbose parsed url   search: null,
+270 verbose parsed url   query: null,
+270 verbose parsed url   pathname: 'vue-template-compiler@^2.1.8',
+270 verbose parsed url   path: 'vue-template-compiler@^2.1.8',
+270 verbose parsed url   href: 'vue-template-compiler@^2.1.8' }
+271 verbose cache add name="vue-template-compiler" spec="^2.1.8" args=["vue-template-compiler","^2.1.8"]
+272 verbose parsed url { protocol: null,
+272 verbose parsed url   slashes: null,
+272 verbose parsed url   auth: null,
+272 verbose parsed url   host: null,
+272 verbose parsed url   port: null,
+272 verbose parsed url   hostname: null,
+272 verbose parsed url   hash: null,
+272 verbose parsed url   search: null,
+272 verbose parsed url   query: null,
+272 verbose parsed url   pathname: '^2.1.8',
+272 verbose parsed url   path: '^2.1.8',
+272 verbose parsed url   href: '^2.1.8' }
+273 verbose addNamed [ 'vue-template-compiler', '^2.1.8' ]
+274 verbose addNamed [ null, null ]
+275 verbose cache add [ 'vue-toastification@^0.8.0', null ]
+276 verbose cache add name=undefined spec="vue-toastification@^0.8.0" args=["vue-toastification@^0.8.0",null]
+277 verbose parsed url { protocol: null,
+277 verbose parsed url   slashes: null,
+277 verbose parsed url   auth: null,
+277 verbose parsed url   host: null,
+277 verbose parsed url   port: null,
+277 verbose parsed url   hostname: null,
+277 verbose parsed url   hash: null,
+277 verbose parsed url   search: null,
+277 verbose parsed url   query: null,
+277 verbose parsed url   pathname: 'vue-toastification@^0.8.0',
+277 verbose parsed url   path: 'vue-toastification@^0.8.0',
+277 verbose parsed url   href: 'vue-toastification@^0.8.0' }
+278 verbose cache add name="vue-toastification" spec="^0.8.0" args=["vue-toastification","^0.8.0"]
+279 verbose parsed url { protocol: null,
+279 verbose parsed url   slashes: null,
+279 verbose parsed url   auth: null,
+279 verbose parsed url   host: null,
+279 verbose parsed url   port: null,
+279 verbose parsed url   hostname: null,
+279 verbose parsed url   hash: null,
+279 verbose parsed url   search: null,
+279 verbose parsed url   query: null,
+279 verbose parsed url   pathname: '^0.8.0',
+279 verbose parsed url   path: '^0.8.0',
+279 verbose parsed url   href: '^0.8.0' }
+280 verbose addNamed [ 'vue-toastification', '^0.8.0' ]
+281 verbose addNamed [ null, null ]
+282 verbose cache add [ 'vue2-daterange-picker@^0.5.1', null ]
+283 verbose cache add name=undefined spec="vue2-daterange-picker@^0.5.1" args=["vue2-daterange-picker@^0.5.1",null]
+284 verbose parsed url { protocol: null,
+284 verbose parsed url   slashes: null,
+284 verbose parsed url   auth: null,
+284 verbose parsed url   host: null,
+284 verbose parsed url   port: null,
+284 verbose parsed url   hostname: null,
+284 verbose parsed url   hash: null,
+284 verbose parsed url   search: null,
+284 verbose parsed url   query: null,
+284 verbose parsed url   pathname: 'vue2-daterange-picker@^0.5.1',
+284 verbose parsed url   path: 'vue2-daterange-picker@^0.5.1',
+284 verbose parsed url   href: 'vue2-daterange-picker@^0.5.1' }
+285 verbose cache add name="vue2-daterange-picker" spec="^0.5.1" args=["vue2-daterange-picker","^0.5.1"]
+286 verbose parsed url { protocol: null,
+286 verbose parsed url   slashes: null,
+286 verbose parsed url   auth: null,
+286 verbose parsed url   host: null,
+286 verbose parsed url   port: null,
+286 verbose parsed url   hostname: null,
+286 verbose parsed url   hash: null,
+286 verbose parsed url   search: null,
+286 verbose parsed url   query: null,
+286 verbose parsed url   pathname: '^0.5.1',
+286 verbose parsed url   path: '^0.5.1',
+286 verbose parsed url   href: '^0.5.1' }
+287 verbose addNamed [ 'vue2-daterange-picker', '^0.5.1' ]
+288 verbose addNamed [ null, null ]
+289 verbose cache add [ 'vuedraggable@^2.24.0', null ]
+290 verbose cache add name=undefined spec="vuedraggable@^2.24.0" args=["vuedraggable@^2.24.0",null]
+291 verbose parsed url { protocol: null,
+291 verbose parsed url   slashes: null,
+291 verbose parsed url   auth: null,
+291 verbose parsed url   host: null,
+291 verbose parsed url   port: null,
+291 verbose parsed url   hostname: null,
+291 verbose parsed url   hash: null,
+291 verbose parsed url   search: null,
+291 verbose parsed url   query: null,
+291 verbose parsed url   pathname: 'vuedraggable@^2.24.0',
+291 verbose parsed url   path: 'vuedraggable@^2.24.0',
+291 verbose parsed url   href: 'vuedraggable@^2.24.0' }
+292 verbose cache add name="vuedraggable" spec="^2.24.0" args=["vuedraggable","^2.24.0"]
+293 verbose parsed url { protocol: null,
+293 verbose parsed url   slashes: null,
+293 verbose parsed url   auth: null,
+293 verbose parsed url   host: null,
+293 verbose parsed url   port: null,
+293 verbose parsed url   hostname: null,
+293 verbose parsed url   hash: null,
+293 verbose parsed url   search: null,
+293 verbose parsed url   query: null,
+293 verbose parsed url   pathname: '^2.24.0',
+293 verbose parsed url   path: '^2.24.0',
+293 verbose parsed url   href: '^2.24.0' }
+294 verbose addNamed [ 'vuedraggable', '^2.24.0' ]
+295 verbose addNamed [ null, null ]
+296 verbose cache add [ 'vuelidate@^0.7.4', null ]
+297 verbose cache add name=undefined spec="vuelidate@^0.7.4" args=["vuelidate@^0.7.4",null]
+298 verbose parsed url { protocol: null,
+298 verbose parsed url   slashes: null,
+298 verbose parsed url   auth: null,
+298 verbose parsed url   host: null,
+298 verbose parsed url   port: null,
+298 verbose parsed url   hostname: null,
+298 verbose parsed url   hash: null,
+298 verbose parsed url   search: null,
+298 verbose parsed url   query: null,
+298 verbose parsed url   pathname: 'vuelidate@^0.7.4',
+298 verbose parsed url   path: 'vuelidate@^0.7.4',
+298 verbose parsed url   href: 'vuelidate@^0.7.4' }
+299 verbose cache add name="vuelidate" spec="^0.7.4" args=["vuelidate","^0.7.4"]
+300 verbose parsed url { protocol: null,
+300 verbose parsed url   slashes: null,
+300 verbose parsed url   auth: null,
+300 verbose parsed url   host: null,
+300 verbose parsed url   port: null,
+300 verbose parsed url   hostname: null,
+300 verbose parsed url   hash: null,
+300 verbose parsed url   search: null,
+300 verbose parsed url   query: null,
+300 verbose parsed url   pathname: '^0.7.4',
+300 verbose parsed url   path: '^0.7.4',
+300 verbose parsed url   href: '^0.7.4' }
+301 verbose addNamed [ 'vuelidate', '^0.7.4' ]
+302 verbose addNamed [ null, null ]
+303 verbose cache add [ 'vuex@^3.5.1', null ]
+304 verbose cache add name=undefined spec="vuex@^3.5.1" args=["vuex@^3.5.1",null]
+305 verbose parsed url { protocol: null,
+305 verbose parsed url   slashes: null,
+305 verbose parsed url   auth: null,
+305 verbose parsed url   host: null,
+305 verbose parsed url   port: null,
+305 verbose parsed url   hostname: null,
+305 verbose parsed url   hash: null,
+305 verbose parsed url   search: null,
+305 verbose parsed url   query: null,
+305 verbose parsed url   pathname: 'vuex@^3.5.1',
+305 verbose parsed url   path: 'vuex@^3.5.1',
+305 verbose parsed url   href: 'vuex@^3.5.1' }
+306 verbose cache add name="vuex" spec="^3.5.1" args=["vuex","^3.5.1"]
+307 verbose parsed url { protocol: null,
+307 verbose parsed url   slashes: null,
+307 verbose parsed url   auth: null,
+307 verbose parsed url   host: null,
+307 verbose parsed url   port: null,
+307 verbose parsed url   hostname: null,
+307 verbose parsed url   hash: null,
+307 verbose parsed url   search: null,
+307 verbose parsed url   query: null,
+307 verbose parsed url   pathname: '^3.5.1',
+307 verbose parsed url   path: '^3.5.1',
+307 verbose parsed url   href: '^3.5.1' }
+308 verbose addNamed [ 'vuex', '^3.5.1' ]
+309 verbose addNamed [ null, null ]
+310 verbose cache add [ 'vuex-router-sync@^5.0.0', null ]
+311 verbose cache add name=undefined spec="vuex-router-sync@^5.0.0" args=["vuex-router-sync@^5.0.0",null]
+312 verbose parsed url { protocol: null,
+312 verbose parsed url   slashes: null,
+312 verbose parsed url   auth: null,
+312 verbose parsed url   host: null,
+312 verbose parsed url   port: null,
+312 verbose parsed url   hostname: null,
+312 verbose parsed url   hash: null,
+312 verbose parsed url   search: null,
+312 verbose parsed url   query: null,
+312 verbose parsed url   pathname: 'vuex-router-sync@^5.0.0',
+312 verbose parsed url   path: 'vuex-router-sync@^5.0.0',
+312 verbose parsed url   href: 'vuex-router-sync@^5.0.0' }
+313 verbose cache add name="vuex-router-sync" spec="^5.0.0" args=["vuex-router-sync","^5.0.0"]
+314 verbose parsed url { protocol: null,
+314 verbose parsed url   slashes: null,
+314 verbose parsed url   auth: null,
+314 verbose parsed url   host: null,
+314 verbose parsed url   port: null,
+314 verbose parsed url   hostname: null,
+314 verbose parsed url   hash: null,
+314 verbose parsed url   search: null,
+314 verbose parsed url   query: null,
+314 verbose parsed url   pathname: '^5.0.0',
+314 verbose parsed url   path: '^5.0.0',
+314 verbose parsed url   href: '^5.0.0' }
+315 verbose addNamed [ 'vuex-router-sync', '^5.0.0' ]
+316 verbose addNamed [ null, null ]
+317 verbose cache add [ 'webpack-merge@^4.2.2', null ]
+318 verbose cache add name=undefined spec="webpack-merge@^4.2.2" args=["webpack-merge@^4.2.2",null]
+319 verbose parsed url { protocol: null,
+319 verbose parsed url   slashes: null,
+319 verbose parsed url   auth: null,
+319 verbose parsed url   host: null,
+319 verbose parsed url   port: null,
+319 verbose parsed url   hostname: null,
+319 verbose parsed url   hash: null,
+319 verbose parsed url   search: null,
+319 verbose parsed url   query: null,
+319 verbose parsed url   pathname: 'webpack-merge@^4.2.2',
+319 verbose parsed url   path: 'webpack-merge@^4.2.2',
+319 verbose parsed url   href: 'webpack-merge@^4.2.2' }
+320 verbose cache add name="webpack-merge" spec="^4.2.2" args=["webpack-merge","^4.2.2"]
+321 verbose parsed url { protocol: null,
+321 verbose parsed url   slashes: null,
+321 verbose parsed url   auth: null,
+321 verbose parsed url   host: null,
+321 verbose parsed url   port: null,
+321 verbose parsed url   hostname: null,
+321 verbose parsed url   hash: null,
+321 verbose parsed url   search: null,
+321 verbose parsed url   query: null,
+321 verbose parsed url   pathname: '^4.2.2',
+321 verbose parsed url   path: '^4.2.2',
+321 verbose parsed url   href: '^4.2.2' }
+322 verbose addNamed [ 'webpack-merge', '^4.2.2' ]
+323 verbose addNamed [ null, null ]
+324 verbose cache add [ 'xlsx@^0.16.3', null ]
+325 verbose cache add name=undefined spec="xlsx@^0.16.3" args=["xlsx@^0.16.3",null]
+326 verbose parsed url { protocol: null,
+326 verbose parsed url   slashes: null,
+326 verbose parsed url   auth: null,
+326 verbose parsed url   host: null,
+326 verbose parsed url   port: null,
+326 verbose parsed url   hostname: null,
+326 verbose parsed url   hash: null,
+326 verbose parsed url   search: null,
+326 verbose parsed url   query: null,
+326 verbose parsed url   pathname: 'xlsx@^0.16.3',
+326 verbose parsed url   path: 'xlsx@^0.16.3',
+326 verbose parsed url   href: 'xlsx@^0.16.3' }
+327 verbose cache add name="xlsx" spec="^0.16.3" args=["xlsx","^0.16.3"]
+328 verbose parsed url { protocol: null,
+328 verbose parsed url   slashes: null,
+328 verbose parsed url   auth: null,
+328 verbose parsed url   host: null,
+328 verbose parsed url   port: null,
+328 verbose parsed url   hostname: null,
+328 verbose parsed url   hash: null,
+328 verbose parsed url   search: null,
+328 verbose parsed url   query: null,
+328 verbose parsed url   pathname: '^0.16.3',
+328 verbose parsed url   path: '^0.16.3',
+328 verbose parsed url   href: '^0.16.3' }
+329 verbose addNamed [ 'xlsx', '^0.16.3' ]
+330 verbose addNamed [ null, null ]
+331 verbose cache add [ 'aspnet-webpack@^2.0.3', null ]
+332 verbose cache add name=undefined spec="aspnet-webpack@^2.0.3" args=["aspnet-webpack@^2.0.3",null]
+333 verbose parsed url { protocol: null,
+333 verbose parsed url   slashes: null,
+333 verbose parsed url   auth: null,
+333 verbose parsed url   host: null,
+333 verbose parsed url   port: null,
+333 verbose parsed url   hostname: null,
+333 verbose parsed url   hash: null,
+333 verbose parsed url   search: null,
+333 verbose parsed url   query: null,
+333 verbose parsed url   pathname: 'aspnet-webpack@^2.0.3',
+333 verbose parsed url   path: 'aspnet-webpack@^2.0.3',
+333 verbose parsed url   href: 'aspnet-webpack@^2.0.3' }
+334 verbose cache add name="aspnet-webpack" spec="^2.0.3" args=["aspnet-webpack","^2.0.3"]
+335 verbose parsed url { protocol: null,
+335 verbose parsed url   slashes: null,
+335 verbose parsed url   auth: null,
+335 verbose parsed url   host: null,
+335 verbose parsed url   port: null,
+335 verbose parsed url   hostname: null,
+335 verbose parsed url   hash: null,
+335 verbose parsed url   search: null,
+335 verbose parsed url   query: null,
+335 verbose parsed url   pathname: '^2.0.3',
+335 verbose parsed url   path: '^2.0.3',
+335 verbose parsed url   href: '^2.0.3' }
+336 verbose addNamed [ 'aspnet-webpack', '^2.0.3' ]
+337 verbose addNamed [ null, null ]
+338 verbose cache add [ 'babel-core@^6.21.0', null ]
+339 verbose cache add name=undefined spec="babel-core@^6.21.0" args=["babel-core@^6.21.0",null]
+340 verbose parsed url { protocol: null,
+340 verbose parsed url   slashes: null,
+340 verbose parsed url   auth: null,
+340 verbose parsed url   host: null,
+340 verbose parsed url   port: null,
+340 verbose parsed url   hostname: null,
+340 verbose parsed url   hash: null,
+340 verbose parsed url   search: null,
+340 verbose parsed url   query: null,
+340 verbose parsed url   pathname: 'babel-core@^6.21.0',
+340 verbose parsed url   path: 'babel-core@^6.21.0',
+340 verbose parsed url   href: 'babel-core@^6.21.0' }
+341 verbose cache add name="babel-core" spec="^6.21.0" args=["babel-core","^6.21.0"]
+342 verbose parsed url { protocol: null,
+342 verbose parsed url   slashes: null,
+342 verbose parsed url   auth: null,
+342 verbose parsed url   host: null,
+342 verbose parsed url   port: null,
+342 verbose parsed url   hostname: null,
+342 verbose parsed url   hash: null,
+342 verbose parsed url   search: null,
+342 verbose parsed url   query: null,
+342 verbose parsed url   pathname: '^6.21.0',
+342 verbose parsed url   path: '^6.21.0',
+342 verbose parsed url   href: '^6.21.0' }
+343 verbose addNamed [ 'babel-core', '^6.21.0' ]
+344 verbose addNamed [ null, null ]
+345 verbose cache add [ 'babel-loader@^6.2.10', null ]
+346 verbose cache add name=undefined spec="babel-loader@^6.2.10" args=["babel-loader@^6.2.10",null]
+347 verbose parsed url { protocol: null,
+347 verbose parsed url   slashes: null,
+347 verbose parsed url   auth: null,
+347 verbose parsed url   host: null,
+347 verbose parsed url   port: null,
+347 verbose parsed url   hostname: null,
+347 verbose parsed url   hash: null,
+347 verbose parsed url   search: null,
+347 verbose parsed url   query: null,
+347 verbose parsed url   pathname: 'babel-loader@^6.2.10',
+347 verbose parsed url   path: 'babel-loader@^6.2.10',
+347 verbose parsed url   href: 'babel-loader@^6.2.10' }
+348 verbose cache add name="babel-loader" spec="^6.2.10" args=["babel-loader","^6.2.10"]
+349 verbose parsed url { protocol: null,
+349 verbose parsed url   slashes: null,
+349 verbose parsed url   auth: null,
+349 verbose parsed url   host: null,
+349 verbose parsed url   port: null,
+349 verbose parsed url   hostname: null,
+349 verbose parsed url   hash: null,
+349 verbose parsed url   search: null,
+349 verbose parsed url   query: null,
+349 verbose parsed url   pathname: '^6.2.10',
+349 verbose parsed url   path: '^6.2.10',
+349 verbose parsed url   href: '^6.2.10' }
+350 verbose addNamed [ 'babel-loader', '^6.2.10' ]
+351 verbose addNamed [ null, null ]
+352 verbose cache add [ 'babel-plugin-transform-async-to-generator@^6.22.0', null ]
+353 verbose cache add name=undefined spec="babel-plugin-transform-async-to-generator@^6.22.0" args=["babel-plugin-transform-async-to-generator@^6.22.0",null]
+354 verbose parsed url { protocol: null,
+354 verbose parsed url   slashes: null,
+354 verbose parsed url   auth: null,
+354 verbose parsed url   host: null,
+354 verbose parsed url   port: null,
+354 verbose parsed url   hostname: null,
+354 verbose parsed url   hash: null,
+354 verbose parsed url   search: null,
+354 verbose parsed url   query: null,
+354 verbose parsed url   pathname: 'babel-plugin-transform-async-to-generator@^6.22.0',
+354 verbose parsed url   path: 'babel-plugin-transform-async-to-generator@^6.22.0',
+354 verbose parsed url   href: 'babel-plugin-transform-async-to-generator@^6.22.0' }
+355 verbose cache add name="babel-plugin-transform-async-to-generator" spec="^6.22.0" args=["babel-plugin-transform-async-to-generator","^6.22.0"]
+356 verbose parsed url { protocol: null,
+356 verbose parsed url   slashes: null,
+356 verbose parsed url   auth: null,
+356 verbose parsed url   host: null,
+356 verbose parsed url   port: null,
+356 verbose parsed url   hostname: null,
+356 verbose parsed url   hash: null,
+356 verbose parsed url   search: null,
+356 verbose parsed url   query: null,
+356 verbose parsed url   pathname: '^6.22.0',
+356 verbose parsed url   path: '^6.22.0',
+356 verbose parsed url   href: '^6.22.0' }
+357 verbose addNamed [ 'babel-plugin-transform-async-to-generator', '^6.22.0' ]
+358 verbose addNamed [ null, null ]
+359 verbose cache add [ 'babel-plugin-transform-runtime@^6.15.0', null ]
+360 verbose cache add name=undefined spec="babel-plugin-transform-runtime@^6.15.0" args=["babel-plugin-transform-runtime@^6.15.0",null]
+361 verbose parsed url { protocol: null,
+361 verbose parsed url   slashes: null,
+361 verbose parsed url   auth: null,
+361 verbose parsed url   host: null,
+361 verbose parsed url   port: null,
+361 verbose parsed url   hostname: null,
+361 verbose parsed url   hash: null,
+361 verbose parsed url   search: null,
+361 verbose parsed url   query: null,
+361 verbose parsed url   pathname: 'babel-plugin-transform-runtime@^6.15.0',
+361 verbose parsed url   path: 'babel-plugin-transform-runtime@^6.15.0',
+361 verbose parsed url   href: 'babel-plugin-transform-runtime@^6.15.0' }
+362 verbose cache add name="babel-plugin-transform-runtime" spec="^6.15.0" args=["babel-plugin-transform-runtime","^6.15.0"]
+363 verbose parsed url { protocol: null,
+363 verbose parsed url   slashes: null,
+363 verbose parsed url   auth: null,
+363 verbose parsed url   host: null,
+363 verbose parsed url   port: null,
+363 verbose parsed url   hostname: null,
+363 verbose parsed url   hash: null,
+363 verbose parsed url   search: null,
+363 verbose parsed url   query: null,
+363 verbose parsed url   pathname: '^6.15.0',
+363 verbose parsed url   path: '^6.15.0',
+363 verbose parsed url   href: '^6.15.0' }
+364 verbose addNamed [ 'babel-plugin-transform-runtime', '^6.15.0' ]
+365 verbose addNamed [ null, null ]
+366 verbose cache add [ 'babel-preset-es2015@^6.18.0', null ]
+367 verbose cache add name=undefined spec="babel-preset-es2015@^6.18.0" args=["babel-preset-es2015@^6.18.0",null]
+368 verbose parsed url { protocol: null,
+368 verbose parsed url   slashes: null,
+368 verbose parsed url   auth: null,
+368 verbose parsed url   host: null,
+368 verbose parsed url   port: null,
+368 verbose parsed url   hostname: null,
+368 verbose parsed url   hash: null,
+368 verbose parsed url   search: null,
+368 verbose parsed url   query: null,
+368 verbose parsed url   pathname: 'babel-preset-es2015@^6.18.0',
+368 verbose parsed url   path: 'babel-preset-es2015@^6.18.0',
+368 verbose parsed url   href: 'babel-preset-es2015@^6.18.0' }
+369 verbose cache add name="babel-preset-es2015" spec="^6.18.0" args=["babel-preset-es2015","^6.18.0"]
+370 verbose parsed url { protocol: null,
+370 verbose parsed url   slashes: null,
+370 verbose parsed url   auth: null,
+370 verbose parsed url   host: null,
+370 verbose parsed url   port: null,
+370 verbose parsed url   hostname: null,
+370 verbose parsed url   hash: null,
+370 verbose parsed url   search: null,
+370 verbose parsed url   query: null,
+370 verbose parsed url   pathname: '^6.18.0',
+370 verbose parsed url   path: '^6.18.0',
+370 verbose parsed url   href: '^6.18.0' }
+371 verbose addNamed [ 'babel-preset-es2015', '^6.18.0' ]
+372 verbose addNamed [ null, null ]
+373 verbose cache add [ 'babel-preset-stage-2@^6.18.0', null ]
+374 verbose cache add name=undefined spec="babel-preset-stage-2@^6.18.0" args=["babel-preset-stage-2@^6.18.0",null]
+375 verbose parsed url { protocol: null,
+375 verbose parsed url   slashes: null,
+375 verbose parsed url   auth: null,
+375 verbose parsed url   host: null,
+375 verbose parsed url   port: null,
+375 verbose parsed url   hostname: null,
+375 verbose parsed url   hash: null,
+375 verbose parsed url   search: null,
+375 verbose parsed url   query: null,
+375 verbose parsed url   pathname: 'babel-preset-stage-2@^6.18.0',
+375 verbose parsed url   path: 'babel-preset-stage-2@^6.18.0',
+375 verbose parsed url   href: 'babel-preset-stage-2@^6.18.0' }
+376 verbose cache add name="babel-preset-stage-2" spec="^6.18.0" args=["babel-preset-stage-2","^6.18.0"]
+377 verbose parsed url { protocol: null,
+377 verbose parsed url   slashes: null,
+377 verbose parsed url   auth: null,
+377 verbose parsed url   host: null,
+377 verbose parsed url   port: null,
+377 verbose parsed url   hostname: null,
+377 verbose parsed url   hash: null,
+377 verbose parsed url   search: null,
+377 verbose parsed url   query: null,
+377 verbose parsed url   pathname: '^6.18.0',
+377 verbose parsed url   path: '^6.18.0',
+377 verbose parsed url   href: '^6.18.0' }
+378 verbose addNamed [ 'babel-preset-stage-2', '^6.18.0' ]
+379 verbose addNamed [ null, null ]
+380 verbose cache add [ 'babel-register@^6.18.0', null ]
+381 verbose cache add name=undefined spec="babel-register@^6.18.0" args=["babel-register@^6.18.0",null]
+382 verbose parsed url { protocol: null,
+382 verbose parsed url   slashes: null,
+382 verbose parsed url   auth: null,
+382 verbose parsed url   host: null,
+382 verbose parsed url   port: null,
+382 verbose parsed url   hostname: null,
+382 verbose parsed url   hash: null,
+382 verbose parsed url   search: null,
+382 verbose parsed url   query: null,
+382 verbose parsed url   pathname: 'babel-register@^6.18.0',
+382 verbose parsed url   path: 'babel-register@^6.18.0',
+382 verbose parsed url   href: 'babel-register@^6.18.0' }
+383 verbose cache add name="babel-register" spec="^6.18.0" args=["babel-register","^6.18.0"]
+384 verbose parsed url { protocol: null,
+384 verbose parsed url   slashes: null,
+384 verbose parsed url   auth: null,
+384 verbose parsed url   host: null,
+384 verbose parsed url   port: null,
+384 verbose parsed url   hostname: null,
+384 verbose parsed url   hash: null,
+384 verbose parsed url   search: null,
+384 verbose parsed url   query: null,
+384 verbose parsed url   pathname: '^6.18.0',
+384 verbose parsed url   path: '^6.18.0',
+384 verbose parsed url   href: '^6.18.0' }
+385 verbose addNamed [ 'babel-register', '^6.18.0' ]
+386 verbose addNamed [ null, null ]
+387 verbose cache add [ 'bootstrap@^3.3.6', null ]
+388 verbose cache add name=undefined spec="bootstrap@^3.3.6" args=["bootstrap@^3.3.6",null]
+389 verbose parsed url { protocol: null,
+389 verbose parsed url   slashes: null,
+389 verbose parsed url   auth: null,
+389 verbose parsed url   host: null,
+389 verbose parsed url   port: null,
+389 verbose parsed url   hostname: null,
+389 verbose parsed url   hash: null,
+389 verbose parsed url   search: null,
+389 verbose parsed url   query: null,
+389 verbose parsed url   pathname: 'bootstrap@^3.3.6',
+389 verbose parsed url   path: 'bootstrap@^3.3.6',
+389 verbose parsed url   href: 'bootstrap@^3.3.6' }
+390 verbose cache add name="bootstrap" spec="^3.3.6" args=["bootstrap","^3.3.6"]
+391 verbose parsed url { protocol: null,
+391 verbose parsed url   slashes: null,
+391 verbose parsed url   auth: null,
+391 verbose parsed url   host: null,
+391 verbose parsed url   port: null,
+391 verbose parsed url   hostname: null,
+391 verbose parsed url   hash: null,
+391 verbose parsed url   search: null,
+391 verbose parsed url   query: null,
+391 verbose parsed url   pathname: '^3.3.6',
+391 verbose parsed url   path: '^3.3.6',
+391 verbose parsed url   href: '^3.3.6' }
+392 verbose addNamed [ 'bootstrap', '^3.3.6' ]
+393 verbose addNamed [ null, null ]
+394 verbose cache add [ 'cross-env@^3.2.4', null ]
+395 verbose cache add name=undefined spec="cross-env@^3.2.4" args=["cross-env@^3.2.4",null]
+396 verbose parsed url { protocol: null,
+396 verbose parsed url   slashes: null,
+396 verbose parsed url   auth: null,
+396 verbose parsed url   host: null,
+396 verbose parsed url   port: null,
+396 verbose parsed url   hostname: null,
+396 verbose parsed url   hash: null,
+396 verbose parsed url   search: null,
+396 verbose parsed url   query: null,
+396 verbose parsed url   pathname: 'cross-env@^3.2.4',
+396 verbose parsed url   path: 'cross-env@^3.2.4',
+396 verbose parsed url   href: 'cross-env@^3.2.4' }
+397 verbose cache add name="cross-env" spec="^3.2.4" args=["cross-env","^3.2.4"]
+398 verbose parsed url { protocol: null,
+398 verbose parsed url   slashes: null,
+398 verbose parsed url   auth: null,
+398 verbose parsed url   host: null,
+398 verbose parsed url   port: null,
+398 verbose parsed url   hostname: null,
+398 verbose parsed url   hash: null,
+398 verbose parsed url   search: null,
+398 verbose parsed url   query: null,
+398 verbose parsed url   pathname: '^3.2.4',
+398 verbose parsed url   path: '^3.2.4',
+398 verbose parsed url   href: '^3.2.4' }
+399 verbose addNamed [ 'cross-env', '^3.2.4' ]
+400 verbose addNamed [ null, null ]
+401 verbose cache add [ 'css-loader@^0.26.1', null ]
+402 verbose cache add name=undefined spec="css-loader@^0.26.1" args=["css-loader@^0.26.1",null]
+403 verbose parsed url { protocol: null,
+403 verbose parsed url   slashes: null,
+403 verbose parsed url   auth: null,
+403 verbose parsed url   host: null,
+403 verbose parsed url   port: null,
+403 verbose parsed url   hostname: null,
+403 verbose parsed url   hash: null,
+403 verbose parsed url   search: null,
+403 verbose parsed url   query: null,
+403 verbose parsed url   pathname: 'css-loader@^0.26.1',
+403 verbose parsed url   path: 'css-loader@^0.26.1',
+403 verbose parsed url   href: 'css-loader@^0.26.1' }
+404 verbose cache add name="css-loader" spec="^0.26.1" args=["css-loader","^0.26.1"]
+405 verbose parsed url { protocol: null,
+405 verbose parsed url   slashes: null,
+405 verbose parsed url   auth: null,
+405 verbose parsed url   host: null,
+405 verbose parsed url   port: null,
+405 verbose parsed url   hostname: null,
+405 verbose parsed url   hash: null,
+405 verbose parsed url   search: null,
+405 verbose parsed url   query: null,
+405 verbose parsed url   pathname: '^0.26.1',
+405 verbose parsed url   path: '^0.26.1',
+405 verbose parsed url   href: '^0.26.1' }
+406 verbose addNamed [ 'css-loader', '^0.26.1' ]
+407 verbose addNamed [ null, null ]
+408 verbose cache add [ 'event-source-polyfill@^0.0.7', null ]
+409 verbose cache add name=undefined spec="event-source-polyfill@^0.0.7" args=["event-source-polyfill@^0.0.7",null]
+410 verbose parsed url { protocol: null,
+410 verbose parsed url   slashes: null,
+410 verbose parsed url   auth: null,
+410 verbose parsed url   host: null,
+410 verbose parsed url   port: null,
+410 verbose parsed url   hostname: null,
+410 verbose parsed url   hash: null,
+410 verbose parsed url   search: null,
+410 verbose parsed url   query: null,
+410 verbose parsed url   pathname: 'event-source-polyfill@^0.0.7',
+410 verbose parsed url   path: 'event-source-polyfill@^0.0.7',
+410 verbose parsed url   href: 'event-source-polyfill@^0.0.7' }
+411 verbose cache add name="event-source-polyfill" spec="^0.0.7" args=["event-source-polyfill","^0.0.7"]
+412 verbose parsed url { protocol: null,
+412 verbose parsed url   slashes: null,
+412 verbose parsed url   auth: null,
+412 verbose parsed url   host: null,
+412 verbose parsed url   port: null,
+412 verbose parsed url   hostname: null,
+412 verbose parsed url   hash: null,
+412 verbose parsed url   search: null,
+412 verbose parsed url   query: null,
+412 verbose parsed url   pathname: '^0.0.7',
+412 verbose parsed url   path: '^0.0.7',
+412 verbose parsed url   href: '^0.0.7' }
+413 verbose addNamed [ 'event-source-polyfill', '^0.0.7' ]
+414 verbose addNamed [ null, null ]
+415 verbose cache add [ 'extract-text-webpack-plugin@^2.0.0-rc.3', null ]
+416 verbose cache add name=undefined spec="extract-text-webpack-plugin@^2.0.0-rc.3" args=["extract-text-webpack-plugin@^2.0.0-rc.3",null]
+417 verbose parsed url { protocol: null,
+417 verbose parsed url   slashes: null,
+417 verbose parsed url   auth: null,
+417 verbose parsed url   host: null,
+417 verbose parsed url   port: null,
+417 verbose parsed url   hostname: null,
+417 verbose parsed url   hash: null,
+417 verbose parsed url   search: null,
+417 verbose parsed url   query: null,
+417 verbose parsed url   pathname: 'extract-text-webpack-plugin@^2.0.0-rc.3',
+417 verbose parsed url   path: 'extract-text-webpack-plugin@^2.0.0-rc.3',
+417 verbose parsed url   href: 'extract-text-webpack-plugin@^2.0.0-rc.3' }
+418 verbose cache add name="extract-text-webpack-plugin" spec="^2.0.0-rc.3" args=["extract-text-webpack-plugin","^2.0.0-rc.3"]
+419 verbose parsed url { protocol: null,
+419 verbose parsed url   slashes: null,
+419 verbose parsed url   auth: null,
+419 verbose parsed url   host: null,
+419 verbose parsed url   port: null,
+419 verbose parsed url   hostname: null,
+419 verbose parsed url   hash: null,
+419 verbose parsed url   search: null,
+419 verbose parsed url   query: null,
+419 verbose parsed url   pathname: '^2.0.0-rc.3',
+419 verbose parsed url   path: '^2.0.0-rc.3',
+419 verbose parsed url   href: '^2.0.0-rc.3' }
+420 verbose addNamed [ 'extract-text-webpack-plugin', '^2.0.0-rc.3' ]
+421 verbose addNamed [ null, null ]
+422 verbose cache add [ 'file-loader@^0.9.0', null ]
+423 verbose cache add name=undefined spec="file-loader@^0.9.0" args=["file-loader@^0.9.0",null]
+424 verbose parsed url { protocol: null,
+424 verbose parsed url   slashes: null,
+424 verbose parsed url   auth: null,
+424 verbose parsed url   host: null,
+424 verbose parsed url   port: null,
+424 verbose parsed url   hostname: null,
+424 verbose parsed url   hash: null,
+424 verbose parsed url   search: null,
+424 verbose parsed url   query: null,
+424 verbose parsed url   pathname: 'file-loader@^0.9.0',
+424 verbose parsed url   path: 'file-loader@^0.9.0',
+424 verbose parsed url   href: 'file-loader@^0.9.0' }
+425 verbose cache add name="file-loader" spec="^0.9.0" args=["file-loader","^0.9.0"]
+426 verbose parsed url { protocol: null,
+426 verbose parsed url   slashes: null,
+426 verbose parsed url   auth: null,
+426 verbose parsed url   host: null,
+426 verbose parsed url   port: null,
+426 verbose parsed url   hostname: null,
+426 verbose parsed url   hash: null,
+426 verbose parsed url   search: null,
+426 verbose parsed url   query: null,
+426 verbose parsed url   pathname: '^0.9.0',
+426 verbose parsed url   path: '^0.9.0',
+426 verbose parsed url   href: '^0.9.0' }
+427 verbose addNamed [ 'file-loader', '^0.9.0' ]
+428 verbose addNamed [ null, null ]
+429 verbose cache add [ 'jquery@3.1.0', null ]
+430 verbose cache add name=undefined spec="jquery@3.1.0" args=["jquery@3.1.0",null]
+431 verbose parsed url { protocol: null,
+431 verbose parsed url   slashes: null,
+431 verbose parsed url   auth: null,
+431 verbose parsed url   host: null,
+431 verbose parsed url   port: null,
+431 verbose parsed url   hostname: null,
+431 verbose parsed url   hash: null,
+431 verbose parsed url   search: null,
+431 verbose parsed url   query: null,
+431 verbose parsed url   pathname: 'jquery@3.1.0',
+431 verbose parsed url   path: 'jquery@3.1.0',
+431 verbose parsed url   href: 'jquery@3.1.0' }
+432 verbose cache add name="jquery" spec="3.1.0" args=["jquery","3.1.0"]
+433 verbose parsed url { protocol: null,
+433 verbose parsed url   slashes: null,
+433 verbose parsed url   auth: null,
+433 verbose parsed url   host: null,
+433 verbose parsed url   port: null,
+433 verbose parsed url   hostname: null,
+433 verbose parsed url   hash: null,
+433 verbose parsed url   search: null,
+433 verbose parsed url   query: null,
+433 verbose parsed url   pathname: '3.1.0',
+433 verbose parsed url   path: '3.1.0',
+433 verbose parsed url   href: '3.1.0' }
+434 verbose addNamed [ 'jquery', '3.1.0' ]
+435 verbose addNamed [ '3.1.0', '3.1.0' ]
+436 verbose cache add [ 'node-sass@4.9.0', null ]
+437 verbose cache add name=undefined spec="node-sass@4.9.0" args=["node-sass@4.9.0",null]
+438 verbose parsed url { protocol: null,
+438 verbose parsed url   slashes: null,
+438 verbose parsed url   auth: null,
+438 verbose parsed url   host: null,
+438 verbose parsed url   port: null,
+438 verbose parsed url   hostname: null,
+438 verbose parsed url   hash: null,
+438 verbose parsed url   search: null,
+438 verbose parsed url   query: null,
+438 verbose parsed url   pathname: 'node-sass@4.9.0',
+438 verbose parsed url   path: 'node-sass@4.9.0',
+438 verbose parsed url   href: 'node-sass@4.9.0' }
+439 verbose cache add name="node-sass" spec="4.9.0" args=["node-sass","4.9.0"]
+440 verbose parsed url { protocol: null,
+440 verbose parsed url   slashes: null,
+440 verbose parsed url   auth: null,
+440 verbose parsed url   host: null,
+440 verbose parsed url   port: null,
+440 verbose parsed url   hostname: null,
+440 verbose parsed url   hash: null,
+440 verbose parsed url   search: null,
+440 verbose parsed url   query: null,
+440 verbose parsed url   pathname: '4.9.0',
+440 verbose parsed url   path: '4.9.0',
+440 verbose parsed url   href: '4.9.0' }
+441 verbose addNamed [ 'node-sass', '4.9.0' ]
+442 verbose addNamed [ '4.9.0', '4.9.0' ]
+443 verbose cache add [ 'optimize-css-assets-webpack-plugin@^1.3.1', null ]
+444 verbose cache add name=undefined spec="optimize-css-assets-webpack-plugin@^1.3.1" args=["optimize-css-assets-webpack-plugin@^1.3.1",null]
+445 verbose parsed url { protocol: null,
+445 verbose parsed url   slashes: null,
+445 verbose parsed url   auth: null,
+445 verbose parsed url   host: null,
+445 verbose parsed url   port: null,
+445 verbose parsed url   hostname: null,
+445 verbose parsed url   hash: null,
+445 verbose parsed url   search: null,
+445 verbose parsed url   query: null,
+445 verbose parsed url   pathname: 'optimize-css-assets-webpack-plugin@^1.3.1',
+445 verbose parsed url   path: 'optimize-css-assets-webpack-plugin@^1.3.1',
+445 verbose parsed url   href: 'optimize-css-assets-webpack-plugin@^1.3.1' }
+446 verbose cache add name="optimize-css-assets-webpack-plugin" spec="^1.3.1" args=["optimize-css-assets-webpack-plugin","^1.3.1"]
+447 verbose parsed url { protocol: null,
+447 verbose parsed url   slashes: null,
+447 verbose parsed url   auth: null,
+447 verbose parsed url   host: null,
+447 verbose parsed url   port: null,
+447 verbose parsed url   hostname: null,
+447 verbose parsed url   hash: null,
+447 verbose parsed url   search: null,
+447 verbose parsed url   query: null,
+447 verbose parsed url   pathname: '^1.3.1',
+447 verbose parsed url   path: '^1.3.1',
+447 verbose parsed url   href: '^1.3.1' }
+448 verbose addNamed [ 'optimize-css-assets-webpack-plugin', '^1.3.1' ]
+449 verbose addNamed [ null, null ]
+450 verbose cache add [ 'sass-loader@^4.1.0', null ]
+451 verbose cache add name=undefined spec="sass-loader@^4.1.0" args=["sass-loader@^4.1.0",null]
+452 verbose parsed url { protocol: null,
+452 verbose parsed url   slashes: null,
+452 verbose parsed url   auth: null,
+452 verbose parsed url   host: null,
+452 verbose parsed url   port: null,
+452 verbose parsed url   hostname: null,
+452 verbose parsed url   hash: null,
+452 verbose parsed url   search: null,
+452 verbose parsed url   query: null,
+452 verbose parsed url   pathname: 'sass-loader@^4.1.0',
+452 verbose parsed url   path: 'sass-loader@^4.1.0',
+452 verbose parsed url   href: 'sass-loader@^4.1.0' }
+453 verbose cache add name="sass-loader" spec="^4.1.0" args=["sass-loader","^4.1.0"]
+454 verbose parsed url { protocol: null,
+454 verbose parsed url   slashes: null,
+454 verbose parsed url   auth: null,
+454 verbose parsed url   host: null,
+454 verbose parsed url   port: null,
+454 verbose parsed url   hostname: null,
+454 verbose parsed url   hash: null,
+454 verbose parsed url   search: null,
+454 verbose parsed url   query: null,
+454 verbose parsed url   pathname: '^4.1.0',
+454 verbose parsed url   path: '^4.1.0',
+454 verbose parsed url   href: '^4.1.0' }
+455 verbose addNamed [ 'sass-loader', '^4.1.0' ]
+456 verbose addNamed [ null, null ]
+457 verbose cache add [ 'style-loader@^0.13.1', null ]
+458 verbose cache add name=undefined spec="style-loader@^0.13.1" args=["style-loader@^0.13.1",null]
+459 verbose parsed url { protocol: null,
+459 verbose parsed url   slashes: null,
+459 verbose parsed url   auth: null,
+459 verbose parsed url   host: null,
+459 verbose parsed url   port: null,
+459 verbose parsed url   hostname: null,
+459 verbose parsed url   hash: null,
+459 verbose parsed url   search: null,
+459 verbose parsed url   query: null,
+459 verbose parsed url   pathname: 'style-loader@^0.13.1',
+459 verbose parsed url   path: 'style-loader@^0.13.1',
+459 verbose parsed url   href: 'style-loader@^0.13.1' }
+460 verbose cache add name="style-loader" spec="^0.13.1" args=["style-loader","^0.13.1"]
+461 verbose parsed url { protocol: null,
+461 verbose parsed url   slashes: null,
+461 verbose parsed url   auth: null,
+461 verbose parsed url   host: null,
+461 verbose parsed url   port: null,
+461 verbose parsed url   hostname: null,
+461 verbose parsed url   hash: null,
+461 verbose parsed url   search: null,
+461 verbose parsed url   query: null,
+461 verbose parsed url   pathname: '^0.13.1',
+461 verbose parsed url   path: '^0.13.1',
+461 verbose parsed url   href: '^0.13.1' }
+462 verbose addNamed [ 'style-loader', '^0.13.1' ]
+463 verbose addNamed [ null, null ]
+464 verbose cache add [ 'url-loader@^0.5.7', null ]
+465 verbose cache add name=undefined spec="url-loader@^0.5.7" args=["url-loader@^0.5.7",null]
+466 verbose parsed url { protocol: null,
+466 verbose parsed url   slashes: null,
+466 verbose parsed url   auth: null,
+466 verbose parsed url   host: null,
+466 verbose parsed url   port: null,
+466 verbose parsed url   hostname: null,
+466 verbose parsed url   hash: null,
+466 verbose parsed url   search: null,
+466 verbose parsed url   query: null,
+466 verbose parsed url   pathname: 'url-loader@^0.5.7',
+466 verbose parsed url   path: 'url-loader@^0.5.7',
+466 verbose parsed url   href: 'url-loader@^0.5.7' }
+467 verbose cache add name="url-loader" spec="^0.5.7" args=["url-loader","^0.5.7"]
+468 verbose parsed url { protocol: null,
+468 verbose parsed url   slashes: null,
+468 verbose parsed url   auth: null,
+468 verbose parsed url   host: null,
+468 verbose parsed url   port: null,
+468 verbose parsed url   hostname: null,
+468 verbose parsed url   hash: null,
+468 verbose parsed url   search: null,
+468 verbose parsed url   query: null,
+468 verbose parsed url   pathname: '^0.5.7',
+468 verbose parsed url   path: '^0.5.7',
+468 verbose parsed url   href: '^0.5.7' }
+469 verbose addNamed [ 'url-loader', '^0.5.7' ]
+470 verbose addNamed [ null, null ]
+471 verbose cache add [ 'vue-loader@^10.0.2', null ]
+472 verbose cache add name=undefined spec="vue-loader@^10.0.2" args=["vue-loader@^10.0.2",null]
+473 verbose parsed url { protocol: null,
+473 verbose parsed url   slashes: null,
+473 verbose parsed url   auth: null,
+473 verbose parsed url   host: null,
+473 verbose parsed url   port: null,
+473 verbose parsed url   hostname: null,
+473 verbose parsed url   hash: null,
+473 verbose parsed url   search: null,
+473 verbose parsed url   query: null,
+473 verbose parsed url   pathname: 'vue-loader@^10.0.2',
+473 verbose parsed url   path: 'vue-loader@^10.0.2',
+473 verbose parsed url   href: 'vue-loader@^10.0.2' }
+474 verbose cache add name="vue-loader" spec="^10.0.2" args=["vue-loader","^10.0.2"]
+475 verbose parsed url { protocol: null,
+475 verbose parsed url   slashes: null,
+475 verbose parsed url   auth: null,
+475 verbose parsed url   host: null,
+475 verbose parsed url   port: null,
+475 verbose parsed url   hostname: null,
+475 verbose parsed url   hash: null,
+475 verbose parsed url   search: null,
+475 verbose parsed url   query: null,
+475 verbose parsed url   pathname: '^10.0.2',
+475 verbose parsed url   path: '^10.0.2',
+475 verbose parsed url   href: '^10.0.2' }
+476 verbose addNamed [ 'vue-loader', '^10.0.2' ]
+477 verbose addNamed [ null, null ]
+478 verbose cache add [ 'vue-test-utils@1.0.0-beta.8', null ]
+479 verbose cache add name=undefined spec="vue-test-utils@1.0.0-beta.8" args=["vue-test-utils@1.0.0-beta.8",null]
+480 verbose parsed url { protocol: null,
+480 verbose parsed url   slashes: null,
+480 verbose parsed url   auth: null,
+480 verbose parsed url   host: null,
+480 verbose parsed url   port: null,
+480 verbose parsed url   hostname: null,
+480 verbose parsed url   hash: null,
+480 verbose parsed url   search: null,
+480 verbose parsed url   query: null,
+480 verbose parsed url   pathname: 'vue-test-utils@1.0.0-beta.8',
+480 verbose parsed url   path: 'vue-test-utils@1.0.0-beta.8',
+480 verbose parsed url   href: 'vue-test-utils@1.0.0-beta.8' }
+481 verbose cache add name="vue-test-utils" spec="1.0.0-beta.8" args=["vue-test-utils","1.0.0-beta.8"]
+482 verbose parsed url { protocol: null,
+482 verbose parsed url   slashes: null,
+482 verbose parsed url   auth: null,
+482 verbose parsed url   host: null,
+482 verbose parsed url   port: null,
+482 verbose parsed url   hostname: null,
+482 verbose parsed url   hash: null,
+482 verbose parsed url   search: null,
+482 verbose parsed url   query: null,
+482 verbose parsed url   pathname: '1.0.0-beta.8',
+482 verbose parsed url   path: '1.0.0-beta.8',
+482 verbose parsed url   href: '1.0.0-beta.8' }
+483 verbose addNamed [ 'vue-test-utils', '1.0.0-beta.8' ]
+484 verbose addNamed [ '1.0.0-beta.8', '1.0.0-beta.8' ]
+485 verbose cache add [ 'webpack@^2.7.0', null ]
+486 verbose cache add name=undefined spec="webpack@^2.7.0" args=["webpack@^2.7.0",null]
+487 verbose parsed url { protocol: null,
+487 verbose parsed url   slashes: null,
+487 verbose parsed url   auth: null,
+487 verbose parsed url   host: null,
+487 verbose parsed url   port: null,
+487 verbose parsed url   hostname: null,
+487 verbose parsed url   hash: null,
+487 verbose parsed url   search: null,
+487 verbose parsed url   query: null,
+487 verbose parsed url   pathname: 'webpack@^2.7.0',
+487 verbose parsed url   path: 'webpack@^2.7.0',
+487 verbose parsed url   href: 'webpack@^2.7.0' }
+488 verbose cache add name="webpack" spec="^2.7.0" args=["webpack","^2.7.0"]
+489 verbose parsed url { protocol: null,
+489 verbose parsed url   slashes: null,
+489 verbose parsed url   auth: null,
+489 verbose parsed url   host: null,
+489 verbose parsed url   port: null,
+489 verbose parsed url   hostname: null,
+489 verbose parsed url   hash: null,
+489 verbose parsed url   search: null,
+489 verbose parsed url   query: null,
+489 verbose parsed url   pathname: '^2.7.0',
+489 verbose parsed url   path: '^2.7.0',
+489 verbose parsed url   href: '^2.7.0' }
+490 verbose addNamed [ 'webpack', '^2.7.0' ]
+491 verbose addNamed [ null, null ]
+492 verbose cache add [ 'webpack-cli@^4.5.0', null ]
+493 verbose cache add name=undefined spec="webpack-cli@^4.5.0" args=["webpack-cli@^4.5.0",null]
+494 verbose parsed url { protocol: null,
+494 verbose parsed url   slashes: null,
+494 verbose parsed url   auth: null,
+494 verbose parsed url   host: null,
+494 verbose parsed url   port: null,
+494 verbose parsed url   hostname: null,
+494 verbose parsed url   hash: null,
+494 verbose parsed url   search: null,
+494 verbose parsed url   query: null,
+494 verbose parsed url   pathname: 'webpack-cli@^4.5.0',
+494 verbose parsed url   path: 'webpack-cli@^4.5.0',
+494 verbose parsed url   href: 'webpack-cli@^4.5.0' }
+495 verbose cache add name="webpack-cli" spec="^4.5.0" args=["webpack-cli","^4.5.0"]
+496 verbose parsed url { protocol: null,
+496 verbose parsed url   slashes: null,
+496 verbose parsed url   auth: null,
+496 verbose parsed url   host: null,
+496 verbose parsed url   port: null,
+496 verbose parsed url   hostname: null,
+496 verbose parsed url   hash: null,
+496 verbose parsed url   search: null,
+496 verbose parsed url   query: null,
+496 verbose parsed url   pathname: '^4.5.0',
+496 verbose parsed url   path: '^4.5.0',
+496 verbose parsed url   href: '^4.5.0' }
+497 verbose addNamed [ 'webpack-cli', '^4.5.0' ]
+498 verbose addNamed [ null, null ]
+499 verbose cache add [ 'webpack-hot-middleware@^2.12.2', null ]
+500 verbose cache add name=undefined spec="webpack-hot-middleware@^2.12.2" args=["webpack-hot-middleware@^2.12.2",null]
+501 verbose parsed url { protocol: null,
+501 verbose parsed url   slashes: null,
+501 verbose parsed url   auth: null,
+501 verbose parsed url   host: null,
+501 verbose parsed url   port: null,
+501 verbose parsed url   hostname: null,
+501 verbose parsed url   hash: null,
+501 verbose parsed url   search: null,
+501 verbose parsed url   query: null,
+501 verbose parsed url   pathname: 'webpack-hot-middleware@^2.12.2',
+501 verbose parsed url   path: 'webpack-hot-middleware@^2.12.2',
+501 verbose parsed url   href: 'webpack-hot-middleware@^2.12.2' }
+502 verbose cache add name="webpack-hot-middleware" spec="^2.12.2" args=["webpack-hot-middleware","^2.12.2"]
+503 verbose parsed url { protocol: null,
+503 verbose parsed url   slashes: null,
+503 verbose parsed url   auth: null,
+503 verbose parsed url   host: null,
+503 verbose parsed url   port: null,
+503 verbose parsed url   hostname: null,
+503 verbose parsed url   hash: null,
+503 verbose parsed url   search: null,
+503 verbose parsed url   query: null,
+503 verbose parsed url   pathname: '^2.12.2',
+503 verbose parsed url   path: '^2.12.2',
+503 verbose parsed url   href: '^2.12.2' }
+504 verbose addNamed [ 'webpack-hot-middleware', '^2.12.2' ]
+505 verbose addNamed [ null, null ]
+506 silly lockFile c902fdd4-babel-polyfill-7-10-4 babel/polyfill@^7.10.4
+507 verbose lock babel/polyfill@^7.10.4 C:\Users\Administrator\AppData\Roaming\npm-cache\c902fdd4-babel-polyfill-7-10-4.lock
+508 silly lockFile d38d9eaf-coreui-coreui-2-1-16 coreui/coreui@^2.1.16
+509 verbose lock coreui/coreui@^2.1.16 C:\Users\Administrator\AppData\Roaming\npm-cache\d38d9eaf-coreui-coreui-2-1-16.lock
+510 silly lockFile 7680fad6-in-chartjs-custom-tooltips-1-3-1 coreui/coreui-plugin-chartjs-custom-tooltips@^1.3.1
+511 verbose lock coreui/coreui-plugin-chartjs-custom-tooltips@^1.3.1 C:\Users\Administrator\AppData\Roaming\npm-cache\7680fad6-in-chartjs-custom-tooltips-1-3-1.lock
+512 silly lockFile be77dab5-coreui-icons-0-3-0 coreui/icons@0.3.0
+513 verbose lock coreui/icons@0.3.0 C:\Users\Administrator\AppData\Roaming\npm-cache\be77dab5-coreui-icons-0-3-0.lock
+514 silly lockFile b69ba3c6-coreui-vue-2-1-2 coreui/vue@^2.1.2
+515 verbose lock coreui/vue@^2.1.2 C:\Users\Administrator\AppData\Roaming\npm-cache\b69ba3c6-coreui-vue-2-1-2.lock
+516 silly lockFile 49195dad-johmun-vue-tags-input-2-1-0 johmun/vue-tags-input@^2.1.0
+517 verbose lock johmun/vue-tags-input@^2.1.0 C:\Users\Administrator\AppData\Roaming\npm-cache\49195dad-johmun-vue-tags-input-2-1-0.lock
+518 silly lockFile 80482051-riophae-vue-treeselect-0-4-0 riophae/vue-treeselect@^0.4.0
+519 verbose lock riophae/vue-treeselect@^0.4.0 C:\Users\Administrator\AppData\Roaming\npm-cache\80482051-riophae-vue-treeselect-0-4-0.lock
+520 silly lockFile cf501fb8-ajv-6-9-1 ajv@^6.9.1
+521 verbose lock ajv@^6.9.1 C:\Users\Administrator\AppData\Roaming\npm-cache\cf501fb8-ajv-6-9-1.lock
+522 silly lockFile fbfc2d26-axios-0-15-3 axios@^0.15.3
+523 verbose lock axios@^0.15.3 C:\Users\Administrator\AppData\Roaming\npm-cache\fbfc2d26-axios-0-15-3.lock
+524 silly lockFile 83516641-bootstrap-vue-2-0-0-rc-24 bootstrap-vue@2.0.0-rc.24
+525 verbose lock bootstrap-vue@2.0.0-rc.24 C:\Users\Administrator\AppData\Roaming\npm-cache\83516641-bootstrap-vue-2-0-0-rc-24.lock
+526 silly lockFile f90c26a4-chart-js-2-9-3 chart.js@^2.9.3
+527 verbose lock chart.js@^2.9.3 C:\Users\Administrator\AppData\Roaming\npm-cache\f90c26a4-chart-js-2-9-3.lock
+528 silly lockFile b2873e79-ckeditor4-vue-0-2-0 ckeditor4-vue@^0.2.0
+529 verbose lock ckeditor4-vue@^0.2.0 C:\Users\Administrator\AppData\Roaming\npm-cache\b2873e79-ckeditor4-vue-0-2-0.lock
+530 silly lockFile dfcda992-clean-webpack-plugin-3-0-0 clean-webpack-plugin@^3.0.0
+531 verbose lock clean-webpack-plugin@^3.0.0 C:\Users\Administrator\AppData\Roaming\npm-cache\dfcda992-clean-webpack-plugin-3-0-0.lock
+532 silly lockFile a299e77f-core-js-2-4-1 core-js@^2.4.1
+533 verbose lock core-js@^2.4.1 C:\Users\Administrator\AppData\Roaming\npm-cache\a299e77f-core-js-2-4-1.lock
+534 silly lockFile 3c7ee69d-cross-spawn-7-0-3 cross-spawn@^7.0.3
+535 verbose lock cross-spawn@^7.0.3 C:\Users\Administrator\AppData\Roaming\npm-cache\3c7ee69d-cross-spawn-7-0-3.lock
+536 silly lockFile 03a65bed-font-awesome-4-7-0 font-awesome@^4.7.0
+537 verbose lock font-awesome@^4.7.0 C:\Users\Administrator\AppData\Roaming\npm-cache\03a65bed-font-awesome-4-7-0.lock
+538 silly lockFile 23259d60-loader-utils-1-4-0 loader-utils@^1.4.0
+539 verbose lock loader-utils@^1.4.0 C:\Users\Administrator\AppData\Roaming\npm-cache\23259d60-loader-utils-1-4-0.lock
+540 silly lockFile 52a6405f-lodash-orderby-4-6-0 lodash.orderby@^4.6.0
+541 verbose lock lodash.orderby@^4.6.0 C:\Users\Administrator\AppData\Roaming\npm-cache\52a6405f-lodash-orderby-4-6-0.lock
+542 silly lockFile e33ffff6-perfect-scrollbar-1-3-0 perfect-scrollbar@^1.3.0
+543 verbose lock perfect-scrollbar@^1.3.0 C:\Users\Administrator\AppData\Roaming\npm-cache\e33ffff6-perfect-scrollbar-1-3-0.lock
+544 silly lockFile 3aabd3cc-rxjs-6-6-0 rxjs@^6.6.0
+545 verbose lock rxjs@^6.6.0 C:\Users\Administrator\AppData\Roaming\npm-cache\3aabd3cc-rxjs-6-6-0.lock
+546 silly lockFile 1dc9256e-simple-line-icons-2-4-1 simple-line-icons@^2.4.1
+547 verbose lock simple-line-icons@^2.4.1 C:\Users\Administrator\AppData\Roaming\npm-cache\1dc9256e-simple-line-icons-2-4-1.lock
+548 silly lockFile 1301af5e-uglifyjs-webpack-plugin-1-3-0 uglifyjs-webpack-plugin@^1.3.0
+549 verbose lock uglifyjs-webpack-plugin@^1.3.0 C:\Users\Administrator\AppData\Roaming\npm-cache\1301af5e-uglifyjs-webpack-plugin-1-3-0.lock
+550 silly lockFile 8ce46ce1-vue-2-6-10 vue@^2.6.10
+551 verbose lock vue@^2.6.10 C:\Users\Administrator\AppData\Roaming\npm-cache\8ce46ce1-vue-2-6-10.lock
+552 silly lockFile 0589297f-vue-awesome-4-0-2 vue-awesome@^4.0.2
+553 verbose lock vue-awesome@^4.0.2 C:\Users\Administrator\AppData\Roaming\npm-cache\0589297f-vue-awesome-4-0-2.lock
+554 silly lockFile 792ea406-vue-chartjs-3-5-0 vue-chartjs@^3.5.0
+555 verbose lock vue-chartjs@^3.5.0 C:\Users\Administrator\AppData\Roaming\npm-cache\792ea406-vue-chartjs-3-5-0.lock
+556 silly lockFile 35af9978-vue-dynamic-select-1-0-16 vue-dynamic-select@^1.0.16
+557 verbose lock vue-dynamic-select@^1.0.16 C:\Users\Administrator\AppData\Roaming\npm-cache\35af9978-vue-dynamic-select-1-0-16.lock
+558 silly lockFile aa5d5abe-vue-input-tag-2-0-6 vue-input-tag@^2.0.6
+559 verbose lock vue-input-tag@^2.0.6 C:\Users\Administrator\AppData\Roaming\npm-cache\aa5d5abe-vue-input-tag-2-0-6.lock
+560 silly lockFile 3afec4de-vue-loader-plugin-1-3-0 vue-loader-plugin@^1.3.0
+561 verbose lock vue-loader-plugin@^1.3.0 C:\Users\Administrator\AppData\Roaming\npm-cache\3afec4de-vue-loader-plugin-1-3-0.lock
+562 silly lockFile 2ba4170f-vue-loading-overlay-3-3-2 vue-loading-overlay@^3.3.2
+563 verbose lock vue-loading-overlay@^3.3.2 C:\Users\Administrator\AppData\Roaming\npm-cache\2ba4170f-vue-loading-overlay-3-3-2.lock
+564 silly lockFile 2981b2cd-vue-router-3-0-0 vue-router@^3.0.0
+565 verbose lock vue-router@^3.0.0 C:\Users\Administrator\AppData\Roaming\npm-cache\2981b2cd-vue-router-3-0-0.lock
+566 silly lockFile f436725b-vue-select-3-10-5 vue-select@^3.10.5
+567 verbose lock vue-select@^3.10.5 C:\Users\Administrator\AppData\Roaming\npm-cache\f436725b-vue-select-3-10-5.lock
+568 silly lockFile aaaed57b-vue-server-renderer-2-1-8 vue-server-renderer@^2.1.8
+569 verbose lock vue-server-renderer@^2.1.8 C:\Users\Administrator\AppData\Roaming\npm-cache\aaaed57b-vue-server-renderer-2-1-8.lock
+570 silly lockFile f7e53e5b-vue-simple-spinner-1-2-10 vue-simple-spinner@^1.2.10
+571 verbose lock vue-simple-spinner@^1.2.10 C:\Users\Administrator\AppData\Roaming\npm-cache\f7e53e5b-vue-simple-spinner-1-2-10.lock
+572 silly lockFile 583ad62d-vue-style-loader-4-1-2 vue-style-loader@^4.1.2
+573 verbose lock vue-style-loader@^4.1.2 C:\Users\Administrator\AppData\Roaming\npm-cache\583ad62d-vue-style-loader-4-1-2.lock
+574 silly lockFile 530467db-vue-tabs-component-1-5-0 vue-tabs-component@^1.5.0
+575 verbose lock vue-tabs-component@^1.5.0 C:\Users\Administrator\AppData\Roaming\npm-cache\530467db-vue-tabs-component-1-5-0.lock
+576 silly lockFile ab714b06-vue-template-compiler-2-1-8 vue-template-compiler@^2.1.8
+577 verbose lock vue-template-compiler@^2.1.8 C:\Users\Administrator\AppData\Roaming\npm-cache\ab714b06-vue-template-compiler-2-1-8.lock
+578 silly lockFile f55da76f-vue-toastification-0-8-0 vue-toastification@^0.8.0
+579 verbose lock vue-toastification@^0.8.0 C:\Users\Administrator\AppData\Roaming\npm-cache\f55da76f-vue-toastification-0-8-0.lock
+580 silly lockFile 6c96031b-vue2-daterange-picker-0-5-1 vue2-daterange-picker@^0.5.1
+581 verbose lock vue2-daterange-picker@^0.5.1 C:\Users\Administrator\AppData\Roaming\npm-cache\6c96031b-vue2-daterange-picker-0-5-1.lock
+582 silly lockFile 2e92fa0e-vuedraggable-2-24-0 vuedraggable@^2.24.0
+583 verbose lock vuedraggable@^2.24.0 C:\Users\Administrator\AppData\Roaming\npm-cache\2e92fa0e-vuedraggable-2-24-0.lock
+584 silly lockFile c3332c2b-vuelidate-0-7-4 vuelidate@^0.7.4
+585 verbose lock vuelidate@^0.7.4 C:\Users\Administrator\AppData\Roaming\npm-cache\c3332c2b-vuelidate-0-7-4.lock
+586 silly lockFile f94fc517-vuex-3-5-1 vuex@^3.5.1
+587 verbose lock vuex@^3.5.1 C:\Users\Administrator\AppData\Roaming\npm-cache\f94fc517-vuex-3-5-1.lock
+588 silly lockFile 55bc6966-vuex-router-sync-5-0-0 vuex-router-sync@^5.0.0
+589 verbose lock vuex-router-sync@^5.0.0 C:\Users\Administrator\AppData\Roaming\npm-cache\55bc6966-vuex-router-sync-5-0-0.lock
+590 silly lockFile facfc208-webpack-merge-4-2-2 webpack-merge@^4.2.2
+591 verbose lock webpack-merge@^4.2.2 C:\Users\Administrator\AppData\Roaming\npm-cache\facfc208-webpack-merge-4-2-2.lock
+592 silly lockFile 3547ded1-xlsx-0-16-3 xlsx@^0.16.3
+593 verbose lock xlsx@^0.16.3 C:\Users\Administrator\AppData\Roaming\npm-cache\3547ded1-xlsx-0-16-3.lock
+594 silly lockFile 308247b2-aspnet-webpack-2-0-3 aspnet-webpack@^2.0.3
+595 verbose lock aspnet-webpack@^2.0.3 C:\Users\Administrator\AppData\Roaming\npm-cache\308247b2-aspnet-webpack-2-0-3.lock
+596 silly lockFile 62c6c9e8-babel-core-6-21-0 babel-core@^6.21.0
+597 verbose lock babel-core@^6.21.0 C:\Users\Administrator\AppData\Roaming\npm-cache\62c6c9e8-babel-core-6-21-0.lock
+598 silly lockFile 468ed9f1-babel-loader-6-2-10 babel-loader@^6.2.10
+599 verbose lock babel-loader@^6.2.10 C:\Users\Administrator\AppData\Roaming\npm-cache\468ed9f1-babel-loader-6-2-10.lock
+600 silly lockFile 21ba997c-nsform-async-to-generator-6-22-0 babel-plugin-transform-async-to-generator@^6.22.0
+601 verbose lock babel-plugin-transform-async-to-generator@^6.22.0 C:\Users\Administrator\AppData\Roaming\npm-cache\21ba997c-nsform-async-to-generator-6-22-0.lock
+602 silly addNameRange { name: 'babel/polyfill', range: '*', hasData: false }
+603 silly addNameRange { name: 'coreui/coreui', range: '*', hasData: false }
+604 silly addNameRange { name: 'coreui/coreui-plugin-chartjs-custom-tooltips',
+604 silly addNameRange   range: '*',
+604 silly addNameRange   hasData: false }
+605 silly addNameRange { name: 'coreui/vue', range: '*', hasData: false }
+606 silly addNameRange { name: 'johmun/vue-tags-input', range: '*', hasData: false }
+607 silly addNameRange { name: 'riophae/vue-treeselect', range: '*', hasData: false }
+608 silly addNameRange { name: 'ajv', range: '*', hasData: false }
+609 silly addNameRange { name: 'axios', range: '*', hasData: false }
+610 silly addNameRange { name: 'chart.js', range: '*', hasData: false }
+611 silly addNameRange { name: 'ckeditor4-vue', range: '*', hasData: false }
+612 silly addNameRange { name: 'clean-webpack-plugin', range: '*', hasData: false }
+613 silly addNameRange { name: 'cross-spawn', range: '*', hasData: false }
+614 silly addNameRange { name: 'font-awesome', range: '*', hasData: false }
+615 silly lockFile c24d3332--plugin-transform-runtime-6-15-0 babel-plugin-transform-runtime@^6.15.0
+616 verbose lock babel-plugin-transform-runtime@^6.15.0 C:\Users\Administrator\AppData\Roaming\npm-cache\c24d3332--plugin-transform-runtime-6-15-0.lock
+617 silly lockFile ec156dd6-babel-preset-es2015-6-18-0 babel-preset-es2015@^6.18.0
+618 verbose lock babel-preset-es2015@^6.18.0 C:\Users\Administrator\AppData\Roaming\npm-cache\ec156dd6-babel-preset-es2015-6-18-0.lock
+619 silly addNameRange { name: 'core-js', range: '*', hasData: false }
+620 silly lockFile 0e3cd0b8-babel-register-6-18-0 babel-register@^6.18.0
+621 verbose lock babel-register@^6.18.0 C:\Users\Administrator\AppData\Roaming\npm-cache\0e3cd0b8-babel-register-6-18-0.lock
+622 silly lockFile 9614c96d-cross-env-3-2-4 cross-env@^3.2.4
+623 verbose lock cross-env@^3.2.4 C:\Users\Administrator\AppData\Roaming\npm-cache\9614c96d-cross-env-3-2-4.lock
+624 silly lockFile 13af1247-babel-preset-stage-2-6-18-0 babel-preset-stage-2@^6.18.0
+625 verbose lock babel-preset-stage-2@^6.18.0 C:\Users\Administrator\AppData\Roaming\npm-cache\13af1247-babel-preset-stage-2-6-18-0.lock
+626 silly lockFile f79677e8-css-loader-0-26-1 css-loader@^0.26.1
+627 verbose lock css-loader@^0.26.1 C:\Users\Administrator\AppData\Roaming\npm-cache\f79677e8-css-loader-0-26-1.lock
+628 silly lockFile 2b45a5a4-bootstrap-3-3-6 bootstrap@^3.3.6
+629 verbose lock bootstrap@^3.3.6 C:\Users\Administrator\AppData\Roaming\npm-cache\2b45a5a4-bootstrap-3-3-6.lock
+630 silly lockFile 088e853a-t-text-webpack-plugin-2-0-0-rc-3 extract-text-webpack-plugin@^2.0.0-rc.3
+631 verbose lock extract-text-webpack-plugin@^2.0.0-rc.3 C:\Users\Administrator\AppData\Roaming\npm-cache\088e853a-t-text-webpack-plugin-2-0-0-rc-3.lock
+632 silly lockFile 3ce22e0c-event-source-polyfill-0-0-7 event-source-polyfill@^0.0.7
+633 verbose lock event-source-polyfill@^0.0.7 C:\Users\Administrator\AppData\Roaming\npm-cache\3ce22e0c-event-source-polyfill-0-0-7.lock
+634 silly lockFile 77cbc626-jquery-3-1-0 jquery@3.1.0
+635 verbose lock jquery@3.1.0 C:\Users\Administrator\AppData\Roaming\npm-cache\77cbc626-jquery-3-1-0.lock
+636 silly lockFile dd27e9c8-node-sass-4-9-0 node-sass@4.9.0
+637 verbose lock node-sass@4.9.0 C:\Users\Administrator\AppData\Roaming\npm-cache\dd27e9c8-node-sass-4-9-0.lock
+638 silly lockFile 398b9e9c-file-loader-0-9-0 file-loader@^0.9.0
+639 verbose lock file-loader@^0.9.0 C:\Users\Administrator\AppData\Roaming\npm-cache\398b9e9c-file-loader-0-9-0.lock
+640 silly lockFile 52c0c00a--css-assets-webpack-plugin-1-3-1 optimize-css-assets-webpack-plugin@^1.3.1
+641 verbose lock optimize-css-assets-webpack-plugin@^1.3.1 C:\Users\Administrator\AppData\Roaming\npm-cache\52c0c00a--css-assets-webpack-plugin-1-3-1.lock
+642 silly lockFile 00b6cba9-sass-loader-4-1-0 sass-loader@^4.1.0
+643 verbose lock sass-loader@^4.1.0 C:\Users\Administrator\AppData\Roaming\npm-cache\00b6cba9-sass-loader-4-1-0.lock
+644 silly lockFile e903989c-style-loader-0-13-1 style-loader@^0.13.1
+645 verbose lock style-loader@^0.13.1 C:\Users\Administrator\AppData\Roaming\npm-cache\e903989c-style-loader-0-13-1.lock
+646 silly lockFile 39b2bb2a-vue-loader-10-0-2 vue-loader@^10.0.2
+647 verbose lock vue-loader@^10.0.2 C:\Users\Administrator\AppData\Roaming\npm-cache\39b2bb2a-vue-loader-10-0-2.lock
+648 silly lockFile 00e32646-webpack-2-7-0 webpack@^2.7.0
+649 verbose lock webpack@^2.7.0 C:\Users\Administrator\AppData\Roaming\npm-cache\00e32646-webpack-2-7-0.lock
+650 silly lockFile 65762442-webpack-cli-4-5-0 webpack-cli@^4.5.0
+651 verbose lock webpack-cli@^4.5.0 C:\Users\Administrator\AppData\Roaming\npm-cache\65762442-webpack-cli-4-5-0.lock
+652 silly lockFile 6e6af105-url-loader-0-5-7 url-loader@^0.5.7
+653 verbose lock url-loader@^0.5.7 C:\Users\Administrator\AppData\Roaming\npm-cache\6e6af105-url-loader-0-5-7.lock
+654 silly lockFile cdb22af2-webpack-hot-middleware-2-12-2 webpack-hot-middleware@^2.12.2
+655 verbose lock webpack-hot-middleware@^2.12.2 C:\Users\Administrator\AppData\Roaming\npm-cache\cdb22af2-webpack-hot-middleware-2-12-2.lock
+656 silly lockFile 52f386b7-vue-test-utils-1-0-0-beta-8 vue-test-utils@1.0.0-beta.8
+657 verbose lock vue-test-utils@1.0.0-beta.8 C:\Users\Administrator\AppData\Roaming\npm-cache\52f386b7-vue-test-utils-1-0-0-beta-8.lock
+658 silly addNameRange { name: 'loader-utils', range: '*', hasData: false }
+659 silly addNameRange { name: 'lodash.orderby', range: '*', hasData: false }
+660 silly addNameRange { name: 'perfect-scrollbar', range: '*', hasData: false }
+661 silly addNameRange { name: 'rxjs', range: '*', hasData: false }
+662 silly addNameRange { name: 'simple-line-icons', range: '*', hasData: false }
+663 silly addNameRange { name: 'uglifyjs-webpack-plugin', range: '*', hasData: false }
+664 silly addNameRange { name: 'vue', range: '*', hasData: false }
+665 silly addNameRange { name: 'vue-awesome', range: '*', hasData: false }
+666 silly addNameRange { name: 'vue-chartjs', range: '*', hasData: false }
+667 silly addNameRange { name: 'vue-dynamic-select', range: '*', hasData: false }
+668 silly addNameRange { name: 'vue-input-tag', range: '*', hasData: false }
+669 silly addNameRange { name: 'vue-loader-plugin', range: '*', hasData: false }
+670 silly addNameRange { name: 'vue-loading-overlay', range: '*', hasData: false }
+671 silly addNameRange { name: 'vue-server-renderer', range: '*', hasData: false }
+672 silly addNameRange { name: 'vue-router', range: '*', hasData: false }
+673 silly addNameRange { name: 'vue-select', range: '*', hasData: false }
+674 silly addNameRange { name: 'vue-simple-spinner', range: '*', hasData: false }
+675 silly addNameRange { name: 'vue-style-loader', range: '*', hasData: false }
+676 silly addNameRange { name: 'vue-tabs-component', range: '*', hasData: false }
+677 silly addNameRange { name: 'vue2-daterange-picker', range: '*', hasData: false }
+678 silly addNameRange { name: 'vue-toastification', range: '*', hasData: false }
+679 silly addNameRange { name: 'vuedraggable', range: '*', hasData: false }
+680 silly addNameRange { name: 'vue-template-compiler', range: '*', hasData: false }
+681 silly addNameRange { name: 'vuelidate', range: '*', hasData: false }
+682 silly addNameRange { name: 'vuex', range: '*', hasData: false }
+683 silly addNameRange { name: 'vuex-router-sync', range: '*', hasData: false }
+684 silly addNameRange { name: 'babel-core', range: '*', hasData: false }
+685 silly addNameRange { name: 'aspnet-webpack', range: '*', hasData: false }
+686 silly addNameRange { name: 'webpack-merge', range: '*', hasData: false }
+687 silly addNameRange { name: 'babel-loader', range: '*', hasData: false }
+688 silly addNameRange { name: 'xlsx', range: '*', hasData: false }
+689 silly addNameRange { name: 'babel-plugin-transform-async-to-generator',
+689 silly addNameRange   range: '*',
+689 silly addNameRange   hasData: false }
+690 verbose url raw babel/polyfill
+691 verbose url resolving [ 'http://registry.npmjs.org/', './babel/polyfill' ]
+692 verbose url resolved http://registry.npmjs.org/babel/polyfill
+693 info trying registry request attempt 1 at 18:07:36
+694 http GET http://registry.npmjs.org/babel/polyfill
+695 verbose url raw coreui/coreui
+696 verbose url resolving [ 'http://registry.npmjs.org/', './coreui/coreui' ]
+697 verbose url resolved http://registry.npmjs.org/coreui/coreui
+698 info trying registry request attempt 1 at 18:07:36
+699 http GET http://registry.npmjs.org/coreui/coreui
+700 verbose url raw coreui/coreui-plugin-chartjs-custom-tooltips
+701 verbose url resolving [ 'http://registry.npmjs.org/',
+701 verbose url resolving   './coreui/coreui-plugin-chartjs-custom-tooltips' ]
+702 verbose url resolved http://registry.npmjs.org/coreui/coreui-plugin-chartjs-custom-tooltips
+703 info trying registry request attempt 1 at 18:07:36
+704 http GET http://registry.npmjs.org/coreui/coreui-plugin-chartjs-custom-tooltips
+705 verbose url raw coreui/icons/0.3.0
+706 verbose url resolving [ 'http://registry.npmjs.org/', './coreui/icons/0.3.0' ]
+707 verbose url resolved http://registry.npmjs.org/coreui/icons/0.3.0
+708 info trying registry request attempt 1 at 18:07:36
+709 http GET http://registry.npmjs.org/coreui/icons/0.3.0
+710 verbose url raw coreui/vue
+711 verbose url resolving [ 'http://registry.npmjs.org/', './coreui/vue' ]
+712 verbose url resolved http://registry.npmjs.org/coreui/vue
+713 info trying registry request attempt 1 at 18:07:36
+714 http GET http://registry.npmjs.org/coreui/vue
+715 verbose url raw johmun/vue-tags-input
+716 verbose url resolving [ 'http://registry.npmjs.org/', './johmun/vue-tags-input' ]
+717 verbose url resolved http://registry.npmjs.org/johmun/vue-tags-input
+718 info trying registry request attempt 1 at 18:07:36
+719 http GET http://registry.npmjs.org/johmun/vue-tags-input
+720 verbose url raw riophae/vue-treeselect
+721 verbose url resolving [ 'http://registry.npmjs.org/', './riophae/vue-treeselect' ]
+722 verbose url resolved http://registry.npmjs.org/riophae/vue-treeselect
+723 info trying registry request attempt 1 at 18:07:36
+724 http GET http://registry.npmjs.org/riophae/vue-treeselect
+725 verbose url raw ajv
+726 verbose url resolving [ 'http://registry.npmjs.org/', './ajv' ]
+727 verbose url resolved http://registry.npmjs.org/ajv
+728 info trying registry request attempt 1 at 18:07:36
+729 http GET http://registry.npmjs.org/ajv
+730 verbose url raw axios
+731 verbose url resolving [ 'http://registry.npmjs.org/', './axios' ]
+732 verbose url resolved http://registry.npmjs.org/axios
+733 info trying registry request attempt 1 at 18:07:36
+734 http GET http://registry.npmjs.org/axios
+735 verbose url raw bootstrap-vue/2.0.0-rc.24
+736 verbose url resolving [ 'http://registry.npmjs.org/', './bootstrap-vue/2.0.0-rc.24' ]
+737 verbose url resolved http://registry.npmjs.org/bootstrap-vue/2.0.0-rc.24
+738 info trying registry request attempt 1 at 18:07:36
+739 http GET http://registry.npmjs.org/bootstrap-vue/2.0.0-rc.24
+740 verbose url raw chart.js
+741 verbose url resolving [ 'http://registry.npmjs.org/', './chart.js' ]
+742 verbose url resolved http://registry.npmjs.org/chart.js
+743 info trying registry request attempt 1 at 18:07:36
+744 http GET http://registry.npmjs.org/chart.js
+745 verbose url raw ckeditor4-vue
+746 verbose url resolving [ 'http://registry.npmjs.org/', './ckeditor4-vue' ]
+747 verbose url resolved http://registry.npmjs.org/ckeditor4-vue
+748 info trying registry request attempt 1 at 18:07:36
+749 http GET http://registry.npmjs.org/ckeditor4-vue
+750 verbose url raw clean-webpack-plugin
+751 verbose url resolving [ 'http://registry.npmjs.org/', './clean-webpack-plugin' ]
+752 verbose url resolved http://registry.npmjs.org/clean-webpack-plugin
+753 info trying registry request attempt 1 at 18:07:36
+754 http GET http://registry.npmjs.org/clean-webpack-plugin
+755 verbose url raw cross-spawn
+756 verbose url resolving [ 'http://registry.npmjs.org/', './cross-spawn' ]
+757 verbose url resolved http://registry.npmjs.org/cross-spawn
+758 info trying registry request attempt 1 at 18:07:36
+759 http GET http://registry.npmjs.org/cross-spawn
+760 verbose url raw font-awesome
+761 verbose url resolving [ 'http://registry.npmjs.org/', './font-awesome' ]
+762 verbose url resolved http://registry.npmjs.org/font-awesome
+763 info trying registry request attempt 1 at 18:07:36
+764 http GET http://registry.npmjs.org/font-awesome
+765 verbose url raw core-js
+766 verbose url resolving [ 'http://registry.npmjs.org/', './core-js' ]
+767 verbose url resolved http://registry.npmjs.org/core-js
+768 info trying registry request attempt 1 at 18:07:36
+769 http GET http://registry.npmjs.org/core-js
+770 silly addNameRange { name: 'babel-plugin-transform-runtime',
+770 silly addNameRange   range: '*',
+770 silly addNameRange   hasData: false }
+771 silly addNameRange { name: 'babel-preset-es2015', range: '*', hasData: false }
+772 silly addNameRange { name: 'babel-register', range: '*', hasData: false }
+773 silly addNameRange { name: 'cross-env', range: '*', hasData: false }
+774 silly addNameRange { name: 'css-loader', range: '*', hasData: false }
+775 silly addNameRange { name: 'babel-preset-stage-2', range: '*', hasData: false }
+776 silly addNameRange { name: 'bootstrap', range: '*', hasData: false }
+777 silly addNameRange { name: 'extract-text-webpack-plugin',
+777 silly addNameRange   range: '*',
+777 silly addNameRange   hasData: false }
+778 silly addNameRange { name: 'event-source-polyfill', range: '*', hasData: false }
+779 silly addNameRange { name: 'optimize-css-assets-webpack-plugin',
+779 silly addNameRange   range: '*',
+779 silly addNameRange   hasData: false }
+780 silly addNameRange { name: 'file-loader', range: '*', hasData: false }
+781 silly addNameRange { name: 'sass-loader', range: '*', hasData: false }
+782 silly addNameRange { name: 'style-loader', range: '*', hasData: false }
+783 silly addNameRange { name: 'vue-loader', range: '*', hasData: false }
+784 verbose url raw loader-utils
+785 verbose url resolving [ 'http://registry.npmjs.org/', './loader-utils' ]
+786 verbose url resolved http://registry.npmjs.org/loader-utils
+787 info trying registry request attempt 1 at 18:07:36
+788 http GET http://registry.npmjs.org/loader-utils
+789 silly addNameRange { name: 'webpack', range: '*', hasData: false }
+790 silly addNameRange { name: 'webpack-hot-middleware', range: '*', hasData: false }
+791 silly addNameRange { name: 'webpack-cli', range: '*', hasData: false }
+792 verbose url raw lodash.orderby
+793 verbose url resolving [ 'http://registry.npmjs.org/', './lodash.orderby' ]
+794 verbose url resolved http://registry.npmjs.org/lodash.orderby
+795 info trying registry request attempt 1 at 18:07:36
+796 http GET http://registry.npmjs.org/lodash.orderby
+797 verbose url raw perfect-scrollbar
+798 verbose url resolving [ 'http://registry.npmjs.org/', './perfect-scrollbar' ]
+799 verbose url resolved http://registry.npmjs.org/perfect-scrollbar
+800 info trying registry request attempt 1 at 18:07:36
+801 http GET http://registry.npmjs.org/perfect-scrollbar
+802 verbose url raw rxjs
+803 verbose url resolving [ 'http://registry.npmjs.org/', './rxjs' ]
+804 verbose url resolved http://registry.npmjs.org/rxjs
+805 info trying registry request attempt 1 at 18:07:36
+806 http GET http://registry.npmjs.org/rxjs
+807 silly addNameRange { name: 'url-loader', range: '*', hasData: false }
+808 verbose url raw simple-line-icons
+809 verbose url resolving [ 'http://registry.npmjs.org/', './simple-line-icons' ]
+810 verbose url resolved http://registry.npmjs.org/simple-line-icons
+811 info trying registry request attempt 1 at 18:07:36
+812 http GET http://registry.npmjs.org/simple-line-icons
+813 verbose url raw uglifyjs-webpack-plugin
+814 verbose url resolving [ 'http://registry.npmjs.org/', './uglifyjs-webpack-plugin' ]
+815 verbose url resolved http://registry.npmjs.org/uglifyjs-webpack-plugin
+816 info trying registry request attempt 1 at 18:07:36
+817 http GET http://registry.npmjs.org/uglifyjs-webpack-plugin
+818 verbose url raw vue
+819 verbose url resolving [ 'http://registry.npmjs.org/', './vue' ]
+820 verbose url resolved http://registry.npmjs.org/vue
+821 info trying registry request attempt 1 at 18:07:36
+822 http GET http://registry.npmjs.org/vue
+823 verbose url raw vue-awesome
+824 verbose url resolving [ 'http://registry.npmjs.org/', './vue-awesome' ]
+825 verbose url resolved http://registry.npmjs.org/vue-awesome
+826 info trying registry request attempt 1 at 18:07:36
+827 http GET http://registry.npmjs.org/vue-awesome
+828 verbose url raw vue-chartjs
+829 verbose url resolving [ 'http://registry.npmjs.org/', './vue-chartjs' ]
+830 verbose url resolved http://registry.npmjs.org/vue-chartjs
+831 info trying registry request attempt 1 at 18:07:36
+832 http GET http://registry.npmjs.org/vue-chartjs
+833 verbose url raw vue-dynamic-select
+834 verbose url resolving [ 'http://registry.npmjs.org/', './vue-dynamic-select' ]
+835 verbose url resolved http://registry.npmjs.org/vue-dynamic-select
+836 info trying registry request attempt 1 at 18:07:36
+837 http GET http://registry.npmjs.org/vue-dynamic-select
+838 verbose url raw vue-input-tag
+839 verbose url resolving [ 'http://registry.npmjs.org/', './vue-input-tag' ]
+840 verbose url resolved http://registry.npmjs.org/vue-input-tag
+841 info trying registry request attempt 1 at 18:07:36
+842 http GET http://registry.npmjs.org/vue-input-tag
+843 verbose url raw vue-loader-plugin
+844 verbose url resolving [ 'http://registry.npmjs.org/', './vue-loader-plugin' ]
+845 verbose url resolved http://registry.npmjs.org/vue-loader-plugin
+846 info trying registry request attempt 1 at 18:07:36
+847 http GET http://registry.npmjs.org/vue-loader-plugin
+848 verbose url raw vue-loading-overlay
+849 verbose url resolving [ 'http://registry.npmjs.org/', './vue-loading-overlay' ]
+850 verbose url resolved http://registry.npmjs.org/vue-loading-overlay
+851 info trying registry request attempt 1 at 18:07:36
+852 http GET http://registry.npmjs.org/vue-loading-overlay
+853 verbose url raw vue-server-renderer
+854 verbose url resolving [ 'http://registry.npmjs.org/', './vue-server-renderer' ]
+855 verbose url resolved http://registry.npmjs.org/vue-server-renderer
+856 info trying registry request attempt 1 at 18:07:36
+857 http GET http://registry.npmjs.org/vue-server-renderer
+858 verbose url raw vue-router
+859 verbose url resolving [ 'http://registry.npmjs.org/', './vue-router' ]
+860 verbose url resolved http://registry.npmjs.org/vue-router
+861 info trying registry request attempt 1 at 18:07:36
+862 http GET http://registry.npmjs.org/vue-router
+863 verbose url raw vue-select
+864 verbose url resolving [ 'http://registry.npmjs.org/', './vue-select' ]
+865 verbose url resolved http://registry.npmjs.org/vue-select
+866 info trying registry request attempt 1 at 18:07:36
+867 http GET http://registry.npmjs.org/vue-select
+868 verbose url raw vue-simple-spinner
+869 verbose url resolving [ 'http://registry.npmjs.org/', './vue-simple-spinner' ]
+870 verbose url resolved http://registry.npmjs.org/vue-simple-spinner
+871 info trying registry request attempt 1 at 18:07:36
+872 http GET http://registry.npmjs.org/vue-simple-spinner
+873 verbose url raw vue-style-loader
+874 verbose url resolving [ 'http://registry.npmjs.org/', './vue-style-loader' ]
+875 verbose url resolved http://registry.npmjs.org/vue-style-loader
+876 info trying registry request attempt 1 at 18:07:36
+877 http GET http://registry.npmjs.org/vue-style-loader
+878 verbose url raw vue-tabs-component
+879 verbose url resolving [ 'http://registry.npmjs.org/', './vue-tabs-component' ]
+880 verbose url resolved http://registry.npmjs.org/vue-tabs-component
+881 info trying registry request attempt 1 at 18:07:36
+882 http GET http://registry.npmjs.org/vue-tabs-component
+883 verbose url raw vue2-daterange-picker
+884 verbose url resolving [ 'http://registry.npmjs.org/', './vue2-daterange-picker' ]
+885 verbose url resolved http://registry.npmjs.org/vue2-daterange-picker
+886 info trying registry request attempt 1 at 18:07:36
+887 http GET http://registry.npmjs.org/vue2-daterange-picker
+888 verbose url raw vue-toastification
+889 verbose url resolving [ 'http://registry.npmjs.org/', './vue-toastification' ]
+890 verbose url resolved http://registry.npmjs.org/vue-toastification
+891 info trying registry request attempt 1 at 18:07:36
+892 http GET http://registry.npmjs.org/vue-toastification
+893 verbose url raw vuedraggable
+894 verbose url resolving [ 'http://registry.npmjs.org/', './vuedraggable' ]
+895 verbose url resolved http://registry.npmjs.org/vuedraggable
+896 info trying registry request attempt 1 at 18:07:36
+897 http GET http://registry.npmjs.org/vuedraggable
+898 verbose url raw vue-template-compiler
+899 verbose url resolving [ 'http://registry.npmjs.org/', './vue-template-compiler' ]
+900 verbose url resolved http://registry.npmjs.org/vue-template-compiler
+901 info trying registry request attempt 1 at 18:07:36
+902 http GET http://registry.npmjs.org/vue-template-compiler
+903 verbose url raw vuelidate
+904 verbose url resolving [ 'http://registry.npmjs.org/', './vuelidate' ]
+905 verbose url resolved http://registry.npmjs.org/vuelidate
+906 info trying registry request attempt 1 at 18:07:36
+907 http GET http://registry.npmjs.org/vuelidate
+908 verbose url raw vuex
+909 verbose url resolving [ 'http://registry.npmjs.org/', './vuex' ]
+910 verbose url resolved http://registry.npmjs.org/vuex
+911 info trying registry request attempt 1 at 18:07:36
+912 http GET http://registry.npmjs.org/vuex
+913 verbose url raw vuex-router-sync
+914 verbose url resolving [ 'http://registry.npmjs.org/', './vuex-router-sync' ]
+915 verbose url resolved http://registry.npmjs.org/vuex-router-sync
+916 info trying registry request attempt 1 at 18:07:36
+917 http GET http://registry.npmjs.org/vuex-router-sync
+918 verbose url raw babel-core
+919 verbose url resolving [ 'http://registry.npmjs.org/', './babel-core' ]
+920 verbose url resolved http://registry.npmjs.org/babel-core
+921 info trying registry request attempt 1 at 18:07:36
+922 http GET http://registry.npmjs.org/babel-core
+923 verbose url raw aspnet-webpack
+924 verbose url resolving [ 'http://registry.npmjs.org/', './aspnet-webpack' ]
+925 verbose url resolved http://registry.npmjs.org/aspnet-webpack
+926 info trying registry request attempt 1 at 18:07:36
+927 http GET http://registry.npmjs.org/aspnet-webpack
+928 verbose url raw webpack-merge
+929 verbose url resolving [ 'http://registry.npmjs.org/', './webpack-merge' ]
+930 verbose url resolved http://registry.npmjs.org/webpack-merge
+931 info trying registry request attempt 1 at 18:07:36
+932 http GET http://registry.npmjs.org/webpack-merge
+933 verbose url raw babel-loader
+934 verbose url resolving [ 'http://registry.npmjs.org/', './babel-loader' ]
+935 verbose url resolved http://registry.npmjs.org/babel-loader
+936 info trying registry request attempt 1 at 18:07:36
+937 http GET http://registry.npmjs.org/babel-loader
+938 verbose url raw xlsx
+939 verbose url resolving [ 'http://registry.npmjs.org/', './xlsx' ]
+940 verbose url resolved http://registry.npmjs.org/xlsx
+941 info trying registry request attempt 1 at 18:07:36
+942 http GET http://registry.npmjs.org/xlsx
+943 verbose url raw babel-plugin-transform-async-to-generator
+944 verbose url resolving [ 'http://registry.npmjs.org/',
+944 verbose url resolving   './babel-plugin-transform-async-to-generator' ]
+945 verbose url resolved http://registry.npmjs.org/babel-plugin-transform-async-to-generator
+946 info trying registry request attempt 1 at 18:07:36
+947 http GET http://registry.npmjs.org/babel-plugin-transform-async-to-generator
+948 verbose url raw babel-plugin-transform-runtime
+949 verbose url resolving [ 'http://registry.npmjs.org/',
+949 verbose url resolving   './babel-plugin-transform-runtime' ]
+950 verbose url resolved http://registry.npmjs.org/babel-plugin-transform-runtime
+951 info trying registry request attempt 1 at 18:07:36
+952 http GET http://registry.npmjs.org/babel-plugin-transform-runtime
+953 verbose url raw babel-preset-es2015
+954 verbose url resolving [ 'http://registry.npmjs.org/', './babel-preset-es2015' ]
+955 verbose url resolved http://registry.npmjs.org/babel-preset-es2015
+956 info trying registry request attempt 1 at 18:07:36
+957 http GET http://registry.npmjs.org/babel-preset-es2015
+958 verbose url raw babel-register
+959 verbose url resolving [ 'http://registry.npmjs.org/', './babel-register' ]
+960 verbose url resolved http://registry.npmjs.org/babel-register
+961 info trying registry request attempt 1 at 18:07:36
+962 http GET http://registry.npmjs.org/babel-register
+963 verbose url raw cross-env
+964 verbose url resolving [ 'http://registry.npmjs.org/', './cross-env' ]
+965 verbose url resolved http://registry.npmjs.org/cross-env
+966 info trying registry request attempt 1 at 18:07:36
+967 http GET http://registry.npmjs.org/cross-env
+968 verbose url raw css-loader
+969 verbose url resolving [ 'http://registry.npmjs.org/', './css-loader' ]
+970 verbose url resolved http://registry.npmjs.org/css-loader
+971 info trying registry request attempt 1 at 18:07:36
+972 http GET http://registry.npmjs.org/css-loader
+973 verbose url raw babel-preset-stage-2
+974 verbose url resolving [ 'http://registry.npmjs.org/', './babel-preset-stage-2' ]
+975 verbose url resolved http://registry.npmjs.org/babel-preset-stage-2
+976 info trying registry request attempt 1 at 18:07:36
+977 http GET http://registry.npmjs.org/babel-preset-stage-2
+978 verbose url raw bootstrap
+979 verbose url resolving [ 'http://registry.npmjs.org/', './bootstrap' ]
+980 verbose url resolved http://registry.npmjs.org/bootstrap
+981 info trying registry request attempt 1 at 18:07:36
+982 http GET http://registry.npmjs.org/bootstrap
+983 verbose url raw extract-text-webpack-plugin
+984 verbose url resolving [ 'http://registry.npmjs.org/',
+984 verbose url resolving   './extract-text-webpack-plugin' ]
+985 verbose url resolved http://registry.npmjs.org/extract-text-webpack-plugin
+986 info trying registry request attempt 1 at 18:07:36
+987 http GET http://registry.npmjs.org/extract-text-webpack-plugin
+988 verbose url raw event-source-polyfill
+989 verbose url resolving [ 'http://registry.npmjs.org/', './event-source-polyfill' ]
+990 verbose url resolved http://registry.npmjs.org/event-source-polyfill
+991 info trying registry request attempt 1 at 18:07:36
+992 http GET http://registry.npmjs.org/event-source-polyfill
+993 verbose url raw jquery/3.1.0
+994 verbose url resolving [ 'http://registry.npmjs.org/', './jquery/3.1.0' ]
+995 verbose url resolved http://registry.npmjs.org/jquery/3.1.0
+996 info trying registry request attempt 1 at 18:07:36
+997 http GET http://registry.npmjs.org/jquery/3.1.0
+998 verbose url raw optimize-css-assets-webpack-plugin
+999 verbose url resolving [ 'http://registry.npmjs.org/',
+999 verbose url resolving   './optimize-css-assets-webpack-plugin' ]
+1000 verbose url resolved http://registry.npmjs.org/optimize-css-assets-webpack-plugin
+1001 info trying registry request attempt 1 at 18:07:36
+1002 http GET http://registry.npmjs.org/optimize-css-assets-webpack-plugin
+1003 verbose url raw file-loader
+1004 verbose url resolving [ 'http://registry.npmjs.org/', './file-loader' ]
+1005 verbose url resolved http://registry.npmjs.org/file-loader
+1006 info trying registry request attempt 1 at 18:07:36
+1007 http GET http://registry.npmjs.org/file-loader
+1008 verbose url raw node-sass/4.9.0
+1009 verbose url resolving [ 'http://registry.npmjs.org/', './node-sass/4.9.0' ]
+1010 verbose url resolved http://registry.npmjs.org/node-sass/4.9.0
+1011 info trying registry request attempt 1 at 18:07:36
+1012 http GET http://registry.npmjs.org/node-sass/4.9.0
+1013 verbose url raw sass-loader
+1014 verbose url resolving [ 'http://registry.npmjs.org/', './sass-loader' ]
+1015 verbose url resolved http://registry.npmjs.org/sass-loader
+1016 info trying registry request attempt 1 at 18:07:36
+1017 http GET http://registry.npmjs.org/sass-loader
+1018 verbose url raw style-loader
+1019 verbose url resolving [ 'http://registry.npmjs.org/', './style-loader' ]
+1020 verbose url resolved http://registry.npmjs.org/style-loader
+1021 info trying registry request attempt 1 at 18:07:36
+1022 http GET http://registry.npmjs.org/style-loader
+1023 verbose url raw vue-loader
+1024 verbose url resolving [ 'http://registry.npmjs.org/', './vue-loader' ]
+1025 verbose url resolved http://registry.npmjs.org/vue-loader
+1026 info trying registry request attempt 1 at 18:07:36
+1027 http GET http://registry.npmjs.org/vue-loader
+1028 verbose url raw webpack
+1029 verbose url resolving [ 'http://registry.npmjs.org/', './webpack' ]
+1030 verbose url resolved http://registry.npmjs.org/webpack
+1031 info trying registry request attempt 1 at 18:07:36
+1032 http GET http://registry.npmjs.org/webpack
+1033 verbose url raw webpack-hot-middleware
+1034 verbose url resolving [ 'http://registry.npmjs.org/', './webpack-hot-middleware' ]
+1035 verbose url resolved http://registry.npmjs.org/webpack-hot-middleware
+1036 info trying registry request attempt 1 at 18:07:36
+1037 http GET http://registry.npmjs.org/webpack-hot-middleware
+1038 verbose url raw webpack-cli
+1039 verbose url resolving [ 'http://registry.npmjs.org/', './webpack-cli' ]
+1040 verbose url resolved http://registry.npmjs.org/webpack-cli
+1041 info trying registry request attempt 1 at 18:07:36
+1042 http GET http://registry.npmjs.org/webpack-cli
+1043 verbose url raw vue-test-utils/1.0.0-beta.8
+1044 verbose url resolving [ 'http://registry.npmjs.org/',
+1044 verbose url resolving   './vue-test-utils/1.0.0-beta.8' ]
+1045 verbose url resolved http://registry.npmjs.org/vue-test-utils/1.0.0-beta.8
+1046 info trying registry request attempt 1 at 18:07:36
+1047 http GET http://registry.npmjs.org/vue-test-utils/1.0.0-beta.8
+1048 verbose url raw url-loader
+1049 verbose url resolving [ 'http://registry.npmjs.org/', './url-loader' ]
+1050 verbose url resolved http://registry.npmjs.org/url-loader
+1051 info trying registry request attempt 1 at 18:07:36
+1052 http GET http://registry.npmjs.org/url-loader
+1053 http 405 http://registry.npmjs.org/coreui/vue
+1054 silly registry.get cb [ 405,
+1054 silly registry.get   { date: 'Thu, 22 Apr 2021 11:07:34 GMT',
+1054 silly registry.get     'content-type': 'application/json',
+1054 silly registry.get     'content-length': '63',
+1054 silly registry.get     connection: 'keep-alive',
+1054 silly registry.get     'set-cookie': [ '__cfduid=dbeed2dbb45b2194b25818c638284be481619089654; expires=Sat, 22-May-21 11:07:34 GMT; path=/; domain=.npmjs.org; HttpOnly; SameSite=Lax' ],
+1054 silly registry.get     'cf-ray': '643e63a50e740be4-HKG',
+1054 silly registry.get     allow: 'PUT',
+1054 silly registry.get     'cf-cache-status': 'DYNAMIC',
+1054 silly registry.get     'cf-request-id': '099adc9b2300000be45a258000000001',
+1054 silly registry.get     'expect-ct': 'max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"',
+1054 silly registry.get     server: 'cloudflare' } ]
+1055 http 404 http://registry.npmjs.org/coreui/icons/0.3.0
+1056 silly registry.get cb [ 404,
+1056 silly registry.get   { date: 'Thu, 22 Apr 2021 11:07:34 GMT',
+1056 silly registry.get     'content-type': 'application/json',
+1056 silly registry.get     'content-length': '11',
+1056 silly registry.get     connection: 'keep-alive',
+1056 silly registry.get     'set-cookie': [ '__cfduid=dc24a84805312bf5edda2279f48d68d0e1619089654; expires=Sat, 22-May-21 11:07:34 GMT; path=/; domain=.npmjs.org; HttpOnly; SameSite=Lax' ],
+1056 silly registry.get     'cf-ray': '643e63a4fa29d1cf-HKG',
+1056 silly registry.get     'cf-cache-status': 'DYNAMIC',
+1056 silly registry.get     'cf-request-id': '099adc9b1e0000d1cfd3262000000001',
+1056 silly registry.get     'expect-ct': 'max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"',
+1056 silly registry.get     server: 'cloudflare' } ]
+1057 silly lockFile be77dab5-coreui-icons-0-3-0 coreui/icons@0.3.0
+1058 silly lockFile be77dab5-coreui-icons-0-3-0 coreui/icons@0.3.0
+1059 silly addNameRange number 2 { name: 'coreui/vue', range: '*', hasData: true }
+1060 silly addNameRange versions [ undefined, [] ]
+1061 error TypeError: Cannot read property 'latest' of undefined
+1061 error     at next (C:\Program Files\nodejs\node_modules\npm\lib\cache.js:687:35)
+1061 error     at C:\Program Files\nodejs\node_modules\npm\lib\cache.js:675:5
+1061 error     at saved (C:\Program Files\nodejs\node_modules\npm\node_modules\npm-registry-client\lib\get.js:142:7)
+1061 error     at Object.oncomplete (fs.js:107:15)
+1062 error If you need help, you may report this log at:
+1062 error     <http://github.com/isaacs/npm/issues>
+1062 error or email it to:
+1062 error     <npm-@googlegroups.com>
+1063 error System Windows_NT 6.2.9200
+1064 error command "C:\\Program Files\\nodejs\\\\node.exe" "C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js" "install"
+1065 error cwd C:\Work\Website\webcore_v1\Web\Lavista\CMS\Lavista.CMS
+1066 error node -v v0.10.13
+1067 error npm -v 1.3.2
+1068 error type non_object_property_load
+1069 verbose exit [ 1, true ]

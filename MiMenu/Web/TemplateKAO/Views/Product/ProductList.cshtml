@@ -1,0 +1,430 @@
+﻿@using TemplateKAO.Services.Zone.ViewModal
+@using TemplateKAO.Services.BannerAds.ViewModel
+@using TemplateKAO.Services.Extra.ViewModel
+@using TemplateKAO.Services.BannerAds.Repository
+@using MI.Entity.Models
+@using TemplateKAO.Services.Product.Repository
+@using TemplateKAO.Services.Extra.Repository
+@using Microsoft.AspNetCore.Http
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Utils
+@inject IHttpContextAccessor HttpContextAccessor
+@using TemplateKAO.Utility
+@inject ICookieUtility cookieUtility
+@inject IConfigSEOUtility configSEOUtility
+@inject IProductRepository productRepository
+@inject IBannerAdsRepository bannerAdsRepository
+@inject IExtraRepository extraRepository
+@{
+    Layout = "~/Views/Shared/_LayoutPublicHome.cshtml";
+    var zone_tree_view = ViewBag.ZoneTreeView as List<ZoneByTreeViewMinify>;
+    var zone_detail = ViewBag.ZoneDetail as ZoneDetail;
+    var cookie_location = cookieUtility.SetCookieDefault();
+    var location_id = cookie_location.LocationId;
+    var location_name = cookie_location.LocationName;
+    var culture = Context.Features.Get<IRequestCultureFeature>().RequestCulture.Culture.TwoLetterISOLanguageName.ToLower();
+    var culture_code = Context.Features.Get<IRequestCultureFeature>().RequestCulture.Culture.ToString();
+    var base_uri_culture = "/" + culture;
+    var domain = Context.Request.Host.ToString();
+    var Banner_Danhmuc_Sanpham_Anhto = new DetailBanerAds();
+    var Banner_Danhmuc_Sanpham_Anhnho_tren = new DetailBanerAds();
+    var Banner_Danhmuc_Sanpham_Anhnho_duoi = new DetailBanerAds();
+    var Banner_Danhmuc_Sanpham_Anhto_Cache = bannerAdsRepository.GetBannerAds_By_Code(culture_code, "Banner_Danhmuc_Sanpham_Anhto");
+    var Banner_Danhmuc_Sanpham_Anhnho_tren_Cahche = bannerAdsRepository.GetBannerAds_By_Code(culture_code, "Banner_Danhmuc_Sanpham_Anhnho_tren");
+    var Banner_Danhmuc_Sanpham_Anhnho_duoi_Cahche = bannerAdsRepository.GetBannerAds_By_Code(culture_code, "Banner_Danhmuc_Sanpham_Anhnho_duoi");
+    if (Banner_Danhmuc_Sanpham_Anhto_Cache != null)
+    {
+        Banner_Danhmuc_Sanpham_Anhto = Newtonsoft.Json.JsonConvert.DeserializeObject<DetailBanerAds>(Banner_Danhmuc_Sanpham_Anhto_Cache.MetaData);
+    }
+    if (Banner_Danhmuc_Sanpham_Anhnho_tren_Cahche != null)
+    {
+        Banner_Danhmuc_Sanpham_Anhnho_tren = Newtonsoft.Json.JsonConvert.DeserializeObject<DetailBanerAds>(Banner_Danhmuc_Sanpham_Anhnho_tren_Cahche.MetaData);
+    }
+    if (Banner_Danhmuc_Sanpham_Anhnho_duoi_Cahche != null)
+    {
+        Banner_Danhmuc_Sanpham_Anhnho_duoi = Newtonsoft.Json.JsonConvert.DeserializeObject<DetailBanerAds>(Banner_Danhmuc_Sanpham_Anhnho_duoi_Cahche.MetaData);
+    }
+}
+@section styles {
+    @{ var bind_meta = "";}
+    @if (zone_detail != null)
+    {
+        bind_meta += configSEOUtility.ConfigMeta(zone_detail.MetaTitle, zone_detail.MetaDescription, zone_detail.MetaKeyword);
+        bind_meta += configSEOUtility.ConfigSocialMeta();
+    }
+    @Html.Raw(bind_meta)
+    <style>
+        .color-circle {
+            height: 20px;
+            width: 20px;
+            border-radius: 50%;
+            display: inline-block;
+            /*border: 1px solid #ffffff;*/
+        }
+        .picking-active {
+            border: 1px solid red !important;
+        }
+        .detail img{
+            max-width:100%;
+        }
+    </style>
+}
+<div id="zone-current" data-id="@zone_detail.Id" style="display:none"></div>
+<section class=" pt-3 pb-4">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-8 col-dm-12 col-12">
+                <div id="carouselHome" class="carousel slide" data-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <a href="@Banner_Danhmuc_Sanpham_Anhto.Url">
+                                <img src="@UIHelper.StoreFilePath(Banner_Danhmuc_Sanpham_Anhto.Image, false)?v=@WebHelper.Version()" class="d-block w-100" alt="@domain">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-12">
+                <a href="@Banner_Danhmuc_Sanpham_Anhnho_tren.Url" title="">
+                    <img src="@UIHelper.StoreFilePath(Banner_Danhmuc_Sanpham_Anhnho_tren.Image, false)?v=@WebHelper.Version()" class="img-fluid w-100 mb-4" alt="@domain" />
+                </a>
+                <a href="@Banner_Danhmuc_Sanpham_Anhnho_duoi.Url" title="">
+                    <img src="@UIHelper.StoreFilePath(Banner_Danhmuc_Sanpham_Anhnho_duoi.Image, false)?v=@WebHelper.Version()" class="img-fluid w-100 mb-3" alt="@domain" />
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="container mb-3">
+    <nav aria-label="breadcrumb">
+        @await Component.InvokeAsync("Breadcrumb", new { zone_id = zone_detail.Id })
+    </nav>
+</div>
+<div class="container mb-3 client-cate">
+    <div class="bg-fff   border-r-4">
+        <div class="row no-gutters">
+            <div class="col-lg-3 col-md-4 col-12 align-self-center ">
+                <div class="px-3 py-2" style="font-size: 13px;line-height: 1.1;">Tìm kiếm theo thương hiệu</div>
+            </div>
+            <div class="col-lg-8 col-md-11 col-10">
+                <div class="swiper-container slide-brand">
+                    <div class="swiper-wrapper">
+                        @{
+                            var list_manufactures = extraRepository.GetManufactures(culture_code);
+                            foreach (var item in list_manufactures)
+                            {
+                                <div class="swiper-slide">
+                                    <div class="border-right border-left py-1 px-3 filter-picking choose-manufacture" data-manu-id="@item.Id">
+                                        <img src="@UIHelper.StoreFilePath(item.Avatar, false)?v=@WebHelper.Version()" class="img-fluid" alt="@item.Name" />
+                                    </div>
+                                </div>
+                            }
+                        }
+                        <!-- Slides -->
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-1 col-md-1 col-2 text-center">
+                <a href="javascript:;" onclick="expandClient()" class="btn btn-sm pt-2 "><i class="fas fa-chevron-down"></i></a>
+            </div>
+        </div>
+        <div class="full-client">
+            <div class="row no-gutters">
+                @foreach (var item in list_manufactures)
+                {
+                    <div class="col-lg-2 col-md-3 col-sm-4 col-6">
+                        <div class="border py-1 px-3 filter-picking choose-manufacture" data-manu-id="@item.Id">
+                            <img src="@UIHelper.StoreFilePath(item.Avatar, false)?v=@WebHelper.Version()" class="img-fluid" alt="@item.Name" />
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<div class="filter-cate">
+    <div class="container ">
+        <div class="bg-fff border-r-4 px-3 py-2 mb-3">
+            <div class="row">
+                <div class="col-xl-2 col-md-6 col-sm-12 col-12">
+                    <div class="form-group d-flex mb-2 mb-lg-0 small py-2">
+                        <label for="formControlRange " class="mb-0 mr-3 ">Tìm kiếm theo</label>
+                    </div>
+                </div>
+                <div class="col-xl-2 col-md-6 col-sm-12 col-12">
+                    <select class="form-control mb-2 mb-lg-0 filter-select range-price">
+                        <option hidden value="">Khung giá</option>
+                        <option value="0-100000">Từ 0 - 100.000đ</option>
+                        <option value="100000-200000">Từ 100.000 - 200.000đ</option>
+                    </select>
+                    @*<div class="dropdown d-inline-block select-local w-100 mb-2 mb-lg-0 ">
+                            <button class="btn form-control dropdown-toggle" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                Khung giá
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-right " aria-labelledby="dropdownMenuLink">
+                                <a class="dropdown-item choose-range-price" href="javascript:;" data-min-price="0" data-max-price="100000">Từ 0 - 100.000</a>
+                                <a class="dropdown-item choose-range-price" href="javascript:;" data-min-price="100000" data-max-price="200000">Từ 100.000 - 200.000</a>
+                                <a class="dropdown-item choose-range-price" href="javascript:;" data-min-price="200000" data-max-price="300000">Từ 200.000 - 300.000</a>
+                                <a class="dropdown-item choose-range-price" href="javascript:;" data-min-price="300000" data-max-price="400000">Từ 300.000 - 400.000</a>
+                            </div>
+                        </div>*@
+                </div>
+                <div class="col-xl-8 col-md-12 col-12 align-self-center">
+                    <form>
+                        <div class="form-row">
+                            @*//xac dinh tim kiem theo danh muc*@
+                            @{ var list_filter = productRepository.GetFilterProductByZoneId(zone_detail.Id, culture_code).Take(4);}
+                            @foreach (var item in list_filter)
+                            {
+                                <div class="col-lg-2 col-md-4 col-sm-6 col-6">
+                                    <select class="form-control mb-2 mb-lg-0 filter-select dynamic-filter" data-spec-id="@item.SpectificationId">
+                                        <option hidden value="">@item.Name</option>
+                                        @foreach (var i in item.Values)
+                                        {
+                                            <option value="@i.Value">@i.Value</option>
+                                        }
+                                    </select>
+                                </div>
+                            }
+
+                            <div class="col-lg-2 col-md-4 col-sm-6 col-6">
+                                <select class="form-control mb-2 mb-lg-0 filter-select color">
+                                    @{
+                                        var colors = extraRepository.GetColors(culture_code);
+                                        <option hidden value="">Màu sắc</option>
+                                        @foreach (var item in colors)
+                                        {
+                                            <option value="@item.Code">
+                                                <div class="d-flex">
+                                                    <div class="color-circle" style="background-color:@item.Code">
+                                                        @*<img src="images/change/Oval-black.svg" class="img-fluid" />*@
+                                                    </div>
+                                                    <div class="align-self-md-end" style="margin:auto">
+                                                        @item.Name <span class="color-828282"></span>
+                                                    </div>
+                                                </div>
+                                            </option>
+                                        }
+                                    }
+                                </select>
+                                @*<div class="dropdown d-inline-block select-local w-100  ">
+                                    <button class="btn form-control dropdown-toggle" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                        Màu sắc
+                                    </button>
+                                    <div class="dropdown-menu dropdown-menu-right " aria-labelledby="dropdownMenuLink">
+                                        @{
+                                            //var colors = extraRepository.GetColors(culture_code);
+                                            foreach (var item in colors)
+                                            {
+                                                <a class="dropdown-item choose-color" href="javascript:;" data-code="@item.Code">
+
+                                                </a>
+                                            }
+                                        }
+
+                                    </div>
+                                </div>*@
+                            </div>
+                            <div class="col-lg-2 col-md-4 col-sm-6 col-6">
+                                <select class="form-control mb-2 mb-lg-0 filter-select extra">
+                                    <option hidden value="">Bổ sung</option>
+                                    <option  value="1">Giá tăng dần</option>
+                                    <option  value="2">Giá giảm dần</option>
+                                    <option  value="3">Nổi bật nhất</option>
+                                </select>
+                                @*<div class="dropdown d-inline-block select-local w-100 ">
+                                    <button class="btn form-control dropdown-toggle" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                        Bổ sung
+                                    </button>
+                                    <div class="dropdown-menu dropdown-menu-right " aria-labelledby="dropdownMenuLink">
+                                        <a class="dropdown-item" href="javascript:;">Giá tăng dần</a>
+                                        <a class="dropdown-item" href="javascript:;">Giá giảm dần</a>
+                                        <a class="dropdown-item" href="javascript:;">Nổi bật nhất</a>
+                                    </div>
+                                </div>*@
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*//Bat dau find du lieu vao day*@
+<div class="container ">
+    <div class="bg-fff p-3 p-xl-4 content-cate-intro mb-3">
+        <div class="row flex-row-reverse">
+            <div class="col-lg-5 col-md-5 col-sm-12 col-12">
+                <div class="image text-center">
+                    <img src="@UIHelper.StoreFilePath(zone_detail.Background, false)?v=@WebHelper.Version()" class="img-fluid mb-3 mb-md-0" />
+                </div>
+            </div>
+            <div class="col-lg-7 col-md-7 col-sm-12 col-12">
+                <div class="detail">
+                    <h5 class="title font-weight-bold">Giới thiệu @zone_detail.Name</h5>
+                    <div class="review  d-inline-block  mb-3">
+                        <div class="star-rating h5 text-center mb-3" data-id="@zone_detail.Id">
+                            @{ var rating_rounded = (int)Math.Round(zone_detail.Rate);}
+                            @for (int i = 0; i < 5; i++)
+                            {
+                                var class_text = "fas fa-star";
+                                if (i + 1 <= rating_rounded)
+                                {
+                                    class_text += " checked";
+                                }
+                                <i class="@class_text" aria-hidden="true"></i>
+                            }
+                        </div>
+                    </div>
+                    @Html.Raw(zone_detail.Content)
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="text-center">
+        <a href="javascript:;" class="btn btn-outline-view-more" onclick="expand();">Xem thêm<i class="fas fa-chevron-down ml-2 "></i></a>
+    </div>
+</div>
+
+@*//Lay Zone theo treeview*@
+@{ var list_zone_first = zone_tree_view.Where(r => r.level == 1);
+    if (zone_tree_view.Count() == 1)
+    {
+        list_zone_first = zone_tree_view.Where(r => r.level == 0);
+    }
+}
+<div id="append-filter">
+    @foreach (var item in list_zone_first)
+    {
+        var link_tar_1 = string.Format("{0}/{1}.c{2}.html", base_uri_culture, item.Url, item.Id);
+        <section class="my-4 san-go-nb">
+            <div class="bg-fff pt-3 border-r-4 mb-4">
+                <div class="px-3">
+                    <div class="row mb-3 no-gutters ">
+                        <div class="col-md-3 col-12 mb-2 mb-md-0">
+                            <a href="@link_tar_1" class="h5 font-weight-bold ">@item.Name</a>
+                        </div>
+                        <div class="col-md-9 col-12 d-lg-flex justify-content-lg-end align-self-center">
+                            @{ var list_zone_second = zone_tree_view.Where(r => r.ParentId == item.Id).ToList();
+                                var zone_second_first = list_zone_second.FirstOrDefault();
+                                var zone_query_first = 0;
+                                if (list_zone_second.Count() > 0)
+                                {
+                                    zone_query_first = list_zone_second.First().Id;
+                                }
+                                else
+                                {
+                                    zone_query_first = item.Id;
+                                }
+                            }
+                            <div class="menu-op align-self-lg-start mr-lg-3">
+                                <!--menu mobile-->
+                                <div class="d-flex flex-wrap d-lg-none">
+
+                                    @for (int i = 0; i < list_zone_second.Count(); i++)
+                                    {
+                                        var link_target = "javascript:void(0)";
+                                        <a href="@link_target" class="link-view-more font-weight-normal mr-3 select-zone @(i==0?"active":"")" data-id="@list_zone_second[i].Id">@list_zone_second[i].Name</a>
+                                    }
+                                </div>
+                                <!--menu mobile end-->
+                                <!--menu pc-->
+                                <div class="swiper-container d-none d-lg-block">
+                                    <!-- Additional required wrapper -->
+                                    <div class="swiper-wrapper">
+                                        <!-- Slides -->
+                                        @foreach (var item_1 in list_zone_second)
+                                        {
+                                            var link_taget = "javascript:void(0)";
+                                            <div class="swiper-slide">
+                                                <div>
+                                                    <a href="@link_taget" class="link-view-more font-weight-normal select-zone " data-id="@item_1.Id">@Html.Raw(UIHelper.CutLine(item_1.Name, 16, 3))</a>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                                <!--menu pc end-->
+                            </div>
+
+                            @*<a href="" class="link-view-more font-weight-normal mr-3">Sàn gỗ Việt Nam</a>
+                                <a href="" class="link-view-more font-weight-normal mr-3">Sàn gỗ Hàn Quốc</a>
+                                <a href="" class="link-view-more font-weight-normal mr-3">Sàn gỗ Đức</a>
+                                <a href="" class="link-view-more font-weight-normal mr-3">Sàn gỗ cốt xanh</a>*@
+                            <div class=" align-self-center  ">
+                                <a href="javascript:void(0)" class="link-view-more font-weight-normal view-more" data-skip="9" data-size="" data-id="">Xem thêm <span class="tong_so_sp"></span> sản phẩm</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="_binding_product">
+                        @await Component.InvokeAsync("ProductList", new { zone_parent_id = zone_query_first, locationId = location_id })
+                    </div>
+
+
+                </div>
+
+            </div>
+            <div class="text-center ">
+                <a href="javascript:void(0)" class="btn btn-outline-view-more button-view-more" data-skip="9" data-size="" data-id="">Xem thêm<i class="fas fa-chevron-down ml-2 "></i></a>
+            </div>
+        </section>
+    }
+</div>
+
+<div id="append_tim_kiem"></div>
+
+<section class="service-home py-3">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-4 col-md-4 col-sm-4 col-12">
+                <div class="d-flex py-3 justify-content-center">
+                    <div class="image align-self-center">
+                        <img src="~/images/shipment-international.svg" class="img-fluid" />
+                    </div>
+                    <div class="px-3 align-self-center">
+                        <label>Vận chuyển</label>
+                        <div class="small">
+                            Free shipping on all order
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4 col-md-4 col-sm-4 col-12">
+                <div class="d-flex py-3 justify-content-center">
+                    <div class="image align-self-center">
+                        <img src="~/images/professions-man-telecommunicator.svg?v=@WebHelper.Version()" class="img-fluid" />
+                    </div>
+                    <div class="px-3 align-self-center">
+                        <label>Support 24/7</label>
+                        <div class="small">
+                            Chúng tôi hỗ trợ bạn 24/7
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4 col-md-4 col-sm-4 col-12">
+                <div class="d-flex py-3 justify-content-center">
+                    <div class="image align-self-center">
+                        <img src="~/images/saving-piggy-dollars.svg?v=@WebHelper.Version()" class="img-fluid" />
+                    </div>
+                    <div class="px-3 align-self-center">
+                        <label>Dịch vụ đổi trả hàng</label>
+                        <div class="small">
+                            Đổi trả hàng trong vòng 7 ngày
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts{
+
+    <script type="text/javascript" src="~/js/controller/productController.js?v=@WebHelper.Version()" ></script>
+
+}
+

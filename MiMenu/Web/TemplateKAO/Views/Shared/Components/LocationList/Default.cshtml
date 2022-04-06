@@ -1,0 +1,8 @@
+﻿@using TemplateKAO.Services.Locations.ViewModal
+@model List<LocationViewModel>;
+<select id="location-selectbox" class="form-control department-location">
+    @foreach (var item in Model)
+    {
+        <option value="@item.Id">@item.Name</option>
+    }
+</select>

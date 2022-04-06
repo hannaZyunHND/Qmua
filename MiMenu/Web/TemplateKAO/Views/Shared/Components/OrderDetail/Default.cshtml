@@ -1,0 +1,127 @@
+﻿@using TemplateKAO.Services.Product.ViewModel
+@using TemplateKAO.Services.Promotion.ViewModel
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Http
+@using TemplateKAO.Services.Extra.Repository
+@inject IHttpContextAccessor HttpContextAccessor
+@using  TemplateKAO.Utility
+@inject ICookieUtility cookieUtility
+@inject IExtraRepository extraRepository
+@using Utils
+@{
+    var culture = Context.Features.Get<IRequestCultureFeature>().RequestCulture.Culture.TwoLetterISOLanguageName.ToLower();
+    var culture_code = Context.Features.Get<IRequestCultureFeature>().RequestCulture.Culture.ToString();
+    var base_uri_culture = "/" + culture;
+    var domain = Context.Request.Host.ToString();
+    var cookie_location = cookieUtility.SetCookieDefault();
+    var location_id = cookie_location.LocationId;
+    var location_name = cookie_location.LocationName;
+}
+@{
+    var promotions = ViewBag.Promotions as List<PromotionViewModel>;
+}
+
+@model List<ProductMinify>;
+
+@foreach (var item in Model)
+{
+    var link_target = string.Format("/{0}.html", item.Url);
+    <tr class="item" id="item-@item.ProductId" data-id="@item.ProductId" data-sale-price="@(item.FlashSaleId > 0 ? item.ProductPriceInFlashSale : item.SalePrice )" data-name="@item.Title" data-is-flash-sale="@item.FlashSaleId" >
+        <td style="min-width: 300px;">
+            <label class="label-checkbox label-2 mb-0">
+                <input type="checkbox" class="choosen-item">
+                <span class="checkmark"></span>
+                <div class="d-flex">
+                    <div class="image-product mr-3">
+                        <img asp-append-version="true" src="@UIHelper.StoreFilePath(item.Avatar)" class="" alt="@item.Title"/>
+                    </div>
+                    <div class="text align-self-center">
+                        <h6 class="name-product">@item.Title</h6>
+                        @*<div>@item.SpecName: @item.SpecValue</div>*@
+                        @{ 
+                            var colors = new List<string>();
+                            var c = item.Color;
+                            if (c != null)
+                            {
+                                colors = c.Split(',').ToList();
+                            }
+                            var color_list = extraRepository.GetColors(culture_code);
+                        }
+                        <div class="color-828282" style="display:none">Màu:
+                            <select class="item-color-code">
+                                @foreach (var p in colors)
+                                {
+                                    var color_name = color_list.Where(r => r.Code.Equals(p)).FirstOrDefault();
+                                    if (color_name != null)
+                                    {
+                                        <option value="@p">@color_name.Name</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+
+                        @if (!string.IsNullOrEmpty(item.PromotionIds))
+                        {
+                            <div class="item-promotion" id="item-promotion-@item.ProductId" data-product-id="@item.ProductId">
+                                @{
+                                    var item_promotion = item.PromotionIds.Split(',').ToList();
+                                    var result = new List<PromotionViewModel>();
+                                    foreach (var pro in item_promotion)
+                                    {
+                                        var pr = promotions.Where(r => r.Id == int.Parse(pro)).ToList();
+                                        result.AddRange(pr);
+                                    }
+                                }
+                                @foreach (var p in result)
+                                {
+                                    <label class="label-checkbox mb-2 ">
+                                        @p.Name
+                                        <input type="checkbox" @(item.FlashSaleId > 0 ? "disabled" : "checked") class="choose-promotion" data-is-discount-price="@p.IsDiscountPrice" data-value="@((int)p.Value)" data-type="@p.Type" data-id="@p.Id" data-name="@p.Name" />
+                                        <span class="checkmark" style="border-radius: 50%;"></span>
+                                    </label>
+                                }
+                            </div>
+                        }
+                    </div>
+                </div>
+            </label>
+        </td>
+        <td>
+            @if (item.FlashSaleId > 0)
+            {
+                <div class="price-new " style="color:red" data-sale-price="@((int)item.ProductPriceInFlashSale)" data-is-flash-sale="@item.FlashSaleId">
+                    @UIHelper.FormatNumber(item.ProductPriceInFlashSale)
+                </div>
+                <div class="price-old">@UIHelper.FormatNumber(item.SalePrice) đ</div>
+            }
+            else
+            {
+                <div class="price-new " data-sale-price="@((int)item.SalePrice)" data-is-flash-sale="@item.FlashSaleId">
+                    @UIHelper.FormatNumber(item.SalePrice)
+                </div>
+                <div class="price-old">@UIHelper.FormatNumber(item.Price) </div>
+            }
+            <div class="group-amount d-flex">
+                <button class="btn minus" type="button">
+                    <i class="fas fa-minus"></i>
+                </button>
+                <input type="number" class="form-control mx-2 quantity" value="">
+                <button class="btn plus" type="button">
+                    <i class="fas fa-plus"></i>
+                </button>
+            </div>
+        </td>
+        @* <td>
+        </td> *@
+        <td class="d-none">
+            <div class="sum">
+                <span class="item-sum" data-item-sum=""></span> 
+            </div>
+        </td>
+        <td>
+            <a href="javascript:void(0)" class="remove-cart-item"><small><i class="fal fa-times"></i></small></a>
+        </td>
+    </tr>
+
+}

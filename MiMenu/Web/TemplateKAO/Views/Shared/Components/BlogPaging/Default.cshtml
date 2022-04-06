@@ -1,0 +1,83 @@
+﻿@using MI.Entity.Enums;
+@using TemplateKAO.Services.Zone.ViewModal
+@using TemplateKAO.Services.Article.ViewModel
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Http
+@using TemplateKAO.Services.Article.Repository
+@using TemplateKAO.Services.BannerAds.Repository
+@using MI.Entity.Models
+@inject IHttpContextAccessor HttpContextAccessor
+@inject IArticleRepository articleRepository;
+@inject IBannerAdsRepository bannerAdsRepository;
+@using Utils
+@using System.Linq
+@{
+    var culture = Context.Features.Get<IRequestCultureFeature>().RequestCulture.Culture.TwoLetterISOLanguageName.ToLower();
+    var culture_code = Context.Features.Get<IRequestCultureFeature>().RequestCulture.Culture.ToString();
+    var base_uri_culture = "/" + culture;
+    var domain = Context.Request.Host.ToString();
+}
+@{
+    var alias = ViewBag.Alias;
+    var page_index = ViewBag.PageIndex;
+    var page_size = ViewBag.PageSize;
+    var total = ViewBag.Total;
+}
+
+@{ var total_page = 0;
+    if (total % page_size == 0)
+    {
+        total_page = total / page_size;
+    }
+
+    else
+    {
+        total_page = total / page_size + 1;
+    }
+
+}
+@{
+    var link_prev = "";
+    var link_next = "";
+    if (page_index > 1)
+    {
+        link_prev = string.Format("/{0}/page/{1}", alias, page_index - 1);
+    }
+    if (page_index == 1)
+    {
+        link_prev = "javascript:void(0)";
+    }
+    if (page_index < total_page)
+    {
+        link_next = string.Format("/{0}/page/{1}", alias, page_index + 1);
+    }
+    if (page_index >= total_page)
+    {
+        link_next = "javascript:void(0)";
+    }
+}
+@if (page_index > 1)
+{
+    <a href="@link_prev" class="btn btn-pagi preview_page" title="">
+        <i class="fas fa-chevron-left "></i>
+    </a>
+}
+<select class="select-page mr-2">
+    @for (int i = 0; i < total_page; i++)
+    {
+        var links = string.Format("/{0}/page/{1}", alias, i + 1);
+        var s = i + 1 == page_index ? "selected" : "";
+        var op = string.Format("<option value=\"{0}\" {1} >{2}</option>", links, s, i + 1);
+        @Html.Raw(op);
+    }
+</select>
+
+<span class="color-828282">/@total_page</span>
+@if (page_index < total_page)
+{
+    <a href="@link_next" class="btn btn-pagi next_page" title="">
+        <i class="fas fa-chevron-right "></i>
+    </a>
+}
+

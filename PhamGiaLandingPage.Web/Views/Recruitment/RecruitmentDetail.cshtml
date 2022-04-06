@@ -1,0 +1,319 @@
+﻿@using MI.Entity.Enums;
+@using PhamGiaLandingPage.Web.Services.Zone.ViewModal
+@using PhamGiaLandingPage.Web.Services.Article.ViewModel
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Http
+@using PhamGiaLandingPage.Web.Services.Article.Repository
+@inject IHttpContextAccessor HttpContextAccessor
+@inject IArticleRepository articleRepository;
+@using Utils
+@using PhamGiaLandingPage.Web.Services.BannerAds.Repository
+@using MI.Entity.Models
+@inject IBannerAdsRepository bannerAdsRepository;
+@{
+    var culture = Context.Features.Get<IRequestCultureFeature>().RequestCulture.Culture.TwoLetterISOLanguageName.ToLower();
+    var culture_code = Context.Features.Get<IRequestCultureFeature>().RequestCulture.Culture.ToString();
+    var base_uri_culture = "/" + culture;
+    var domain = Context.Request.Host.ToString();
+
+    var Banner_Tuyendung = new DetailBanerAds();
+    var Banner_Tuyendung_Cache = bannerAdsRepository.GetBannerAds_By_Code(culture_code, "Banner_Tuyendung");
+    if (Banner_Tuyendung_Cache != null)
+    {
+        Banner_Tuyendung = Newtonsoft.Json.JsonConvert.DeserializeObject<DetailBanerAds>(Banner_Tuyendung_Cache.MetaData);
+    }
+}
+@{
+    ViewData["Title"] = "RecruitmentDetail";
+    Layout = "~/Views/Shared/_LayoutPublicHome.cshtml";
+}
+@{
+
+    var detail = ViewBag.Detail as ArticleDetail;
+}
+
+@section styles {
+    <style type="text/css">
+        .banner-page {
+            background: url(@UIHelper.StoreFilePath(Banner_Tuyendung.Image)) no-repeat center;
+            min-height: 200px;
+            background-size: cover;
+            display: flex;
+        }
+    </style>
+
+} 
+
+<div class="banner-page py-3 mb-4">
+    <div class="container align-self-center">
+        <div class="row justify-content-center">
+            <div class=" col-sm-10 col-12 ">
+                <h1 class="text-center color-fff">BẠN MUỐN ĐỒNG HÀNH CÙNG JANHOME?</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row ">
+        <div class="col-xl-8 col-lg-8 col-md-8 col-sm-12 col-12">
+            <div class="recrui-content ">
+                <h1 class="title">@detail.Title</h1>
+                <div class="color-828282 mb-4" style="font-size: 14px;">
+                    <span class="mr-3 mb-2">
+                        <img asp-append-version="true" src="/images/icon-sm-td-1.svg" class="img-fluid mr-2" />@detail.ArticleRecruitment.Position
+                    </span>
+                    <span class="mr-3  mb-2">
+                        <img asp-append-version="true" src="/images/icon-sm-td-2.svg" class="img-fluid mr-2" />@detail.ArticleRecruitment.Count
+                    </span>
+                    <span class="mr-3  mb-2">
+                        <img asp-append-version="true" src="/images/icon-sm-td-3.svg" class="img-fluid mr-2" />@detail.ArticleRecruitment.Salary
+                    </span>
+                </div>
+                <div class="detail">
+                    <p>
+                        @Html.Raw(detail.Body)
+                    </p>
+
+                    <div class="d-flex facebook-btn justify-content-end my-4">
+                        <div class="small mr-3">
+                            <img asp-append-version="true" src="/images/eye.svg" class="img-fluid mr-2" />120 lượt xem
+                        </div>
+                        <button class="btn mr-2">
+                            <i class="fas fa-thumbs-up mr-1"></i>Thích
+                            <span>1.4K</span>
+                        </button>
+                        <button href="" class="btn">Chia sẻ</button>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+        <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12 pl-lg-5">
+            <div class="heading pb-2 border-bottom mb-4 ">
+                <div class="h5 font-weight-600 mb-0 ">
+                    Ứng tuyển
+                </div>
+            </div>
+            <div class="mb-4">
+                <form class="form-ung-tuyen">
+                    <div class="form-group">
+                        <div class="form-control py-2 " style="color: #007DFF;">Chuyên viên kinh doanh</div>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="" placeholder="Họ tên *">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="" placeholder="Email *">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="" placeholder="Số điện thoại *">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="" placeholder="Địa chỉ *">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="" placeholder="Mức lương mong muốn *">
+                    </div>
+                    <div class="form-group">
+                        <textarea type="text" rows="5" class="form-control" id=""
+                                  placeholder="Thông tin thêm"></textarea>
+                    </div>
+                    <div class="form-group form-row">
+                        <div class="col-sm-7 col-7 position-relative">
+                            <input type="text" class="form-control" id="" placeholder="Gửi hồ sơ ngay">
+                            <input type="file" class="form-control input-file">
+                        </div>
+                        <div class="col-sm-5 col-5">
+                            <button class="btn btn-save btn-file">Chọn hồ sơ</button>
+                            <input type="file" class="form-control input-file">
+
+                        </div>
+                        <div class="col-12">
+                            <small class="form-text text-muted color-828282">* File đính kèm dung lượng tối đa 5MB</small>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-save w-100">Ứng tuyển</button>
+                    </div>
+                </form>
+
+            </div>
+
+        </div>
+        <div class="col-xl-8 col-lg-8 col-md-8 col-sm-12 col-12">
+            <!--Gửi Comment-->
+            <div class="row mb-3">
+                <div class="col-md-8 col-sm-8 col-12 ">
+                    <h5 class="font-weight-600 mb-3 mb-md-0 mt-1">165 Bình luận</h5>
+                </div>
+                <div class="col-md-4 col-sm-4 col-12 text-right">
+                    <div class="search-comment">
+                        <input class="form-control " type="text" placeholder="Search" />
+                        <i class="fas fa-search"></i>
+                    </div>
+                </div>
+            </div>
+            <form class="border border-r-4 mb-4 ">
+                <textarea class="form-control " rows="5" placeholder="Type your topic here"
+                          style="border: 0;"></textarea>
+                <div class="border-top">
+                    <div class="form-row p-2 ">
+                        <div class="col-xl-2 col-md-2 col-12">
+                            <div class="position-relative form-control text-center mb-2 mb-md-0"
+                                 style="font-size: 14px;">
+                                <img asp-append-version="true" src="/images/camera.svg" class="img-fluid" />
+                                <input type="file" class="input-choose-file " accept="image/*">
+                            </div>
+
+                        </div>
+                        <div class="col-xl-4 col-md-4 col-12">
+                            <input type="text" style="font-size: 14px;" class="form-control mb-2 mb-md-0"
+                                   placeholder="Tên (bắt buộc)">
+                        </div>
+                        <div class="col-xl-4 col-md-4 col-12">
+                            <input type="text" style="font-size: 14px;" class="form-control mb-2 mb-md-0"
+                                   placeholder="Email (bắt buộc)">
+                        </div>
+                        <div class="col-xl-2 col-md-2 col-12">
+                            <button class="btn btn-save px-5 mb-2 mb-md-0">Gửi</button>
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+
+            <div class="list-comment mb-5">
+                <div class="media mb-3">
+                    <img asp-append-version="true" src="/images/change/ava.jpg" class="img-fluid avatar mr-3" alt="...">
+                    <div class="media-body">
+                        <h6 class="name">Tomothy Flores</h6>
+                        <div class="comment-ct ">
+                            Cras sit amet nibh libero, in gravida nulla.
+                        </div>
+                        <div class="d-flex flex-wrap">
+                            <a href="" class="btn-link small mr-3 mb-2">Trả lời</a>
+                            <a href="" href="" class="btn-link small mr-3 mb-2">
+                                <i class="fas fa-thumbs-up mr-2"></i>Thích
+                            </a>
+                            <span class="time small mb-2">10/09/2019 10:46</span>
+                        </div>
+                        <div class="media sub  mt-3">
+                            <a class="" href="#">
+                                <img asp-append-version="true" src="/images/change/product-detail-01.jpg" class="img-fluid avatar mr-3"
+                                     alt="...">
+                            </a>
+                            <div class="media-body">
+                                <h6 class="name qtv">Media heading</h6>
+                                <div class="qtv">Quản trị viên</div>
+                                <div class="comment-ct">
+                                    Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque
+                                    ante sollicitudin.
+                                </div>
+                                <div class="d-flex flex-wrap">
+                                    <a href="" class="btn-link small mr-3 mb-2">Trả lời</a>
+                                    <a href="" href="" class="btn-link small mr-3 mb-2">
+                                        <i class="fas fa-thumbs-up mr-2"></i>Hài lòng
+                                    </a>
+                                    <a href="" href="" class="btn-link small mr-3 mb-2">
+                                        <i class="fas fa-thumbs-down mr-2"></i>Không hài lòng
+                                    </a>
+                                    <span class="time small mb-2">10/09/2019 10:46</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="media">
+                    <img asp-append-version="true" src="/images/change/ava.jpg" class="img-fluid avatar mr-3" alt="...">
+                    <div class="media-body">
+                        <h6 class="name">Tomothy Flores</h6>
+                        <div class="comment-ct ">
+                            Cras sit amet nibh libero, in gravida nulla.
+                        </div>
+                        <div class="d-flex flex-wrap">
+                            <a href="javascrip:;" class="btn-link small mr-3">Trả lời</a>
+                            <a href="javascrip:;" class="btn-link small mr-3">
+                                <i class="fas fa-thumbs-up mr-2"></i>Thích
+                            </a>
+                            <span class="time small">10/09/2019 10:46</span>
+                        </div>
+                        <div class="media sub  mt-3">
+                            <a class="" href="#">
+                                <img asp-append-version="true" src="/images/change/product-detail-01.jpg" class="img-fluid avatar mr-3"
+                                     alt="...">
+                            </a>
+                            <div class="media-body">
+                                <h6 class="name qtv">Media heading</h6>
+                                <div class="qtv">Quản trị viên</div>
+                                <div class="comment-ct">
+                                    Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque
+                                    ante sollicitudin.
+                                </div>
+                                <div class="d-flex flex-wrap">
+                                    <a href="javascrip:;" class="btn-link small mr-3 mb-2">Trả lời</a>
+                                    <a href="javascrip:;" class="btn-link small mr-3 mb-2">
+                                        <i class="fas fa-thumbs-up mr-2"></i>Hài lòng
+                                    </a>
+                                    <a href="javascrip:;" class="btn-link small mr-3 mb-2">
+                                        <i class="fas fa-thumbs-down mr-2"></i>Không hài lòng
+                                    </a>
+                                    <span class="time small">10/09/2019 10:46</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="service-home py-3">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-4 col-md-4 col-sm-4 col-12">
+                <div class="d-flex py-3 justify-content-center">
+                    <div class="image align-self-center">
+                        <img asp-append-version="true" src="/images/shipment-international.svg" class="img-fluid" />
+                    </div>
+                    <div class="px-3 align-self-center">
+                        <label>Vận chuyển</label>
+                        <div class="small">
+                            Free shipping on all order
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4 col-md-4 col-sm-4 col-12">
+                <div class="d-flex py-3 justify-content-center">
+                    <div class="image align-self-center">
+                        <img asp-append-version="true" src="/images/professions-man-telecommunicator.svg" class="img-fluid" />
+                    </div>
+                    <div class="px-3 align-self-center">
+                        <label>Support 24/7</label>
+                        <div class="small">
+                            Chúng tôi hỗ trợ bạn 24/7
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4 col-md-4 col-sm-4 col-12">
+                <div class="d-flex py-3 justify-content-center">
+                    <div class="image align-self-center">
+                        <img asp-append-version="true" src="/images/saving-piggy-dollars.svg" class="img-fluid" />
+                    </div>
+                    <div class="px-3 align-self-center">
+                        <label>Dịch vụ đổi trả hàng</label>
+                        <div class="small">
+                            Đổi trả hàng trong vòng 7 ngày
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,157 @@
+﻿@using MI.Entity.Enums;
+@using PhamGiaLandingPage.Web.Services.Zone.ViewModal
+@using PhamGiaLandingPage.Web.Services.Article.ViewModel
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Http
+@using PhamGiaLandingPage.Web.Services.Article.Repository
+@using PhamGiaLandingPage.Web.Services.BannerAds.Repository
+@using MI.Entity.Models
+@inject IHttpContextAccessor HttpContextAccessor
+@inject IArticleRepository articleRepository;
+@inject IBannerAdsRepository bannerAdsRepository;
+@using Utils
+@using System.Linq
+@{
+    var culture = Context.Features.Get<IRequestCultureFeature>().RequestCulture.Culture.TwoLetterISOLanguageName.ToLower();
+    var culture_code = Context.Features.Get<IRequestCultureFeature>().RequestCulture.Culture.ToString();
+    var base_uri_culture = "/" + culture;
+    var domain = Context.Request.Host.ToString();
+}
+@{
+    var zone_target = ViewBag.ZoneTarget as ZoneDetail;
+    var Banner_Blog = new DetailBanerAds();
+    var Banner_Blog_Cache = bannerAdsRepository.GetBannerAds_By_Code(culture_code, "Banner_Blog");
+    if (Banner_Blog_Cache != null)
+    {
+        Banner_Blog = Newtonsoft.Json.JsonConvert.DeserializeObject<DetailBanerAds>(Banner_Blog_Cache.MetaData);
+    }
+    var page_index = ViewBag.PageIndex;
+    var page_size = ViewBag.PageSize;
+
+
+}
+
+@section styles {
+    <style type="text/css">
+        .banner-page {
+            background: url(@UIHelper.StoreFilePath(Banner_Blog.Image)) no-repeat center;
+            min-height: 200px;
+            background-size: cover;
+            display: flex;
+        }
+    </style>
+
+}
+@{
+    ViewData["Title"] = "BlogList2";
+    //Layout = "~/Views/Shared/_LayoutPublicHome.cshtml";
+}
+
+<div class="banner-page py-3 mb-4">
+    <div class="container align-self-center">
+        <div class="row justify-content-center">
+            <div class="col-sm-10 col-12 ">
+                <h1 class="text-center">@zone_target.Name</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row flex-md-row-reverse">
+        <div class="col-xl-3 col-lg-3 col-md-4 col-sm-12 col-12">
+            @await Component.InvokeAsync("MenuRightBlog")
+        </div>
+        @{ var total = 0;
+            var list_article = articleRepository.GetArticlesInZoneId_Minify(zone_target.Id, (int)TypeZone.Article, culture_code, "", page_index, page_size, out total) as List<ArticleMinify>; }
+        @if (list_article != null)
+        {
+            <div class="col-xl-9 col-lg-9 col-md-8 col-sm-12 col-12">
+                <div class="heading pb-2 border-bottom mb-3 d-flex">
+                    <div class="h5 font-weight-600 mb-0 ">
+                        @zone_target.Name
+                    </div>
+                </div>
+
+                <div class="slide-blog-cate swiper-container">
+                    <!-- Additional required wrapper -->
+                    <div class="swiper-wrapper">
+                        <!-- Slides -->
+                        @{ var article_in_slide = list_article.Skip(0).Take(3); }
+                        @foreach (var item in article_in_slide)
+                        {
+                            var link = string.Format("/{0}.html", item.Url);
+                            <div class="swiper-slide">
+                                <div class="item mb-3">
+                                    <a href="@link" title="@item.Title">
+                                        <img asp-append-version="true" src="@UIHelper.StoreFilePath(item.Avatar,false)" class="w-100" alt="@item.Title" />
+                                    </a>
+                                    <h2 class="title">
+                                        <a href="@link" title="@item.Title">@item.Title</a>
+
+                                    </h2>
+                                </div>
+                            </div>
+                        }
+                    </div>
+
+                    <!-- If we need navigation buttons -->
+                    <div class="swiper-button-prev"><i class="fas fa-chevron-left"></i></div>
+                    <div class="swiper-button-next"><i class="fas fa-chevron-right"></i></div>
+                </div>
+
+
+                <div class="list-blog-cate-2 binding-blog">
+                    @{ var article_out_slide = list_article.Skip(3); }
+                    @foreach (var item in article_out_slide)
+                    {
+                        var link = string.Format("/{0}.html", item.Url);
+                        <div class="item item-blog-km">
+                            <div class="row">
+                                <div class="col-lg-3 col-md-4 col-sm-4 col-12">
+                                    <div class="image mb-3 mb-sm-0">
+                                        <a href="@link" title="@item.Title">
+                                            <img asp-append-version="true" src="@UIHelper.StoreFilePath(item.Avatar)" class="img-fluid" alt="@item.Title" />
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="col-lg-9 col-md-8 col-sm-8  col-12 ">
+
+                                    <h5 class="title">
+                                        <a href="@link" title="@item.Title">@item.Title</a>
+                                    </h5>
+                                    <div style="display:flex; align-items:center">
+                                        <div class="time">
+                                            @item.CreatedDate.ToString("dd/MM/yyyy hh:mm") <img asp-append-version="true" src="~/images/eye.svg" class="img-fluid mr-2" style=" margin-bottom: .1rem;"/>@item.ViewCount lượt xem
+                                        </div>
+                                        <div class="small mr-3" ></div>
+                                    </div>
+                                    
+                                    <div class="des">
+
+                                        @Html.Raw(item.Description)
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                </div>
+                <div class="jan-pagination text-right mb-4 ">
+                    @await Component.InvokeAsync("BlogPaging", new { alias = zone_target.Url, pageIndex = page_index, pageSize = page_size, total = total })
+                </div>
+            </div>
+        }
+
+    </div>
+</div>
+
+
+@section scripts{
+
+
+    <script type="text/javascript" src="~/js/controller/blogList2Controller.js" asp-append-version="true"></script>
+}
+

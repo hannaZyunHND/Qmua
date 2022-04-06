@@ -1,0 +1,65 @@
+﻿@using MI.Entity.Enums;
+@using TemplateKAO.Services.Zone.ViewModal
+@using TemplateKAO.Services.Article.ViewModel
+@using TemplateKAO.Services.Extra.ViewModel
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Http
+@using TemplateKAO.Services.Article.Repository
+@using TemplateKAO.Services.Extra.Repository
+@using TemplateKAO.Services.Zone.Repository
+@inject IHttpContextAccessor HttpContextAccessor
+@inject IArticleRepository articleRepository;
+@inject IZoneRepository zoneRepository;
+@inject IExtraRepository extraRepository;
+@using Utils
+@{
+    var culture = Context.Features.Get<IRequestCultureFeature>().RequestCulture.Culture.TwoLetterISOLanguageName.ToLower();
+    var culture_code = Context.Features.Get<IRequestCultureFeature>().RequestCulture.Culture.ToString();
+    var base_uri_culture = "/" + culture;
+    var domain = Context.Request.Host.ToString();
+}
+
+@{
+    Layout = null;
+    var id = (int)ViewBag.Id;
+    var obj_id = (int)ViewBag.ObjId;
+    var obj_type = (int)ViewBag.ObjType;
+    var comments = new List<CommentDetail>();
+
+    //var list_zone_parents = zoneRepository.GetListZoneByParentId((int)TypeZone.AllButProduct, culture_code);
+}
+
+    <div class="border border-r-4 mb-4 reply upload-parent" data-type="comment" data-object-id="@obj_id" data-object-type="@obj_type" data-lang="@culture_code">
+        <textarea class="form-control txt_content" rows="5" placeholder="Type your topic here"
+                  style="border: 0;" minlength="50"></textarea>
+        <div class="border-top">
+            <div class="form-row p-2 ">
+                <div class="col-xl-2 col-md-2 col-12">
+                    <div class="position-relative form-control text-center mb-2 mb-md-0"
+                         style="font-size: 14px;">
+                        <img asp-append-version="true" src="~/images/camera.svg" class="img-fluid" />
+                        <input type="file" class="input-choose-file " accept="image/*" data-target-url="">
+                    </div>
+                </div>
+                <div class="col-xl-4 col-md-4 col-12">
+                    <input type="text" style="font-size: 14px;" class="form-control mb-2 mb-md-0 txt_name" placeholder="Tên (bắt buộc)" required>
+                </div>
+                <div class="col-xl-4 col-md-4 col-12">
+                    <input type="text" style="font-size: 14px;" class="form-control mb-2 mb-md-0 txt_phoneOrEmail" placeholder="Email (bắt buộc)" required>
+                </div>
+                <div class="col-xl-2 col-md-2 col-12">
+                    <button class="btn btn-save px-5 mb-2 mb-md-0 send-comment-reply w-100" data-type="comment" data-object-id="@obj_id" data-object-type="@obj_type" data-parent="@id" data-lang="@culture_code" type="button">Gửi</button>
+                </div>
+            </div>
+        </div>
+        <div class="_binding_pickup_img" style="display:none; position:relative">
+            <div>
+                <img class="_place-img" />
+            </div>
+            <div class="_close_customize" style="position:absolute; top:0px; right: 0px">
+                <button class="_place-img-close" style="background-color: transparent; border: 0;"> <i class="fal fa-times-circle"></i></button>
+            </div>
+
+        </div>
+    </div>

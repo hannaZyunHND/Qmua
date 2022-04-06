@@ -1,0 +1,664 @@
+﻿@using MI.Entity.Enums;
+@using PhamGiaLandingPage.Web.Services.Zone.ViewModal
+@using PhamGiaLandingPage.Web.Services.Article.ViewModel
+@using PhamGiaLandingPage.Web.Services.Product.ViewModel
+@using PhamGiaLandingPage.Web.Services.Extra.ViewModel
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Http
+@using PhamGiaLandingPage.Web.Services.Article.Repository
+@using PhamGiaLandingPage.Web.Services.Extra.Repository
+@using PhamGiaLandingPage.Web.Services.Zone.Repository
+@using PhamGiaLandingPage.Web.Services.Product.Repository
+@using System.IO;
+@using Microsoft.AspNetCore.Hosting;
+@using PhamGiaLandingPage.Web.Utility
+@inject IHttpContextAccessor HttpContextAccessor
+@inject IArticleRepository articleRepository;
+@inject IZoneRepository zoneRepository;
+@inject IExtraRepository extraRepository;
+@inject IProductRepository productRepository;
+@inject IHostingEnvironment env
+@using Utils
+@{
+    var culture = Context.Features.Get<IRequestCultureFeature>().RequestCulture.Culture.TwoLetterISOLanguageName.ToLower();
+    var culture_code = Context.Features.Get<IRequestCultureFeature>().RequestCulture.Culture.ToString();
+    var base_uri_culture = "/" + culture;
+    var domain = Context.Request.Host.ToString();
+}
+
+@{
+    ViewData["Title"] = "ContructionEstimates";
+    Layout = "~/Views/Shared/_LayoutPublicHome.cshtml";
+}
+@await Component.InvokeAsync("SEO_Breadcrumb", new { bread = new List<ZoneByTreeViewMinify>(), page = "du-toan-cong-trinh", type_page = "" })
+<form class="container contruction-estimates-form">
+    <nav aria-label="breadcrumb ">
+        <ol class="breadcrumb jan-breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Dự toán công trình</li>
+        </ol>
+    </nav>
+    <div class="heading h5 mb-3 font-weight-600">Dự toán công trình</div>
+    <div class="row">
+        <div class="col-xl-9 col-lg-9 col-md-8 col-sm-12 col-12">
+            <div class="card jan-card">
+                <div class="card-body infomation-room">
+                    <h5 class="card-title">1. Thông số nhà</h5>
+                    <div class="form-row">
+                        <div class="form-group col-md-4 col-sm-6 col-12">
+                            <label for="">Chiều dài</label>
+                            <input type="number" class="form-control" id="length" value="0" step=".1">
+                        </div>
+                        <div class="form-group col-md-4 col-sm-6 col-12">
+                            <label for="">Chiều rộng</label>
+                            <input type="number" class="form-control" id="width" value="0" step=".1">
+                        </div>
+                        <div class="form-group col-md-4 col-sm-6 col-12">
+                            <label for="">Diện tích</label>
+                            <input type="number" class="form-control" id="acreage" value="" disabled step=".1">
+                        </div>
+                        <div class="form-group col-md-4 col-sm-6 col-12">
+                            <label for="">Số cửa</label>
+                            <input type="number" class="form-control" id="count-door" value="0" step=".1">
+                        </div>
+
+                        <div class="form-group col-md-4 col-sm-6 col-12">
+                            <label for="">Chiều dài cửa</label>
+                            <input type="number" class="form-control" id="length-door" value="0" step=".1">
+                        </div>
+                        <div class="form-group col-md-4 col-sm-6 col-12">
+                            <label for="">Độ dài nẹp</label>
+                            <input type="number" class="form-control" id="perimeter" value="" disabled step=".1">
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+            <div class="card jan-card">
+                <div class="card-body">
+                    <h5 class="card-title">2. Diện tích thi công dự kiến</h5>
+                    <div class="item-dot  ">
+                        <div class="w-50">
+                            Diện tích  lát sàn dự kiến:
+                        </div>
+                        <div>
+                            <span class="room-acreage-woodfloor" data-value=""></span> m2
+                        </div>
+                    </div>
+                    <div class="item-dot  ">
+                        <div class="w-50">
+                            Xốp lót dự kiến :
+                        </div>
+                        <div>
+                            <span class="room-acreage-styrofoam" data-value=""></span> m2
+                        </div>
+                    </div>
+                    <div class="item-dot  ">
+                        <div class="w-50">
+                            Nẹp:
+                        </div>
+                        <div>
+                            <span class="room-length-splint" data-value=""></span> m
+                        </div>
+                    </div>
+                    <div class="item-dot  ">
+                        <div class="w-50">
+                            Phào:
+                        </div>
+                        <div>
+                            <span class="room-length-walling" data-value=""></span> m
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card jan-card">
+                <div class="card-body">
+                    <h5 class="card-title">3. Tính toán giá thi công</h5>
+                    <div class="card-2 border mb-3">
+                        <div class="heading bg-light p-3 mb-2">
+                            Vật liệu
+                        </div>
+                        <div class="item-choose" data-unit="m2" data-material-type="@((int)MaterialType.Woodfloor)">
+                            <div class="label">Sàn gỗ</div>
+                            <button type="button" class="btn btn-choose choose-material-type" data-material-type="@((int)MaterialType.Woodfloor)">Chọn sàn gỗ</button>
+                            <div class="list-selected material-item-selected" style="display:none;" data-sale-price="0">
+                                <div class="item-product-modal-2 get row no-gutters">
+                                    <div class="col-xl-2 col-lg-2 col-md-4 col-4  pr-xl-4 pr-3 mb-3">
+                                        <div class="image-product">
+                                            <img asp-append-version="true" src="" class="img-fluid item-selected-avatar">
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-4 col-lg-10 col-md-8 col-8 ">
+                                        <div class="name-product font-weight-600 mb-1 item-selected-title"></div>
+                                        <div><span class="item-selected-spec-name"></span>: <span class="item-selected-spec-value"></span></div>
+                                    </div>
+                                    <div class="col-xl-6 col-lg-12 col-md-12 col-12 align-self-center">
+                                        <div class="row">
+                                            <div class="col-xl-5 col-lg-6 col-md-5 col-sm-6 col-12">
+                                                <div class="group-amount d-flex mb-2 mb-md-0  ">
+                                                    <button class="btn btn-sm item-selected-minus-button" style="display:none" type="button">
+                                                        <i class="fas fa-minus "></i>
+                                                    </button>
+                                                    <input type="text" class="form-control mx-2 item-selected-quantity" disabled value="" step=".1"> m2
+                                                    <button class="btn btn-sm item-selected-plus-button" style="display:none" type="button">
+                                                        <i class="fas fa-plus"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-7 col-lg-6 col-md-7 col-sm-6 col-12  d-flex justify-content-between pl-md-0 pl-lg-3 ">
+                                                <div class="price  item-selected-sale-price">
+                                                </div>
+                                                <div class="">
+                                                    <button class="btn p-0 mr-2 item-selected-edit-button" type="button"><img asp-append-version="true" src="~/images/Edit.svg" /></button>
+                                                    <button class="btn p-0 item-selected-del-button" type="button"><img asp-append-version="true" src="~/images/del-icon.svg" /></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item-choose" data-unit="m2" data-material-type="@((int)MaterialType.Styrofoam)">
+                            <div class="label">Xốp lót</div>
+                            <button type="button" class="btn btn-choose choose-material-type" data-material-type="@((int)MaterialType.Styrofoam)">Chọn xốp lót</button>
+                            <div class=" list-selected material-item-selected" style="display:none;" data-sale-price="0">
+                                <div class="item-product-modal-2 get row no-gutters">
+                                    <div class="col-xl-2 col-lg-2 col-md-4 col-4  pr-xl-4 pr-3 mb-3">
+                                        <div class="image-product">
+                                            <img asp-append-version="true" src="" class="img-fluid item-selected-avatar">
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-4 col-lg-10 col-md-8 col-8 ">
+                                        <div class="name-product font-weight-600 mb-1 item-selected-title"></div>
+                                        <div><span class="item-selected-spec-name"></span>: <span class="item-selected-spec-value"></span></div>
+                                    </div>
+                                    <div class="col-xl-6 col-lg-12 col-md-12 col-12 align-self-center">
+                                        <div class="row">
+                                            <div class="col-xl-5 col-lg-6 col-md-5 col-sm-6 col-12">
+                                                <div class="group-amount d-flex mb-2 mb-md-0  ">
+                                                    <button class="btn btn-sm item-selected-minus-button" style="display:none" type="button">
+                                                        <i class="fas fa-minus "></i>
+                                                    </button>
+                                                    <input type="text" class="form-control mx-2 item-selected-quantity" disabled value="" step=".1"> m2
+                                                    <button class="btn btn-sm item-selected-plus-button" style="display:none" type="button">
+                                                        <i class="fas fa-plus"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-7 col-lg-6 col-md-7 col-sm-6 col-12  d-flex justify-content-between pl-md-0 pl-lg-3 ">
+                                                <div class="price  item-selected-sale-price">
+                                                </div>
+                                                <div class="">
+                                                    <button class="btn p-0 mr-2 item-selected-edit-button" type="button"><img asp-append-version="true" src="~/images/Edit.svg" /></button>
+                                                    <button class="btn p-0 item-selected-del-button" type="button"><img asp-append-version="true" src="~/images/del-icon.svg" /></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item-choose" data-unit="m-door" data-material-type="@((int)MaterialType.Splint)">
+                            <div class="label">Nẹp</div>
+                            <button type="button" class="btn btn-choose choose-material-type" data-material-type="@((int)MaterialType.Splint)">Chọn nẹp</button>
+                            <div class="list-selected material-item-selected" style="display:none;" data-sale-price="0">
+                                <div class="item-product-modal-2 get row no-gutters">
+                                    <div class="col-xl-2 col-lg-2 col-md-4 col-4  pr-xl-4 pr-3 mb-3">
+                                        <div class="image-product">
+                                            <img asp-append-version="true" src="" class="img-fluid item-selected-avatar">
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-4 col-lg-10 col-md-8 col-8 ">
+                                        <div class="name-product font-weight-600 mb-1 item-selected-title"></div>
+                                        <div><span class="item-selected-spec-name"></span>: <span class="item-selected-spec-value"></span></div>
+                                    </div>
+                                    <div class="col-xl-6 col-lg-12 col-md-12 col-12 align-self-center">
+                                        <div class="row">
+                                            <div class="col-xl-5 col-lg-6 col-md-5 col-sm-6 col-12">
+                                                <div class="group-amount d-flex mb-2 mb-md-0  ">
+                                                    <button class="btn btn-sm item-selected-minus-button" style="display:none" type="button">
+                                                        <i class="fas fa-minus "></i>
+                                                    </button>
+                                                    <input type="text" class="form-control mx-2 item-selected-quantity" disabled value="" step=".1"> m
+                                                    <button class="btn btn-sm item-selected-plus-button" style="display:none" type="button">
+                                                        <i class="fas fa-plus"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-7 col-lg-6 col-md-7 col-sm-6 col-12  d-flex justify-content-between pl-md-0 pl-lg-3 ">
+                                                <div class="price  item-selected-sale-price">
+                                                </div>
+                                                <div class="">
+                                                    <button class="btn p-0 mr-2 item-selected-edit-button " type="button"><img asp-append-version="true" src="~/images/Edit.svg" /></button>
+                                                    <button class="btn p-0 item-selected-del-button" type="button"><img asp-append-version="true" src="~/images/del-icon.svg" /></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item-choose" data-unit="m" data-material-type="@((int)MaterialType.Walling)">
+                            <div class="label">Phào</div>
+                            <button type="button" class="btn btn-choose choose-material-type" data-material-type="@((int)MaterialType.Walling)">Chọn ốp tường</button>
+                            <div class="list-selected material-item-selected" style="display:none;" data-sale-price="0">
+                                <div class="item-product-modal-2 get row no-gutters">
+                                    <div class="col-xl-2 col-lg-2 col-md-4 col-4  pr-xl-4 pr-3 mb-3">
+                                        <div class="image-product">
+                                            <img asp-append-version="true" src="" class="img-fluid item-selected-avatar">
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-4 col-lg-10 col-md-8 col-8 ">
+                                        <div class="name-product font-weight-600 mb-1 item-selected-title"></div>
+                                        <div><span class="item-selected-spec-name"></span>: <span class="item-selected-spec-value"></span></div>
+                                    </div>
+                                    <div class="col-xl-6 col-lg-12 col-md-12 col-12 align-self-center">
+                                        <div class="row">
+                                            <div class="col-xl-5 col-lg-6 col-md-5 col-sm-6 col-12">
+                                                <div class="group-amount d-flex mb-2 mb-md-0  ">
+                                                    <button class="btn btn-sm item-selected-minus-button" style="display:none" type="button">
+                                                        <i class="fas fa-minus "></i>
+                                                    </button>
+                                                    <input type="text" class="form-control mx-2 item-selected-quantity" disabled value="" step=".1"> m
+                                                    <button class="btn btn-sm item-selected-plus-button" style="display:none" type="button">
+                                                        <i class="fas fa-plus"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-7 col-lg-6 col-md-7 col-sm-6 col-12  d-flex justify-content-between pl-md-0 pl-lg-3 ">
+                                                <div class="price  item-selected-sale-price">
+                                                </div>
+                                                <div class="">
+                                                    <button class="btn p-0 mr-2 item-selected-edit-button" type="button"><img asp-append-version="true" src="~/images/Edit.svg" /></button>
+                                                    <button class="btn p-0 item-selected-del-button" type="button"><img asp-append-version="true" src="~/images/del-icon.svg" /></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item-choose" data-unit="box" data-material-type="@((int)MaterialType.Glue)">
+                            <div class="label">Keo dán</div>
+                            <button type="button" class="btn btn-choose choose-material-type" data-material-type="@((int)MaterialType.Glue)">Chọn keo dán</button>
+                            <div class="list-selected material-item-selected" style="display:none;" data-sale-price="0">
+                                <div class="item-product-modal-2 get row no-gutters">
+                                    <div class="col-xl-2 col-lg-2 col-md-4 col-4  pr-xl-4 pr-3 mb-3">
+                                        <div class="image-product">
+                                            <img asp-append-version="true" src="" class="img-fluid item-selected-avatar">
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-4 col-lg-10 col-md-8 col-8 ">
+                                        <div class="name-product font-weight-600 mb-1 item-selected-title"></div>
+                                        <div><span class="item-selected-spec-name"></span>: <span class="item-selected-spec-value"></span></div>
+                                    </div>
+                                    <div class="col-xl-6 col-lg-12 col-md-12 col-12 align-self-center">
+                                        <div class="row">
+                                            <div class="col-xl-5 col-lg-6 col-md-5 col-sm-6 col-12">
+                                                <div class="group-amount d-flex mb-2 mb-md-0  ">
+                                                    <button class="btn btn-sm item-selected-minus-button" style="display:none" type="button">
+                                                        <i class="fas fa-minus "></i>
+                                                    </button>
+                                                    <input type="text" class="form-control mx-2 item-selected-quantity" disabled value="" step=".1"> lọ
+                                                    <button class="btn btn-sm item-selected-plus-button" style="display:none" type="button">
+                                                        <i class="fas fa-plus"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-7 col-lg-6 col-md-7 col-sm-6 col-12  d-flex justify-content-between pl-md-0 pl-lg-3 ">
+                                                <div class="price  item-selected-sale-price">
+                                                </div>
+                                                <div class="">
+                                                    <button class="btn p-0 mr-2 item-selected-edit-button" type="button"><img asp-append-version="true" src="~/images/Edit.svg" /></button>
+                                                    <button class="btn p-0 item-selected-del-button" type="button"><img asp-append-version="true" src="~/images/del-icon.svg" /></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-2 border mb-3">
+                        <div class="heading bg-light p-3 mb-2">
+                            Công thợ
+                        </div>
+
+                        <div class="p-3">
+                            <div class="item-check border">
+                                <label class="label-checkbox  mb-0 ">
+                                    <input type="checkbox" class="labor extra-infomation" data-min-area="0" data-max-area="10" data-item-price="450000" data-is-per-metter="0" data-content="&lt; 10 m2 : 450.000 đ/ công trình">
+                                    <span class="checkmark"></span>
+                                    <div class="d-flex">
+                                        <div class="text-1 align-self-center">
+                                            &lt; 10 m2
+                                        </div>
+                                        <div class="align-self-center ">
+                                            450.000 đ/ công trình
+                                        </div>
+                                    </div>
+                                </label>
+                            </div>
+                            <div class="item-check border">
+                                <label class="label-checkbox  mb-0 ">
+                                    <input type="checkbox" class="labor extra-infomation" data-min-area="11" data-max-area="20" data-item-price="500000" data-is-per-metter="0" data-content="10 m2 - 20 m2 : 500.000 đ/ công trình">
+                                    <span class="checkmark"></span>
+                                    <div class="d-flex">
+                                        <div class="text-1 align-self-center">
+                                            10 m2 - 20 m2
+                                        </div>
+                                        <div class="align-self-center ">
+                                            500.000 đ/ công trình
+                                        </div>
+                                    </div>
+                                </label>
+                            </div>
+                            <div class="item-check border">
+                                <label class="label-checkbox  mb-0 ">
+                                    <input type="checkbox" class="labor extra-infomation" data-min-area="21" data-max-area="40" data-item-price="25000" data-is-per-metter="1" data-content="20 m2 - 40 m2 : 25.000đ / m2">
+                                    <span class="checkmark"></span>
+                                    <div class="d-flex">
+                                        <div class="text-1 align-self-center">
+                                            20 m2 - 40 m2
+                                        </div>
+                                        <div class="align-self-center ">
+                                            25.000đ / m2
+                                        </div>
+                                    </div>
+                                </label>
+                            </div>
+                            <div class="item-check border">
+                                <label class="label-checkbox  mb-0 ">
+                                    <input type="checkbox" class="labor extra-infomation" data-min-area="41" data-max-area="100000" data-item-price="20000" data-is-per-metter="1" data-content="40 m2 - 100 m2 : 20.000đ / m2">
+                                    <span class="checkmark"></span>
+                                    <div class="d-flex">
+                                        <div class="text-1 align-self-center">
+                                            40 m2 - 100 m2
+                                        </div>
+                                        <div class="align-self-center ">
+                                            20.000đ / m2
+                                        </div>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-2 border mb-4">
+                        <div class="heading bg-light p-3 mb-2">
+                            PHƯƠNG THỨC VẬN CHUYỂN
+                        </div>
+
+                        <div class="p-3">
+                            <div class="item-check border">
+                                <label class="label-checkbox  mb-0 ">
+                                    <input type="checkbox " class="extra-infomation" data-content="&lt; 15km hoặc 75tr :  Miễn phí">
+                                    <span class="checkmark"></span>
+                                    <div class="d-flex">
+                                        <div class="text-1 align-self-center">
+                                            &lt; 15km hoặc 75tr
+                                        </div>
+                                        <div class="align-self-center ">
+                                            Miễn phí
+                                        </div>
+                                    </div>
+                                </label>
+                            </div>
+                            <div class="item-check border">
+                                <label class="label-checkbox  mb-0 ">
+                                    <input type="checkbox" class="extra-infomation" checked data-content="Khác : Liên hệ tư vấn">
+                                    <span class="checkmark"></span>
+                                    <div class="d-flex">
+                                        <div class="text-1 align-self-center">
+                                            Khác
+                                        </div>
+                                        <div class="align-self-center ">
+                                            Liên hệ tư vấn
+                                        </div>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card jan-card">
+                <h5 class="card-title">4: Thông tin khách hàng</h5>
+                <div class="card-body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-xl-12 col-lg-12 col-md-12 col-12">
+                                <div>
+                                    <div class="heading">
+                                        Thông tin khách hàng
+                                    </div>
+                                    <div>
+                                        <label class="label-checkbox d-inline-block mr-3">
+                                            Nam
+                                            <input type="radio" name="gender-radio" value="male" checked />
+                                            <span class="checkmark" style="border-radius: 50%;"></span>
+                                        </label>
+                                        <label class="label-checkbox d-inline-block">
+                                            Nữ
+                                            <input type="radio" name="gender-radio" value="female" />
+                                            <span class="checkmark" style="border-radius: 50%;"></span>
+                                        </label>
+                                    </div>
+                                    <div class="form-row mb-4">
+                                        <div class="col-sm-6 col-12">
+                                            <input type="text" class="form-control mb-3 name" placeholder="Họ và tên" required>
+                                        </div>
+                                        <div class="col-sm-6 col-12">
+                                            <input type="text" class="form-control mb-3 phone-number" placeholder="Số điện thoại" required>
+                                        </div>
+                                        <div class="col-sm-12 col-12">
+                                            <textarea rows="4" type="text" class="form-control mb-3 note"
+                                                      placeholder="Ghi chú" minlength="10"></textarea>
+                                        </div>
+                                    </div>
+                                    @{
+                                        var provinces_result = new Dictionary<string, TinhThanh>();
+                                        var provinces_json_part = env.WebRootFileProvider.GetFileInfo("hanhchinhvn-master/dist/tinh_tp.json")?.PhysicalPath;
+                                        if (provinces_json_part != null)
+                                        {
+                                            var file_content = File.ReadAllText(provinces_json_part);
+                                            if (file_content != null)
+                                            {
+                                                provinces_result = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<string, TinhThanh>>(file_content);
+
+                                            }
+                                        }
+                                    }
+                                    <div class="heading">
+                                        Chọn địa chỉ và thời gian nhận hàng
+                                    </div>
+                                    <div class="form-row mb-4">
+                                        <div class="col-sm-6 col-12">
+                                            <select class="form-control mb-3 tinh-thanh" required>
+                                                <option hidden value="">Chọn Tỉnh/Thành</option>
+                                                @foreach (var item in provinces_result)
+                                                {
+                                                    <option value="@item.Key">@item.Value.name</option>
+                                                }
+                                            </select>
+                                        </div>
+                                        <div class="col-sm-6 col-12">
+                                            <select class="form-control mb-3 quan-huyen" disabled required>
+                                                <option hidden value="">Chọn Quận/Huyện</option>
+                                                <option value="Tân Phú">Tân Phú</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-sm-6 col-12">
+                                            <select class="form-control mb-3 phuong-xa" disabled required>
+                                                <option hidden value="">Chọn Phường/Xã</option>
+                                                <option value="Hồ Chí Minh">Hồ Chí Minh</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-sm-6 col-12">
+                                            <input type="text" class="form-control mb-3 so-nha" placeholder="Số nhà">
+                                        </div>
+
+                                    </div>
+                                    <div class="mb-5">
+                                        <label class="label-checkbox ">
+                                            Cà thẻ khi nhận hàng
+                                            <input type="checkbox" class="extra-infomation" data-content="Cà thẻ khi nhận hàng">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                        <label class="label-checkbox ">
+                                            Xuất hóa đơn công ty
+                                            <input type="checkbox" class="extra-infomation" data-content="Xuất hóa đơn công ty">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-lg-3 col-md-4 col-12">
+            <div class="total-pay">
+                <div class="d-flex ">
+                    <label class="mr-2">Diện tích:</label>
+                    <div class="ml-auto"><span class="caled-acreage" data-value=""></span> m2</div>
+                </div>
+                <div class="d-flex">
+                    <label class="mr-2">Công thợ:</label>
+                    <div class="ml-auto font-weight-600"><span class="caled-labor" data-value=""></span></div>
+                </div>
+                <div class="d-flex mb-2">
+                    <label class="mr-2">Vật liệu:</label>
+                    <div class="ml-auto"><span class="caled-material" data-value=""></span> đ</div>
+                </div>
+                <div class="d-flex mb-2">
+                    <label class="mr-2">Vận chuyển:</label>
+                    <div class="ml-auto"></div>
+                </div>
+                <div class="border-bottom my-2">
+
+                </div>
+                <div class="d-flex mb-2">
+                    <label class="mr-2">Tổng:</label>
+                    <div class="ml-auto  color-EE7D22"><span class="caled-total" data-value=""></span> đ</div>
+                </div>
+
+                <button type="submit" class="btn btn-save w-100 my-2 text-uppercase order-now">Đặt ngay</button>
+                <div class="text-center">
+                    <a href="" class="btn-link small ">Hoặc gọi tư vấn 1800 0022 </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</form>
+
+
+
+<div class="modal fade jan-modal-2" id="material-model" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content ">
+
+        </div>
+    </div>
+</div>
+<div class="modal jan-modal fade" id="modal-don-hang" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header border-bottom-0">
+                <h6 class="modal-title font-weight-bold">Đơn hàng</h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body  pt-0" style="color: #4f4f4f;">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-12">
+                        <p> Mã số đơn hàng: <span class="font-weight-600">1029xxx2833</span></p>
+                        <div class="row">
+                            <div class="mb-3 col-lg-6 col-md-12 col-12">
+                                <label class="font-weight-bold mb-1 ">Thông tin khách hàng</label>
+                                <div class="customer-id" data-id="0" style="display:none;"></div>
+                                <div>- Anh/ Chị: <span class="font-weight-600 customer-name">Nguyễn Tiến Đức</span></div>
+                                <div>- SĐT: <span class="font-weight-600 customer-phone"> 0292938333</span></div>
+                                <div>- Địa chỉ:<span class="font-weight-600 customer-address"> Tân Triều - Hà Đông - Hà Nội</span></div>
+                            </div>
+                            <div class="mb-3 col-lg-6 col-md-12 col-12">
+                                <label class="font-weight-bold mb-1">Thông tin khác </label>
+                                <ul class="list_extra_infomation"></ul>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-12">
+                        <p> Thời gian đặt hàng: <span class="font-weight-600">10 - 02 - 2019 </span></p>
+                        <div class="mb-3">
+                            <label class="font-weight-bold mb-1 ">Thông tin đơn hàng</label>
+                            @*<div>- Sản phẩm:<span class="font-weight-600"> Sàn gỗ công nghiệp</span></div>
+                                <div>- Số lượng:<span class="font-weight-600"> 1</span></div>
+                                <div>- Giá bán:<span class="font-weight-600 color-EE7D22">  6.900.000vnđ</span></div>
+                                <div>- Tổng tiền:<span class="font-weight-600 color-EE7D22">  6.900.000vnđ</span></div>
+                                <div>- Khuyến mại đi kèm: <span class="font-weight-600 ">Lì xì quà tặng 300.000đ</span></div>
+                                <div>- Yêu cầu khác:<span class="font-weight-600"> Giao ngoài giờ hành chính</span></div>
+                                <div>- Ưu đãi voucher: <span class="font-weight-600 color-EE7D22">  500.000vnđ</span></div>
+                                <div>- Mã voucher: <span class="font-weight-600">323131</span></div>*@
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Sản phẩm</th>
+                                        <th>Số lượng</th>
+                                        <th>Giá bán</th>
+                                        <th>Tổng tiền</th>
+                                        <th>KM đi kèm</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="table-infomation-product">
+                                    <tr class="table-report-item" style="display:none">
+                                        <td class="product-id" hidden>1</td>
+                                        <td class="product-name">SP A</td>
+                                        <td class="product-quantity">5</td>
+                                        <td class="product-price">1.000.000 đ</td>
+                                        <td class="product-total-price">5.000.000 đ</td>
+                                        <td class="product-promotion">
+                                            <ul class="product-promotion-ul"></ul>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <hr />
+                        <div class="d-flex">
+                            <div>Số tiền cần thanh toán: </div>
+                            <div class="ml-auto font-weight-600 color-EE7D22 total-payment"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-end">
+                <button type="button" class="btn btn-link color-828282 px-2 border-right">In</button>
+                <button type="button" class="btn btn-link color-828282 px-2 border-right">Chia sẻ</button>
+                <button type="button" class="btn btn-link color-828282 px-2 border-right">Gửi email</button>
+                <button type="button" class="btn btn-link color-828282 mr-3">Sửa</button>
+                <button type="button" class="btn btn-save">Hoàn thành</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts{
+    <script type="text/javascript" src="~/js/libs/momentjs/momentJS.js" asp-append-version="true"></script>
+    <script type="text/javascript" src="~/js/libs/daterangepicker-master/daterangepicker.js" asp-append-version="true"></script>
+    <script type="text/javascript" src="~/js/libs/paginationjs/paginationJS.js" asp-append-version="true"></script>
+    <script type="text/javascript" src="~/js/controller/estimatesController.js" asp-append-version="true"></script>
+
+
+}

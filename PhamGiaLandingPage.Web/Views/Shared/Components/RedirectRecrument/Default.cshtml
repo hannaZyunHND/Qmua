@@ -1,0 +1,261 @@
+﻿@using MI.Entity.Enums;
+@using PhamGiaLandingPage.Web.Services.Zone.ViewModal
+@using PhamGiaLandingPage.Web.Services.Zone.Repository
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Http
+@using PhamGiaLandingPage.Web.Services.Article.Repository
+@inject IHttpContextAccessor HttpContextAccessor
+@inject IArticleRepository articleRepository;
+@inject IZoneRepository zoneRepository;
+@using PhamGiaLandingPage.Web.Services.Article.ViewModel;
+@using Utils
+@{
+    var culture = Context.Features.Get<IRequestCultureFeature>().RequestCulture.Culture.TwoLetterISOLanguageName.ToLower();
+    var culture_code = Context.Features.Get<IRequestCultureFeature>().RequestCulture.Culture.ToString();
+    var base_uri_culture = "/" + culture;
+    var domain = Context.Request.Host.ToString();
+    ZoneDetail zoneDetail = new ZoneDetail();
+    List<ZoneByTreeViewMinify> zoneByTreeViewMinifies = new List<ZoneByTreeViewMinify>();
+    List<ArticleMinify> lstArticleMinify = new List<ArticleMinify>();
+    ArticleMinify articleMinify = new ArticleMinify();
+    if(ViewBag.Detail != null)
+    {
+        zoneDetail = ViewBag.Detail;
+    }
+    if (ViewBag.ZoneChilds != null)
+    {
+        zoneByTreeViewMinifies = (List<ZoneByTreeViewMinify>)ViewBag.ZoneChilds;
+    }
+    if (ViewBag.Top_newest != null)
+    {
+        lstArticleMinify = (List<ArticleMinify>)ViewBag.Top_newest;
+        if (lstArticleMinify.Count() > 0)
+        {
+            articleMinify = lstArticleMinify.OrderByDescending(n => n.Id).First();
+        }
+
+    }
+    int PageIndex = (int)ViewBag.pageIndex;
+    int PageSize = (int)ViewBag.pageSize;
+    int TotalPage = (int)ViewBag.TotalPage;
+    int Paging = 0;
+    if ((TotalPage % PageSize) == 0)
+    {
+        Paging = TotalPage / PageSize;
+    }
+    else
+    {
+        Paging = (TotalPage / PageSize) + 1;
+    }
+}
+@{
+    ViewData["Title"] = "Tuyển dụng";
+    //Layout = "~/Views/Shared/_LayoutPublicHome.cshtml";
+}
+<div class="banner-page py-3 mb-4"
+     style="">
+    <div class="container align-self-center">
+        <div class="row justify-content-center">
+            <div class=" col-sm-10 col-12 ">
+                <h1 class="text-center color-fff">@zoneDetail.Name</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row cate-recrui">
+        @foreach (var item in zoneByTreeViewMinifies)
+        {
+            var link_tar = string.Format("/{0}",item.Url);
+            <div class="col-xl-3 col-lg-3 col-sm-6 col-6">
+                <a href="@link_tar">
+                    <div class="item">
+                        <div class="icon mb-3">
+                            @if (!string.IsNullOrEmpty(item.Icon))
+                            {
+                                <img asp-append-version="true" src="@UIHelper.StoreFilePath(item.Icon, false)" class="img-fluid " />
+                            }
+                            @if (string.IsNullOrEmpty(item.Icon))
+                            {
+                                <img asp-append-version="true" src="/images/icon-recrui-1.svg" class="img-fluid " />
+                            }
+
+                        </div>
+                        <div>
+                            @item.Name
+                        </div>
+                    </div>
+                </a>
+            </div>
+        }
+
+        @*<div class="col-xl-3 col-lg-3 col-sm-6 col-6">
+            <a href="">
+                <div class="item">
+                    <div class="icon mb-3">
+                        <img asp-append-version="true" src="/images/icon-recrui-2.svg" class="img-fluid " />
+                    </div>
+                    <div>
+                        Nhân viên kinh doanh
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-xl-3 col-lg-3 col-sm-6 col-6">
+            <a href="">
+                <div class="item">
+                    <div class="icon mb-3">
+                        <img asp-append-version="true" src="/images/icon-recrui-3.svg" class="img-fluid " />
+                    </div>
+                    <div>
+                        Nhân viên kinh doanh
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-xl-3 col-lg-3 col-sm-6 col-6">
+            <a href="">
+                <div class="item">
+                    <div class="icon mb-3">
+                        <img asp-append-version="true" src="/images/icon-recrui-4.svg" class="img-fluid " />
+                    </div>
+                    <div>
+                        Nhân viên kinh doanh
+                    </div>
+                </div>
+            </a>
+        </div>*@
+
+    </div>
+    <div class="row ">
+
+        <div class="col-xl-8 col-lg-8 col-md-8 col-sm-12 col-12">
+
+            <div class="heading pb-2 border-bottom mb-3 ">
+                <div class="h5 font-weight-600 mb-0 ">
+                    Mới nhất
+                </div>
+            </div>
+            <div class="list-td mb-3">
+                @if (lstArticleMinify.Count() > 0)
+                {
+                    foreach (var item in lstArticleMinify)
+                    {
+                        if (!string.IsNullOrEmpty(item.Metadata))
+                        {
+                            item.ArticleRecruitment = Newtonsoft.Json.JsonConvert.DeserializeObject<MI.Entity.CustomClass.ArticleRecruitment>(item.Metadata);
+                        }
+                        var links = string.Format("/{0}.html", item.Url);
+                        <div class="item-recrui ">
+                            <div class="row">
+                                <div class="col-xl-1 col-lg-2 col-md-3 col-sm-2 col-3 align-self-center ">
+                                    <div class="icon text-center">
+                                        <img asp-append-version="true" src="/images/change/people.svg" class="img-fluid" />
+                                    </div>
+                                </div>
+                                <div class="col-xl-11 col-lg-10 col-md-10 col-sm-10 col-9">
+                                    <h6 class="title">
+                                        <a href="@links">
+                                            @item.Title
+                                        </a>
+                                    </h6>
+                                    <div class="color-828282">
+                                        <span class="mr-3 mb-2">
+                                            <img asp-append-version="true" src="/images/icon-sm-td-1.svg" class="img-fluid mr-2" />@item.ArticleRecruitment.Position
+                                        </span>
+                                        <span class="mr-3  mb-2">
+                                            <img asp-append-version="true" src="/images/icon-sm-td-2.svg" class="img-fluid mr-2" />@item.ArticleRecruitment.Count
+                                        </span>
+                                        <span class="mr-3  mb-2">
+                                            <img asp-append-version="true" src="/images/icon-sm-td-3.svg" class="img-fluid mr-2" />@item.ArticleRecruitment.Salary
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+
+            </div>
+
+            <div class="jan-pagination text-right mb-5 ">
+                @if (PageIndex > 1)
+                {
+                    <button class="btn btn-pagi btn-paging-pre" title="Preview"><i class="fas fa-chevron-left "></i></button>
+                }
+                else
+                {
+                    <button class="btn btn-pagi" title="Preview"><i class="fas fa-chevron-left "></i></button>
+                }
+                <select class="select-page mr-2 paging-data">
+                    @for (int i = 1; i <= Paging; i++)
+                    {
+                        if (i == PageIndex)
+                        {
+                            <option value="@PageIndex" selected>@PageIndex</option>
+                        }
+                        else
+                        {
+                            <option value="@i">@i</option>
+                        }
+                    }
+                </select>
+                <span class="color-828282"> / @(Paging)</span>
+                @if (PageIndex < Paging)
+                {
+                    <button class="btn btn-pagi btn-paging-next" title="Next"><i class="fas fa-chevron-right "></i></button>
+                }
+                else
+                {
+                    <button class="btn btn-pagi" title="Next"><i class="fas fa-chevron-right "></i></button>
+                }
+            </div>
+
+        </div>
+        <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12 pl-lg-5">
+            <div class="heading pb-2 border-bottom mb-4 ">
+                <div class="h5 font-weight-600 mb-0 ">
+                    Tiêu điểm
+                </div>
+            </div>
+            <div class="item-recrui-right">
+                <h6 class="title">
+                    @articleMinify.Title
+                </h6>
+                <div class="mb-3">
+                    <div class="mr-3 mb-2">
+                        <img asp-append-version="true" src="/images/icon-sm-td-1.svg" class="img-fluid mr-2" />@articleMinify.ArticleRecruitment.Position
+                    </div>
+                    <div class="mr-3 mb-2">
+                        <img asp-append-version="true" src="/images/icon-sm-td-4.svg" class="img-fluid mr-2" />@articleMinify.ArticleRecruitment.Address
+                    </div>
+                    <div class="mr-3  mb-2">
+                        <img asp-append-version="true" src="/images/icon-sm-td-2.svg" class="img-fluid mr-2" />@articleMinify.ArticleRecruitment.Count
+                    </div>
+                    <div class="mr-3  mb-2">
+                        <img asp-append-version="true" src="/images/icon-sm-td-3.svg" class="img-fluid mr-2" />@articleMinify.ArticleRecruitment.Salary
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <div class="font-weight-bold mb-2">
+                        Mô tả công việc:
+                    </div>
+                    <div>
+                        @{ Html.Raw(articleMinify.Description);}
+                    </div>
+                </div>
+                <div class="px-5 mb-4">
+                    <a href="" class="btn btn-save w-100">Xem chi tiết</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts {
+    <script type="text/javascript" src="~/js/controller/recruitmentController.js" asp-append-version="true"></script>
+
+}

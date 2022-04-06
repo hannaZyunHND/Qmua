@@ -1,0 +1,156 @@
+﻿@using MI.Entity.Enums;
+@using System.Linq;
+@using TemplateKAO.Services.Zone.ViewModal
+@using TemplateKAO.Services.Zone.Repository
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Http
+@using TemplateKAO.Services.Article.Repository
+@inject IHttpContextAccessor HttpContextAccessor
+@inject IArticleRepository articleRepository;
+@inject IZoneRepository zoneRepository;
+@using TemplateKAO.Services.BannerAds.Repository
+@inject IBannerAdsRepository bannerAdsRepository;
+@using MI.Entity.Models
+@using Utils
+@{
+    var culture = Context.Features.Get<IRequestCultureFeature>().RequestCulture.Culture.TwoLetterISOLanguageName.ToLower();
+    var culture_code = Context.Features.Get<IRequestCultureFeature>().RequestCulture.Culture.ToString();
+    var base_uri_culture = "/" + culture;
+    var domain = Context.Request.Host.ToString();
+}
+@{
+    ViewData["Title"] = "CategoriesList1";
+    //Layout = "~/Views/Shared/_LayoutPublicHome.cshtml";
+
+    var zoneId = (int)ViewBag.CateId;
+    var pageIndex = (int)ViewBag.PageIndex;
+    var pageSize = (int)ViewBag.PageSize;
+
+    var zone_target = zoneRepository.GetZoneDetail(zoneId, culture_code);
+
+    var Banner_Blog = new DetailBanerAds();
+    var Banner_Blog_Cache = bannerAdsRepository.GetBannerAds_By_Code(culture_code, "Banner_Blog");
+    if (Banner_Blog_Cache != null)
+    {
+        Banner_Blog = Newtonsoft.Json.JsonConvert.DeserializeObject<DetailBanerAds>(Banner_Blog_Cache.MetaData);
+    }
+
+}
+@section styles {
+    @if (zone_target != null)
+    {
+        <style type="text/css">
+        .banner-page {
+            background: url(@UIHelper.StoreFilePath(Banner_Blog.Image)) no-repeat center;
+            min-height: 200px;
+            background-size: cover;
+            display: flex;
+        }
+        </style>
+    }
+}
+
+@if (zone_target != null)
+{
+    <div class="banner-page py-3 mb-4">
+        <div class="container align-self-center">
+            <div class="row justify-content-center">
+                <div class="col-sm-10 col-12 ">
+                    <h1 class="text-center">@zone_target.Name</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row flex-md-row-reverse">
+            <div class="col-xl-3 col-lg-3 col-md-4 col-sm-12 col-12">
+                @await Component.InvokeAsync("MenuRightBlog")
+            </div>
+            <div class="col-xl-9 col-lg-9 col-md-8 col-sm-12 col-12">
+                <div class="mb-4">
+                    <div class="heading pb-2 border-bottom mb-4 d-flex position-relative">
+                        <div class="h4 font-weight-600 mb-0 ">
+                            @zone_target.Name
+                        </div>
+                        <div class="line-heading-2">
+
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table   jan-table">
+                            <tbody>
+                                @{
+                                    var total_list_cate = 0;
+                                    var list_cate = articleRepository.GetArticlesInZoneId_Minify_FullFilter(zone_target.Id, (int)TypeZone.Categories, (int)TypeArticle.Download, 2, culture_code, "", pageIndex, pageSize, out total_list_cate);
+
+                                }
+                                @foreach (var item in list_cate)
+                                {
+                                    var l = "javascript:void(0)";
+                                    <tr>
+                                        <td>
+                                            <a href="@item.UrlFileDownload" target="_blank">@item.Title</a>
+                                        </td>
+                                        <td>
+                                            <div class="time color-828282">
+                                                @item.CreatedDate.ToString("dd/MM/yyyy hh:mm")
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <a href="@item.UrlFileDownload" class="btn-link font-weight-600" target="_blank">
+                                                <img asp-append-version="true" src="~/images/download-table.svg" class="img-fluid mr-2" />Tải về
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                @{ var total_page = 0;
+                    if (total_list_cate % pageSize == 0)
+                    {
+                        total_page = total_list_cate / pageSize;
+                    }
+
+                    else
+                    {
+                        total_page = total_list_cate / pageSize + 1;
+                    }
+
+                }
+                <div class="jan-pagination text-right mb-4 ">
+                    <button class="btn btn-pagi preview_page" title="" data-zone-id="@zone_target.Id" data-page-index="@pageIndex" data-page-size="@pageSize" data-min-page="1" data-type="@((int)TypeArticle.Blog)" data-alias="@zone_target.Url"><i class="fas fa-chevron-left "></i></button>
+                    <select class="select-page mr-2" data-page-size="@pageSize" data-type="@((int)TypeArticle.Blog)" data-zone-id="@zone_target.Id" data-page-index="@pageSize" data-alias="@zone_target.Url">
+                        @for (int i = 0; i < total_page; i++)
+                        {
+                            var s = i + 1 == pageIndex ? "selected" : "";
+                            if (i == 0)
+                            {
+                                <option value="@(i+1)">@(i + 1)</option>
+                            }
+                            else
+                            {
+                                <option value="@(i+1)">@(i + 1)</option>
+                            }
+
+                        }
+
+                    </select>
+
+                    <span class="color-828282">/@total_page</span>
+                    <button class="btn btn-pagi next_page" title="" data-zone-id="@zone_target.Id" data-page-index="@pageIndex" data-page-size="@pageSize" data-max-page="@total_page" data-type="@((int)TypeArticle.Blog)" data-alias="@zone_target.Url"><i class="fas fa-chevron-right "></i></button>
+                </div>
+                <!--Gửi Comment-->
+                @await Component.InvokeAsync("Comment", new { object_id = zone_target.Id, object_type = (int)CommentType.ArticleZone });
+            </div>
+        </div>
+    </div>
+}
+
+
+
+
+

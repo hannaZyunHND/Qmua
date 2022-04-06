@@ -1,0 +1,91 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@using MI.Entity.Enums;
+@using TemplateKAO.Services.Zone.ViewModal
+@using TemplateKAO.Services.Article.ViewModel
+@using TemplateKAO.Services.Product.ViewModel
+@using TemplateKAO.Services.Extra.ViewModel
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Http
+@using TemplateKAO.Services.Article.Repository
+@using TemplateKAO.Services.Extra.Repository
+@using TemplateKAO.Services.Zone.Repository
+@using TemplateKAO.Services.Product.Repository
+@using TemplateKAO.Utility
+@inject IHttpContextAccessor HttpContextAccessor
+@inject IArticleRepository articleRepository;
+@inject IZoneRepository zoneRepository;
+@inject IExtraRepository extraRepository;
+@inject IProductRepository productRepository;
+@inject ICookieUtility cookieUtility;
+@using Utils
+@{
+    var culture = Context.Features.Get<IRequestCultureFeature>().RequestCulture.Culture.TwoLetterISOLanguageName.ToLower();
+    var culture_code = Context.Features.Get<IRequestCultureFeature>().RequestCulture.Culture.ToString();
+    var base_uri_culture = "/" + culture;
+    var domain = Context.Request.Host.ToString();
+}
+@{ 
+    var material_type = ViewBag.MaterialType;
+}
+
+<div class="modal-header d-flex ">
+    <h5 class="modal-title pr-3 align-self-center" id="">VẬT LIỆU</h5>
+    <button type="button" class="_sort_price">
+        <div class="pr-2">
+            Giá
+        </div>
+        <div class="d-grid">
+            <i class="fal fa-angle-up cust-fal"></i>
+            <i class="fal fa-angle-down cust-fal"></i>
+        </div>
+    </button>
+    <div class="search-comment ml-auto">
+        <input class="form-control filter-text" type="text" placeholder="Search" style="background: #F2F2F2;border: 0;">
+        <i class="fas fa-search" aria-hidden="true"></i>
+    </div>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body px-0">
+    <div class="row no-gutters">
+        <div class="col-xl-4 col-md-4 col-sm-12 col-12">
+            <div class="list-filter-modal " data-material-type="@material_type">
+                @{
+                    var list_spectifications = new List<SpectificationEstimatesCooked>();
+                    if(material_type > 0)
+                    {
+                        list_spectifications = productRepository.GetSpectificationByMaterialType(material_type, culture_code);
+                    }
+                    
+                }
+                @foreach (var item in list_spectifications)
+                {
+                    <div class="menu sub">
+                        <div class="heading" data-spectification-id="@item.SpectificationId">@item.Name</div>
+                        <div class="sub-menu ">
+                            @foreach (var l in item.Values)
+                            {
+                                <button class="btn btn-x spectification-value" data-spectification-id="@item.SpectificationId" data-spectification-value="@l.Value">@l.Value</button>
+                            }
+
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+        <div class=" col-xl-8 col-md-8 col-sm-12 col-12">
+            <div class="list-product-modal-2">
+                @*ProductInEstimatesSearch*@
+                @{
+                    var f = new List<FilterSpectification>();
+                    var fp = new FilterProductBySpectification() { parentId = 0, lang_code = culture_code, locationId = cookieUtility.SetCookieDefault().LocationId, manufacture_id = "", min_price = 0, max_price = 0, sort_price = 0, sort_rate = 0, color_code = "", filter = f, filter_text = "", material_type = material_type, pageNumber = 1, pageSize = 10 };
+                 }
+                @await Component.InvokeAsync("ProductInEstimatesSearch", new { fp = fp })
+            </div>
+        </div>
+    </div>
+</div>

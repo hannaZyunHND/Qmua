@@ -1,0 +1,414 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <UserSecretsId>bbede629-a556-4c1b-a5c4-21dfc46058ee</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Views\Common\**" />
+    <Compile Remove="wwwroot - Copy\**" />
+    <Compile Remove="wwwroot\design\.git\**" />
+    <Compile Remove="wwwroot\js\autocomplate\**" />
+    <Compile Remove="wwwroot\js\libs\comfirm\**" />
+    <Compile Remove="wwwroot\vendor\Simple-jQuery-Magnifying-Glass-Image-Zoom-Plugin-magnify-js\**" />
+    <Content Remove="Views\Common\**" />
+    <Content Remove="wwwroot - Copy\**" />
+    <Content Remove="wwwroot\design\.git\**" />
+    <Content Remove="wwwroot\js\autocomplate\**" />
+    <Content Remove="wwwroot\js\libs\comfirm\**" />
+    <Content Remove="wwwroot\vendor\Simple-jQuery-Magnifying-Glass-Image-Zoom-Plugin-magnify-js\**" />
+    <EmbeddedResource Remove="Views\Common\**" />
+    <EmbeddedResource Remove="wwwroot - Copy\**" />
+    <EmbeddedResource Remove="wwwroot\design\.git\**" />
+    <EmbeddedResource Remove="wwwroot\js\autocomplate\**" />
+    <EmbeddedResource Remove="wwwroot\js\libs\comfirm\**" />
+    <EmbeddedResource Remove="wwwroot\vendor\Simple-jQuery-Magnifying-Glass-Image-Zoom-Plugin-magnify-js\**" />
+    <None Remove="Views\Common\**" />
+    <None Remove="wwwroot - Copy\**" />
+    <None Remove="wwwroot\design\.git\**" />
+    <None Remove="wwwroot\js\autocomplate\**" />
+    <None Remove="wwwroot\js\libs\comfirm\**" />
+    <None Remove="wwwroot\vendor\Simple-jQuery-Magnifying-Glass-Image-Zoom-Plugin-magnify-js\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Controllers\CommonController.cs" />
+    <Compile Remove="Controllers\LanguageController.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Views\Product\GetProductByZoneId.cshtml" />
+    <Content Remove="wwwroot\js\controller\productController.js~RF87fffc9.TMP" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Dapper" Version="2.0.30" />
+    <PackageReference Include="Hangfire.AspNetCore" Version="1.7.11" />
+    <PackageReference Include="Hangfire.SqlServer" Version="1.7.11" />
+    <PackageReference Include="LocalizationCultureCore" Version="1.1.2" />
+    <PackageReference Include="Microsoft.AspNetCore" Version="2.1.7" />
+    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.1.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.AspNetCore.ResponseCompression" Version="2.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="2.1.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.1.14" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.1.14" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.1.14">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="2.1.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.BrowserLink" Version="2.1.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.10" />
+    <PackageReference Include="NLog.Web.AspNetCore" Version="4.9.2" />
+    <PackageReference Include="Wangkanai.Responsive" Version="2.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\design\assets\jquery\3.5.1\jquery.min.js" />
+    <None Include="wwwroot\design\assets\uikit-3.6.18\js\uikit-icons.js" />
+    <None Include="wwwroot\design\assets\uikit-3.6.18\js\uikit-icons.min.js" />
+    <None Include="wwwroot\design\assets\uikit-3.6.18\js\uikit.js" />
+    <None Include="wwwroot\design\assets\uikit-3.6.18\js\uikit.min.js" />
+    <None Include="wwwroot\design\images\icon\icon\maps\streetview_24px.svg" />
+    <None Include="wwwroot\design\js\app.js" />
+    <None Include="wwwroot\design\scss\abstracts\_breakpoints.scss" />
+    <None Include="wwwroot\design\scss\abstracts\_functions.scss" />
+    <None Include="wwwroot\design\scss\abstracts\_mixins.scss" />
+    <None Include="wwwroot\design\scss\abstracts\_variables.scss" />
+    <None Include="wwwroot\design\scss\app.css.map" />
+    <None Include="wwwroot\design\scss\app.scss" />
+    <None Include="wwwroot\design\scss\base\_color.scss" />
+    <None Include="wwwroot\design\scss\base\_fonts.scss" />
+    <None Include="wwwroot\design\scss\base\_helpers.scss" />
+    <None Include="wwwroot\design\scss\base\_reset.scss" />
+    <None Include="wwwroot\design\scss\base\_typography.scss" />
+    <None Include="wwwroot\design\scss\base\_uikits.scss" />
+    <None Include="wwwroot\design\scss\components\_animations.scss" />
+    <None Include="wwwroot\design\scss\components\_breadcrumb.scss" />
+    <None Include="wwwroot\design\scss\components\_buttons.scss" />
+    <None Include="wwwroot\design\scss\components\_carousel.scss" />
+    <None Include="wwwroot\design\scss\components\_fontsize.scss" />
+    <None Include="wwwroot\design\scss\components\_grid.scss" />
+    <None Include="wwwroot\design\scss\components\_keyframes.scss" />
+    <None Include="wwwroot\design\scss\components\_margin.scss" />
+    <None Include="wwwroot\design\scss\components\_modal.scss" />
+    <None Include="wwwroot\design\scss\components\_pagination.scss" />
+    <None Include="wwwroot\design\scss\components\_slider.scss" />
+    <None Include="wwwroot\design\scss\components\_tabs.scss" />
+    <None Include="wwwroot\design\scss\components\_text.scss" />
+    <None Include="wwwroot\design\scss\layout\_block01.scss" />
+    <None Include="wwwroot\design\scss\layout\_block02.scss" />
+    <None Include="wwwroot\design\scss\layout\_block03.scss" />
+    <None Include="wwwroot\design\scss\layout\_block04.scss" />
+    <None Include="wwwroot\design\scss\layout\_block05.scss" />
+    <None Include="wwwroot\design\scss\layout\_footer.scss" />
+    <None Include="wwwroot\design\scss\layout\_forms.scss" />
+    <None Include="wwwroot\design\scss\layout\_grid.scss" />
+    <None Include="wwwroot\design\scss\layout\_header.scss" />
+    <None Include="wwwroot\design\scss\layout\_menu-mobile.scss" />
+    <None Include="wwwroot\design\scss\layout\_navigation.scss" />
+    <None Include="wwwroot\design\scss\layout\_sidebar.scss" />
+    <None Include="wwwroot\design\scss\pages\_about.scss" />
+    <None Include="wwwroot\design\scss\pages\_blog-detail.scss" />
+    <None Include="wwwroot\design\scss\pages\_blog.scss" />
+    <None Include="wwwroot\design\scss\pages\_contact.scss" />
+    <None Include="wwwroot\design\scss\pages\_home.scss" />
+    <None Include="wwwroot\design\scss\pages\_menu.scss" />
+    <None Include="wwwroot\design\scss\pages\_order.scss" />
+    <None Include="wwwroot\design\scss\pages\_product.scss" />
+    <None Include="wwwroot\design\scss\themes\_admin.scss" />
+    <None Include="wwwroot\design\scss\themes\_theme.scss" />
+    <None Include="wwwroot\design\scss\vendors\_bootstrap.scss" />
+    <None Include="wwwroot\design\scss\vendors\_jquery-ui.scss" />
+    <None Include="wwwroot\design\template-parts\commons\facebook_chat.php" />
+    <None Include="wwwroot\design\template-parts\commons\menu-mobile.php" />
+    <None Include="wwwroot\design\template-parts\layouts\block01.php" />
+    <None Include="wwwroot\design\template-parts\layouts\block02.php" />
+    <None Include="wwwroot\design\template-parts\layouts\block03.php" />
+    <None Include="wwwroot\design\template-parts\layouts\block04.php" />
+    <None Include="wwwroot\design\template-parts\layouts\block05.php" />
+    <None Include="wwwroot\design\template-parts\layouts\footer.php" />
+    <None Include="wwwroot\design\template-parts\layouts\header.php" />
+    <None Include="wwwroot\design\template-parts\layouts\pagination1.php" />
+    <None Include="wwwroot\hanhchinhvn-master\.gitignore" />
+    <None Include="wwwroot\hanhchinhvn-master\composer.lock" />
+    <None Include="wwwroot\hanhchinhvn-master\excel_files\Danh sách quận huyện phường xã thuộc Thành phố Cần Thơ.xls" />
+    <None Include="wwwroot\hanhchinhvn-master\excel_files\Danh sách quận huyện phường xã thuộc Thành phố Hà Nội.xls" />
+    <None Include="wwwroot\hanhchinhvn-master\excel_files\Danh sách quận huyện phường xã thuộc Thành phố Hải Phòng.xls" />
+    <None Include="wwwroot\hanhchinhvn-master\excel_files\Danh sách quận huyện phường xã thuộc Thành phố Hồ Chí Minh.xls" />
+    <None Include="wwwroot\hanhchinhvn-master\excel_files\Danh sách quận huyện phường xã thuộc Thành phố Đà Nẵng.xls" />
+    <None Include="wwwroot\hanhchinhvn-master\excel_files\Danh sách quận huyện phường xã thuộc Tỉnh An Giang.xls" />
+    <None Include="wwwroot\hanhchinhvn-master\excel_files\Danh sách quận huyện phường xã thuộc Tỉnh Bà Rịa - Vũng Tàu.xls" />
+    <None Include="wwwroot\hanhchinhvn-master\excel_files\Danh sách quận huyện phường xã thuộc Tỉnh Bình Dương.xls" />
+    <None Include="wwwroot\hanhchinhvn-master\excel_files\Danh sách quận huyện phường xã thuộc Tỉnh Bình Phước.xls" />
+    <None Include="wwwroot\hanhchinhvn-master\excel_files\Danh sách quận huyện phường xã thuộc Tỉnh Bình Thuận.xls" />
+    <None Include="wwwroot\hanhchinhvn-master\excel_files\Danh sách quận huyện phường xã thuộc Tỉnh Bình Định.xls" />
+    <None Include="wwwroot\hanhchinhvn-master\excel_files\Danh sách quận huyện phường xã thuộc Tỉnh Bạc Liêu.xls" />
+    <None Include="wwwroot\hanhchinhvn-master\excel_files\Danh sách quận huyện phường xã thuộc Tỉnh Bắc Giang.xls" />
+    <None Include="wwwroot\hanhchinhvn-master\excel_files\Danh sách quận huyện phường xã thuộc Tỉnh Bắc Kạn.xls" />
+    <None Include="wwwroot\hanhchinhvn-master\excel_files\Danh sách quận huyện phường xã thuộc Tỉnh Bắc Ninh.xls" />
+    <None Include="wwwroot\hanhchinhvn-master\excel_files\Danh sách quận huyện phường xã thuộc Tỉnh Bến Tre.xls" />
+    <None Include="wwwroot\hanhchinhvn-master\excel_files\Danh sách quận huyện phường xã thuộc Tỉnh Cao Bằng.xls" />
+    <None Include="wwwroot\hanhchinhvn-master\excel_files\Danh sách quận huyện phường xã thuộc Tỉnh Cà Mau.xls" />
+    <None Include="wwwroot\hanhchinhvn-master\excel_files\Danh sách quận huyện phường xã thuộc Tỉnh Gia Lai.xls" />
+    <None Include="wwwroot\hanhchinhvn-master\excel_files\Danh sách quận huyện phường xã thuộc Tỉnh Hoà Bình.xls" />
+    <None Include="wwwroot\hanhchinhvn-master\excel_files\Danh sách quận huyện phường xã thuộc Tỉnh Hà Giang.xls" />
+    <None Include="wwwroot\hanhchinhvn-master\excel_files\Danh sách quận huyện phường xã thuộc Tỉnh Hà Nam.xls" />
+    <None Include="wwwroot\hanhchinhvn-master\excel_files\Danh sách quận huyện phường xã thuộc Tỉnh Hà Tĩnh.xls" />
+    <None Include="wwwroot\hanhchinhvn-master\excel_files\Danh sách quận huyện phường xã thuộc Tỉnh Hưng Yên.xls" />
+    <None Include="wwwroot\hanhchinhvn-master\excel_files\Danh sách quận huyện phường xã thuộc Tỉnh Hải Dương.xls" />
+    <None Include="wwwroot\hanhchinhvn-master\excel_files\Danh sách quận huyện phường xã thuộc Tỉnh Hậu Giang.xls" />
+    <None Include="wwwroot\hanhchinhvn-master\excel_files\Danh sách quận huyện phường xã thuộc Tỉnh Khánh Hòa.xls" />
+    <None Include="wwwroot\hanhchinhvn-master\excel_files\Danh sách quận huyện phường xã thuộc Tỉnh Kiên Giang.xls" />
+    <None Include="wwwroot\hanhchinhvn-master\excel_files\Danh sách quận huyện phường xã thuộc Tỉnh Kon Tum.xls" />
+    <None Include="wwwroot\hanhchinhvn-master\excel_files\Danh sách quận huyện phường xã thuộc Tỉnh Lai Châu.xls" />
+    <None Include="wwwroot\hanhchinhvn-master\excel_files\Danh sách quận huyện phường xã thuộc Tỉnh Long An.xls" />
+    <None Include="wwwroot\hanhchinhvn-master\excel_files\Danh sách quận huyện phường xã thuộc Tỉnh Lào Cai.xls" />
+    <None Include="wwwroot\hanhchinhvn-master\excel_files\Danh sách quận huyện phường xã thuộc Tỉnh Lâm Đồng.xls" />
+    <None Include="wwwroot\hanhchinhvn-master\excel_files\Danh sách quận huyện phường xã thuộc Tỉnh Lạng Sơn.xls" />
+    <None Include="wwwroot\hanhchinhvn-master\excel_files\Danh sách quận huyện phường xã thuộc Tỉnh Nam Định.xls" />
+    <None Include="wwwroot\hanhchinhvn-master\excel_files\Danh sách quận huyện phường xã thuộc Tỉnh Nghệ An.xls" />
+    <None Include="wwwroot\hanhchinhvn-master\excel_files\Danh sách quận huyện phường xã thuộc Tỉnh Ninh Bình.xls" />
+    <None Include="wwwroot\hanhchinhvn-master\excel_files\Danh sách quận huyện phường xã thuộc Tỉnh Ninh Thuận.xls" />
+    <None Include="wwwroot\hanhchinhvn-master\excel_files\Danh sách quận huyện phường xã thuộc Tỉnh Phú Thọ.xls" />
+    <None Include="wwwroot\hanhchinhvn-master\excel_files\Danh sách quận huyện phường xã thuộc Tỉnh Phú Yên.xls" />
+    <None Include="wwwroot\hanhchinhvn-master\excel_files\Danh sách quận huyện phường xã thuộc Tỉnh Quảng Bình.xls" />
+    <None Include="wwwroot\hanhchinhvn-master\excel_files\Danh sách quận huyện phường xã thuộc Tỉnh Quảng Nam.xls" />
+    <None Include="wwwroot\hanhchinhvn-master\excel_files\Danh sách quận huyện phường xã thuộc Tỉnh Quảng Ngãi.xls" />
+    <None Include="wwwroot\hanhchinhvn-master\excel_files\Danh sách quận huyện phường xã thuộc Tỉnh Quảng Ninh.xls" />
+    <None Include="wwwroot\hanhchinhvn-master\excel_files\Danh sách quận huyện phường xã thuộc Tỉnh Quảng Trị.xls" />
+    <None Include="wwwroot\hanhchinhvn-master\excel_files\Danh sách quận huyện phường xã thuộc Tỉnh Sóc Trăng.xls" />
+    <None Include="wwwroot\hanhchinhvn-master\excel_files\Danh sách quận huyện phường xã thuộc Tỉnh Sơn La.xls" />
+    <None Include="wwwroot\hanhchinhvn-master\excel_files\Danh sách quận huyện phường xã thuộc Tỉnh Thanh Hóa.xls" />
+    <None Include="wwwroot\hanhchinhvn-master\excel_files\Danh sách quận huyện phường xã thuộc Tỉnh Thái Bình.xls" />
+    <None Include="wwwroot\hanhchinhvn-master\excel_files\Danh sách quận huyện phường xã thuộc Tỉnh Thái Nguyên.xls" />
+    <None Include="wwwroot\hanhchinhvn-master\excel_files\Danh sách quận huyện phường xã thuộc Tỉnh Thừa Thiên Huế.xls" />
+    <None Include="wwwroot\hanhchinhvn-master\excel_files\Danh sách quận huyện phường xã thuộc Tỉnh Tiền Giang.xls" />
+    <None Include="wwwroot\hanhchinhvn-master\excel_files\Danh sách quận huyện phường xã thuộc Tỉnh Trà Vinh.xls" />
+    <None Include="wwwroot\hanhchinhvn-master\excel_files\Danh sách quận huyện phường xã thuộc Tỉnh Tuyên Quang.xls" />
+    <None Include="wwwroot\hanhchinhvn-master\excel_files\Danh sách quận huyện phường xã thuộc Tỉnh Tây Ninh.xls" />
+    <None Include="wwwroot\hanhchinhvn-master\excel_files\Danh sách quận huyện phường xã thuộc Tỉnh Vĩnh Long.xls" />
+    <None Include="wwwroot\hanhchinhvn-master\excel_files\Danh sách quận huyện phường xã thuộc Tỉnh Vĩnh Phúc.xls" />
+    <None Include="wwwroot\hanhchinhvn-master\excel_files\Danh sách quận huyện phường xã thuộc Tỉnh Yên Bái.xls" />
+    <None Include="wwwroot\hanhchinhvn-master\excel_files\Danh sách quận huyện phường xã thuộc Tỉnh Điện Biên.xls" />
+    <None Include="wwwroot\hanhchinhvn-master\excel_files\Danh sách quận huyện phường xã thuộc Tỉnh Đắk Lắk.xls" />
+    <None Include="wwwroot\hanhchinhvn-master\excel_files\Danh sách quận huyện phường xã thuộc Tỉnh Đắk Nông.xls" />
+    <None Include="wwwroot\hanhchinhvn-master\excel_files\Danh sách quận huyện phường xã thuộc Tỉnh Đồng Nai.xls" />
+    <None Include="wwwroot\hanhchinhvn-master\excel_files\Danh sách quận huyện phường xã thuộc Tỉnh Đồng Tháp.xls" />
+    <None Include="wwwroot\hanhchinhvn-master\export.php" />
+    <None Include="wwwroot\hanhchinhvn-master\include.php" />
+    <None Include="wwwroot\hanhchinhvn-master\readme.md" />
+    <None Include="wwwroot\images\226-united-states.svg" />
+    <None Include="wwwroot\images\camera.svg" />
+    <None Include="wwwroot\images\cart-icon.svg" />
+    <None Include="wwwroot\images\Cart.svg" />
+    <None Include="wwwroot\images\change\360do-icon-thumb.svg" />
+    <None Include="wwwroot\images\change\caculator-icon.svg" />
+    <None Include="wwwroot\images\change\Flashsale.svg" />
+    <None Include="wwwroot\images\change\icon-store-1.svg" />
+    <None Include="wwwroot\images\change\Oval-2.svg" />
+    <None Include="wwwroot\images\change\Oval-3.svg" />
+    <None Include="wwwroot\images\change\Oval-black.svg" />
+    <None Include="wwwroot\images\change\people.svg" />
+    <None Include="wwwroot\images\change\quayngay.svg" />
+    <None Include="wwwroot\images\change\wheel_back-2.svg" />
+    <None Include="wwwroot\images\change\wheel_back.svg" />
+    <None Include="wwwroot\images\change\wheel_of_lunch_peg.svg" />
+    <None Include="wwwroot\images\check.svg" />
+    <None Include="wwwroot\images\date.svg" />
+    <None Include="wwwroot\images\download-con-thumb.svg" />
+    <None Include="wwwroot\images\download-table.svg" />
+    <None Include="wwwroot\images\dropdown-icon.svg" />
+    <None Include="wwwroot\images\express-ic.svg" />
+    <None Include="wwwroot\images\eye.svg" />
+    <None Include="wwwroot\images\fb-cir-ic.svg" />
+    <None Include="wwwroot\images\flag-icon.svg" />
+    <None Include="wwwroot\images\gia-dung.svg" />
+    <None Include="wwwroot\images\gift.svg" />
+    <None Include="wwwroot\images\go-cong-nghiep.svg" />
+    <None Include="wwwroot\images\go-ngoai-troi.svg" />
+    <None Include="wwwroot\images\go-nhua.svg" />
+    <None Include="wwwroot\images\go-tu-nhien.svg" />
+    <None Include="wwwroot\images\hot-line-red-icon.svg" />
+    <None Include="wwwroot\images\icon-banner-lt-1.svg" />
+    <None Include="wwwroot\images\icon-banner-lt-2.svg" />
+    <None Include="wwwroot\images\icon-banner-lt-3.svg" />
+    <None Include="wwwroot\images\icon-de-1.svg" />
+    <None Include="wwwroot\images\icon-de-2.svg" />
+    <None Include="wwwroot\images\icon-de-3.svg" />
+    <None Include="wwwroot\images\icon-de-4.svg" />
+    <None Include="wwwroot\images\icon-de-5.svg" />
+    <None Include="wwwroot\images\icon-de-6.svg" />
+    <None Include="wwwroot\images\icon-n-1.svg" />
+    <None Include="wwwroot\images\icon-n-2.svg" />
+    <None Include="wwwroot\images\icon-n-3.svg" />
+    <None Include="wwwroot\images\icon-n-4.svg" />
+    <None Include="wwwroot\images\icon-n-5.svg" />
+    <None Include="wwwroot\images\icon-recrui-1.svg" />
+    <None Include="wwwroot\images\icon-recrui-2.svg" />
+    <None Include="wwwroot\images\icon-recrui-3.svg" />
+    <None Include="wwwroot\images\icon-recrui-4.svg" />
+    <None Include="wwwroot\images\icon-sm-td-1.svg" />
+    <None Include="wwwroot\images\icon-sm-td-2.svg" />
+    <None Include="wwwroot\images\icon-sm-td-3.svg" />
+    <None Include="wwwroot\images\icon-sm-td-4.svg" />
+    <None Include="wwwroot\images\icon-spuc.svg" />
+    <None Include="wwwroot\images\icon-store-1.svg" />
+    <None Include="wwwroot\images\icon-store-2.svg" />
+    <None Include="wwwroot\images\icon-store-3.svg" />
+    <None Include="wwwroot\images\img-bepvui\icon-menu\beptu.svg" />
+    <None Include="wwwroot\images\img-bepvui\icon-menu\Bộ nồi.svg" />
+    <None Include="wwwroot\images\img-bepvui\icon-menu\Dien gia dung.svg" />
+    <None Include="wwwroot\images\img-bepvui\icon-menu\lovisong.svg" />
+    <None Include="wwwroot\images\img-bepvui\icon-menu\May rua bat.svg" />
+    <None Include="wwwroot\images\img-bepvui\icon-menu\maylockhongkhi.svg" />
+    <None Include="wwwroot\images\img-bepvui\icon-menu\noi com dien.svg" />
+    <None Include="wwwroot\images\img-bepvui\icon-menu\robot.svg" />
+    <None Include="wwwroot\images\img-bepvui\KM\flash.svg" />
+    <None Include="wwwroot\images\img-bepvui\KM\icon gift.svg" />
+    <None Include="wwwroot\images\lastest-ic.svg" />
+    <None Include="wwwroot\images\listView.svg" />
+    <None Include="wwwroot\images\location-icn.svg" />
+    <None Include="wwwroot\images\Location.svg" />
+    <None Include="wwwroot\images\master-ic.svg" />
+    <None Include="wwwroot\images\menu-icon.svg" />
+    <None Include="wwwroot\images\messenger.svg" />
+    <None Include="wwwroot\images\paypal-ic.svg" />
+    <None Include="wwwroot\images\professions-man-telecommunicator.svg" />
+    <None Include="wwwroot\images\sale-tag-icon.svg" />
+    <None Include="wwwroot\images\sale-tag.svg" />
+    <None Include="wwwroot\images\saving-piggy-dollars.svg" />
+    <None Include="wwwroot\images\scroll.svg" />
+    <None Include="wwwroot\images\search.svg" />
+    <None Include="wwwroot\images\shipment-international.svg" />
+    <None Include="wwwroot\images\spvx-ic.svg" />
+    <None Include="wwwroot\images\spvx-ic3.svg" />
+    <None Include="wwwroot\images\spvx-ic4.svg" />
+    <None Include="wwwroot\images\spvx-ic5.svg" />
+    <None Include="wwwroot\images\tag.svg" />
+    <None Include="wwwroot\images\trang-tri-2.svg" />
+    <None Include="wwwroot\images\trang-tri.svg" />
+    <None Include="wwwroot\images\twitter-ic.svg" />
+    <None Include="wwwroot\images\video-icon.svg" />
+    <None Include="wwwroot\images\visa-ic.svg" />
+    <None Include="wwwroot\images\youtube-icon-thumb.svg" />
+    <None Include="wwwroot\js\libs\daterangepicker-master\.gitignore" />
+    <None Include="wwwroot\js\libs\daterangepicker-master\daterangepicker.js" />
+    <None Include="wwwroot\js\libs\daterangepicker-master\example\amd\main.js" />
+    <None Include="wwwroot\js\libs\daterangepicker-master\example\amd\require.js" />
+    <None Include="wwwroot\js\libs\daterangepicker-master\example\browserify\bundle.js" />
+    <None Include="wwwroot\js\libs\daterangepicker-master\example\browserify\main.js" />
+    <None Include="wwwroot\js\libs\daterangepicker-master\example\browserify\README.md" />
+    <None Include="wwwroot\js\libs\daterangepicker-master\moment.min.js" />
+    <None Include="wwwroot\js\libs\daterangepicker-master\package.js" />
+    <None Include="wwwroot\js\libs\daterangepicker-master\README.md" />
+    <None Include="wwwroot\js\libs\daterangepicker-master\website\website.js" />
+    <None Include="wwwroot\js\libs\jquery-autocompleter\.eslintignore" />
+    <None Include="wwwroot\js\libs\jquery-autocompleter\.eslintrc" />
+    <None Include="wwwroot\js\libs\jquery-autocompleter\.prettierignore" />
+    <None Include="wwwroot\js\libs\jquery-autocompleter\.prettierrc" />
+    <None Include="wwwroot\js\libs\jquery-autocompleter\dist\jquery.autocompleter.js" />
+    <None Include="wwwroot\js\libs\jquery-autocompleter\dist\jquery.autocompleter.min.js" />
+    <None Include="wwwroot\js\libs\jquery-autocompleter\dist\jquery.autocompleter.min.js.map" />
+    <None Include="wwwroot\js\libs\jquery-autocompleter\LICENSE" />
+    <None Include="wwwroot\js\libs\jquery-autocompleter\README.md" />
+    <None Include="wwwroot\js\libs\jquery-autocompleter\rollup.config.js" />
+    <None Include="wwwroot\js\libs\jquery-autocompleter\src\.babelrc" />
+    <None Include="wwwroot\js\libs\jquery-autocompleter\src\jquery.autocompleter.js" />
+    <None Include="wwwroot\js\libs\yall-js\dist\yall.js" />
+    <None Include="wwwroot\js\libs\yall-js\dist\yall.min.js" />
+    <None Include="wwwroot\js\libs\yall-js\dist\yall.min.mjs" />
+    <None Include="wwwroot\js\libs\yall-js\README.md" />
+    <None Include="wwwroot\js\libs\yall-js\src\yall.mjs" />
+    <None Include="wwwroot\js\libs\vakata-jstree-6dce227\.gitignore" />
+    <None Include="wwwroot\js\libs\vakata-jstree-6dce227\demo\README.md" />
+    <None Include="wwwroot\js\libs\vakata-jstree-6dce227\jstree.js" />
+    <None Include="wwwroot\js\libs\vakata-jstree-6dce227\jstree.min.js" />
+    <None Include="wwwroot\js\libs\vakata-jstree-6dce227\gruntfile.js" />
+    <None Include="wwwroot\js\libs\vakata-jstree-6dce227\LICENSE-MIT" />
+    <None Include="wwwroot\js\libs\vakata-jstree-6dce227\README.md" />
+    <None Include="wwwroot\js\libs\vakata-jstree-6dce227\src\intro.js" />
+    <None Include="wwwroot\js\libs\vakata-jstree-6dce227\src\jstree.changed.js" />
+    <None Include="wwwroot\js\libs\vakata-jstree-6dce227\src\jstree.checkbox.js" />
+    <None Include="wwwroot\js\libs\vakata-jstree-6dce227\src\jstree.conditionalselect.js" />
+    <None Include="wwwroot\js\libs\vakata-jstree-6dce227\src\jstree.contextmenu.js" />
+    <None Include="wwwroot\js\libs\vakata-jstree-6dce227\src\jstree.dnd.js" />
+    <None Include="wwwroot\js\libs\vakata-jstree-6dce227\src\jstree.js" />
+    <None Include="wwwroot\js\libs\vakata-jstree-6dce227\src\jstree.massload.js" />
+    <None Include="wwwroot\js\libs\vakata-jstree-6dce227\src\jstree.search.js" />
+    <None Include="wwwroot\js\libs\vakata-jstree-6dce227\src\jstree.sort.js" />
+    <None Include="wwwroot\js\libs\vakata-jstree-6dce227\src\jstree.state.js" />
+    <None Include="wwwroot\js\libs\vakata-jstree-6dce227\src\jstree.types.js" />
+    <None Include="wwwroot\js\libs\vakata-jstree-6dce227\src\jstree.unique.js" />
+    <None Include="wwwroot\js\libs\vakata-jstree-6dce227\src\jstree.wholerow.js" />
+    <None Include="wwwroot\js\libs\vakata-jstree-6dce227\src\misc.js" />
+    <None Include="wwwroot\js\libs\vakata-jstree-6dce227\src\outro.js" />
+    <None Include="wwwroot\js\libs\vakata-jstree-6dce227\src\sample.js" />
+    <None Include="wwwroot\js\libs\vakata-jstree-6dce227\src\themes\base.less" />
+    <None Include="wwwroot\js\libs\vakata-jstree-6dce227\src\themes\default-dark\style.less" />
+    <None Include="wwwroot\js\libs\vakata-jstree-6dce227\src\themes\default\style.less" />
+    <None Include="wwwroot\js\libs\vakata-jstree-6dce227\src\themes\main.less" />
+    <None Include="wwwroot\js\libs\vakata-jstree-6dce227\src\themes\mixins.less" />
+    <None Include="wwwroot\js\libs\vakata-jstree-6dce227\src\themes\responsive.less" />
+    <None Include="wwwroot\js\libs\vakata-jstree-6dce227\src\vakata-jstree.js" />
+    <None Include="wwwroot\js\libs\vakata-jstree-6dce227\test\unit\libs\qunit.js" />
+    <None Include="wwwroot\js\libs\vakata-jstree-6dce227\test\unit\test.js" />
+    <None Include="wwwroot\vendor\bootstrap.min.js" />
+    <None Include="wwwroot\vendor\font-a-pro\fonts\fa-brands-400.svg" />
+    <None Include="wwwroot\vendor\font-a-pro\fonts\fa-brands-400.woff2" />
+    <None Include="wwwroot\vendor\font-a-pro\fonts\fa-light-300.svg" />
+    <None Include="wwwroot\vendor\font-a-pro\fonts\fa-light-300.woff2" />
+    <None Include="wwwroot\vendor\font-a-pro\fonts\fa-regular-400.svg" />
+    <None Include="wwwroot\vendor\font-a-pro\fonts\fa-regular-400.woff2" />
+    <None Include="wwwroot\vendor\font-a-pro\fonts\fa-solid-900.svg" />
+    <None Include="wwwroot\vendor\font-a-pro\fonts\fa-solid-900.woff2" />
+    <None Include="wwwroot\vendor\fontawesome\webfonts\fa-brands-400.svg" />
+    <None Include="wwwroot\vendor\fontawesome\webfonts\fa-brands-400.woff2" />
+    <None Include="wwwroot\vendor\fontawesome\webfonts\fa-light-300.svg" />
+    <None Include="wwwroot\vendor\fontawesome\webfonts\fa-light-300.woff2" />
+    <None Include="wwwroot\vendor\fontawesome\webfonts\fa-regular-400.svg" />
+    <None Include="wwwroot\vendor\fontawesome\webfonts\fa-regular-400.woff2" />
+    <None Include="wwwroot\vendor\fontawesome\webfonts\fa-solid-900.svg" />
+    <None Include="wwwroot\vendor\fontawesome\webfonts\fa-solid-900.woff2" />
+    <None Include="wwwroot\vendor\jquery-2.1.3.min.js" />
+    <None Include="wwwroot\vendor\jquery-3.1.1.min.js" />
+    <None Include="wwwroot\vendor\jquery-3.3.1.min.js" />
+    <None Include="wwwroot\vendor\popper.min.js" />
+    <None Include="wwwroot\vendor\rangeslider.min.js" />
+    <None Include="wwwroot\vendor\smoothproducts.min.js" />
+    <None Include="wwwroot\vendor\swiper.min.js" />
+    <None Include="wwwroot\vendor\tether.min.js" />
+    <None Include="wwwroot\vendor\wow.min.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Common\Utils\Utils.csproj" />
+    <ProjectReference Include="..\..\..\Core\IBo\MI.Bo.csproj" />
+    <ProjectReference Include="..\..\..\Core\IDal\MI.Dal.csproj" />
+    <ProjectReference Include="..\..\..\Core\IEntity\MI.Entity.csproj" />
+    <ProjectReference Include="..\..\..\Core\MI.Cache\MI.Cache.csproj" />
+    <ProjectReference Include="..\..\..\MI.Dapper.Data\MI.Dapper.Data.csproj" />
+    <ProjectReference Include="..\..\..\MI.ES\MI.ES.csproj" />
+    <ProjectReference Include="..\..\..\MI.Service\MI.Service.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="System.Web">
+      <HintPath>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Web.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="appsettings.json">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
+    <Content Update="Views\Shared\Components\DropdownCart\Default.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
+</Project>

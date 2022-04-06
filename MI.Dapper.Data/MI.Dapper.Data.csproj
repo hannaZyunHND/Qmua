@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp2.1</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <Content Include="DatabaseScript\CreateArticles.txt" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Dapper" Version="2.0.30" />
+        <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.1.1" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="2.1.1" />
+        <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="2.1.1" />
+        <PackageReference Include="morelinq" Version="3.3.2" />
+        <PackageReference Include="System.Data.SqlClient" Version="4.5.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Common\Utils\Utils.csproj" />
+    </ItemGroup>
+
+</Project>

@@ -1,0 +1,79 @@
+﻿@using MI.Entity.Enums;
+@using PhamGiaLandingPage.Web.Services.Zone.ViewModal
+@using PhamGiaLandingPage.Web.Services.Article.ViewModel
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Http
+@using PhamGiaLandingPage.Web.Services.Article.Repository
+@using PhamGiaLandingPage.Web.Services.Zone.Repository
+@inject IHttpContextAccessor HttpContextAccessor
+@inject IArticleRepository articleRepository;
+@inject IZoneRepository zoneRepository;
+@using Utils
+@{
+    var culture = Context.Features.Get<IRequestCultureFeature>().RequestCulture.Culture.TwoLetterISOLanguageName.ToLower();
+    var culture_code = Context.Features.Get<IRequestCultureFeature>().RequestCulture.Culture.ToString();
+    var base_uri_culture = "/" + culture;
+    var domain = Context.Request.Host.ToString();
+}
+
+@{
+    var bread_list = new List<ZoneByTreeViewMinify>();
+    var bread_single = ViewBag.BreadSingle;
+    var bread_type = ViewBag.BreakType;
+    if (ViewBag.BreadList != null)
+    {
+        bread_list = ViewBag.BreadList;
+
+    }
+}
+
+@*Breadcrumb by microdata*@
+@if (bread_list.Count >= 1)
+{
+    <ol style="display:none" itemscope itemtype="https://schema.org/BreadcrumbList">
+        @*<li itemprop="itemListElement" itemscope
+            itemtype="https://schema.org/ListItem">
+            <a itemprop="item" href="@domain">
+                <span itemprop="name">Books</span>
+            </a>
+            <meta itemprop="position" content="1" />
+        </li>*@
+        ›
+        @for (int i = 0; i < bread_list.Count; i++)
+        {
+            <li itemprop="itemListElement" itemscope
+                itemtype="https://schema.org/ListItem">
+                <a itemscope itemtype="https://schema.org/WebPage"
+                   itemprop="item" itemid="@(domain + "/" + bread_list[i].Url)"
+                   href="@(domain + "/" + bread_list[i].Url)">
+                    <span itemprop="name">@bread_list[i].Name</span>
+                </a>
+                <meta itemprop="position" content="@(i+2)" />
+            </li>
+            @(i == bread_list.Count - 1 ? "" : ">");
+        }
+    </ol>
+}
+@if (!string.IsNullOrEmpty(bread_single))
+{
+    <ol style="display:none" itemscope itemtype="https://schema.org/BreadcrumbList">
+        <li itemprop="itemListElement" itemscope
+            itemtype="https://schema.org/ListItem">
+            <a itemprop="item" href="@domain">
+                <span itemprop="name">Books</span>
+            </a>
+            <meta itemprop="position" content="1" />
+        </li>
+        ›
+        <li itemprop="itemListElement" itemscope
+            itemtype="https://schema.org/ListItem">
+            <a itemscope itemtype="https://schema.org/WebPage"
+               itemprop="item" itemid="@(domain + "/" + bread_single)"
+               href="@(domain + "/" + string.IsNullOrEmpty(bread_type)?"":("/"+bread_type) + bread_single)">
+                <span itemprop="name">@bread_single</span>
+            </a>
+            <meta itemprop="position" content="2" />
+        </li>
+    </ol>
+}

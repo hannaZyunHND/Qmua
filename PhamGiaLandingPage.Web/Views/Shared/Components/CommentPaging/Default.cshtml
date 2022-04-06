@@ -1,0 +1,66 @@
+﻿@using Utils
+@model List<PhamGiaLandingPage.Web.Services.Extra.ViewModel.CommentDetail>;
+
+@{ 
+    var index = (int)ViewBag.Index;
+    var size = (int)ViewBag.Size;
+}
+@if (Model != null)
+{
+    var list_comment_parents = Model.Where(r => r.ParentId == 0).ToList().Skip(size*(index -1)).Take(size);
+
+    @foreach (var item in list_comment_parents)
+    {
+        <div class="media mb-3">
+            <img asp-append-version="true" src="@UIHelper.StoreFilePath(item.Avatar)" class="img-fluid avatar mr-3" alt="@item.Name">
+            <div class="media-body">
+                <h6 class="name">@item.Name</h6>
+                <div class="comment-ct ">
+                    @item.Content
+                </div>
+                <div class="d-flex flex-wrap">
+                    <a href="javascript:void(0)" class="btn-link small mr-3 mb-2">Trả lời</a>
+                    <a href="javascript:void(0)" class="btn-link small mr-3 mb-2">
+                        <i class="fas fa-thumbs-up mr-2"></i>Thích
+                    </a>
+                    <span class="time small mb-2">@item.CreatedDate.ToString("dd/MM/yyyy hh:mm")</span>
+                </div>
+                @{ var list_comment_reply = Model.Where(r => r.ParentId == item.Id);}
+                @foreach (var rep in list_comment_reply)
+                {
+                    <div class="media sub  mt-3">
+                        <a class="" href="javascript:void(0)">
+                            <div class="avatar  mr-3" data-name="@item.Name"></div>
+                            @*<img asp-append-version="true" src="@UIHelper.StoreFilePath(rep.Avatar)" class="img-fluid avatar mr-3"
+                                alt="@rep.Name">*@
+                        </a>
+                        <div class="media-body">
+                            <h6 class="name qtv">@rep.Name</h6>
+                            @if (!string.IsNullOrEmpty(rep.CreatedByAdminId))
+                            {
+                                <div class="qtv">Quản trị viên</div>
+                            }
+
+                            <div class="comment-ct">
+                                @rep.Content
+                            </div>
+                            <div class="d-flex flex-wrap">
+                                <a href="javascript:void(0)" class="btn-link small mr-3 mb-2">Trả lời</a>
+                                <a href="javascript:void(0)" class="btn-link small mr-3 mb-2">
+                                    <i class="fas fa-thumbs-up mr-2"></i>Hài lòng
+                                </a>
+                                <a href="javascript:void(0)" class="btn-link small mr-3 mb-2">
+                                    <i class="fas fa-thumbs-down mr-2"></i>Không hài lòng
+                                </a>
+                                <span class="time small mb-2">@rep.CreatedDate.ToString("dd/MM/yyyy hh:mm")</span>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+}
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@

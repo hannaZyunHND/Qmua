@@ -1,0 +1,1 @@
+sc create Xmedia-Get-Link-Share-Youtube2ES binPath= "%~dp0GetLinkService.exe" DisplayName= "Xmedia-Get-Link-Share-Youtube2ES" 

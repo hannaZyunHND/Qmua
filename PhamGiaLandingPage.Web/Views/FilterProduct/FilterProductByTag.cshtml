@@ -1,0 +1,128 @@
+﻿@using PhamGiaLandingPage.Web.Services.Zone.ViewModal
+@using PhamGiaLandingPage.Web.Services.BannerAds.ViewModel
+@using PhamGiaLandingPage.Web.Services.Extra.ViewModel
+@using PhamGiaLandingPage.Web.Services.BannerAds.Repository
+@using MI.Entity.Models
+@using PhamGiaLandingPage.Web.Services.Product.Repository
+@using PhamGiaLandingPage.Web.Services.Extra.Repository
+@using Microsoft.AspNetCore.Http
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Utils
+@inject IHttpContextAccessor HttpContextAccessor
+@using PhamGiaLandingPage.Web.Utility
+@using PhamGiaLandingPage.Web.Services.Product.ViewModel;
+@inject ICookieUtility cookieUtility
+@inject IConfigSEOUtility configSEOUtility
+@inject IProductRepository productRepository
+@inject IBannerAdsRepository bannerAdsRepository
+@inject IExtraRepository extraRepository
+@{
+    ViewData["Title"] = "FilterProductByRegion";
+    Layout = "~/Views/Shared/_LayoutPublicHome.cshtml";
+    var cookie_location = cookieUtility.SetCookieDefault();
+    var location_id = cookie_location.LocationId;
+    var location_name = cookie_location.LocationName;
+    var culture = Context.Features.Get<IRequestCultureFeature>().RequestCulture.Culture.TwoLetterISOLanguageName.ToLower();
+    var culture_code = Context.Features.Get<IRequestCultureFeature>().RequestCulture.Culture.ToString();
+    var base_uri_culture = "/" + culture;
+    var domain = Context.Request.Host.ToString();
+    var total = 0;
+    if(ViewBag.Total != null)
+    {
+        total = (int)ViewBag.Total;
+    }
+    var pageSize = (int)ViewBag.Size;
+    var url = ViewBag.Url;
+    //var zone_id = ViewBag.ZoneId;
+    var pageIndex = 1;
+}
+@model List<ProductMinify>;
+<div class="container mb-3">
+    @*@await Component.InvokeAsync("Breadcrumb", new { zone_id = zone_id })*@
+</div>
+
+<div class="list-flash-sale bg-fff  ">
+    <div class="container">
+        <div class="row no-gutters _binding_product">
+            @if (Model != null)
+            {
+                foreach (var item in Model)
+                {
+                    var link_tar = string.Format("/{0}.html", item.Url);
+                    <div class="col-xl-2 col-lg-3 col-md-4 col-sm-4 col-6">
+                        <div class="item-product" data-id="@item.ProductId" data-properties="@item.PropertyId">
+                            <div class="tag-1">
+
+                            </div>
+                            @if (item.FlashSaleId > 0)
+                            {
+                                <div class="tag-flashsale">
+                                    <img src="~/images/tag-flash-111x34.svg" class=" img-fluid" />
+                                </div>
+                            }
+                            <div class="image">
+                                <a href="@link_tar">
+                                    <img asp-append-version="true" src="@UIHelper.StoreFilePath(item.Avatar)"
+                                         class="img-fluid  w-100" alt="@item.Title" />
+                                </a>
+                                <div class="tag-2">
+                                    <img asp-append-version="true" src="" class="img-fluid tag-2-thumb" />
+                                </div>
+                            </div>
+                            <h5 class="title">
+                                <a href="@link_tar" title="@item.Title">
+                                    @item.Title
+                                </a>
+                            </h5>
+                            <div class="text-left">
+                                @if (item.FlashSaleId > 0)
+                                {
+                                    <div class="price-new">
+                                        @UIHelper.FormatNumber(item.ProductPriceInFlashSale) đ
+                                    </div>
+
+                                    <div class="price-old">
+                                        @(item.SalePrice <= 0 ? Html.Raw("<pre>&nbsp;</pre>") : Html.Raw(UIHelper.FormatNumber(item.SalePrice) + "đ"))
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="price-new">
+                                        @UIHelper.FormatNumber(item.SalePrice) đ
+                                    </div>
+
+                                    <div class="price-old">
+                                        @(item.Price <= 0 ? Html.Raw("<pre>&nbsp;</pre>") : Html.Raw(UIHelper.FormatNumber(item.Price) + "đ"))
+                                    </div>
+                                }
+
+                            </div>
+                            <div class="size small mb-1">
+                                @item.SpecName: @item.SpecValue
+                            </div>
+                            <div class="review d-flex">
+                                <div class="color-FFAB1B mr-2">
+                                    @System.Math.Round(item.Rate, 1)/5<i class="fas fa-star ml-1"></i>
+                                </div>
+                                <div class="color-828282">
+                                    @item.CountRate đánh giá
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+        @if (total > pageSize)
+        {
+            <div class="text-center my-5">
+                <a href="javascript:void(0)" class="btn btn-outline-view-more region-view-more" data-index="@pageIndex" data-url="@url">Xem thêm<i class="fas fa-chevron-down ml-2 " aria-hidden="true"></i></a>
+            </div>
+        }
+    </div>
+</div>
+@section scripts{
+
+    <script type="text/javascript" asp-append-version="true" src="~/js/controller/filterProductController.js"></script>
+}

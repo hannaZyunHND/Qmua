@@ -1,0 +1,111 @@
+.blog{
+  &__section1{
+    @include media-breakpoint-up('m'){
+      padding-top: 77px !important;
+      padding-bottom: 77px !important;
+    }
+  }
+  &__grid{
+    .uk-grid-margin{
+      @include media-breakpoint-up('m'){
+        margin-top: 40px !important;
+      }
+    }
+  }
+  &__box1{
+    &__catalog{
+      bottom: 25px !important;
+      color: #ffffff;
+      min-width: 120px;
+      text-align: center;
+      span{
+        font-family: $font-Roboto-Light;
+        @extend .fz-16;
+        line-height: 1.5;
+      }
+      &.bai-viet-moi{
+        background: #EE543A;
+      }
+      &.tu-van{
+        background: #17D79D;
+      }
+      &.tuyen-dung{
+        background: #C717D7;
+      }
+    }
+    &__bg{
+      box-shadow: (0px 4px 4px rgba(0, 0, 0, 0.25));
+      margin-bottom: 15px;
+      @include media-breakpoint-up('m'){
+        margin-bottom: 20px;
+      }
+    }
+    &__name{
+      @extend .fz-14;
+      line-height: (16/14);
+      color: #595959;
+      font-family: $font-Roboto-Light;
+    }
+    &__title{
+      @extend .fz-18;
+      line-height: (25/18);
+      font-family: $font-Roboto-Medium;
+      a{
+        color: #000;
+      }
+    }
+  }
+  &__subnav{
+    >li{
+      position: relative;
+      &:nth-child(n+2){
+        &:before{
+          content: "";
+          width: 4px;
+          height: 4px;
+          display: inline-block;
+          border-radius: 50%;
+          background: #595959;
+          position: absolute;
+          top: 50%;
+          transform: translateY(-50%);
+          $x: 27px;
+          left: calc((#{$x} - 4px)/2);
+        }
+      }
+    }
+  }
+  &__btn{
+    line-height: 48px;
+    @extend .blog__dc1;
+    font-family: $font-Roboto-Bold;
+    color: #000;
+    &.uk-active{
+      border-color: $color2;
+      background: $color2;
+      color: #ffffff;
+    }
+  }
+  &__boxSearch{
+    &__icon{
+      svg{
+        opacity: 0;
+      }
+    }
+    &__inputSearch{
+      height: 50px !important;
+      @extend .blog__dc1;
+      color: #595959;
+      &::placeholder{
+        color: #595959;
+      }
+      font-family: $font-Roboto-Medium;
+    }
+  }
+  &__dc1{
+    border: 1px solid #C4C4C4 !important;
+    box-sizing: border-box;
+    border-radius: 8px;
+    @extend .fz-16;
+  }
+}

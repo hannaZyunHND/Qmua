@@ -1,0 +1,57 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@{
+    Layout = null;
+}
+
+
+@using PhamGiaLandingPage.Web.Services.Product.ViewModel;
+@using Utils;
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+@using PhamGiaLandingPage.Web.Utility
+@inject ICookieUtility cookieUtility
+@model List<ProductMinify>;
+@{
+    var total = ViewBag.Total;
+    var id = ViewBag.Id;
+    var culture = Context.Features.Get<IRequestCultureFeature>().RequestCulture.Culture.TwoLetterISOLanguageName.ToLower();
+    var culture_code = Context.Features.Get<IRequestCultureFeature>().RequestCulture.Culture.ToString();
+    var base_uri_culture = "/" + culture;
+    var domain = Context.Request.Host.ToString();
+    var cookie_location = cookieUtility.SetCookieDefault();
+    var location_id = cookie_location.LocationId;
+    var location_name = cookie_location.LocationName;
+    var pageSize = (int)ViewBag.Size;
+    var keyword = ViewBag.KeyWord;
+}
+
+<div class="container mb-3">
+    @*@await Component.InvokeAsync("Breadcrumb", new { zone_id = zone_id })*@
+</div>
+
+
+@if (Model != null)
+{
+    <div class="_get-info" data-total="@total" data-keyword="@keyword" style="display:none;"></div>
+    foreach (var item in Model)
+    {
+        <div class="col-xl-2 col-lg-3 col-md-4 col-sm-4 col-6">
+            @await Component.InvokeAsync("ItemProduct", new { pr = item, isLazy = false })
+        </div>
+    }
+}
+
+@*@if (total > pageSize)
+    {
+        <div class="text-center my-5">
+            <a href="javascript:void(0)" class="btn btn-outline-view-more region-view-more" data-index="@pageIndex" data-url="@url">Xem thêm<i class="fas fa-chevron-down ml-2 " aria-hidden="true"></i></a>
+        </div>
+    }*@
+

@@ -1,0 +1,19 @@
+body { }
+.main .container-fluid { padding: 0 6px !important }
+.mi-paging { float: right; height: 35px }
+.list-data { }
+.list-data .card-filter { border-bottom: 0;margin-bottom: 0 }
+.list-data .card-filter .card-body {padding-bottom: 0  }
+.list-data .card {border-radius:0 }
+.list-data .card-data {border-top: 0 }
+.list-data .card-data .card-body{border-top: 0 !important }
+.breadcrumb{margin-bottom: 6px}
+
+[data-browse="Browse"] {
+    overflow:hidden;
+}
+
+
+.popover .popover-header{
+    color:#000000;
+}

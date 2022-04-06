@@ -1,0 +1,111 @@
+﻿using NhaBepVuiV2.ExecuteCommand;
+using NhaBepVuiV2.Services.Order.ViewModal;
+using Microsoft.Extensions.Configuration;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using System.Threading.Tasks;
+using Dapper;
+using System.Globalization;
+
+namespace NhaBepVuiV2.Services.Order.Repository
+{
+    public interface IOrderRepository
+    {
+        int CreateOrderInWebsite(OrderViewModel orders);
+        int GetOrderCode();
+        CouPonDetail GetCouponChildByCode(string Code);
+    }
+    public class OrderRepository : IOrderRepository
+    {
+        private readonly IConfiguration _configuration;
+        private readonly string _connStr;
+        private readonly IExecuters _executers;
+
+        public OrderRepository(IConfiguration configuration, IExecuters executers)
+        {
+            _configuration = configuration;
+            _connStr = _configuration.GetConnectionString("DefaultConnection");
+            _executers = executers;
+        }
+
+        public int CreateOrderInWebsite(OrderViewModel orders)
+        {
+            //Xay dung cac thu truoc
+            DataTable or_Detail = new DataTable();
+            or_Detail.Columns.Add("ProductId", typeof(int));
+            or_Detail.Columns.Add("Quantity", typeof(decimal));
+            or_Detail.Columns.Add("LogPrice", typeof(decimal));
+            or_Detail.Columns.Add("OrderSourceType", typeof(int));
+            or_Detail.Columns.Add("OrderSourceId", typeof(int));
+            or_Detail.Columns.Add("Voucher", typeof(string));
+            or_Detail.Columns.Add("VoucherPrice", typeof(float));
+            or_Detail.Columns.Add("VoucherType", typeof(int));
+
+            DataTable or_Promotions = new DataTable();
+            or_Promotions.Columns.Add("ProductId", typeof(int));
+            or_Promotions.Columns.Add("LogName", typeof(string));
+            or_Promotions.Columns.Add("LogValue", typeof(decimal));
+            or_Promotions.Columns.Add("LogType", typeof(string));
+            foreach (var item in orders.Products)
+            {
+                or_Detail.Rows.Add(item.ProductId, item.Quantity, item.LogPrice, item.OrderSourceType, item.OrderSourceId,item.Voucher,item.VoucherPrice,item.VoucherType);
+                if (item.Promotions != null)
+                {
+                    foreach (var b in item.Promotions)
+                        or_Promotions.Rows.Add(item.ProductId, b.LogName, b.LogValue, b.LogType);
+                }
+            }
+
+            var p = new DynamicParameters();
+            var commandText = "usp_Web_CreateOrder";
+            p.Add("@cus_Name", orders.Customer.Name);
+            p.Add("@cus_Gender", orders.Customer.Gender);
+            p.Add("@cus_PhoneNumber", orders.Customer.PhoneNumber);
+            p.Add("@cus_Address", orders.Customer.Address);
+            p.Add("@or_Code", orders.OrderCode);
+            p.Add("@or_MetaData", Newtonsoft.Json.JsonConvert.SerializeObject(orders.Extras));
+            p.Add("@or_Note", orders.Customer.Note);
+            p.Add("@or_Detail", or_Detail.AsTableValuedParameter("type_OrderProduct_v4"));
+            p.Add("@or_Promotions", or_Promotions.AsTableValuedParameter("type_OrderPromotionInProduct_v1"));
+            p.Add("@out_order_id", dbType: System.Data.DbType.Int32, direction: System.Data.ParameterDirection.Output);
+
+
+            var result = _executers.ExecuteCommand(_connStr, conn => conn.Execute(commandText, p, commandType: System.Data.CommandType.StoredProcedure));
+            result = p.Get<int>("@out_order_id");
+            return result;
+        }
+
+        public int GetOrderCode()
+        {
+            var p = new DynamicParameters();
+            var commandText = "usp_Web_GetOrderCode";
+            p.Add("@code", dbType: System.Data.DbType.Int32, direction: System.Data.ParameterDirection.Output);
+            var result = _executers.ExecuteCommand(_connStr, conn => conn.Execute(commandText, p, commandType: System.Data.CommandType.StoredProcedure));
+            result = p.Get<int>("@code");
+            return result;
+        }
+        public CouPonDetail GetCouponChildByCode(string Code)
+        {
+            try
+            {
+                var p = new DynamicParameters();
+                var commantext = "usp_Web_GetVoucherByCode";
+                p.Add("@Code", Code.Trim());
+                var result = _executers.ExecuteCommand(_connStr, conn => conn.QueryFirstOrDefault<CouPonDetail>(commantext, p, commandType: System.Data.CommandType.StoredProcedure));
+                return result;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+    }
+    public class CouPonDetail
+    {
+        public string Name { get; set; }
+        public int DiscountOption { get; set; }
+        public string ValueDiscount { get; set; }
+    }
+}

@@ -1,0 +1,41 @@
+.block01{
+  color: #ffffff;
+  &__input{
+    @extend .fz-16;
+    color: #828282;
+  }
+  &__btn{
+    background: $color1;
+    @extend .fz-18;
+    font-family: $font-Roboto-Black;
+  }
+  &__txt{
+    @extend .block01__input;
+    color: #ffffff;
+  }
+  &__overlay{
+    background: rgba(50, 50, 50, 0.7);
+  }
+  &__title{
+    font-family: $font-Roboto-Medium;
+    @extend .fz-48;
+    line-height: (35/48);
+    color: #ffffff;
+    position: relative;
+    padding-bottom: 30px;
+    &:after{
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      background: url(images/line1.png);
+      display: inline-block;
+      width: 259px;
+      height: 6px;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+  }
+}

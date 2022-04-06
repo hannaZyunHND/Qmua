@@ -1,0 +1,595 @@
+﻿@using TemplateKAO.Utility
+@using TemplateKAO.Services.BannerAds.Repository
+@using MI.Entity.Models
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.AspNetCore.Http
+@using Newtonsoft.Json
+@{
+    ViewData["Title"] = "Spin";
+    Layout = "~/Views/Shared/_LayoutPublicHome.cshtml";
+
+}
+@inject IBannerAdsRepository bannerAdsRepository
+@inject IHttpContextAccessor HttpContextAccessor
+@* @inject IConfigSEOUtility configSEOUtility; *@
+@section styles{
+    @{
+        /**/
+
+        var bind_meta = "";
+        @* bind_meta += configSEOUtility.ConfigMeta("Vòng quay may mắn", "Vòng quay may mắn", "Vòng quay may mắn"); *@
+    }
+    @Html.Raw(bind_meta)
+}
+@{
+    var culture = Context.Features.Get<IRequestCultureFeature>().RequestCulture.Culture.TwoLetterISOLanguageName.ToLower();
+    var culture_code = Context.Features.Get<IRequestCultureFeature>().RequestCulture.Culture.ToString();
+    
+    var TheLe_Cahche = bannerAdsRepository.GetConfigByName(culture_code, "TheLe");
+    var CoCau_Cahche = bannerAdsRepository.GetConfigByName(culture_code, "CoCau");
+    var HuongDan_Cahche = bannerAdsRepository.GetConfigByName(culture_code, "HuongDan");
+    
+}
+<link href="~/css/wheel.css" rel="stylesheet" />
+<div class="spin">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-md-7 col-sm-12 col-12 pt-5 align-self-center">
+                <div class="bg-peg"> </div>
+                <div class="bg-back" style="">
+                    <!-- <img src="images/change/wheel_back-2.svg" id="wheel">-->
+                    <div align="center">
+                        <table cellpadding="0" cellspacing="0" border="0">
+                            <tr>
+                                <td width="100%" height="100%" class="the_wheel" align="center" valign="center">
+                                    <canvas id="canvas" width="480" height="480">
+                                        <p style="{color: white}" align="center">
+                                            Sorry, your browser doesn't support canvas. Please try another.
+                                        </p>
+                                    </canvas>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <img src="images/change/wheel_of_lunch_peg.svg" id="peg">
+
+                <div class="btn-lucky-spin text-center mt-4">
+                    <button class="btn btn-outline-light px-4 mb-3" id="spin_start" onClick="R.LuckySpin.startSpin();">
+                        Quay
+                        ngay
+                    </button>
+                    <button id="spin_stop" class="btn btn-outline-light px-4 mb-3" onClick="R.LuckySpin.stopSpin();">Dừng lại</button>
+                    <button id="spin_reset" class="btn btn-outline-light px-4 mb-3" onClick="R.LuckySpin.resetWheel();">Quay lại</button>
+                </div>
+
+
+                <div class="btn-lucky-spin text-center mb-4">
+                    <button class="btn btn-outline-light  mx-2" data-toggle="modal" data-target="#modal-the-le">
+                        Thể
+                        lệ
+                    </button>
+                    <button class="btn btn-outline-light  mx-2" data-toggle="modal" data-target="#modal-co-cau">
+                        Cơ
+                        cấu
+                    </button>
+                    <button class="btn btn-outline-light   mx-2" data-toggle="modal"
+                            data-target="#modal-huong-dan">
+                        Hướng dẫn
+                    </button>
+                    <button class="btn btn-outline-light  mx-2" data-toggle="modal"
+                            data-target="#modal-danh-sach">
+                        Danh sách
+                    </button>
+                </div>
+
+            </div>
+            <div class="col-lg-6 col-md-5 col-sm-12 col-12 pt-3 align-self-center">
+                <div class="text-center my-4">
+                    <a href="home.html"><img src="images/logo.png" class="img-fluid"></a>
+                </div>
+                <form class="row justify-content-center mb-4">
+                    <div class="form-group mb-2 col-xl-7 col-lg-7 col-md-7 col-sm-12 col-12">
+                        <input type="text" class="form-control" id="phoneNumberTxt" placeholder="Nhập số điện thoại">
+                    </div>
+                    <div class="form-group mb-2 col-xl-4  col-lg-5 col-md-5 col-sm-12 col-12">
+                        <button class="btn btn-save w-100 h-100" type="button" id="RegisterSpin">Nhận lượt quay</button>
+                    </div>
+                    <div class="form-group col-xl-11 col-lg-12 col-md-12 col-12">
+                        <small id="" class="form-text  " style="color: #fff;">
+                            Lưu ý: Voucher chỉ sử dụng tại cửa hàng hoặc thông qua nhân viên tư vấn online. Mọi thông tin quý khác vui lòng xem thêm tại thể lệ chương trình
+                        </small>
+                    </div>
+                </form>
+                <div class="text-center mb-4 mb-xl-5">
+                    <img src="images/change/quayngay.svg" class="img-fluid">
+                </div>
+
+                <h3 class="text-center">
+                    Tổng giải thưởng
+                </h3>
+                <div class="sum mb-3">
+                    110.000.000đ
+                </div>
+                <div class="mb-3 d-flex flex-wrap">
+                    <div class="h3 nowrap mr-3  mt-3 mb-3">
+                        Khung giờ
+                    </div>
+                    <div>
+                        <div class="d-flex mb-3 ">
+                            <div class="time  ">
+                                15:00
+                            </div>
+                            <div class="h3 align-self-center font-weight-bolder">
+                                &#8722;
+                            </div>
+                            <div class="time  ">
+                                16:00
+                            </div>
+                        </div>
+                        <div class="color-FFAB1B pl-3 ">
+                            Từ 24/07/2020 đến 30/07/2020
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal thể lệ -->
+<div class="modal jan-modal fade" id="modal-the-le" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content pb-4">
+            <div class="modal-header border-bottom-0">
+                <h6 class="modal-title font-weight-bold">Thể lệ chương trình</h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body pt-0">
+                @Html.Raw(TheLe_Cahche)
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="modal jan-modal fade" id="modal-co-cau" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content pb-4">
+            <div class="modal-header border-bottom-0">
+                <h6 class="modal-title font-weight-bold">Cơ cấu chương trình</h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body pt-0">
+                @Html.Raw(CoCau_Cahche)
+
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="modal jan-modal fade" id="modal-huong-dan" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content pb-4">
+            <div class="modal-header border-bottom-0">
+                <h6 class="modal-title font-weight-bold">Hướng dẫn chương trình</h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body pt-0">
+                @Html.Raw(HuongDan_Cahche)
+
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- Modal danh sách -->
+<div class="modal jan-modal fade" id="modal-danh-sach" tabindex="-1" role="dialog"
+     aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content pb-4">
+            <div class="modal-header border-bottom-0">
+                <h6 class="modal-title font-weight-bold">Danh sách khách hàng trúng thưởng</h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body pt-0 table-responsive">
+                <table class="table table-bordered text-center">
+                    <thead>
+                        <tr>
+                            <th scope="col" style="width: 80px;">STT</th>
+                            <th scope="col">SĐT</th>
+                            <th scope="col">Giải thưởng</th>
+                        </tr>
+                    </thead>
+                    <tbody id="customLucky"></tbody>
+                </table>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+@section scripts{
+
+    <script type="text/javascript" src="~/vendor/Winwheel.min.js" asp-append-version="true"></script>
+    <script type="text/javascript" src="~/vendor/TweenMax.min.js" asp-append-version="true"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+    <script>
+
+        R.LuckySpin = {
+            Init: function () {
+
+                R.LuckySpin.RegisterEvent();
+                R.LuckySpin.statusButton(1);
+                R.LuckySpin.theWheel = null;
+                R.LuckySpin.duration = 2;//Thời gian kết thúc vòng quay
+                R.LuckySpin.spins = 3;//Quay nhanh hay chậm 3, 8, 15,
+                R.LuckySpin.wheelSpinning = false;
+                R.LuckySpin.flag = true;
+                R.LuckySpin.BuildRatio = [];
+            },
+
+            RegisterEvent: function () {
+                R.LuckySpin.GetSpinDate();
+                $('#modal-danh-sach').on('shown.bs.modal', function () {
+                    R.LuckySpin.GetCustomLucky();
+                })
+                $('#RegisterSpin').off('click').on('click', function () {
+                    if ($('#phoneNumberTxt').val().length < 10) {
+                        $.confirm({
+                            // icon: 'fa fa-smile-o',
+                            title: '',
+                            content: 'Nhập số điện thoại!',
+                            theme: 'modern',
+                            closeIcon: true,
+                            animation: 'scale',
+                            type: 'blue',
+                            buttons: {
+                                confirm: {
+                                    text: 'Đóng',
+                                    btnClass: 'btn-orange',
+                                    action: function () {
+
+                                    }
+                                }
+
+                            }
+                        });
+                        return false;
+                    }
+                    var url = '/LuckySpin/CustomLuckyCheckExist';
+                    var params = {
+                        phoneNumber: $('#phoneNumberTxt').val()
+                    };
+                    $.get(url, params, function (res) {
+                        if (res) {
+                            $('#phoneNumberTxt').val('');
+                            $.confirm({
+                                // icon: 'fa fa-smile-o',
+                                title: '',
+                                content: 'Số điện thoại này đã tồn tại!',
+                                theme: 'modern',
+                                closeIcon: true,
+                                animation: 'scale',
+                                type: 'blue',
+                                buttons: {
+                                    confirm: {
+                                        text: 'Đóng',
+                                        btnClass: 'btn-orange',
+                                        action: function () {
+
+                                        }
+                                    }
+
+                                }
+                            });
+                        } else {
+                            $.confirm({
+                                // icon: 'fa fa-smile-o',
+                                title: '',
+                                content: 'Bạn nhận được 01 lượt quay !',
+                                theme: 'modern',
+                                closeIcon: true,
+                                animation: 'scale',
+                                type: 'blue',
+                                buttons: {
+                                    confirm: {
+                                        text: 'Đóng',
+                                        btnClass: 'btn-orange',
+                                        action: function () {
+
+                                        }
+                                    }
+
+                                }
+                            });
+                        }
+
+                        R.LuckySpin.flag = res;
+
+                    });
+                })
+            },
+
+
+            GetCustomLucky: function () {
+                var url = '/LuckySpin/GetCustomLucky';
+                var params = {};
+                $.get(url, params, function (res) {
+                    var result = JSON.parse(JSON.stringify(res));
+                    var htm = '';
+                    $.each(result,
+                        function (index, v) {
+                            var ind = index + 1
+                            htm += '<tr><th scope="row">' + ind + '</th><td>' + v.phoneNumber + '</td><td>' + v.luckySpinName + '</td></tr>';
+                        });
+                    $('#customLucky').html(htm);
+                });
+            },
+            GetSpinDate: function () {
+                var url = '/LuckySpin/GetLuckySpin';
+                var params = {};
+                $.get(url, params, function (res) {
+                    var result = JSON.parse(JSON.stringify(res));
+                    console.log(result);
+                    var spinData = []
+                    $.each(result,
+                        function (index, v) {
+                            if (index % 2 == 0) {
+                                spinData.push({ 'fillStyle': '#fff', 'text': v.name });
+                            }
+                            else {
+                                spinData.push({ 'fillStyle': '#c6000f', 'text': v.name });
+                            }
+
+                            var x = {
+                                SegmentsNumber : index,
+                                Ratio : v.ratio
+                            }
+                            R.LuckySpin.BuildRatio.push(x);
+                        });
+
+                    //Thông số vòng quay
+                    R.LuckySpin.theWheel = new Winwheel({
+                        'numSegments': spinData.length,     // Chia 8 phần bằng nhau
+
+                        'outerRadius': 215,   // Đặt bán kính vòng quay
+                        'textFontSize': 10,    // Đặt kích thước chữ
+                        'rotationAngle': 0,     // Đặt góc vòng quay từ 0 đến 360 độ.
+                        'segments': spinData,   // Các thành phần bao gồm màu sắc và văn bản.
+                        'animation': {
+                            'type': 'spinOngoing', //spinToStop, spinOngoing
+                            'duration': R.LuckySpin.duration,
+                            'spins': R.LuckySpin.spins,
+                            'callbackSound': R.LuckySpin.playSound,     //Hàm gọi âm thanh khi quay
+                            'soundTrigger': 'pin',         //Chỉ định chân là để kích hoạt âm thanh
+                            'callbackFinished': R.LuckySpin.alertPrize,    //Hàm hiển thị kết quả trúng giải thưởng
+                        },
+                        'pins':
+                        {
+                            'number': 24   //Số lượng chân. Chia đều xung quanh vòng quay.
+                        }
+                    });
+
+                    //Kiểm tra vòng quay
+                    R.LuckySpin.wheelSpinning = false;
+
+
+
+                })
+            },
+            playSound: function () {
+                //Tạo âm thanh và tải tập tin tick.mp3.
+                var audio = new Audio('sound/tick.mp3');
+                audio.pause();
+                audio.currentTime = 0;
+                audio.play();
+            },
+            GetPrize: function () {
+                var a = [];
+                var bd = 0;
+                for (var i = 0; i < R.LuckySpin.BuildRatio.length; i++) {
+                    var start = 0
+                    if (i == 0)
+                        start = 0;
+                    if (i > 0)
+                        start = bd;
+                    var end = start + R.LuckySpin.BuildRatio[i].Ratio;
+                    bd = end;
+                    var b = {
+                        index: i,
+                        start: start,
+                        end: end
+                    }
+                    a.push(b)
+                }
+                var choosen = Math.floor(Math.random() * 100) + 1;
+                console.log(R.LuckySpin.BuildRatio);
+                console.log(choosen);
+                console.log(a);
+                //a.forEach(function (e,v) {
+                //    if (v.start <= choosen && v.end > choosen) {
+                //        return v.index;
+                //    }
+                //})
+                for (var i = 0; i < a.length; i++) {
+                    if (a[i].start <= choosen && a[i].end > choosen)
+                        return a[i].index;
+                }
+
+            },
+
+            //Hiển thị các nút vòng quay
+            statusButton: function (status) {
+                if (status == 1) { //trước khi quay
+                    document.getElementById('spin_start').classList.remove("hide");
+                    document.getElementById('spin_stop').classList.add("hide");
+                    document.getElementById('spin_reset').classList.add("hide");
+                } else if (status == 2) { //đang quay
+                    document.getElementById('spin_start').classList.add("hide");
+                    document.getElementById('spin_stop').classList.remove("hide");
+                    document.getElementById('spin_reset').classList.add("hide");
+                } else if (status == 3) { //kết quả
+                    document.getElementById('spin_start').classList.add("hide");
+                    document.getElementById('spin_stop').classList.add("hide");
+                    //document.getElementById('spin_reset').classList.remove("hide");
+                } else {
+                    alert('Các giá trị của status: 1, 2, 3');
+                }
+            },
+
+
+            //startSpin
+            startSpin: function () {
+                if (!R.LuckySpin.flag) {
+                    // Ensure that spinning can't be clicked again while already running.
+                    if (R.LuckySpin.wheelSpinning == false) {
+                        //CSS hiển thị button
+                        R.LuckySpin.statusButton(2);
+
+                        //Cấu hình vòng quay
+                        R.LuckySpin.theWheel.animation = {
+                            'type': 'spinOngoing',
+                            'duration': R.LuckySpin.duration,
+                            'spins': R.LuckySpin.spins,
+                            'callbackSound': R.LuckySpin.playSound, //Hàm gọi âm thanh khi quay
+                            'soundTrigger': 'pin', //Chỉ định chân là để kích hoạt âm thanh
+                            'callbackFinished': R.LuckySpin.alertPrize, //Hàm hiển thị kết quả trúng giải thưởng
+                        };
+                       
+                        //Hàm bắt đầu quay
+                        R.LuckySpin.theWheel.startAnimation();
+                    }
+                } else {
+                    $.confirm({
+                        // icon: 'fa fa-smile-o',
+                        title: '',
+                        content: 'Nhâp số điện thoại để lấy lượt quay !',
+                        theme: 'modern',
+                        closeIcon: true,
+                        animation: 'scale',
+                        type: 'blue',
+                        buttons: {
+                            confirm: {
+                                text: 'Đóng',
+                                btnClass: 'btn-orange',
+                                action: function () {
+
+                                }
+                            }
+
+                        }
+                    });
+                }
+            },
+
+            //stopSpin
+            stopSpin: function () {
+                if (R.LuckySpin.wheelSpinning == false) {
+                    R.LuckySpin.theWheel.animation = {
+                        'type': 'spinToStop',
+                        'duration': (R.LuckySpin.duration + 13),
+                        'spins': (R.LuckySpin.spins + 1),
+                        'callbackSound': R.LuckySpin.playSound,     //Hàm gọi âm thanh khi quay
+                        'soundTrigger': 'pin',         //Chỉ định chân là để kích hoạt âm thanh
+                        'callbackFinished': R.LuckySpin.alertPrize,    //Hàm hiển thị kết quả trúng giải thưởng
+                    };
+                    //var stopAt = 4;
+                    //var st = R.LuckySpin.theWheel.getRandomForSegment(stopAt);
+                    //R.LuckySpin.theWheel.stopAngle = st;
+                    //Kết quả chỉ định
+                    R.LuckySpin.stopAngle();
+
+                    //Hàm bắt đầu quay
+                    R.LuckySpin.theWheel.startAnimation();
+
+                    //Khóa vòng quay
+                    R.LuckySpin.wheelSpinning = true;
+                }
+            },
+
+            //stopAngle
+            stopAngle: function () {
+                //Ta có: 360 độ chia 8 bằng 45 độ cho mỗi giải thưởng.
+                //VD: Giải 3 => Có gốc độ từ 91 đến 135.
+                //let start = Math.floor(Math.random() * 360);
+                let start = 0;
+                let stop = Math.floor((Math.random() * 44)); //Giá trị cao nhất 44
+                var stopAtt = R.LuckySpin.GetPrize();
+                console.log(stopAtt);
+                var st = R.LuckySpin.theWheel.getRandomForSegment(stopAtt+1);
+                let stopAt = start + stop;
+                R.LuckySpin.theWheel.animation.stopAngle = st;
+                console.log(stopAt)
+            },
+
+            //Result
+            alertPrize: function (indicatedSegment) {
+                $('#spin_reset').remove();
+                var url = '/LuckySpin/CustomLuckyAdd';
+                var params = {
+                    value: indicatedSegment.text,
+                    phoneNumber: $('#phoneNumberTxt').val()
+                };
+                $.post(url, params, function (res) {
+
+                });
+                $.confirm({
+                    title: '',
+                    content: 'Giải thưởng của bạn là: ' + indicatedSegment.text,
+                    icon: 'fa fa-question-circle-o',
+                    theme: 'supervan',
+                    closeIcon: true,
+                    animation: 'scale',
+                    type: 'orange',
+                    buttons: {
+                        okay: {
+                            text: 'Đóng',
+                            btnClass: 'btn-blue',
+                            action: function () {
+                                // do nothing
+                            }
+                        }
+                    }
+                });
+
+
+
+                //CSS hiển thị button
+                R.LuckySpin.statusButton(3);
+            },
+
+            //resetWheel
+            resetWheel: function () {
+                if (!R.LuckySpin.flag) {
+                    R.LuckySpin.statusButton(1);
+                    R.LuckySpin.theWheel.stopAnimation(false);
+                    R.LuckySpin.theWheel.rotationAngle = 0;
+                    R.LuckySpin.theWheel.draw();
+                    R.LuckySpin.wheelSpinning = false;
+                }
+                //CSS hiển thị button
+
+            }
+
+        }
+        $(function () {
+            R.LuckySpin.Init();
+        });
+
+
+    </script>
+}

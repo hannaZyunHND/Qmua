@@ -1,0 +1,76 @@
+.uk-offcanvas-bar{
+  background: #FFFFFF;
+}
+#offcanvas-overlay-trekhoedep{
+  z-index: 1002;
+}
+.trekhoedep__nav{
+  .uk-nav-sub{
+    a{
+      color: #000 !important;
+    }
+  }
+  &__li{
+
+  }
+  &__arrow{
+    content: "";
+    width: 40px;
+    height: 40px;
+    right: 0;
+    //width: 1.5em;
+    //height: 1.5em;
+    //right: 5px;
+    float: right;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2214%22%20height%3D%2214%22%20viewBox%3D%220%200%2014%2014%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%20%20%20%20%3Cpolyline%20fill%3D%22none%22%20stroke%3D%22%23666%22%20stroke-width%3D%221.1%22%20points%3D%2210%201%204%207%2010%2013%22%20%2F%3E%0A%3C%2Fsvg%3E");
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpolyline fill='none' stroke='%23000' stroke-width='1.03' points='7 4 13 10 7 16'%3E%3C/polyline%3E%3C/svg%3E") !important;
+    .uk-open>a &{
+      background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpolyline fill='none' stroke='%23000' stroke-width='1.03' points='16 7 10 13 4 7'%3E%3C/polyline%3E%3C/svg%3E") !important;
+    }
+  }
+  &__a{
+    display: flex !important;
+    align-items: center;
+    color: #000 !important;
+    padding: 6px 6px !important;
+    text-transform: uppercase;
+    position: relative;
+    .trekhoedep__nav__li:nth-child(n+2) &{
+      border-top: 1px solid #C6C4C5;
+    }
+  }
+}
+.uk-offcanvas-page{
+  #m_ham_1{
+    transform: rotate(45deg);
+    margin-top: 13px;
+    width: 100%;
+  }
+  #m_ham_2{
+    transform: rotate(-45deg);
+    margin-top: -7px;
+  }
+  #m_ham_3{
+    opacity: 0;
+    width: 100%;
+  }
+}
+$w: 100%;
+#m_ham_1{
+  width: #{$w};
+}
+#m_ham_2{
+
+}
+#m_ham_3{
+  width: #{$w};
+}
+.m_nav_ham{
+  width: 30px;
+  height: 2px;
+  background: $color1;
+  margin: 5px auto;
+  transition-duration: .3s;
+}

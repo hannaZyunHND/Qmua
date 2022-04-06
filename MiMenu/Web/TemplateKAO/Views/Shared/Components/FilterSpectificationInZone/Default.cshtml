@@ -1,0 +1,128 @@
+﻿@using MI.Entity.Enums;
+@using TemplateKAO.Services.Zone.ViewModal
+@using TemplateKAO.Services.Article.ViewModel
+@using TemplateKAO.Services.Product.ViewModel
+@using TemplateKAO.Services.Extra.ViewModel
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Http
+@using TemplateKAO.Services.Article.Repository
+@using TemplateKAO.Services.Extra.Repository
+@using TemplateKAO.Services.Zone.Repository
+@using TemplateKAO.Services.Product.Repository
+@inject IHttpContextAccessor HttpContextAccessor
+@inject IArticleRepository articleRepository;
+@inject IZoneRepository zoneRepository;
+@inject IExtraRepository extraRepository;
+@inject IProductRepository productRepository;
+@using Utils
+@{
+    var culture = Context.Features.Get<IRequestCultureFeature>().RequestCulture.Culture.TwoLetterISOLanguageName.ToLower();
+    var culture_code = Context.Features.Get<IRequestCultureFeature>().RequestCulture.Culture.ToString();
+    var base_uri_culture = "/" + culture;
+    var domain = Context.Request.Host.ToString();
+}
+@{
+    //var list_product = new List<ProductMinify>();
+    //if (Model != null)
+    //{
+    //    list_product = Model;
+    //}
+    var zone_current = (int)ViewBag.ZoneParent;
+    var zone_tree_view = zoneRepository.GetZoneByTreeViewMinifies((int)TypeZone.Product, culture_code, zone_current);
+
+    var list_zone_first = zone_tree_view.Where(r => r.level == 1);
+    if (zone_tree_view.Count() == 1)
+    {
+        list_zone_first = zone_tree_view.Where(r => r.level == 0);
+    }
+    var fp = new FilterProductBySpectification();
+    if (ViewBag.Filter != null)
+    {
+        fp = ViewBag.Filter;
+    }
+}
+@foreach (var item in list_zone_first)
+{
+
+    var link_tar_1 = string.Format("/{0}",  item.Url);
+    <section class="my-4 san-go-nb">
+        <div class="container ">
+            <div class="bg-fff pt-3 border-r-4 mb-4">
+                <div class="px-3">
+                    <div class="row mb-3 no-gutters ">
+                        <div class="col-md-3 col-12 mb-2 mb-md-0">
+                            <a href="@link_tar_1" class="h5 font-weight-bold ">@item.Name</a>
+                        </div>
+                        <div class="col-md-9 col-12 d-lg-flex justify-content-lg-end align-self-center">
+                            @{ 
+                                var list_zone_second = zone_tree_view.Where(r => r.ParentId == item.Id).ToList();
+                                var zone_second_first = list_zone_second.FirstOrDefault();
+                                var zone_query_first = 0;
+                                if (list_zone_second.Count() > 0)
+                                {
+                                    zone_query_first = list_zone_second.First().Id;
+                                }
+                                else
+                                {
+                                    zone_query_first = item.Id;
+                                }
+                                var item_filter = fp;
+                                
+                                item_filter.parentId = zone_query_first;
+                            }
+
+                            <div class="menu-op align-self-lg-start mr-lg-3">
+                                <!--menu mobile-->
+                                <div class="d-flex flex-wrap d-lg-none">
+
+                                    @for (int i = 0; i < list_zone_second.Count(); i++)
+                                    {
+                                        var link_target = "javascript:void(0)";
+                                        <a href="@link_target" class="link-view-more font-weight-normal mr-3 select-zone-filterd @(i==0?"active":"")" data-id="@list_zone_second[i].Id">@list_zone_second[i].Name</a>
+                                    }
+                                </div>
+                                <!--menu mobile end-->
+                                <!--menu pc-->
+                                <div class="swiper-container d-none d-lg-block">
+                                    <!-- Additional required wrapper -->
+                                    <div class="swiper-wrapper">
+                                        <!-- Slides -->
+                                        @foreach (var item_1 in list_zone_second)
+                                        {
+                                            var link_taget = "javascript:void(0)";
+                                            <div class="swiper-slide">
+                                                <div>
+                                                    <a href="@link_taget" class="link-view-more font-weight-normal select-zone-filterd" data-id="@item_1.Id">@Html.Raw(UIHelper.CutLine(item_1.Name, 16, 3))</a>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                                <!--menu pc end-->
+                            </div>
+
+                            @*<a href="" class="link-view-more font-weight-normal mr-3">Sàn gỗ Việt Nam</a>
+                                <a href="" class="link-view-more font-weight-normal mr-3">Sàn gỗ Hàn Quốc</a>
+                                <a href="" class="link-view-more font-weight-normal mr-3">Sàn gỗ Đức</a>
+                                <a href="" class="link-view-more font-weight-normal mr-3">Sàn gỗ cốt xanh</a>*@
+                            <div class=" align-self-center  ">
+                                <a href="javascript:void(0)" class="link-view-more font-weight-normal view-more view-more-filter" data-skip="9" data-size="" data-id="">Xem thêm <span class="tong_so_sp"></span> sản phẩm</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="_binding_product">
+                        @await Component.InvokeAsync("FilterSpectificationInZoneProductList", new { fp = item_filter })
+                    </div>
+
+
+                </div>
+
+            </div>
+            <div class="text-center ">
+                <a href="javascript:void(0)" class="btn btn-outline-view-more button-view-more" data-skip="9" data-size="" data-id="">Xem thêm<i class="fas fa-chevron-down ml-2 "></i></a>
+            </div>
+        </div>
+    </section>
+
+}

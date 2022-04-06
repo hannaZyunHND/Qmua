@@ -1,0 +1,61 @@
+﻿@using PhamGiaLandingPage.Web.Services.Product.ViewModel
+@using PhamGiaLandingPage.Web.Services.Promotion.ViewModel
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+@using  PhamGiaLandingPage.Web.Utility
+@inject ICookieUtility cookieUtility
+@using Utils
+@{
+    var culture = Context.Features.Get<IRequestCultureFeature>().RequestCulture.Culture.TwoLetterISOLanguageName.ToLower();
+    var culture_code = Context.Features.Get<IRequestCultureFeature>().RequestCulture.Culture.ToString();
+    var base_uri_culture = "/" + culture;
+    var domain = Context.Request.Host.ToString();
+    var cookie_location = cookieUtility.SetCookieDefault();
+    var location_id = cookie_location.LocationId;
+    var location_name = cookie_location.LocationName;
+    var total_price = ViewBag.TotalPrice;
+}
+
+@model List<ProductMinify>;
+<div id="total-price-dropdown-cart" style="display:none" data-price="@total_price"></div>
+@foreach(var item in Model)
+{
+    var link_tar = string.Format("/{0}.html", item.Url);
+    var dom_id = "item-dropdown-cart" + item.ProductId;
+    <div class="item-cart" id="@dom_id" data-id="@item.ProductId">
+        <div class="image-product  ">
+            <img asp-append-version="true" src="@UIHelper.StoreFilePath(item.Avatar)" class="" alt="@item.Title"/>
+        </div>
+        <div class="text px-2 ">
+            <h6 class="name-product mb-1"><a href="@link_tar">@item.Title</a></h6>
+            @if (item.FlashSaleId > 0)
+            {
+                <div class="price">@UIHelper.FormatNumber(item.ProductPriceInFlashSale)</div>
+            }
+            else
+            {
+                <div class="price">@UIHelper.FormatNumber(item.SalePrice)</div>
+            }
+
+            <div class="d-flex">
+                <label class="mb-0 color-828282 mr-4">Số lượng</label>
+                <div class="group-amount d-flex align-self-center">
+                    <button class="btn small-cart-minus" type="button">
+                        <i class="fas fa-minus" aria-hidden="true"></i>
+                    </button>
+                    <span class="color-EE7D22 small-cart-quantity">0</span>
+                    <button class="btn small-cart-plus" type="button">
+                        <i class="fas fa-plus" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="del">
+            <button class="btn btn-link small-cart-delte">Xóa</button>
+        </div>
+    </div>
+}
+
+

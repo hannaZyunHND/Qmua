@@ -1,0 +1,312 @@
+﻿@using MI.Entity.Enums;
+@using TemplateKAO.Services.Zone.ViewModal
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Http
+@using TemplateKAO.Services.Article.Repository
+@inject IHttpContextAccessor HttpContextAccessor
+@inject IArticleRepository articleRepository;
+@using Utils
+@using TemplateKAO.Services.BannerAds.Repository
+@using MI.Entity.Models
+@inject IBannerAdsRepository bannerAdsRepository;
+@{
+    var culture = Context.Features.Get
+<IRequestCultureFeature>().RequestCulture.Culture.TwoLetterISOLanguageName.ToLower();
+    var culture_code = Context.Features.Get
+	<IRequestCultureFeature>().RequestCulture.Culture.ToString();
+    var base_uri_culture = "/" + culture;
+    var domain = Context.Request.Host.ToString();
+}
+@{
+    ViewData["Title"] = "BlogList1";
+    Layout = "~/Views/Shared/_LayoutPublicHome.cshtml";
+    var blog_zone_parent = ViewBag.ZoneParent as ZoneByTreeViewMinify;
+    var list_zone_chlids = ViewBag.ZoneChilds as List
+		<ZoneByTreeViewMinify>;
+
+    var Banner_Blog = new DetailBanerAds();
+    var Banner_Blog_Cache = bannerAdsRepository.GetBannerAds_By_Code(culture_code, "Banner_Blog");
+    if (Banner_Blog_Cache != null)
+    {
+        Banner_Blog = Newtonsoft.Json.JsonConvert.DeserializeObject
+			<DetailBanerAds>(Banner_Blog_Cache.MetaData);
+    }
+}
+
+@section styles {
+    
+				<style type="text/css">
+                    .banner-page {
+                        background: url(@UIHelper.StoreFilePath(Banner_Blog.Image)) no-repeat center;
+                        min-height: 200px;
+                        background-size: cover;
+                        display: flex;
+                    }
+                </style>
+
+}
+				<div class="banner-page py-3 mb-4">
+					<div class="container align-self-center">
+						<div class="row justify-content-center">
+							<div class="col-sm-10 col-12 ">
+								<h1 class="text-center">@blog_zone_parent.Name</h1>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="container">
+					<div class="row flex-md-row-reverse">
+						<div class="col-xl-3 col-lg-3 col-md-4 col-sm-12 col-12">
+                            @await Component.InvokeAsync("MenuRightBlog")
+                        </div>
+						<div class="col-xl-9 col-lg-9 col-md-8 col-sm-12 col-12">
+							<div class="blog-video mb-4">
+								<div class="heading pb-2 border-bottom mb-3 d-flex">
+									<div class="h5 font-weight-600 mb-0 ">
+										<img asp-append-version="true" src="images/video-icon.svg" class="img-fluid mr-2" /> Video
+									</div>
+									<div class="ml-auto">
+										<a href="" class="link-view-more">
+                                            Xem thêm 
+											<i class="fas fa-chevron-right ml-1 small"></i>
+										</a>
+									</div>
+								</div>
+								<div class="slide-video">
+									<div class="swiper-container">
+										<!-- Additional required wrapper -->
+										<div class="swiper-wrapper">
+											<!-- Slides -->
+                                            @{
+                                                var total_news_video = 0;
+                                                var list_news_video = articleRepository.GetArticlesInZoneId_Minify_FullFilter(0, (int)TypeZone.AllButProduct, (int)TypeArticle.Video, 2, culture_code, "", 1, 10, out total_news_video);
+                                                foreach (var item in list_news_video)
+                                                {
+                                                    <div class="swiper-slide">
+                                                        <div class="item">
+                                                            <iframe width="100%" height="150" src="@UIHelper.ConvertLinkYoutubeVideo(item.Description)"
+                                                            frameborder="0"
+                                                            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                                            allowfullscreen></iframe>
+                                                            <h5 class="title">
+                                                                <a href="javascript:void(0)" title="@item.Title">@item.Title</a>
+                                                            </h5>
+                                                            <div class="time">
+                                                        @item.CreatedDate.ToString("dd/MM/yyyy hh:mm");
+                                                    </div>
+                                                        </div>
+                                                    </div>
+                                                }
+                                            }
+										</div>
+									</div>
+								</div>
+							</div>
+                            @for (int i = 0; i < list_zone_chlids.Count; i += 2)
+                                {
+                            var link_target_1 = string.Format("{0}/{1}.b{2}.html", base_uri_culture, list_zone_chlids[i].Url, list_zone_chlids[i].Id);
+                            var total_1 = 0;
+                            var list_article_in_zone_1 = articleRepository.GetArticlesInZoneId_Minify_FullFilter(list_zone_chlids[i].Id, (int)TypeZone.Article, (int)TypeArticle.Blog, 2, culture_code, "", 1, 6, out total_1);
+							<div class="blogs-home blogs-home-tn mb-4">
+								<div class="heading pb-2 border-bottom mb-3 d-flex">
+									<h5 class="title font-weight-600 mb-3 mb-lg-0 d-inline-block mr-4 ">@list_zone_chlids[i].Name</h5>
+									<div class="review d-inline-block color-EE7D22">
+                            @await Component.InvokeAsync("RatingStar", new { object_id = list_zone_chlids[i].Id, object_type = (int)TypeRating.ArticleCategory, hTag = "" })
+                        </div>
+                                @if (total_1 > 5)
+                                {
+                            
+									<div class="ml-auto">
+										<a href="@link_target_1" class="link-view-more">
+                                    Xem thêm 
+											<i class="fas fa-chevron-right ml-1 small"></i>
+										</a>
+									</div>
+                                    }
+								</div>
+								<div class="row">
+									<div class="col-xl-7 col-md-6 col-sm-12 col-12">
+                                        @if (list_article_in_zone_1 != null)
+                                        {
+                                            var first = list_article_in_zone_1.FirstOrDefault();
+                                            if (first != null)
+                                            {
+                                                var links = string.Format("{0}/{1}.a{2}.html", base_uri_culture, first.Url, first.Id);
+                                                    <div class="item">
+                                                        <div class="image">
+                                                            <a href="@links" title="@first.Title">
+                                                                <img asp-append-version="true" src="@UIHelper.StoreFilePath(first.Avatar, false)" class="img-fluid"
+                                                                    alt="@first.Title" />
+                                                            </a>
+                                                        </div>
+                                                        <a href="@links" title="@first.Title" class="">
+                                                            <h6 class="title  mt-3 ">
+                                                            @first.Title
+                                                        </h6>
+                                                        </a>
+                                                        <div class="des">
+                                                            @Html.Raw(first.Description)
+                                                        </div>
+                                                    </div>
+                                            }
+                                        }
+									</div>
+                                    @{var after_first = list_article_in_zone_1.Skip(1); }
+                                                <div class="col-xl-5 col-md-6 col-sm-12 col-12 pl-md-0">
+                                                    <div class="list-right">
+                                                        @foreach (var item in after_first)
+                                                        {
+                                                            var links = string.Format("{0}/{1}.a{2}.html", base_uri_culture, item.Url, item.Id);
+                                                                <div class="item">
+                                                                    <div class="row">
+                                                                        <div class="col-xl-3 col-md-4 col-sm-3 col-3 pr-0">
+                                                                            <div class="image">
+                                                                                <a href="@links" title="@item.Title">
+                                                                                    <img asp-append-version="true" src="@UIHelper.StoreFilePath(item.Avatar)"
+                                                                                class="img-fluid" alt="@item.Title" />
+                                                                                </a>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-xl-9 col-md-8 col-sm-9 col-9 ">
+                                                                            <h6 class="title">
+                                                                                <a href="@links" title="@item.Title">
+                                                                            @item.Title
+                                                                        </a>
+                                                                            </h6>
+                                                                            <div class="time">
+                                                                        @item.CreatedDate.ToString("dd/MM/yyyy");
+                                                                    </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                            @if (i + 1 < list_zone_chlids.Count)
+                            {
+                                var link_target_2 = "javascript:void(0)";
+                                var total_2 = 0;
+                                //var list_article_in_zone_1 = articleRepository.GetArticlesInZoneId_Minify_FullFilter(list_zone_chlids[i].Id, (int)TypeZone.Article,(int)TypeArticle.Blog,2, culture_code, "", 1, 6, out total_1);
+                                var list_article_in_zone_2 = articleRepository.GetArticlesInZoneId_Minify_FullFilter(list_zone_chlids[i + 1].Id, (int)TypeZone.Article, (int)TypeArticle.Blog, 2, culture_code, "", 1, 5, out total_2);
+
+							<div class="blog-ss-3">
+								<div class="heading pb-2 border-bottom mb-3 d-flex">
+									<h5 class="title font-weight-600 mb-3 mb-lg-0 d-inline-block mr-4 ">@list_zone_chlids[i + 1].Name</h5>
+									<div class="review d-inline-block color-EE7D22">
+
+                                @await Component.InvokeAsync("RatingStar", new { object_id = list_zone_chlids[i + 1].Id, object_type = (int)TypeRating.ArticleCategory, hTag = "" })
+                            </div>
+                            @if (total_2 > 5)
+                            {
+                                <div class="ml-auto">
+                                    <a href="@link_target_2" class="link-view-more">
+                                    Xem thêm 
+                                        <i class="fas fa-chevron-right ml-1 small"></i>
+                                    </a>
+                                </div>
+                            }
+								</div>
+								<div class="row justify-content-center mb-4">
+                                    @{ var part_1 = list_article_in_zone_2.Skip(0).Take(2);
+                                        var part_2 = list_article_in_zone_2.Skip(2);
+                                    }
+                                    @foreach (var p1 in part_1)
+                                    {
+                                        var link_p1 = string.Format("{0}/{1}.a{2}.html", base_uri_culture, p1.Url, p1.Id);
+                                        
+                                            <div class="col-xl-6 col-sm-6 col-12">
+                                                <div class="item-blog-km">
+                                                    <div class="image mb-3">
+                                                        <a href="@link_p1">
+                                                            <img asp-append-version="true" src="@UIHelper.StoreFilePath(p1.Avatar, false)" class="img-fluid"
+                                                            alt="@p1.Title" />
+                                                        </a>
+                                                    </div>
+                                                    <div class="">
+                                                        <h5 class="title">
+                                                            <a href="@link_p1" title="@p1.Title">@p1.Title</a>
+                                                        </h5>
+                                                    </div>
+                                                    <div class="tag-time"></div>
+                                                </div>
+                                            </div>
+                                    }
+                                    @foreach (var p2 in part_2)
+                                    {
+                                        var link_p2 = string.Format("{0}/{1}.a{2}.html", base_uri_culture, p2.Url, p2.Id);
+                                        
+                                            <div class="col-xl-4 col-sm-4 col-12">
+                                                <div class="item-blog-km">
+                                                    <div class="image mb-3">
+                                                        <a href="@link_p2">
+                                                            <img asp-append-version="true" src="@UIHelper.StoreFilePath(p2.Avatar)" class="img-fluid"
+                                                            alt="@p2.Title" />
+                                                        </a>
+                                                    </div>
+                                                    <div class="">
+                                                        <h5 class="title h6">
+                                                            <a href="@link_p2" title="@p2.Title">@p2.Title</a>
+                                                        </h5>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                    }
+								</div>
+							</div>
+                }
+
+            }
+							<!--Gửi Comment-->
+                @await Component.InvokeAsync("Comment", new { object_id = blog_zone_parent.Id, object_type = (int)CommentType.ArticleZone })
+        
+						</div>
+					</div>
+				</div>
+				<section class="service-home py-3">
+					<div class="container">
+						<div class="row">
+							<div class="col-xl-4 col-md-4 col-sm-4 col-12">
+								<div class="d-flex py-3 justify-content-center">
+									<div class="image align-self-center">
+										<img asp-append-version="true" src="~/images/shipment-international.svg" class="img-fluid" />
+									</div>
+									<div class="px-3 align-self-center">
+										<label>Vận chuyển</label>
+                                    <div class="small">
+                                    Free shipping on all order
+                                </div>
+									</div>
+								</div>
+							</div>
+							<div class="col-xl-4 col-md-4 col-sm-4 col-12">
+								<div class="d-flex py-3 justify-content-center">
+									<div class="image align-self-center">
+										<img asp-append-version="true" src="~/images/professions-man-telecommunicator.svg" class="img-fluid" />
+									</div>
+									<div class="px-3 align-self-center">
+										<label>Support 24/7</label>
+										<div class="small">
+                            Chúng tôi hỗ trợ bạn 24/7
+                        </div>
+									</div>
+								</div>
+							</div>
+							<div class="col-xl-4 col-md-4 col-sm-4 col-12">
+								<div class="d-flex py-3 justify-content-center">
+									<div class="image align-self-center">
+										<img asp-append-version="true" src="~/images/saving-piggy-dollars.svg" class="img-fluid" />
+									</div>
+									<div class="px-3 align-self-center">
+										<label>Dịch vụ đổi trả hàng</label>
+										<div class="small">
+                            Đổi trả hàng trong vòng 7 ngày
+                        </div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</section>

@@ -1,0 +1,93 @@
+﻿USE [JanHome_db]
+GO
+/****** Object:  StoredProcedure [dbo].[Create_Product]    Script Date: 12/19/2018 10:37:43 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [dbo].[Create_Articles] @Title nvarchar(250),
+                                         @Description nvarchar(max),
+                                         @Body ntext,
+                                         @Avatar nvarchar(500),
+                                         @Author nvarchar(500),
+                                         @Status tinyint,
+                                         @Source nvarchar(300),
+                                         @Type tinyint,
+                                         @LastModifiedDate datetime,
+                                         @DistributionDate datetime,
+                                         @CreatedBy varchar(200),
+                                         @LastModifiedBy varchar(200),
+                                         @PublishedBy varchar(200),
+                                         @WordCount int,
+                                         @Url varchar(50),
+                                         @LikeCount int,
+                                         @MetaKeyword nvarchar(255),
+                                         @MetaDescription nvarchar(255),
+                                         @MetaTitle nvarchar(255),
+                                         @SocialTitle nvarchar(255),
+                                         @SocialDescription nvarchar(500),
+                                         @SocialImage nvarchar(255),
+                                         @LanguageCode nchar(10),
+                                         @ZoneIds varchar(50),
+                                         @ProductIds varchar(50),
+                                         @id int output
+AS
+BEGIN
+    SET NOCOUNT ON;
+    set xact_abort on;
+    begin tran
+        begin try
+            insert into Article(Title, Description, Body, Avatar, Author, Status, Source, Type,CreatedDate, LastModifiedDate,
+                                DistributionDate, CreatedBy, LastModifiedBy, PublishedBy, WordCount, Url, LikeCount,
+                                MetaKeyword, MetaDescription, MetaTitle, SocialTitle, SocialDescription,
+                                SocialImage, LanguageCode)
+            values (@Title,
+                    @Description,
+                    @Body,
+                    @Avatar,
+                    @Author,
+                    @Status,
+                    @Source,
+                    @Type,
+                    getdate(),
+                    @LastModifiedDate,
+                    @DistributionDate,
+                    @CreatedBy,
+                    @LastModifiedBy,
+                    @PublishedBy,
+                    @WordCount,
+                    @Url,
+                    @LikeCount,
+                    @MetaKeyword,
+                    @MetaDescription,
+                    @MetaTitle,
+                    @SocialTitle,
+                    @SocialDescription,
+                    @SocialImage,
+                    @LanguageCode)
+            set @id = SCOPE_IDENTITY()
+
+
+            delete from ArticlesInZone where ArticleId = @id
+
+            insert into ArticlesInZone
+            select @id as ArticleId, cast(String as int) as ZoneId, 1
+            from ufn_CSVToTable(@ZoneIds, ',')
+
+            delete from ProductInArticle where ArticleId = @id
+
+            insert into ProductInArticle
+            select @id as ArticleId, cast(String as int) as ProductId, 1
+            from ufn_CSVToTable(@ProductIds, ',')
+            commit
+        end try
+        begin catch
+            rollback
+            DECLARE @ErrorMessage VARCHAR(2000)
+            SELECT @ErrorMessage = N'Lỗi: ' + ERROR_MESSAGE()
+            RAISERROR (@ErrorMessage, 16, 1)
+        end catch
+
+
+END

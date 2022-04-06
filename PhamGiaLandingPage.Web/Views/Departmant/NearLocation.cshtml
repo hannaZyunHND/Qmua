@@ -1,0 +1,229 @@
+﻿@{
+    ViewData["Title"] = "NearLocation";
+    Layout = "~/Views/Shared/_LayoutPublicHome.cshtml";
+    //var promotions = ViewBag.Promotions as List<PromotionViewModel>;
+}
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="bg-map position-relative">
+                <div class="box-list-stores col-xl-3 col-lg-3 col-md-5 col-sm-6 col-12 px-0 p-md-3">
+                    <h6 class="title">Janhome tại địa phương bạn</h6>
+                    <div class="mb-3">Hãy tìm Janhome tại địa phương bạn</div>
+                    <div class="search-comment mb-3">
+                        <input class="form-control " type="text" placeholder="Search">
+                        <i class="fas fa-search" aria-hidden="true"></i>
+                    </div>
+                    <div class="mb-3">
+                        <div class="d-inline-block mr-3">Khoảng cách</div>
+                        <label class="label-checkbox ">
+                            500m
+                            <input type="checkbox" checked="checked">
+                            <span class="checkmark"></span>
+                        </label>
+                        <label class="label-checkbox ">
+                            1km
+                            <input type="checkbox">
+                            <span class="checkmark"></span>
+                        </label>
+                        <label class="label-checkbox ">
+                            2km
+                            <input type="checkbox">
+                            <span class="checkmark"></span>
+                        </label>
+                        <label class="label-checkbox ">
+                            3km
+                            <input type="checkbox">
+                            <span class="checkmark"></span>
+                        </label>
+                        <label class="label-checkbox ">
+                            5km
+                            <input type="checkbox">
+                            <span class="checkmark"></span>
+                        </label>
+                        <label class="label-checkbox ">
+                            10km
+                            <input type="checkbox">
+                            <span class="checkmark"></span>
+                        </label>
+                        <div>
+                            <a href="" class="link-view-more">
+                                Xem thêm <i class="fas fa-chevron-right ml-1 small"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <button class="btn btn-save  w-100 mb-3" onclick="expandListStore()">
+                        Xem tất cả các cửa hàng<i class="fas fa-chevron-down ml-auto float-right mt-1 small"></i>
+                    </button>
+                    <div class="list-add-store">
+                        <div class="item">
+                            <div class="name"><a href="">Janhome Long Biên</a></div>
+                            <div class="d-flex ">
+                                <div class="icon">
+                                    <img asp-append-version="true" src="images/icon-store-1.svg" class="img-fluid" />
+                                </div>
+                                <div class="text">
+                                    Số 3 Ngô Gia Tự, Phường Đức Giang, Q Long Biên, Hà Nội
+                                </div>
+                            </div>
+                            <div class="d-flex ">
+                                <div class="icon">
+                                    <img asp-append-version="true" src="images/icon-store-2.svg" class="img-fluid" />
+                                </div>
+                                <div class="text">
+                                    info@janco.com.vn
+                                </div>
+                            </div>
+                            <div class="d-flex">
+                                <div class="icon">
+                                    <img asp-append-version="true" src="images/icon-store-3.svg" class="img-fluid" />
+                                </div>
+                                <div class="text color-EE7D22 font-weight-600 ">
+                                    0939 63 22 33
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="name"><a href="">Janhome Long Biên</a></div>
+                            <div class="d-flex ">
+                                <div class="icon">
+                                    <img asp-append-version="true" src="images/icon-store-1.svg" class="img-fluid" />
+                                </div>
+                                <div class="text">
+                                    Số 3 Ngô Gia Tự, Phường Đức Giang, Q Long Biên, Hà Nội
+                                </div>
+                            </div>
+                            <div class="d-flex ">
+                                <div class="icon">
+                                    <img asp-append-version="true" src="images/icon-store-2.svg" class="img-fluid" />
+                                </div>
+                                <div class="text">
+                                    info@janco.com.vn
+                                </div>
+                            </div>
+                            <div class="d-flex">
+                                <div class="icon">
+                                    <img asp-append-version="true" src="images/icon-store-3.svg" class="img-fluid" />
+                                </div>
+                                <div class="text color-EE7D22 font-weight-600 ">
+                                    0939 63 22 33
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="name"><a href="">Janhome Long Biên</a></div>
+                            <div class="d-flex ">
+                                <div class="icon">
+                                    <img asp-append-version="true" src="images/icon-store-1.svg" class="img-fluid" />
+                                </div>
+                                <div class="text">
+                                    Số 3 Ngô Gia Tự, Phường Đức Giang, Q Long Biên, Hà Nội
+                                </div>
+                            </div>
+                            <div class="d-flex ">
+                                <div class="icon">
+                                    <img asp-append-version="true" src="images/icon-store-2.svg" class="img-fluid" />
+                                </div>
+                                <div class="text">
+                                    info@janco.com.vn
+                                </div>
+                            </div>
+                            <div class="d-flex">
+                                <div class="icon">
+                                    <img asp-append-version="true" src="images/icon-store-3.svg" class="img-fluid" />
+                                </div>
+                                <div class="text color-EE7D22 font-weight-600 ">
+                                    0939 63 22 33
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="name"><a href="">Janhome Long Biên</a></div>
+
+                            <div class="d-flex ">
+                                <div class="icon">
+                                    <img asp-append-version="true" src="images/icon-store-1.svg" class="img-fluid" />
+                                </div>
+                                <div class="text">
+                                    Số 3 Ngô Gia Tự, Phường Đức Giang, Q Long Biên, Hà Nội
+                                </div>
+                            </div>
+                            <div class="d-flex ">
+                                <div class="icon">
+                                    <img asp-append-version="true" src="images/icon-store-2.svg" class="img-fluid" />
+                                </div>
+                                <div class="text">
+                                    info@janco.com.vn
+                                </div>
+                            </div>
+                            <div class="d-flex">
+                                <div class="icon">
+                                    <img asp-append-version="true" src="images/icon-store-3.svg" class="img-fluid" />
+                                </div>
+                                <div class="text color-EE7D22 font-weight-600 ">
+                                    0939 63 22 33
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="name"><a href="">Janhome Long Biên</a></div>
+                            <div class="d-flex ">
+                                <div class="icon">
+                                    <img asp-append-version="true" src="images/icon-store-1.svg" class="img-fluid" />
+                                </div>
+                                <div class="text">
+                                    Số 3 Ngô Gia Tự, Phường Đức Giang, Q Long Biên, Hà Nội
+                                </div>
+                            </div>
+                            <div class="d-flex ">
+                                <div class="icon">
+                                    <img asp-append-version="true" src="images/icon-store-2.svg" class="img-fluid" />
+                                </div>
+                                <div class="text">
+                                    info@janco.com.vn
+                                </div>
+                            </div>
+                            <div class="d-flex">
+                                <div class="icon">
+                                    <img asp-append-version="true" src="images/icon-store-3.svg" class="img-fluid" />
+                                </div>
+                                <div class="text color-EE7D22 font-weight-600 ">
+                                    0939 63 22 33
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="name"><a href="">Janhome Long Biên</a></div>
+                            <div class="d-flex ">
+                                <div class="icon">
+                                    <img asp-append-version="true" src="images/icon-store-1.svg" class="img-fluid" />
+                                </div>
+                                <div class="text">
+                                    Số 3 Ngô Gia Tự, Phường Đức Giang, Q Long Biên, Hà Nội
+                                </div>
+                            </div>
+                            <div class="d-flex ">
+                                <div class="icon">
+                                    <img asp-append-version="true" src="images/icon-store-2.svg" class="img-fluid" />
+                                </div>
+                                <div class="text">
+                                    info@janco.com.vn
+                                </div>
+                            </div>
+                            <div class="d-flex">
+                                <div class="icon">
+                                    <img asp-append-version="true" src="images/icon-store-3.svg" class="img-fluid" />
+                                </div>
+                                <div class="text color-EE7D22 font-weight-600 ">
+                                    0939 63 22 33
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d59593.52765077088!2d105.79622393408064!3d21.008846544805813!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x313452d13bf0451f%3A0x8eda1639a41649a9!2zSkFOSE9NRSBIw6AgxJDDtG5n!5e0!3m2!1svi!2s!4v1583049506174!5m2!1svi!2s" width="100%" height="1000" frameborder="0" style="border:0;" allowfullscreen=""></iframe>
+            </div>
+        </div>
+    </div>
+</div>

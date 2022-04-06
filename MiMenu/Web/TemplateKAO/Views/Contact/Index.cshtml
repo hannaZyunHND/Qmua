@@ -1,0 +1,148 @@
+﻿@using TemplateKAO.Services.Product.Repository
+@using TemplateKAO.Services.Zone.Repository
+@using MI.Entity.Enums
+@using TemplateKAO.Services.BannerAds.Repository
+@using TemplateKAO.Services.Store.Repository
+@using TemplateKAO.Services.Locations.Repository
+@using TemplateKAO.Services.Store.ViewModel
+@using TemplateKAO.Services.Locations.ViewModal
+@using TemplateKAO.Services.FlashSale.Repository
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.AspNetCore.Http
+@using TemplateKAO.Services.Article.Repository
+@using Newtonsoft.Json
+@using TemplateKAO.Utility
+@using Microsoft.AspNetCore.Mvc.RazorPages
+@using MI.Entity.Models
+@using MI.Entity.Enums;
+@using TemplateKAO.Services.Zone.ViewModal
+@using TemplateKAO.Services.Zone.Repository
+@using TemplateKAO.Services.Article.ViewModel
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Http
+@using Microsoft.AspNetCore.Http.Extensions
+@using TemplateKAO.Services.Article.Repository
+@using TemplateKAO.Utility
+@using TemplateKAO.Services.Product.Repository
+@using TemplateKAO.Services.Zone.Repository
+@using MI.Entity.Enums
+@using TemplateKAO.Services.BannerAds.Repository
+@using TemplateKAO.Services.FlashSale.Repository
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.AspNetCore.Http
+@using TemplateKAO.Services.Article.Repository
+@using Newtonsoft.Json
+@using TemplateKAO.Utility
+@using Microsoft.AspNetCore.Mvc.RazorPages
+@using MI.Entity.Models
+@using TemplateKAO.Services.Extra.ViewModel
+@using TemplateKAO.Services.Extra.Repository
+@using Microsoft.AspNetCore.Http.Extensions
+@using TemplateKAO.Services.Product.Repository
+@using TemplateKAO.Services.Zone.Repository
+@using MI.Entity.Enums
+@using TemplateKAO.Services.BannerAds.Repository
+@using TemplateKAO.Services.FlashSale.Repository
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.AspNetCore.Http
+@using TemplateKAO.Services.Article.Repository
+@using TemplateKAO.Services.Extra.Repository
+@using Newtonsoft.Json
+@using TemplateKAO.Utility
+@using Microsoft.AspNetCore.Mvc.RazorPages
+@using MI.Entity.Models
+@using TemplateKAO.Services.Extra.ViewModel
+@using TemplateKAO.Services.Extra.Repository
+@using Microsoft.AspNetCore.Http.Extensions
+@inject IHttpContextAccessor HttpContextAccessor
+@inject ICookieUtility cookieUtility
+@inject IConfigSEOUtility configSEOUtility
+@inject IArticleRepository articleRepository
+@inject IBannerAdsRepository bannerAdsRepository
+@inject IStoreRepository storeRepository
+@inject ILocationsRepository locationsRepository
+@inject IViewLocalizer Localizer
+
+@using Utils
+@{
+    var culture = Context.Features.Get<IRequestCultureFeature>().RequestCulture.Culture.TwoLetterISOLanguageName.ToLower();
+    var culture_code = Context.Features.Get<IRequestCultureFeature>().RequestCulture.Culture.ToString();
+    var base_uri_culture = "/" + culture;
+    var domain = Context.Request.Host.ToString();
+
+    const string CookieLocationId = "_LocationId";
+    const string CookieLocationName = "_LocationName";
+    var cookie_location = cookieUtility.SetCookieDefault();
+    var location_id = cookie_location.LocationId;
+    var location_name = cookie_location.LocationName;
+    //string urlImages = "https://jhcms.migroup.asia/uploads";
+    //List<BannerAdsViewModel> lstBannerAds = new List<BannerAdsViewModel>();
+    //lstBannerAds = bannerAdsRepository.GetBannerAds(culture_code);
+    var northside_add = bannerAdsRepository.GetConfigByName(culture_code, "northside_address");
+    var northside_hotline = bannerAdsRepository.GetConfigByName(culture_code, "northside_hotline");
+    var northside_email = bannerAdsRepository.GetConfigByName(culture_code, "northside_email");
+    var southside_add = bannerAdsRepository.GetConfigByName(culture_code, "southside_address");
+    var southside_hotline = bannerAdsRepository.GetConfigByName(culture_code, "southside_hotline");
+    var southside_email = bannerAdsRepository.GetConfigByName(culture_code, "southside_email");
+    var maps = bannerAdsRepository.GetConfigByName(culture_code, "GoogleMap");
+    var tendn = bannerAdsRepository.GetConfigByName(culture_code, "Name");
+    var diachi = bannerAdsRepository.GetConfigByName(culture_code, "Address");
+
+}
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_LayoutPublicHome.cshtml";
+}
+<div class="lienhe__section1 uk-section" uk-height-viewport="offset-bottom: true">
+    <div class="uk-container">
+        <ul class="uk-breadcrumb mb-15 mb-37-m">
+            <li><a href="">@Localizer["Home"]</a></li>
+            <li><span>@Localizer["CONTACT"]</span></li>
+        </ul>
+        <div class="uk-child-width-1-2@m uk-grid-small uk-grid-50-m uk-flex-middle" uk-grid>
+            <div>
+                <div class="uk-cover-container">
+                    <iframe class="uk-position-cover" src="@maps" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                    <canvas width="1040" height="720"></canvas>
+                </div>
+            </div>
+            <form id="form-lien-he">
+                <div class="uk-text-center uk-margin home__boxCommon mb-40-m">
+                    <h2 class="uk-h2 uk-text-uppercase home__boxCommon__title">@Localizer["REGISTER FOR CONSULTATIONS"]</h2>
+                    <p class="uk-margin-remove home__boxCommon__desc">@Localizer["Let's"] @tendn @Localizer["Accompany your success"]</p>
+                </div>
+                <div class="uk-flex-center" uk-grid uk-scrollspy="target: .animation; cls: uk-animation-slide-bottom-small; delay: 500; repeat: false;">
+                    <div class="uk-width-1-1@m">
+                        <div class="uk-grid-small uk-grid-20-m uk-margin mb-40-m" uk-grid>
+                            <div class="uk-width-1-1">
+                                <input class="uk-input uk-border-rounded home__section02__input _lien_he_email" type="text" placeholder="Email">
+                            </div>
+                            <div class="uk-width-1-1">
+                                <input class="uk-input uk-border-rounded home__section02__input _lien_he_name" type="text" placeholder="@Localizer["Name"]">
+                            </div>
+                            <div class="uk-width-1-1">
+                                <input class="uk-input uk-border-rounded home__section02__input _lien_he_phone" type="text" placeholder="@Localizer["Phone"]">
+                            </div>
+                        </div>
+                        <div class="uk-text-center">
+                            <button type="submit" class="animation home__section02__btn uk-button uk-button-secondary uk-border-pill">@Localizer["CONTACT"]</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- -----------------EndChung---------------------- -->
+
+@section scripts{
+
+    @*<script type="text/javascript" src="~/js/libs/daterangepicker-master/daterangepicker.js" asp-append-version="true"></script>
+        <script type="text/javascript" src="~/js/libs/paginationjs/paginationJS.js" asp-append-version="true"></script>*@
+    <script type="text/javascript" asp-append-version="true" src="~/js/controller/contactController.js"></script>
+
+
+}

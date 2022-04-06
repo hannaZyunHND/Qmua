@@ -1,0 +1,40 @@
+﻿@using TemplateKAO.Services.BannerAds.Repository
+@using MI.Entity.Models
+@using TemplateKAO.Services.Product.Repository
+@using TemplateKAO.Services.Extra.Repository
+@using Microsoft.AspNetCore.Http
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Utils
+@inject IHttpContextAccessor HttpContextAccessor
+@using TemplateKAO.Utility
+@using TemplateKAO.Services.Product.ViewModel;
+@inject ICookieUtility cookieUtility
+@inject IConfigSEOUtility configSEOUtility
+@inject IProductRepository productRepository
+@inject IBannerAdsRepository bannerAdsRepository
+@inject IExtraRepository extraRepository
+@{
+    var cookie_location = cookieUtility.SetCookieDefault();
+    var location_id = cookie_location.LocationId;
+    var location_name = cookie_location.LocationName;
+    var culture = Context.Features.Get<IRequestCultureFeature>().RequestCulture.Culture.TwoLetterISOLanguageName.ToLower();
+    var culture_code = Context.Features.Get<IRequestCultureFeature>().RequestCulture.Culture.ToString();
+    var base_uri_culture = "/" + culture;
+    var domain = Context.Request.Host.ToString();
+    var total = (int)ViewBag.Total;
+    var pageSize = (int)ViewBag.Size;
+    var url = ViewBag.Url;
+    var pageIndex = 1;
+}
+@model List<ProductMinify>;
+@if (Model != null)
+{
+    foreach (var item in Model)
+    {
+        var link_tar = string.Format("/{0}.html", item.Url);
+        <div class="col-xl-2 col-lg-3 col-md-4 col-sm-4 col-6">
+            @await Component.InvokeAsync("ItemProduct", new { pr = item, isLazy = false })
+        </div>
+    }
+}

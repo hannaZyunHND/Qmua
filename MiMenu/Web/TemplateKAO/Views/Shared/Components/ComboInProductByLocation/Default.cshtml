@@ -1,0 +1,35 @@
+﻿@using TemplateKAO.Services.Product.ViewModel;
+@using Utils;
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+@using TemplateKAO.Utility
+@inject ICookieUtility cookieUtility
+@model List<ProductMinify>;
+@{
+    var culture = Context.Features.Get<IRequestCultureFeature>().RequestCulture.Culture.TwoLetterISOLanguageName.ToLower();
+    var culture_code = Context.Features.Get<IRequestCultureFeature>().RequestCulture.Culture.ToString();
+    var base_uri_culture = "/" + culture;
+    var domain = Context.Request.Host.ToString();
+    var cookie_location = cookieUtility.SetCookieDefault();
+    var location_id = cookie_location.LocationId;
+    var location_name = cookie_location.LocationName;
+}
+@{var count = 1; }
+
+@foreach (var item in Model)
+{
+    count++;
+    var link_target = string.Format("/{0}.html", item.Url);
+    <label class="label-checkbox d-flex">
+        <div class="image-product mr-2">
+            <img asp-append-version="true" src="~/@item.Avatar" class="" alt="@item.Title" />
+        </div>
+        <div class="align-self-center mr-2"><a href="@link_target" alt="@item.Title">@item.Title</a></div>
+        <div class="align-self-center font-weight-600 ml-auto nowrap combo-item-price">@UIHelper.FormatNumber(item.SalePrice) đ/m2</div>
+        <input class="choose_combo" data-sale-price="@item.SalePrice" type="checkbox" checked="checked">
+        <span class="checkmark"></span>
+    </label>
+
+}

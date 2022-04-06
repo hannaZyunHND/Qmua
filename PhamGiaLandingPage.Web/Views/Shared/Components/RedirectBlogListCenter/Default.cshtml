@@ -1,0 +1,135 @@
+﻿@using MI.Entity.Enums;
+@using PhamGiaLandingPage.Web.Services.Zone.ViewModal
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Http
+@using PhamGiaLandingPage.Web.Services.Article.Repository
+@using PhamGiaLandingPage.Web.Services.Zone.Repository
+@using PhamGiaLandingPage.Web.Utility
+@inject IHttpContextAccessor HttpContextAccessor
+@inject IArticleRepository articleRepository;
+@inject IZoneRepository zoneRepository;
+@model ZoneDetail;
+@using Utils
+@using System;
+@{
+    var index = (int)ViewBag.Index;
+    var size = (int)ViewBag.Size;
+    @* var size = 2; *@
+
+    var culture = Context.Features.Get<IRequestCultureFeature>().RequestCulture.Culture.TwoLetterISOLanguageName.ToLower();
+    var culture_code = Context.Features.Get<IRequestCultureFeature>().RequestCulture.Culture.ToString();
+    var path = Context.Request.Path.ToString().Split("/")[1];
+    var bvm = false;
+    var checker = "";
+    var id = Model.Id;
+    var flag = Model.Type;
+    if (path == "bai-viet-moi" || path == "blog")
+    {
+        bvm = true;
+        checker = "blog";
+        id = 0;
+        flag = (int)TypeZone.Article;
+    }
+    if (path == "du-an" || path == "du-an-moi")
+    {
+        bvm = false;
+        checker = "duan";
+        id = 0;
+        flag = (int)TypeZone.DuAn;
+    }
+
+
+    if (Model.Type == (int)TypeZone.DuAn)
+    {
+        checker = "duan";
+    }
+    if (Model.Type == (int)TypeZone.Article)
+    {
+        checker = "blog";
+    }
+
+    //var base_uri_culture = "/" + culture;
+    @* var base_uri_culture = "/"; *@
+    var domain = Context.Request.Host.ToString();
+    var total = 0;
+    var list_bai_viet = articleRepository.GetArticlesInZoneId_Minify_FullFilter(id, flag, (int)TypeArticle.All, 2, culture_code, "", index, size, out total);
+
+    var bai_viet_top = list_bai_viet.FirstOrDefault();
+    var bai_viet_con = list_bai_viet.Skip(1).Take(size - 1).ToList();
+
+
+}
+@{
+    Layout = null;
+    <div class="paging-container" style="display:none" data-total="@total" data-size="@size" data-currentpage="@index"></div>
+    @if (checker == "blog")
+    {
+        foreach (var item in list_bai_viet)
+        {
+            var link_tar = LinkRedirectUrlUtility.BlogDetailUrl(item.Url);
+            <div>
+                <div class="uk-cover-container blog__box1__bg">
+                    <img src="@UIHelper.StoreFilePath(item.Avatar)" alt="" uk-cover>
+                    <canvas width="720" height="582"></canvas>
+                    <div class="uk-display-inline-block uk-position-bottom-right blog__box1__catalog"><span>@item.ZoneName</span></div>
+                </div>
+                <div>
+                    <div class="uk-flex-middle uk-child-width-auto uk-flex-between uk-grid-collapse mb-10 mb-20-m" uk-grid>
+                        <div>
+                            <div class="uk-child-width-auto uk-flex-middle uk-grid-12" uk-grid>
+                                <div>
+                                    <div class="uk-cover-container uk-border-circle">
+                                        <img src="~/design/cooken-03-2021/images/lemanhhai_anhthe.jpg" alt="" uk-cover>
+                                        <canvas width="25" height="25"></canvas>
+                                    </div>
+                                </div>
+                                @* <div>
+                                    <span class="blog__box1__name">@item.Title</span>
+                                </div> *@
+                            </div>
+                        </div>
+                        <div>
+                            <ul class="uk-child-width-auto uk-grid-27 blog__subnav" uk-grid>
+                                <li><span class="blog__box1__name">@(DateTime.Now.DayOfYear - item.CreatedDate.DayOfYear) ngày trước</span></li>
+                                <li><span class="blog__box1__name">@item.ViewCount views</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <h5 class="uk-h5 blog__box1__title uk-margin-remove"><a href="@LinkRedirectUrlUtility.BlogDetailUrl(item.Url)">@Html.Raw(item.Title)</a></h5>
+                </div>
+            </div>
+        }
+    }
+    @if (checker == "duan")
+    {
+        @foreach (var item in list_bai_viet)
+        {
+            <div>
+                <div>
+                    <div class="blog__box1__bg duan__box1 uk-position-relative uk-overflow-hidden uk-inline-clip uk-transition-toggle" tabindex="0">
+                        <div class="uk-cover-container uk-transition-scale-up uk-transition-opaque">
+                            <a href="@LinkRedirectUrlUtility.BlogDetailUrl(item.Url)">
+                                <img src="@UIHelper.StoreFilePath(item.Avatar)" alt="" uk-cover>
+                                <canvas width="720" height="582"></canvas>
+
+                            </a>
+                        </div>
+                        <div class="duan__box1__overlay uk-transition-fade uk-position-cover uk-overlay uk-overlay-default uk-flex uk-flex-center uk-flex-middle">
+                            <div class="uk-text-center">
+                                @* <p class="duan__box1__title uk-h4 uk-margin-remove">@item.Title</p> *@
+                                <p class="duan__box1__desc">@Html.Raw(item.Title)</p>
+                                <a href="@LinkRedirectUrlUtility.BlogDetailUrl(item.Url)" class="home__section05__box1__btn uk-border-rounded uk-button uk-button-secondary animation uk-scrollspy-inview uk-animation-slide-bottom-small" style="">Xem thêm</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+
+
+    }
+}
+
+
+

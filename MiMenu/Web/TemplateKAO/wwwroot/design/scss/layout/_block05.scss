@@ -1,0 +1,28 @@
+.block05{
+  &__container-expand-right{
+    padding-right: 0;
+    max-width: calc(50% + (1200px / 2));
+  }
+  &__title{
+    @extend .fz-64;
+    font-family: $font-Roboto-Bold;
+    line-height: (61/64);
+    @include media-breakpoint-up('m'){
+      margin-bottom: 56px;
+    }
+  }
+  &__desc{
+    @extend .fz-20;
+    line-height: (90/4/20);
+    font-family: $font-Roboto-Bold;
+    @include media-breakpoint-up('m'){
+      margin-bottom: 60px;
+    }
+  }
+  &__btn{
+    @extend .fz-36;
+    font-family: $font-Roboto-Bold;
+    background: $color1 !important;
+    color: #ffffff !important;
+  }
+}

@@ -1,0 +1,52 @@
+.footer{
+  background: $color3;
+  &__title{
+    font-family: $font-Roboto-Bold;
+    @extend .fz-20;
+    position: relative;
+    padding-bottom: 10px;
+    &:after{
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      height: 2px;
+      width: 100%;
+      display: inline-block;
+      background: $color2;
+    }
+  }
+  &__list1{
+    >li{
+      @extend .footer__dc1;
+    }
+  }
+  &__list2{
+    >li{
+      >a{
+        @extend .footer__dc1;
+      }
+    }
+  }
+  &__list3{
+    >li{
+      >a{
+        color: $color2;
+      }
+    }
+  }
+  &__dc1{
+    @extend .fz-16;
+    letter-spacing: 0.002em;
+    color: #444444;
+  }
+  &__input{
+    color: #3864A5;
+    @extend .fz-16;
+  }
+  &__btn{
+    @extend .fz-19;
+    background: $color2;
+    font-family: $font-Roboto-Bold;
+  }
+}

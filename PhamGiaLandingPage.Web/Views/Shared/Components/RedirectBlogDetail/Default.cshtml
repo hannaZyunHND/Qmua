@@ -1,0 +1,384 @@
+﻿@using MI.Entity.Enums;
+@using PhamGiaLandingPage.Web.Services.Zone.ViewModal
+@using PhamGiaLandingPage.Web.Services.Zone.Repository
+@using PhamGiaLandingPage.Web.Services.Article.ViewModel
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Http
+@using Microsoft.AspNetCore.Http.Extensions
+@using PhamGiaLandingPage.Web.Services.Article.Repository
+@using PhamGiaLandingPage.Web.Utility
+@inject IHttpContextAccessor HttpContextAccessor
+@inject IArticleRepository articleRepository;
+@inject IZoneRepository zoneRepository;
+@using Utils
+@{
+    var culture = Context.Features.Get<IRequestCultureFeature>().RequestCulture.Culture.TwoLetterISOLanguageName.ToLower();
+    var culture_code = Context.Features.Get<IRequestCultureFeature>().RequestCulture.Culture.ToString();
+    var base_uri_culture = "/" + culture;
+    var domain = Context.Request.Host.ToString();
+    var domain_full = Context.Request.GetDisplayUrl();
+
+}
+@{
+    ViewData["Title"] = "BlogDetail";
+    //Layout = "~/Views/Shared/_LayoutPublicHome.cshtml";
+}
+@{
+    var blog_zone_parent = new ZoneByTreeViewMinify();
+    var detail = ViewBag.Detail as ArticleDetail;
+    var zone_id = detail.ZoneId;
+    var zone_target = (ZoneDetail)zoneRepository.GetZoneDetail(zone_id, culture_code);
+    var parent = zoneRepository.GetBreadcrumbByZoneId(zone_id, culture_code).Where(r => r.level == 0).FirstOrDefault();
+    if (parent != null)
+    {
+        blog_zone_parent = parent;
+    }
+    var list_zone_parent = zoneRepository.GetListZoneByParentId((int)TypeZone.AllButProduct, culture_code);
+    var title = detail.Title;
+
+    var metaData = Newtonsoft.Json.JsonConvert.DeserializeObject<ArticleRecruitment1>(detail.Metadata) ?? new ArticleRecruitment1();
+
+
+}
+@section styles {
+
+}
+@{
+    var zone_type = zone_target.Type;
+}
+
+
+@if (zone_type == (int)TypeZone.DuAn)
+{
+    <div class="uk-section detail-container blog-detail__section1 uk-background-norepeat uk-background-top-center" data-id="@detail.Id" data-src="/design/cooken-03-2021/~/design/cooken-03-2021/images/blog-detail/anhchim1.png" uk-img>
+        <div class="uk-container uk-container-small mb-15 mb-62-m">
+            <ul class="uk-breadcrumb mb-15 mb-60-m">
+                <li><a href="">Trang Chủ</a></li>
+
+                @{
+                    //var zone_type = zone_target.Type;
+                    if (zone_type == (int)TypeZone.DuAn)
+                    {
+                        <li><a href="">Dự Án</a></li>
+                    }
+                    if (zone_type == (int)TypeZone.Article)
+                    {
+                        <li><a href="">Bài viết</a></li>
+                    }
+                }
+                <li><span>@zone_target.Name</span></li>
+            </ul>
+            <h1 class="uk-h1 uk-text-center blog-detail__title uk-margin-remove">@detail.Title</h1>
+        </div>
+        <div class="uk-container mb-59-m mb-20">
+            <div class="uk-child-width-auto@s uk-flex-middle uk-grid-10 uk-grid-26-m mb-20 mb-47-m" uk-grid>
+                <div class="uk-width-auto">
+                    <img src="~/design/cooken-03-2021/images/icon/action/date_range_24px.png" alt="">
+                    <span class="duan-detail__box1__txt uk-text-middle">@detail.CreatedDate.ToString("dd/MM/yyyy")</span>
+                </div>
+                <div class="uk-width-auto">
+                    <img src="~/design/cooken-03-2021/images/icon/action/perm_identity_24px.png" alt="">
+                    <span class="duan-detail__box1__txt uk-text-middle">@detail.Author</span>
+                </div>
+                <div class="uk-width-auto">
+                    <img src="~/design/cooken-03-2021/images/icon/action/visibility_24px.png" alt="">
+                    <span class="duan-detail__box1__txt uk-text-middle">@detail.ViewCount</span>
+                </div>
+                <div>
+                    <div class="fb-like" data-href="https://developers.facebook.com/docs/plugins/" data-width="" data-layout="button_count" data-action="like" data-size="small" data-share="true"></div>
+                </div>
+            </div>
+            <div class="uk-grid-small uk-grid-38-m mb-20 mb-60-m" uk-grid>
+                <div class="uk-width-expand">
+                    <!--slide-->
+
+                    @{
+                        var avatarArray = metaData.AvatarArray.Split(",");
+                        if (avatarArray.Count() > 1)
+                        {
+                            <div class="slider-for uk-margin-small">
+                                @foreach (var i in avatarArray)
+                                {
+                                    <div>
+                                        <div class="uk-cover-container">
+                                            <img src="@UIHelper.StoreFilePath(i, false)" alt="" uk-cover>
+                                            <canvas width="740" height="540"></canvas>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        }
+
+                    }
+
+
+                    @if (avatarArray.Count() > 1)
+                    {
+                        <div class="slider-nav uk-margin-small">
+                            @foreach (var i in avatarArray)
+                            {
+                                <div class="uk-padding-small uk-padding-remove-top uk-padding-remove-bottom">
+                                    <div class="uk-cover-container">
+                                        <img src="@UIHelper.StoreFilePath(i)" alt="" uk-cover>
+                                        <canvas width="190" height="139"></canvas>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    }
+
+
+                    <!--/slide-->
+                    <article class="uk-article blog-detail__article">
+                        <figure>
+                            <img src="@detail.Avatar" alt="">
+                            <figcaption>@detail.Title</figcaption>
+                        </figure>
+                        @Html.Raw(detail.Body)
+                    </article>
+                </div>
+                <!--Aside-->
+                <div class="uk-width-1-3@@m">
+                    <div class="uk-card uk-card-default uk-card-body uk-margin duan-detail__box2">
+                        <h5 class="uk-h5 duan-detail__box4__title">THÔNG TIN DỰ ÁN</h5>
+                        <div>
+                            <div class="duan-detail__box4__item">
+                                <div class="duan-detail__box4__txt1">Khách hàng:</div>
+                                <div class="duan-detail__box4__txt2">@metaData.ttkh</div>
+                            </div>
+                            <div class="duan-detail__box4__item">
+                                <div class="duan-detail__box4__txt1">Khu vực:</div>
+                                <div class="duan-detail__box4__txt2">@metaData.ttdc</div>
+                            </div>
+                            <div class="duan-detail__box4__item">
+                                <div class="duan-detail__box4__txt1">Lĩnh Vực</div>
+                                <div class="duan-detail__box4__txt2">@metaData.ttlv</div>
+                            </div>
+                            <div class="duan-detail__box4__item">
+                                <div class="duan-detail__box4__txt1">Dịch Vụ Cung Cấp</div>
+                                <div class="duan-detail__box4__txt2">@metaData.ttdv</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="uk-card uk-card-default uk-card-body uk-margin duan-detail__box2">
+                        <form class="form-thu-thap">
+                            <fieldset class="uk-fieldset">
+                                <legend class="uk-legend duan-detail__box3__txt">Liên Hệ Ngay Để Được Tư Vấn</legend>
+                                <div class="uk-margin">
+                                    <div class="uk-width-1-1" uk-form-custom="target: > * > span:first-child">
+                                        <select class="select-thu-thap">
+                                            <option value="">Bạn muốn xây kế hoạch gì ?</option>
+                                            <option value="facebook">Facebook Marketing</option>
+                                            <option value="media_solution">Media Solution</option>
+                                            <option value="application_marketing">Application Marketing</option>
+                                            <option value="tiktok_marketing">Tiktok Marketing</option>
+                                        </select>
+                                        <button class="uk-button duan-detail__box3__select uk-button-default uk-width-1-1" type="button" tabindex="-1">
+                                            <span class="line-clamp-1"></span>
+                                            <span class="uk-position-center-right" uk-icon="icon: chevron-down"></span>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="uk-margin">
+                                    <input class="uk-input duan-detail__box3__input _lien_he_name" type="text" placeholder="Họ và tên">
+                                </div>
+                                <div class="uk-margin">
+                                    <input class="uk-input duan-detail__box3__input _lien_he_phone" type="text" placeholder="Số điện thoại">
+                                </div>
+                                <div class="uk-margin">
+                                    <input class="uk-input duan-detail__box3__input _lien_he_email" type="text" placeholder="Email">
+                                </div>
+                                <div class="uk-margin">
+                                    <textarea class="uk-textarea duan-detail__box3__input _lien_he_ghichu" rows="5" placeholder="Ghi chú"></textarea>
+                                </div>
+                                <div class="uk-text-center">
+                                    <button type="submit" class="uk-button duan-detail__box3__btn uk-button-secondary">Gửi</button>
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
+                <!--/Aside-->
+            </div>
+            <div>
+                <!--Rating-->
+                @{
+                    
+
+                    var dictionary = new Dictionary<int, double>();
+                    dictionary.Add(5, detail.Five_Star);
+                    dictionary.Add(4, detail.Four_Star);
+                    dictionary.Add(3, detail.Three_Star);
+                    dictionary.Add(2, detail.Two_Star);
+                    dictionary.Add(1, detail.One_Star);
+                }
+                @await Component.InvokeAsync("RatingStar", new { object_id = @detail.Id, object_type = (int)TypeRating.Article, hTag = "", dict = dictionary })
+                <!--Gửi Comment-->
+                @await Component.InvokeAsync("Comment", new { object_id = detail.Id, object_type = (int)CommentType.Article })
+
+                <!--Đánh giá end-->
+            </div>
+
+            <hr>
+            <div class="duan-detail__box9" uk-grid>
+                <script async defer crossorigin="anonymous" src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v10.0&appId=2323475157962564&autoLogAppEvents=1" nonce="RXTKaoeW"></script>
+                    <div class="fb-comments" data-href="@domain_full" data-width="100%" data-numposts="5"></div>
+                    <script>
+                        $(".fb-comments").attr("data-width", $(".fb-comments").parent().width());
+        $(window).on('resize', function () {
+            resizeiframe();
+        });
+
+    function resizeiframe() {
+        var src = $('.fb-comments iframe').attr('src').split('width='),
+            width = $(".fb-comments").parent().width();
+
+        $('.fb-comments iframe').attr('src', src[0] + 'width=' + width);
+    }
+                    </script>
+                
+            </div>
+        </div>
+    </div>
+}
+@if (zone_type != (int)TypeZone.DuAn)
+{
+    <div class="uk-section detail-container blog-detail__section1 uk-background-norepeat uk-background-top-center" data-id="@detail.Id" data-src="/design/cooken-03-2021/images/blog-detail/anhchim1.png" uk-img>
+        <div class="uk-container uk-container-small mb-15 mb-33-m">
+            <ul class="uk-breadcrumb mb-15 mb-55-m">
+                <li><a href="">Trang Chủ</a></li>
+                @{
+                    //var zone_type = zone_target.Type;
+                    if (zone_type == (int)TypeZone.DuAn)
+                    {
+                        <li><a href="">Dự Án</a></li>
+                    }
+                    if (zone_type == (int)TypeZone.Article)
+                    {
+                        <li><a href="">Bài viết</a></li>
+                    }
+                }
+                <li><span>@detail.Title</span></li>
+            </ul>
+            <div class="uk-flex-middle uk-child-width-auto mb-15 mb-60-m" uk-grid>
+                <div>
+                    <div class="uk-child-width-auto uk-flex-middle uk-grid-12" uk-grid>
+                        <div>
+                            <div class="uk-cover-container uk-border-circle">
+                                <img src="~/design/cooken-03-2021/images/lemanhhai_anhthe.jpg" alt="" uk-cover>
+                                <canvas width="25" height="25"></canvas>
+                            </div>
+                        </div>
+                        <div>
+                            <span class="blog__box1__name">@detail.Author</span>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <ul class="uk-child-width-auto uk-grid-27 blog__subnav" uk-grid>
+                        <li><span class="blog__box1__name">@(detail.CreatedDate.DayOfYear - DateTime.Now.DayOfYear) ngày trước</span></li>
+                        <li><span class="blog__box1__name">@detail.ViewCount views</span></li>
+                    </ul>
+                </div>
+            </div>
+            <h1 class="uk-h1 uk-text-center blog-detail__title mb-20 mb-40-m">@detail.Title</h1>
+            @*<div class="uk-text-center blog-detail__desc mb-20 mb-40-m">Nhiều nước châu Âu chuẩn bị áp đặt các biện pháp phong tỏa nghiêm ngặt, nhằm kiểm soát làn sóng dịch bệnh lần ba.</div>*@
+            <article class="uk-article blog-detail__article mb-20 mb-40-m">
+                @Html.Raw(detail.Body)
+            </article>
+            <div class="uk-section-xsmall blog-detail__box1 mb-20 mb-59-m">
+                <div class="uk-flex-middle uk-grid-small uk-grid-69-m" uk-grid>
+                    <div class="uk-width-auto@@m">
+                        <div class="uk-child-width-auto uk-grid-small uk-grid-26-m" uk-grid>
+                            <div><a href=""><img src="~/design/cooken-03-2021/images/blog-detail/instagram.png" alt=""></a></div>
+                            <div><a href=""><img src="~/design/cooken-03-2021/images/blog-detail/facebook.png" alt=""></a></div>
+                            <div><a href=""><img src="~/design/cooken-03-2021/images/blog-detail/twiter.png" alt=""></a></div>
+                            <div><a href=""><img src="~/design/cooken-03-2021/images/blog-detail/tiktok.png" alt=""></a></div>
+                        </div>
+                    </div>
+                    <div class="uk-width-expand">
+                        <div class="uk-child-width-auto uk-grid-small uk-grid-56-m" uk-grid>
+                            <div>
+                                <div class="uk-flex-middle uk-grid-7" uk-grid>
+                                    <div class="uk-width-auto">
+                                        <img src="~/design/cooken-03-2021/images/blog-detail/icon/action/visibility_24px.png" alt="">
+                                    </div>
+                                    <div class="uk-width-expand">
+                                        <span class="blog-detail__box1__txt">@detail.ViewCount</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="uk-flex-middle uk-grid-7" uk-grid>
+                                    <div class="uk-width-auto">
+                                        <img src="~/design/cooken-03-2021/images/blog-detail/icon/editor/mode_comment_24px.png" alt="">
+                                    </div>
+                                    <div class="uk-width-expand">
+                                        <span class="blog-detail__box1__txt">@detail.CommentCount</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="uk-width-auto">
+                        <div class="uk-flex-middle uk-grid-7" uk-grid>
+                            <div class="uk-width-auto">
+                                <img src="~/design/cooken-03-2021/images/blog-detail/icon/content/reply_24px.png" alt="">
+                            </div>
+                            <div class="uk-width-expand">
+                                <a href="" class="blog-detail__box1__link">Chia Sẻ</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <h2 class="uk-h2 blog-detail__title1 uk-margin-remove">Bài Viết Liên Quan</h2>
+        </div>
+        <div class="uk-container">
+            <div class="uk-child-width-1-3@@m mb-20 mb-40-m uk-grid-small uk-grid-20-m blog__grid" uk-grid>
+                @{
+                    var t = 0;
+                    var lsSame = articleRepository.GetArticlesInZoneId_Minify_FullFilter(zone_id, zone_type, (int)TypeArticle.All, 2, culture_code, "", 1, 3, out t);
+                    foreach (var item in lsSame)
+                    {
+                        <div>
+                            <div class="uk-cover-container blog__box1__bg">
+                                <img src="@UIHelper.StoreFilePath(item.Avatar)" alt="" uk-cover>
+                                <canvas width="720" height="582"></canvas>
+                                <div class="uk-display-inline-block uk-position-bottom-right blog__box1__catalog bai-viet-moi"><span>@detail.ZoneName</span></div>
+                            </div>
+                            <div>
+                                <div class="uk-flex-middle uk-child-width-auto uk-flex-between uk-grid-collapse mb-10 mb-20-m" uk-grid>
+                                    <div>
+                                        <div class="uk-child-width-auto uk-flex-middle uk-grid-12" uk-grid>
+                                            <div>
+                                                <div class="uk-cover-container uk-border-circle">
+                                                    <img src="~/design/cooken-03-2021/images/lemanhhai_anhthe.jpg" alt="" uk-cover>
+                                                    <canvas width="25" height="25"></canvas>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <span class="blog__box1__name">Cooker ADM</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <ul class="uk-child-width-auto uk-grid-27 blog__subnav" uk-grid>
+                                            <li><span class="blog__box1__name">@(item.CreatedDate.DayOfYear - DateTime.Now.DayOfYear) ngày trước</span></li>
+                                            <li><span class="blog__box1__name">@item.ViewCount views</span></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <h5 class="uk-h5 blog__box1__title uk-margin-remove"><a href="@LinkRedirectUrlUtility.BlogDetailUrl(item.Url)">@Html.Raw(UIHelper.TrimByWord(Html.Raw(item.Description), 20, "..."))</a></h5>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+}
+
+@section scripts {
+}

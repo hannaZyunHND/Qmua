@@ -1,0 +1,540 @@
+﻿@using PhamGiaLandingPage.Web.Services.Product.Repository
+@using PhamGiaLandingPage.Web.Services.Zone.Repository
+@using MI.Entity.Enums
+@using PhamGiaLandingPage.Web.Services.BannerAds.Repository
+@using PhamGiaLandingPage.Web.Services.FlashSale.Repository
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.AspNetCore.Http
+@using PhamGiaLandingPage.Web.Services.Article.Repository
+@using Newtonsoft.Json
+@using PhamGiaLandingPage.Web.Utility
+@using Microsoft.AspNetCore.Mvc.RazorPages
+@using MI.Entity.Models
+@using PhamGiaLandingPage.Web.Services.Extra.ViewModel
+@using PhamGiaLandingPage.Web.Services.Extra.Repository
+@using Microsoft.AspNetCore.Http.Extensions
+
+@inject IHttpContextAccessor HttpContextAccessor
+@inject ICookieUtility cookieUtility
+@inject IConfigSEOUtility configSEOUtility
+@inject IArticleRepository articleRepository
+@inject IBannerAdsRepository bannerAdsRepository
+@inject IFlashSaleRepository flashSaleRepository
+@inject IExtraRepository extraRepository
+@inject IZoneRepository zoneRepository
+
+@using Utils
+@{
+    var culture = Context.Features.Get<IRequestCultureFeature>().RequestCulture.Culture.TwoLetterISOLanguageName.ToLower();
+    var culture_code = Context.Features.Get<IRequestCultureFeature>().RequestCulture.Culture.ToString();
+    var base_uri_culture = "/" + culture;
+    var domain = Context.Request.Host.ToString();
+    var domain_full = Context.Request.GetDisplayUrl();
+
+    const string CookieLocationId = "_LocationId";
+    const string CookieLocationName = "_LocationName";
+    var cookie_location = cookieUtility.SetCookieDefault();
+    var location_id = cookie_location.LocationId;
+    var location_name = cookie_location.LocationName;
+    //string urlImages = "https://jhcms.migroup.asia/uploads";
+    //List<BannerAdsViewModel> lstBannerAds = new List<BannerAdsViewModel>();
+    //lstBannerAds = bannerAdsRepository.GetBannerAds(culture_code);
+    //var Slide_Trangchu_Tren = new List<DetailBanerAds>();
+    //var Stem_Trangchu = new List<DetailBanerAds>();
+    //var Banner_Trangchu_Tren_Nho2 = new DetailBanerAds();
+    //var Banner_Trangchu_Tren_Nho1 = new DetailBanerAds();
+    //var Banner_Trangchu_body_tren_Trai_1 = new DetailBanerAds();
+    //var Banner_Trangchu_body_tren_Phai_1 = new DetailBanerAds();
+    //var Slide_Body = new List<DetailBanerAds>();
+    //var SlideFootter = new List<DetailBanerAds>();
+    //var Stem_Chantrang = new List<DetailBanerAds>();
+    //var Banner_Chantrang = new DetailBanerAds();
+    //var VungHienThi_TrangChu_Tren_Phai = new List<DetailBanerAds>();
+
+
+    ////VungHienThi_TrangChu_Tren_Phai
+    //var VungHienThi_TrangChu_Tren_Phai_Cache = bannerAdsRepository.GetBannerAds_By_Code(culture_code, "VungHienThi_TrangChu_Tren_Phai");
+
+    //var Slide_Trangchu_Tren_Cahche = bannerAdsRepository.GetBannerAds_By_Code(culture_code, "Slide_Trangchu_Tren");
+    //var Stem_Trangchu_Cahche = bannerAdsRepository.GetBannerAds_By_Code(culture_code, "Stem_Trangchu");
+    //var Banner_Trangchu_Tren_Nho2_Cahche = bannerAdsRepository.GetBannerAds_By_Code(culture_code, "Banner_Trangchu_Tren_Nho2");
+    //var Banner_Trangchu_Tren_Nho1_Cahche = bannerAdsRepository.GetBannerAds_By_Code(culture_code, "Banner_Trangchu_Tren_Nho1");
+    //var Banner_Trangchu_body_tren_Trai_1_Cahche = bannerAdsRepository.GetBannerAds_By_Code(culture_code, "Banner_Trangchu_body_tren_Trai_1");
+    //var Banner_Trangchu_body_tren_Phai_1_Cahche = bannerAdsRepository.GetBannerAds_By_Code(culture_code, "Banner_Trangchu_body_tren_Phai_1");
+    //var Slide_Body_Cahche = bannerAdsRepository.GetBannerAds_By_Code(culture_code, "Slide_Body");
+    //var Slide_Body_Chan_Trang = bannerAdsRepository.GetBannerAds_By_Code(culture_code, "Slide_Body_Footter");
+    //var Stem_Chantrang_Cahche = bannerAdsRepository.GetBannerAds_By_Code(culture_code, "Stem_Chantrang");
+    //var Banner_Chantrang_Cahche = bannerAdsRepository.GetBannerAds_By_Code(culture_code, "Banner_Chantrang");
+
+
+    //if (VungHienThi_TrangChu_Tren_Phai_Cache != null)
+    //{
+    //    VungHienThi_TrangChu_Tren_Phai = JsonConvert.DeserializeObject<List<DetailBanerAds>>(VungHienThi_TrangChu_Tren_Phai_Cache.MetaData).Where(r => r.Show == true).ToList();
+    //}
+    //if (Slide_Trangchu_Tren_Cahche != null)
+    //{
+    //    Slide_Trangchu_Tren = JsonConvert.DeserializeObject<List<DetailBanerAds>>(Slide_Trangchu_Tren_Cahche.MetaData).Where(r => r.Show == true).ToList();
+    //}
+    //if (Stem_Trangchu_Cahche != null)
+    //{
+    //    Stem_Trangchu = JsonConvert.DeserializeObject<List<DetailBanerAds>>(Stem_Trangchu_Cahche.MetaData).Where(r => r.Show == true).ToList();
+    //}
+    //if (Banner_Trangchu_Tren_Nho2_Cahche != null)
+    //{
+    //    Banner_Trangchu_Tren_Nho2 = JsonConvert.DeserializeObject<DetailBanerAds>(Banner_Trangchu_Tren_Nho2_Cahche.MetaData);
+    //}
+    //if (Banner_Trangchu_Tren_Nho1_Cahche != null)
+    //{
+    //    Banner_Trangchu_Tren_Nho1 = JsonConvert.DeserializeObject<DetailBanerAds>(Banner_Trangchu_Tren_Nho1_Cahche.MetaData);
+    //}
+    //if (Banner_Trangchu_body_tren_Trai_1_Cahche != null)
+    //{
+    //    Banner_Trangchu_body_tren_Trai_1 = JsonConvert.DeserializeObject<DetailBanerAds>(Banner_Trangchu_body_tren_Trai_1_Cahche.MetaData);
+    //}
+    //if (Banner_Trangchu_body_tren_Phai_1_Cahche != null)
+    //{
+    //    Banner_Trangchu_body_tren_Phai_1 = JsonConvert.DeserializeObject<DetailBanerAds>(Banner_Trangchu_body_tren_Phai_1_Cahche.MetaData);
+    //}
+    //if (Slide_Body_Cahche != null)
+    //{
+    //    Slide_Body = JsonConvert.DeserializeObject<List<DetailBanerAds>>(Slide_Body_Cahche.MetaData).Where(r => r.Show == true).ToList();
+    //}
+    //if (Slide_Body_Chan_Trang != null)
+    //{
+    //    SlideFootter = JsonConvert.DeserializeObject<List<DetailBanerAds>>(Slide_Body_Chan_Trang.MetaData).Where(r => r.Show == true).ToList();
+    //}
+
+    //if (Stem_Chantrang_Cahche != null)
+    //{
+    //    Stem_Chantrang = JsonConvert.DeserializeObject<List<DetailBanerAds>>(Stem_Chantrang_Cahche.MetaData).Where(r => r.Show == true).ToList();
+    //}
+    //if (Banner_Chantrang_Cahche != null)
+    //{
+    //    Banner_Chantrang = JsonConvert.DeserializeObject<DetailBanerAds>(Banner_Chantrang_Cahche.MetaData);
+    //}
+
+    var title = bannerAdsRepository.GetConfigByName(culture_code, "TitleHome");
+    var DesWeb = bannerAdsRepository.GetConfigByName(culture_code, "DesWeb");
+    var MetaKeyword = bannerAdsRepository.GetConfigByName(culture_code, "MetaKeyword");
+    var FacebookAppId = bannerAdsRepository.GetConfigByName(culture_code, "FacebookAppId");
+    var SEOGoogle = bannerAdsRepository.GetConfigByName(culture_code, "SeoPhoto");
+    //var FacebookAppId = bannerAdsRepository.GetConfigByName(culture_code, "FacebookAppId ");
+}
+@inject IProductRepository productRepository
+@inject IZoneRepository zoneRepository
+@{
+    //ViewData["Title"] = "IndexPublic";
+    Layout = "~/Views/Shared/_LayoutPublicHome.cshtml";
+}
+@section styles{
+    @Html.Raw(configSEOUtility.ConfigSocialMeta("default appID", domain_full, title, DesWeb, SEOGoogle))
+    @Html.Raw(configSEOUtility.ConfigMeta(title, DesWeb, MetaKeyword))
+}
+
+@*<cache expires-after="@TimeSpan.FromMinutes(5)">*@
+@*<cache expires-after="@TimeSpan.FromMinutes(30)" vary-by-cookie=".AspNetCore.Culture, _LocationId">*@
+<!--Banner-->
+@{
+    var banner_chu = bannerAdsRepository.GetBannerAds_By_Code(culture_code, "Cooken_TrangChu_Banner");
+    if (banner_chu != null)
+    {
+        var bn = Newtonsoft.Json.JsonConvert.DeserializeObject<DetailBanerAds>(banner_chu.MetaData);
+        if (bn != null)
+        {
+            <div class="home__section05 uk-section uk-background-norepeat uk-background-bottom-center" uk-height-viewport="offset-top: true;" data-src="/design/cooken-03-2021/images/Background1.png" uk-img>
+                <div class="uk-container uk-container-small">
+                    <div class="uk-flex-middle uk-child-width-1-2@m uk-flex-right@m uk-position-relative" uk-grid uk-scrollspy="target: .animation; cls: uk-animation-slide-bottom-small; delay: 500; repeat: false;">
+                        <div class="" uk-toggle="cls: uk-position-center-left; mode: media; media: @@m">
+                            <div class="home__section05__box1">
+                                <h1 class="uk-h1 home__section05__box1__title uk-margin animation">
+                                    @bn.Title
+                                </h1>
+                                <div class="home__section05__box1__box uk-margin">
+                                    @Html.Raw(bn.Description)
+                                </div>
+                                <a href="" class="home__section05__box1__btn uk-border-rounded uk-button uk-button-secondary animation">Xem thêm</a>
+                            </div>
+                        </div>
+                        <div class="uk-width-3-5@m">
+                            <div class="home__section05__box1__img animation" uk-scrollspy-class="uk-animation-scale-up">
+                                <img src="@UIHelper.StoreFilePath(bn.Image, false)" alt="@bn.Title">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+}
+
+<!--/Banner-->
+
+@{
+    var gioi_thieu_cooken = bannerAdsRepository.GetBannerAds_By_Code(culture_code, "Cooken_TrangChu_GioiThieu");
+    if (gioi_thieu_cooken != null)
+    {
+        var gt = Newtonsoft.Json.JsonConvert.DeserializeObject<DetailBanerAds>(gioi_thieu_cooken.MetaData);
+        if (gt != null)
+        {
+            <div class="uk-section home__section06 uk-text-center uk-background-norepeat uk-background-top-center" data-src="/design/cooken-03-2021/images/bg2.png" uk-img>
+                <div class="uk-container uk-container-small">
+                    <div class="uk-text-center uk-margin home__boxCommon mb-28-m">
+                        <h2 class="uk-h2 uk-text-uppercase home__boxCommon__title">@gt.Title</h2>
+                    </div>
+                    <div class="uk-flex-center uk-margin mb-80-m" uk-grid>
+                        <div class="uk-width-3-5@m">
+                            <div class="uk-text-center">
+                                @Html.Raw(gt.Description)
+                            </div>
+                        </div>
+                    </div>
+                    <div><a href="/lien-he" class="uk-button home__section06__btn uk-border-rounded uk-button-default">LIÊN HỆ NGAY</a></div>
+                </div>
+            </div>
+        }
+    }
+}
+
+
+
+<!--DỊCH VỤ-->
+<div class="uk-section home__section07" uk-height-viewport="offset-bottom: false">
+    <div class="uk-container uk-container-small">
+        <div class="uk-text-center uk-margin home__boxCommon mb-40-m">
+            <h2 class="uk-h2 uk-text-uppercase home__boxCommon__title">DỊCH VỤ</h2>
+        </div>
+        @{
+            var dich_vu_cooken = bannerAdsRepository.GetBannerAds_By_Code(culture_code, "Cooken_TrangChu_DichVu");
+            if (dich_vu_cooken != null)
+            {
+                var gtc = Newtonsoft.Json.JsonConvert.DeserializeObject<List<DetailBanerAds>>(dich_vu_cooken.MetaData);
+                if (gtc != null)
+                {
+                    <ul class="uk-child-width-auto@m uk-margin mb-60-m uk-grid-small uk-grid-30-m uk-flex-center" uk-grid uk-switcher="connect: .my-class">
+                        @foreach (var item in gtc)
+                        {
+
+                            <li>
+                                <a href="" class="home__section07__box1__btn uk-button uk-button-default">@item.Title</a>
+                            </li>
+                            @*<li>
+                                    <a href="" class="home__section07__box1__btn uk-button uk-button-default">TIKTOK MARKETING</a>
+                                </li>
+                                <li>
+                                    <a href="" class="home__section07__box1__btn uk-button uk-button-default">APPLICATION MARKETING</a>
+                                </li>
+                                <li>
+                                    <a href="" class="home__section07__box1__btn uk-button uk-button-default">MEDIA SOLUTION</a>
+                                </li>*@
+
+                        }
+                    </ul>
+                    <ul class="uk-switcher mb-60-m my-class">
+                        @foreach (var item in gtc)
+                        {
+                            <li>
+                                <div class="uk-flex-middle uk-grid-small uk-grid-58-m" uk-grid uk-scrollspy="target: .animation; cls: uk-animation-slide-bottom-small; delay: 500; repeat: false;">
+                                    <div class="uk-width-expand">
+                                        <img src="@UIHelper.StoreFilePath(item.Image, false)" alt="">
+                                    </div>
+                                    <div class="uk-width-2-5@m animation">
+                                        <h3 class="uk-h3 home__section07__box2__title uk-text-capitalize">@item.Title</h3>
+                                        @Html.Raw(item.Description)
+                                    </div>
+                                </div>
+                            </li>
+                        }
+                    </ul>
+                }
+            }
+        }
+
+
+
+
+        <div class="uk-text-center uk-margin home__boxCommon mb-40-m">
+            <h2 class="uk-h2 uk-text-uppercase home__boxCommon__title">DỰ ÁN</h2>
+        </div>
+        <div class="uk-text-center uk-margin mb-60-m">
+            <div class="uk-display-inline-block home__section07__box3 uk-border-pill">
+                <a href="javascript:void(0)" class="home__section07__box3__btn uk-active uk-button uk-button-default uk-border-pill switch-du-an" data-value="VietNam">Việt Nam</a>
+                <a href="javascript:void(0)" class="home__section07__box3__btn uk-button uk-button-default uk-border-pill switch-du-an" data-value="NuocNgoai">Nước Ngoài</a>
+            </div>
+        </div>
+        <div class="" uk-slider>
+
+            <div class="uk-position-relative">
+
+                <div class="uk-slider-container uk-light uk-slider-container-offset">
+                    <ul class="uk-slider-items uk-child-width-1-3@m uk-grid-match uk-grid-small uk-grid-37-m binding-du-an" uk-grid>
+                        @{
+                            var trongnuoc = bannerAdsRepository.GetBannerAds_By_Code(culture_code, "Cooken_TrangChu_DuAnVietNam");
+                            if (trongnuoc != null)
+                            {
+                                var tn = Newtonsoft.Json.JsonConvert.DeserializeObject<List<DetailBanerAds>>(trongnuoc.MetaData);
+                                if (tn != null)
+                                {
+                                    foreach (var item in tn)
+                                    {
+                                        <li>
+                                            <div class="uk-card uk-card-default uk-text-center home__section07__box4">
+                                                <div class="home__section07__box4__img uk-flex uk-flex-middle uk-flex-center">
+                                                    <img src="@UIHelper.StoreFilePath(item.Image, false)" alt="@item.Title">
+                                                </div>
+                                                <div class="uk-card-body home__section07__box4__body">
+                                                    <ul class="uk-list home__section07__box4__list">
+                                                        @{
+                                                            var ll = UIHelper.ClearHtmlTag(item.Description).Split("|");
+                                                            foreach (var i in ll)
+                                                            {
+                                                                <li>@Html.Raw(i)</li>
+                                                            }
+                                                        }
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    }
+                                }
+                            }
+                        }
+                    </ul>
+                </div>
+
+                <div class="uk-hidden@s uk-light">
+                    <a class="uk-position-center-left uk-position-small" href="#" uk-slidenav-previous uk-slider-item="previous"></a>
+                    <a class="uk-position-center-right uk-position-small" href="#" uk-slidenav-next uk-slider-item="next"></a>
+                </div>
+
+                <div class="uk-visible@s">
+                    <a class="uk-position-center-left-out uk-position-small" href="#" uk-slidenav-previous uk-slider-item="previous"></a>
+                    <a class="uk-position-center-right-out uk-position-small" href="#" uk-slidenav-next uk-slider-item="next"></a>
+                </div>
+
+            </div>
+
+            <ul class="uk-slider-nav uk-dotnav uk-flex-center uk-margin"></ul>
+
+        </div>
+        <div class="uk-child-width-1-3@m uk-grid-match uk-grid-small uk-grid-37-m uk-hidden" uk-grid>
+            <div>
+                <div class="uk-card uk-card-default uk-text-center home__section07__box4">
+                    <div class="home__section07__box4__img uk-flex uk-flex-middle uk-flex-center">
+                        <img src="images/duan/logo1.png" alt="">
+                    </div>
+                    <div class="uk-card-body home__section07__box4__body">
+                        <ul class="uk-list home__section07__box4__list">
+                            <li>Số lượng người dùng sử dụng dịch vụ định danh khách hàng điện tử - eKYC 15x%</li>
+                            <li>Tổng số lượt nhắc đến trên các trang mạng xã hội ( Facebook, Tiktok, ...) tăng 200% xuyên suốt chiến dịch</li>
+                            <li>Số người dùng sử dụng ứng dụng sau khi đăng ký tài khoản tăng 54%</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="uk-card uk-card-default uk-text-center home__section07__box4">
+                    <div class="home__section07__box4__img uk-flex uk-flex-middle uk-flex-center">
+                        <img src="images/duan/logo2.png" alt="">
+                    </div>
+                    <div class="uk-card-body home__section07__box4__body">
+                        <ul class="uk-list home__section07__box4__list">
+                            <li>Tổng số người dùng ứng dụng tăng trưởng 17x%</li>
+                            <li>Tỉ lệ người dùng quay lại/tái cài đặt tăng 63%</li>
+                            <li>Tổng doanh thu ghi nhận từ nền tảng ứng dụng tăng 300%</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="uk-card uk-card-default uk-text-center home__section07__box4">
+                    <div class="home__section07__box4__img uk-flex uk-flex-middle uk-flex-center">
+                        <img src="images/duan/logo3.png" alt="">
+                    </div>
+                    <div class="uk-card-body home__section07__box4__body">
+                        <ul class="uk-list home__section07__box4__list">
+                            <li>Tổng số người cài đặt ứng dụng tăng trưởng 19x%</li>
+                            <li>Tỉ lệ gỡ ứng dụng trong vòng 7 ngày sau khi cài đặt giảm 71%</li>
+                            <li>Tỉ lệ người chơi thực hiện hành động chi trả trong quá trình sử dụng 34%</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--/DỊCH VỤ-->
+<!--LỢI THẾ CỦA COOKEN AGENCY-->
+<div class="uk-section-xlarge home__section04 uk-background-norepeat uk-background-top-center" uk-height-viewport="offset-bottom: true" data-src="/design/cooken-03-2021/images/bg4.png" uk-img>
+    <div class="uk-container uk-container-small">
+        @{
+            var loithe_cooken = bannerAdsRepository.GetBannerAds_By_Code(culture_code, "Cooken_TrangChu_LoiThe");
+            if (loithe_cooken != null)
+            {
+                var lt = Newtonsoft.Json.JsonConvert.DeserializeObject<List<DetailBanerAds>>(loithe_cooken.MetaData);
+                if (lt.Count > 1)
+                {
+                    <div class="uk-margin-medium mb-120-m">
+                        <div class="uk-text-center uk-margin home__boxCommon mb-60-m">
+                            <h2 class="uk-h2 uk-text-uppercase home__boxCommon__title">@lt[0].Title</h2>
+                        </div>
+                        <div class="uk-child-width-1-2@m uk-grid-small uk-grid-21-m" uk-grid>
+                            <div>
+                                <ul class="home__section04__box1" uk-accordion uk-scrollspy="target: .animation; cls: uk-animation-slide-bottom-small; delay: 500; repeat: false;">
+                                    @{
+                                        var cccc = 0;
+                                    }
+                                    @foreach (var item in lt.Skip(1))
+                                    {
+                                        <li class="animation @(cccc == 0 ? "uk-open" : "")">
+                                            <a class="uk-accordion-title home__section04__box1__title" href="#"><span class="home__section04__box1__title__txt">@item.Title</span></a>
+                                            <div class="uk-accordion-content home__section04__box1__content uk-background-default uk-padding-small">
+                                                <ul class="uk-list uk-list-bullet">
+                                                    @Html.Raw(item.Description)
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        cccc++;
+                                    }
+                                </ul>
+                            </div>
+                            <div>
+                                <div class="uk-cover-container">
+                                    <img src="@UIHelper.StoreFilePath(lt[0].Image, false)" alt="@lt[0].Title" uk-cover>
+                                    <canvas width="910" height="992"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        }
+
+
+
+        @{
+            var conso = bannerAdsRepository.GetBannerAds_By_Code(culture_code, string.Format("Cooken_{0}_ConSo", "TrangChu"));
+            if (conso != null)
+            {
+                var cs = Newtonsoft.Json.JsonConvert.DeserializeObject<List<DetailBanerAds>>(conso.MetaData);
+                if (cs != null)
+                {
+                    <div class="uk-margin-medium mb-120-m">
+                        <div class="uk-text-center uk-margin home__boxCommon mb-80-m">
+                            <h2 class="uk-h2 uk-text-uppercase home__boxCommon__title">@cs[0].Title</h2>
+                        </div>
+                        <div uk-scrollspy="cls: counter;">
+                            <div id="counter" class="uk-child-width-1-2 uk-grid-small uk-grid-43-m uk-flex-center" uk-grid uk-scrollspy="target: .home__section04__blog__box2; cls: uk-animation-fade; delay: 500">
+                                @foreach (var item in cs.Skip(1))
+                                {
+                                <div class="uk-width-auto@@m">
+                                    <div class="uk-text-center home__section04__blog__box2">
+                                        @{var cts = 0;}
+                                        <div class="home__section04__blog__box2__txt1"><span class="counter-value" data-count="@item.Title.Split(" ")[0]">@item.Title</span>@(int.TryParse(item.Title, out cts) ? "+" : "TRIỆU" )</div>
+                                        <div class="home__section04__blog__box2__txt2">@Html.Raw(item.Description)</div>
+                                    </div>
+                                </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        }
+
+
+
+        <div class="uk-text-center uk-margin home__boxCommon mb-40-m">
+            <h2 class="uk-h2 uk-text-uppercase home__boxCommon__title">BLOG</h2>
+        </div>
+        <div class="uk-child-width-1-3@m uk-grid-small uk-grid-17-m" uk-grid>
+            @{
+                var t_listBlog = 0;
+                var listBlog = articleRepository.GetArticlesInZoneId_Minify_AddFilterHot(0, 0, 1, culture_code, "", 1, 3, out t_listBlog);
+                foreach (var item in listBlog)
+                {
+
+                    <div class="home__section04__blog__box1">
+                        <div class="uk-cover-container uk-margin-small">
+                            <a href="@LinkRedirectUrlUtility.BlogDetailUrl(item.Url)">
+                                <img src="@UIHelper.StoreFilePath(item.Avatar, false)" alt="" uk-cover>
+                                <canvas width="620" height="434"></canvas>
+                            </a>
+                        </div>
+                        <div class="uk-margin-small home__section04__blog__box1__date">@item.CreatedDate.ToString("dd-MM-yyyy")</div>
+                        <h5 class="home__section04__blog__box1__title uk-h5 uk-margin-remove uk-margin-small"><a href="@LinkRedirectUrlUtility.BlogDetailUrl(item.Url)" style="font-size: 14px;">@item.Title</a></h5>
+                    </div>
+
+                }
+            }
+
+        </div>
+    </div>
+</div>
+<!--/LỢI THẾ CỦA COOKEN AGENCY-->
+<!--REFERRAL PROGRAM-->
+<div class="home__section03 mb-120-m uk-flex uk-flex-middle uk-text-center uk-background-norepeat uk-background-center-center" uk-height-viewport="offset-bottom: true" data-src="/design/cooken-03-2021/images/bg3.png" uk-img>
+    <div class="uk-section uk-width-1-1">
+        <div class="uk-container uk-container-small">
+            <div class="uk-flex-center" uk-grid>
+                <div class="uk-width-2-5@m">
+                    @{
+                        var khoichantrang = bannerAdsRepository.GetBannerAds_By_Code(culture_code, "Cooken_TrangChu_KhoiChanTrang");
+                        if (khoichantrang != null)
+                        {
+                            var kct = Newtonsoft.Json.JsonConvert.DeserializeObject<DetailBanerAds>(khoichantrang.MetaData);
+                            if (kct != null)
+                            {
+                                <div class="uk-text-center uk-margin home__boxCommon mb-37-m">
+
+                                    <h2 class="uk-h2 uk-text-uppercase home__boxCommon__title">@kct.Title</h2>
+                                </div>
+                                <p class="home__section01__box1__txt uk-margin-remove">@Html.Raw(kct.Description)</p>
+                            }
+                        }
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--/REFERRAL PROGRAM-->
+<!--ĐĂNG KÝ TƯ VẤN-->
+@*</cache>*@
+
+@*</cache>*@
+
+@section scripts{
+    @*<script type="text/javascript" src="~/js/libs/momentjs/momentJS.js" asp-append-version="true"></script>*@
+    @*<script type="text/javascript" src="~/js/libs/daterangepicker-master/moment.min.js" asp-append-version="true"></script>*@
+    @*<script type="text/javascript" src="~/js/libs/daterangepicker-master/daterangepicker.js?v=1" ></script>*@
+    <script>
+        $('.slide-sock').slick({
+            autoplay: false,
+            autoplaySpeed: 2500,
+            arrows: false,
+            slidesToShow: 1,
+            responsive: [{
+                breakpoint: 1024,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1
+                }
+            }, {
+                breakpoint: 480,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1
+                }
+            }]
+        });
+
+        $('.next-2').click(function () {
+            $(".slide-sock").slick('slickNext');
+        });
+        $('.pre-2').click(function () {
+            $(".slide-sock").slick('slickPrev');
+        });
+    </script>
+    <script type="text/javascript" src="~/js/controller/homeController.js?v=@WebHelper.Version()"></script>
+}

@@ -1,0 +1,98 @@
+@media(min-width:320px) and (max-width: 767px) {
+    .mb-pd-sub {
+        padding-left: 0;
+    }
+    .call-icon {
+        display: block !important;
+    }
+    .social-button-content {
+        display: block;
+    }
+}
+
+@media(max-width:567px) {
+    .social-button-content {
+        display: block !important;
+        justify-content: space-around;
+        width: 100%;
+    }
+    .social-button {
+        left: 20px;
+        width: calc(100% - 40px);
+        justify-content: flex-start;
+    }
+}
+
+.list-news-right .list-group-item {
+    padding: 10px 20px;
+}
+
+.nd-fast-search {
+    background: url('/images/fast-search.jpg') center no-repeat;
+    background-size: cover;
+}
+.mgbta{
+    margin-bottom : 85px;
+}
+.txt-1-fastsot {
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 24px;
+    text-align: center;
+    text-transform: uppercase;
+    color: #FFFFFF;
+    padding: 10px 0;
+}
+
+.main-fast-search {
+    padding: 0 10px 10px;
+}
+
+.margin-0-auto {
+    margin: 0 auto;
+}
+
+.list-menu-right .lastest-news .title {
+    margin-bottom: 3px;
+    height: auto;
+    overflow: hidden;
+    font-size: 13px;
+    line-height: 16px;
+    max-height: 4.5rem;
+}
+
+.item-product .price-old-none {
+    font-size: 14px;
+    color: #828282;
+    margin-bottom: 5px;
+    max-height: 4.5rem;
+}
+
+.name-tinhthanh,
+.number-store {
+    color: #1A468F;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 0;
+    outline: none;
+}
+
+.list-add-store .name {
+    color: #333333;
+}
+
+.url-old-link {
+    color: #EE7E23;
+    font-weight: 600;
+    /*    color: #007DFF;*/
+    font-size: 14px;
+    white-space: nowrap;
+}
+
+.link-view-more {
+    color: #EE7E23;
+}
+
+.star-rating-dynamic i.checked {
+    color: #ffab1b;
+}

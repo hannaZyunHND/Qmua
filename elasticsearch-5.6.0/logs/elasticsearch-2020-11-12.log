@@ -1,0 +1,2 @@
+[2020-11-12T00:07:59,806][INFO ][o.e.c.m.MetaDataDeleteIndexService] [hHj-txf] [product_suggest/EbQ3UFzbS_aCX2RWXdkR0A] deleting index
+[2020-11-12T00:08:00,645][INFO ][o.e.c.m.MetaDataCreateIndexService] [hHj-txf] [product_suggest] creating index, cause [api], templates [], shards [5]/[1], mappings [productes]

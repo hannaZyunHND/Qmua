@@ -1,0 +1,201 @@
+﻿@using MI.Entity.Enums;
+@using TemplateKAO.Services.Zone.ViewModal
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Http
+@using TemplateKAO.Services.Article.Repository
+@using TemplateKAO.Services.Zone.Repository
+@using TemplateKAO.Utility
+@using TemplateKAO.Services.Product.Repository
+@using TemplateKAO.Services.Zone.Repository
+@using MI.Entity.Enums
+@using TemplateKAO.Services.BannerAds.Repository
+@using TemplateKAO.Services.FlashSale.Repository
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.AspNetCore.Http
+@using TemplateKAO.Services.Article.Repository
+@using Newtonsoft.Json
+@using TemplateKAO.Utility
+@using Microsoft.AspNetCore.Mvc.RazorPages
+@using MI.Entity.Models
+@using TemplateKAO.Services.Extra.ViewModel
+@using TemplateKAO.Services.Extra.Repository
+@using Microsoft.AspNetCore.Http.Extensions
+@using TemplateKAO.Services.Product.Repository
+@using TemplateKAO.Services.Zone.Repository
+@using MI.Entity.Enums
+@using TemplateKAO.Services.BannerAds.Repository
+@using TemplateKAO.Services.FlashSale.Repository
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.AspNetCore.Http
+@using TemplateKAO.Services.Article.Repository
+@using TemplateKAO.Services.Extra.Repository
+@using Newtonsoft.Json
+@using TemplateKAO.Utility
+@using Microsoft.AspNetCore.Mvc.RazorPages
+@using MI.Entity.Models
+@using TemplateKAO.Services.Extra.ViewModel
+@using TemplateKAO.Services.Extra.Repository
+@using Microsoft.AspNetCore.Http.Extensions
+@inject IHttpContextAccessor HttpContextAccessor
+@inject IArticleRepository articleRepository;
+@inject IZoneRepository zoneRepository;
+@inject IViewLocalizer Localizer
+@model ZoneDetail;
+@using Utils
+@{
+    var culture = Context.Features.Get<IRequestCultureFeature>().RequestCulture.Culture.TwoLetterISOLanguageName.ToLower();
+    var culture_code = Context.Features.Get<IRequestCultureFeature>().RequestCulture.Culture.ToString();
+    //var base_uri_culture = "/" + culture;
+    var base_uri_culture = "/";
+    var domain = Context.Request.Host.ToString();
+    var index = (int)ViewBag.Index;
+    var size = (int)ViewBag.Size;
+    var path = Context.Request.Path.ToString().Split("/")[1];
+}
+@{
+    @*ViewData["Title"] = "BlogList1";
+        Layout = "~/Views/Shared/_LayoutPublicHome.cshtml";*@
+    var blog_zone_parent = new ZoneByTreeViewMinify();
+    var p = (List<ZoneByTreeViewMinify>)zoneRepository.GetBreadcrumbByZoneId(Model.Id, culture_code);
+    var parent = p.Where(r => r.level == 0).FirstOrDefault();
+    var flag = 10;
+    if (parent != null)
+    {
+        blog_zone_parent = parent;
+
+        flag = parent.Type;
+
+    }
+    var list_zone_chlids = new List<ZoneByTreeViewMinify>();
+
+
+}
+
+@section styles {
+    @*<style type="text/css">
+            .banner-page {
+                background: url(/@blog_zone_parent.Banner) no-repeat center;
+                min-height: 200px;
+                background-size: cover;
+                display: flex;
+            }
+        </style>*@
+}
+@{
+    var list_zone_parent = zoneRepository.GetListZoneByParentId(flag, culture_code);
+}
+<div class="uk-background-norepeat menu__section1 uk-position-relative uk-background-cover uk-light" data-src="design/images/05600a6dc19a37ef746fb267902398bf2.png" uk-img>
+    <div class="uk-position-cover menu__overlay"></div>
+    <div class="uk-position-relative uk-position-z-index uk-section-small uk-text-center">
+        <div class="uk-container">
+            <h1 class="uk-h1 menu__title2">Menu</h1>
+            <ul class="uk-breadcrumb">
+                <li><a href="">Home</a></li>
+                <li><a href="">Blog</a></li>
+                @*<li><span>Đặt hàng</span></li>*@
+            </ul>
+        </div>
+    </div>
+</div>
+<!--/Banner-->
+
+<div class="blog__section1 uk-section uk-background-norepeat uk-background-top-center" data-src="~/design/cooken-03-2021/images/bg2.png" uk-img>
+    <div class="uk-container">
+        <div class="uk-child-width-auto uk-grid-small uk-grid-41-m uk-flex-center mb-20 mb-56-m" uk-grid>
+            <div>
+                @{
+                    var bblink = "";
+                    @if (path == "du-an" || path == "du-an-moi" || flag == (int)TypeZone.DuAn)
+                    {
+                        bblink = "/du-an";
+
+
+                    }
+                    @if (path == "blog" || path == "bai-viet-moi" || flag == (int)TypeZone.Article)
+                    {
+
+                        bblink = "/blog";
+
+                    }
+
+                }
+                <a href="@bblink" class="blog__btn uk-button uk-button-default uk-button-large">@Localizer["All"]</a>
+            </div>
+            <div>
+                @{
+                    var lllink = "";
+                    var lltext = "";
+                    @if (path == "du-an" || path == "du-an-moi" || flag == (int)TypeZone.DuAn)
+                    {
+                        lllink = "/du-an-moi";
+                        lltext = "Dự án mới";
+
+                    }
+                    @if (path == "blog" || path == "bai-viet-moi" || flag == (int)TypeZone.Article)
+                    {
+
+                        lllink = "/bai-viet-moi";
+                        if(culture_code == "vi-VN")
+                        {
+                            lltext = "Bài viết mới";
+                        }
+
+                        if(culture_code == "en-US")
+                        {
+                            lltext = "Newest";
+                        }
+
+                    }
+                }
+                <a href="@lllink" class=" blog__btn uk-button uk-button-default uk-button-large">@lltext</a>
+            </div>
+            @if (path == "du-an" || path == "du-an-moi")
+            {
+                list_zone_parent = zoneRepository.GetListZoneByParentId((int)TypeZone.DuAn, culture_code);
+
+            }
+            @if (path == "blog" || path == "bai-viet-moi")
+            {
+                list_zone_parent = zoneRepository.GetListZoneByParentId((int)TypeZone.Article, culture_code);
+            }
+            @foreach (var item in list_zone_parent)
+            {
+                <div>
+                    <a href="@LinkRedirectUrlUtility.BlogLinkUrl(item.Url)" class=" blog__btn uk-button uk-button-default uk-button-large">@item.Name</a>
+                </div>
+            }
+            <div class="uk-width-expand">
+                <form class="uk-search uk-search-default uk-width-1-1">
+                    <span class="uk-search-icon-flip blog__boxSearch__icon uk-background-norepeat uk-background-center-center" data-src="/design/cooken-03-2021/images/Group-iconsearch.png" uk-img uk-search-icon></span>
+                    <input class="uk-search-input uk-form-large uk-width-1-1 blog__boxSearch__inputSearch" type="search" placeholder="@Localizer["Find"]">
+                </form>
+            </div>
+
+        </div>
+        <div class="uk-child-width-1-3@@m mb-20 mb-40-m uk-grid-small uk-grid-20-m blog__grid" uk-grid>
+            @{
+                var z = new ZoneDetail();
+                if (path != "bai-viet-moi" && path != "blog" && path != "du-an" && path != "du-an-moi")
+                {
+                    z = zoneRepository.GetZoneDetail(Model.Id, culture_code);
+                }
+
+
+
+            }
+            @await Component.InvokeAsync("RedirectBlogListCenter", new { zone = z, pageIndex = index, pageSize = size });
+
+        </div>
+        <div class="pagin">
+
+        </div>
+
+    </div>
+</div>
+
+
+
+

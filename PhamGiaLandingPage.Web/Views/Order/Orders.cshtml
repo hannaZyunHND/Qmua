@@ -1,0 +1,365 @@
+﻿@using PhamGiaLandingPage.Web.Services.BannerAds.Repository
+@using PhamGiaLandingPage.Web.Services.Product.ViewModel
+@using PhamGiaLandingPage.Web.Services.Zone.ViewModal
+@using PhamGiaLandingPage.Web.Services.Promotion.ViewModel
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Http
+@using Microsoft.AspNetCore.Hosting;
+@inject IHttpContextAccessor HttpContextAccessor
+@using PhamGiaLandingPage.Web.Utility
+@using System.IO;
+@inject ICookieUtility cookieUtility
+@inject IHostingEnvironment env
+@inject IBannerAdsRepository bannerAdsRepository;
+@using Utils
+@{
+    var culture = Context.Features.Get<IRequestCultureFeature>().RequestCulture.Culture.TwoLetterISOLanguageName.ToLower();
+    var culture_code = Context.Features.Get<IRequestCultureFeature>().RequestCulture.Culture.ToString();
+    var base_uri_culture = "/" + culture;
+    var domain = Context.Request.Host.ToString();
+    var cookie_location = cookieUtility.SetCookieDefault();
+    var location_id = cookie_location.LocationId;
+    var location_name = cookie_location.LocationName;
+}
+@{
+    ViewData["Title"] = "Orders";
+    Layout = "~/Views/Shared/_LayoutPublicHome.cshtml";
+    //var promotions = ViewBag.Promotions as List<PromotionViewModel>;
+}
+@model List<ProductMinify>;
+@await Component.InvokeAsync("SEO_Breadcrumb", new { bread = new List<ZoneByTreeViewMinify>(), page = "gio-hang", type_page = "" })
+<div class="bg-f6f8f8 kc-cart">
+    <div class="container">
+        <nav aria-label="breadcrumb my-3">
+            <ol class="breadcrumb jan-breadcrumb">
+                <li class="breadcrumb-item"><a href="/">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Giỏ hàng</li>
+            </ol>
+        </nav>
+        <form id="order-form">
+            <section class="list-product-cart">
+                <div class="bg-fff mb-3" style="padding: 20px;">
+                    <div class="d-flex" style="justify-content: space-between; align-items:center;">
+                        <div class="heading">
+                            Giỏ hàng
+                        </div>
+                        <div class="back-buy">
+                            <a href="/">Quay lại mua hàng <i class="fal fa-angle-right ml-2"></i></a>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-borderless jan-table-cart mb-4">
+                            <thead class="d-none">
+                                <tr>
+                                    <th>
+                                        <label class="label-checkbox mb-0 ">
+                                            Sản phẩm
+                                            <input type="checkbox" class="cbx-affectedd-all" checked>
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </th>
+                                    <th>Giá</th>
+                                    @* <th>Số lượng</th> *@
+                                    <th class="d-none">Tổng tiền</th>
+                                    <th style="max-width:35px;">x</th>
+                                </tr>
+                            </thead>
+                            <tbody class="_binding_order"></tbody>
+                        </table>
+                    </div>
+                    <div class="total-pay">
+                        <div class="d-flex ">
+                            <label class="mr-2">Tổng tiền:</label>
+                            <div class="ml-auto"><span id="order-sum" data-price="">0</span> đ</div>
+                        </div>
+                        <div class="d-flex">
+                            <label class="mr-2">Giảm:</label>
+                            <div class="ml-auto"><span id="order-discount" data-price="">0</span></div>
+                        </div>
+                        <div class="d-flex">
+                            <label class="mr-2" style="font-weight:600;">Thanh toán:</label>
+                            <div class="ml-auto bill-all-bv"><span id="order-price" data-price="">0</span> đ</div>
+                        </div>
+                        <div class="boxCouponCode" style="">
+                            <div class="textcode" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                                Sử dụng mã giảm giá
+                            </div>
+                            @* <p>
+                                    <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                        Link with href
+                                    </a>
+                                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                                         Sử dụng mã giảm giá
+                                    </button>
+                                </p> *@
+                            <div class="collapse" id="collapseExample">
+                                <div class="card card-body mt-2">
+                                    <div class="inputcode">
+                                        <span data-value="0" data-type="0" style="display:none" class="data-voucher"></span>
+                                        <input type="text" class="form-control" id="Coupon" data-code="" maxlength="20" name="Coupon" autocomplete="off" placeholder="Nhập mã giảm giá">
+                                        <button type="button" id="btnCoupon">Áp dụng</button>
+                                    </div>
+                                </div>
+                                <div style="width:100%" data-codepromotion="" class="mess-coupon hidden"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section class="infor-customer">
+                <div class="bg-fff mb-3" style="padding: 20px;">
+                    <div class="heading">
+                        Thông tin khách hàng
+                    </div>
+                    <div>
+                        <label class="label-checkbox d-inline-block mr-3">
+                            Nam
+                            <input type="radio" name="gender-radio" value="male" checked />
+                            <span class="checkmark" style="border-radius: 50%;"></span>
+                        </label>
+                        <label class="label-checkbox d-inline-block">
+                            Nữ
+                            <input type="radio" name="gender-radio" value="female" />
+                            <span class="checkmark" style="border-radius: 50%;"></span>
+                        </label>
+                    </div>
+                    <div class="form-row mb-4">
+                        <div class="col-sm-6 col-12">
+                            <input type="text" class="form-control mb-3 name" placeholder="Họ và tên" required>
+                        </div>
+                        <div class="col-sm-6 col-12">
+                            <input type="text" class="form-control mb-3 phone-number" placeholder="Số điện thoại" required>
+                        </div>
+                        <div class="col-sm-12 col-12">
+                            <textarea rows="4" type="text" class="form-control mb-3 note" placeholder="Ghi chú" minlength="10"></textarea>
+                        </div>
+                    </div>
+
+                    @{
+                        var provinces_result = new Dictionary<string, TinhThanh>();
+                        var provinces_json_part = env.WebRootFileProvider.GetFileInfo("hanhchinhvn-master/dist/tinh_tp.json")?.PhysicalPath;
+                        if (provinces_json_part != null)
+                        {
+                            var file_content = File.ReadAllText(provinces_json_part);
+                            if (file_content != null)
+                            {
+                                provinces_result = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<string, TinhThanh>>(file_content);
+                            }
+                        }
+                    }
+                    <div class="heading">
+                        Chọn địa chỉ và thời gian nhận hàng
+                    </div>
+                    <div class="form-row mb-4">
+                        <div class="col-sm-6 col-12">
+                            <select class="form-control mb-3 tinh-thanh" required>
+                                <option hidden value="">Chọn Tỉnh/Thành</option>
+                                @foreach (var item in provinces_result)
+                                {
+                                    <option value="@item.Key">@item.Value.name</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="col-sm-6 col-12">
+                            <select class="form-control mb-3 quan-huyen" disabled required>
+                                <option hidden value="">Chọn Quận/Huyện</option>
+                                <option value="Tân Phú">Tân Phú</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-6 col-12">
+                            <select class="form-control mb-3 phuong-xa" disabled required>
+                                <option hidden value="">Chọn Phường/Xã</option>
+                                <option value="Hồ Chí Minh">Hồ Chí Minh</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-6 col-12">
+                            <input type="text" class="form-control mb-3 so-nha" placeholder="Số nhà, tên đường/phố">
+                        </div>
+
+                    </div>
+                    <div class="mb-4">
+                        <div class="heading">
+                            Chọn phương thức thanh toán
+                        </div>
+                        <ul class="row">
+                            <li class="col-md-6">
+                                <label class="label-checkbox">
+                                    Cà thẻ khi nhận hàng
+                                    <input type="checkbox" class="extra-infomation" data-content="Cà thẻ khi nhận hàng">
+                                    <span class="checkmark"></span>
+                                </label>
+                            </li>
+                            <li class="col-md-6">
+                                <label class="label-checkbox">
+                                    Xuất hóa đơn công ty
+                                    <input type="checkbox" class="extra-infomation company-bill" data-content="Xuất hóa đơn công ty">
+                                    <span class="checkmark"></span>
+                                </label>
+                            </li>
+                            <li class="col-md-6">
+                                <label class="label-checkbox">
+                                    Thanh toán tiền mặt khi nhận hàng
+                                    <input type="checkbox" class="extra-infomation" data-content="Thanh toán tiền mặt khi nhận hàng">
+                                    <span class="checkmark"></span>
+                                </label>
+                            </li>
+                            <li class="col-md-6">
+                                <label class="label-checkbox">
+                                    Chuyển khoản ngân hàng
+                                    <input type="checkbox" class="extra-infomation bank-transfer" data-content="Xuất hóa đơn công ty">
+                                    <span class="checkmark"></span>
+                                </label>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="info-cty info-company" style="display:none">
+                        <label class="label-checkbox txt-dd-1 pl-0">
+                            Thông tin công ty
+                        </label>
+                        <div class="form-row">
+                            <div class="col-sm-6 col-12">
+                                <input type="text" class="form-control mb-3 name" placeholder="Tên công ty">
+                            </div>
+                            <div class="col-sm-6 col-12">
+                                <input type="text" class="form-control mb-3 phone-number" placeholder="Mã số thuế">
+                            </div>
+                            <div class="col-sm-12 col-12">
+                                <textarea rows="1" type="text" class="form-control mb-3 note" placeholder="Địa chỉ" minlength="10"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    @* ----chuyen-khoan--ngan-hang---- *@
+                    @{
+                        var banknumber1 = bannerAdsRepository.GetConfigByName(culture_code,"BankNumber1");
+                        var bankNameMaster1 = bannerAdsRepository.GetConfigByName(culture_code,"BankNameMaster1");
+                        var bankName1 = bannerAdsRepository.GetConfigByName(culture_code,"BankName1");
+                        var banknumber2 = bannerAdsRepository.GetConfigByName(culture_code,"BankNumber2");
+                        var bankNameMaster2 = bannerAdsRepository.GetConfigByName(culture_code,"BankNameMaster2");
+                        var bankName2 = bannerAdsRepository.GetConfigByName(culture_code,"BankName2");
+                    }
+                    <div class="info-cty info-bank" style="display:none">
+                        <label class="label-checkbox txt-dd-1 pl-0">
+                            Thông tin chuyển khoản
+                        </label>
+                        <ul class="row list-dacdiem">
+                            <li class="col-md-6">
+                                <b>Ngân hàng :</b> @bankName1 <br>
+                                <b>Tên tài khoản:</b> @bankNameMaster1 <br>
+                                <b>STK:</b> @banknumber1
+                            </li>
+                            <li class="col-md-6">
+                                <b>Ngân hàng :</b> @bankName2 <br>
+                                <b>Tên tài khoản:</b> @bankNameMaster2 <br>
+                                <b>STK: </b> @banknumber2
+                            </li>
+                        </ul>
+                    </div>
+                    @* --------------------------- *@
+                    <div class="pt-2" style="text-align:center;">
+                        <button class="btn btn-save w-100 my-2" style="background-color: #3AB54A; max-width:450px;" type="submit">Đặt hàng</button>
+                    </div>
+                </div>
+            </section>
+        </form>
+    </div>
+</div>
+
+<!-- Modal đơn hàng -->
+<div class="modal jan-modal fade" id="modal-don-hang" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header border-bottom-0">
+                <h6 class="modal-title font-weight-bold">Đơn hàng</h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body pt-0" style="color: #4f4f4f;">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-12">
+                        <p> Mã số đơn hàng: <span class="font-weight-600 order-code">1029xxx2833</span></p>
+                        <div class="row">
+                            <div class="mb-3 col-lg-6 col-md-12 col-12">
+                                <label class="font-weight-bold mb-1 ">Thông tin khách hàng</label>
+                                <div class="customer-id" data-id="0" style="display:none;"></div>
+                                <div>- Anh/ Chị: <span class="font-weight-600 customer-name">Nguyễn Tiến Đức</span></div>
+                                <div>- SĐT: <span class="font-weight-600 customer-phone"> 0292938333</span></div>
+                                <div>- Địa chỉ:<span class="font-weight-600 customer-address"> Tân Triều - Hà Đông - Hà Nội</span></div>
+                            </div>
+                            <div class="mb-3 col-lg-6 col-md-12 col-12">
+                                <label class="font-weight-bold mb-1">Thông tin khác</label>
+                                <ul class="list_extra_infomation"></ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-12">
+                        <p> Thời gian đặt hàng: <span class="font-weight-600 order-time">10 - 02 - 2019 </span></p>
+                        <div class="mb-3">
+                            <label class="font-weight-bold mb-1 ">Thông tin đơn hàng</label>
+                            @*<div>- Sản phẩm:<span class="font-weight-600"> Sàn gỗ công nghiệp</span></div>
+                                <div>- Số lượng:<span class="font-weight-600"> 1</span></div>
+                                <div>- Giá bán:<span class="font-weight-600 color-EE7D22">  6.900.000vnđ</span></div>
+                                <div>- Tổng tiền:<span class="font-weight-600 color-EE7D22">  6.900.000vnđ</span></div>
+                                <div>- Khuyến mại đi kèm: <span class="font-weight-600 ">Lì xì quà tặng 300.000đ</span></div>
+                                <div>- Yêu cầu khác:<span class="font-weight-600"> Giao ngoài giờ hành chính</span></div>
+                                <div>- Ưu đãi voucher: <span class="font-weight-600 color-EE7D22">  500.000vnđ</span></div>
+                                <div>- Mã voucher: <span class="font-weight-600">323131</span></div>*@
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Sản phẩm</th>
+                                        <th>Số lượng</th>
+                                        <th>Giá bán</th>
+                                        <th>Tổng tiền</th>
+                                        <th>KM đi kèm</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="table-infomation-product">
+                                    <tr class="table-report-item" style="display:none">
+                                        <td class="product-id" hidden>1</td>
+                                        <td class="product-name">SP A</td>
+                                        <td class="product-quantity">5</td>
+                                        <td class="product-price">1.000.000 đ</td>
+                                        <td class="product-total-price">5.000.000 đ</td>
+                                        <td class="product-promotion">
+                                            <ul class="product-promotion-ul"></ul>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <hr />
+                        <div class="d-flex">
+                            <div>Mã voucher được áp dụng: </div>
+                            <div class="ml-auto font-weight-600 color-EE7D22 code-promotion"></div>
+                        </div>
+                        <div class="d-flex">
+                            <div>Trị giá voucher: </div>
+                            <div class="ml-auto font-weight-600 color-EE7D22 values-promotion"></div>
+                        </div>
+                        <div class="d-flex">
+                            <div>Số tiền cần thanh toán: </div>
+                            <div class="ml-auto font-weight-600 color-EE7D22 total-payment"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-end">
+                @*<button type="button" class="btn btn-link color-828282 px-2 border-right">In</button>
+                    <button type="button" class="btn btn-link color-828282 px-2 border-right">Chia sẻ</button>
+                    <button type="button" class="btn btn-link color-828282 px-2 border-right">Gửi email</button>
+                    <button type="button" class="btn btn-link color-828282 mr-3">Sửa</button>*@
+                <button type="button" class="btn btn-save">Hoàn thành</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script type="text/javascript" src="~/js/controller/orderController.js" asp-append-version="true"></script>
+    <script type="text/javascript" src="~/js/libs/momentjs/momentJS.js" asp-append-version="true"></script>
+    <script type="text/javascript" src="~/js/libs/daterangepicker-master/daterangepicker.js" asp-append-version="true"></script>
+    <script type="text/javascript" src="~/js/libs/paginationjs/paginationJS.js" asp-append-version="true"></script>
+}

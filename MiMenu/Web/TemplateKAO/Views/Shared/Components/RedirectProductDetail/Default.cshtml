@@ -1,0 +1,1028 @@
+﻿@using TemplateKAO.Services.Product.ViewModel
+@using TemplateKAO.Services.Product.Repository
+@using TemplateKAO.Services.Article.ViewModel
+@using TemplateKAO.Services.Article.Repository
+@using TemplateKAO.Services.Zone.Repository
+@using TemplateKAO.Services.BannerAds.Repository
+@using TemplateKAO.Services.Extra.ViewModel
+@using TemplateKAO.Services.BannerAds.ViewModel
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Http
+@using MI.Entity.Enums
+@using Newtonsoft.Json
+@using MI.Entity.CustomClass
+@using Microsoft.AspNetCore.Http.Extensions
+@using MI.Entity.Models
+@inject IHttpContextAccessor HttpContextAccessor
+@using TemplateKAO.Utility
+@inject ICookieUtility cookieUtility
+@inject IArticleRepository articleRepository
+@inject IZoneRepository zoneRepository
+@inject IBannerAdsRepository bannerAdsRepository
+@inject IProductRepository productRepository
+@inject IConfigSEOUtility configSEOUtility
+@inject IViewLocalizer Localizer
+
+@using Utils
+@{
+    var culture = Context.Features.Get<IRequestCultureFeature>().RequestCulture.Culture.TwoLetterISOLanguageName.ToLower();
+    var culture_code = Context.Features.Get<IRequestCultureFeature>().RequestCulture.Culture.ToString();
+    var base_uri_culture = "/" + culture;
+    var domain = Context.Request.Host.ToString();
+    //HttpContext.Current.Request.Url.AbsoluteUri;
+    var domain_full = Context.Request.GetDisplayUrl();
+}
+@{
+    ViewData["Title"] = "ProductDetail";
+    //Layout = "~/Views/Shared/_LayoutPublicHome.cshtml";
+    var detail = ViewBag.Infomation as ProductDetail;
+
+    var setification_detail = ViewBag.Spectification as List<ProductSpectificationDetail>;
+    var product_same_zone = ViewBag.SameZone as List<ProductMinify>;
+    var same_total = ViewBag.SameTotal;
+    var zone_id = ViewBag.Zone;
+    var zone_url = ViewBag.ZoneUrl;
+    var cookie_location = cookieUtility.SetCookieDefault();
+    var location_id = cookie_location.LocationId;
+    var location_name = cookie_location.LocationName;
+
+    var product_price_details = ViewBag.ListLocation as List<ProductPriceInLocationDetail>;
+    var default_price_detail = ViewBag.DefaultLocationPrice as ProductPriceInLocationDetail;
+    var combo = ViewBag.Combo as List<ProductMinify>
+        ;
+    var promotions = ViewBag.Promotion as List<PromotionInProduct>
+        ;
+    var comments = ViewBag.Comments as List<CommentDetail>
+        ;
+    var meta_file = new FileProduct();
+    if (detail.MetaFile != null)
+    {
+        meta_file = Newtonsoft.Json.JsonConvert.DeserializeObject<FileProduct>(detail.MetaFile);
+    }
+    var lstLink = new List<DetailBanerAds>();
+    var lstLink_Cahche = bannerAdsRepository.GetBannerAds_By_Code(culture_code, "Hau_Mai_1");
+    if (lstLink != null)
+    {
+        lstLink = JsonConvert.DeserializeObject<List<DetailBanerAds>>(lstLink_Cahche.MetaData).Where(r => r.Show == true).ToList();
+    }
+}
+@*
+    public string ConfigShemaOrg(string domain_full,string title, string avatar, DateTime createdDate, DateTime modifiedDate, string metaTitle, string web_name,string logo, string description)
+    public string ConfigSocialMeta(string fbAppId = "default fbAddId", string url = "default url", string title = "default title", string description = "default description", string image = "default image")
+    public string ConfigMeta(string title, string description, string keyword)
+
+*@
+@inject IViewLocalizer _localizer
+
+
+@if (detail != null)
+{
+    <div class="container my-3">
+        @await Component.InvokeAsync("Breadcrumb", new { zone_id = detail.ZoneId })
+    </div>
+    <section class="product-detail" data-id="@detail.Id" data-properties="@detail.PropertyId">
+        <div class="container">
+            <div class="row mb-3">
+                <div class="col-lg-9 col-md-9 col-12" style="align-items:center;">
+                    <h1 class="title mb-3 mb-lg-0 d-inline-block mr-4" style="height:auto;">@detail.Title </h1>
+                    <div class="small d-inline-block">
+                        <div class="star-rating d-inline-block text-center" data-id="@detail.Id" data-rate-type="1">
+                            @await Component.InvokeAsync("RatingStar", new { object_id = @detail.Id, object_type = (int)TypeRating.Product, hTag = "" })
+                        </div>
+                    </div>
+                    <div class="d-inline-block text-primary px-2">@detail.TotalRate @_localizer["Rate"]</div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-12 facebook-btn">
+                    <div class="fb-like" data-href="@domain_full" data-width="" data-layout="button_count" data-action="like" data-size="small" data-share="true"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-9 col-lg-12 col-md-7 col-sm-12 col-12">
+                    <div class="row">
+                        <div class="col-xl-6 col-lg-5 col-md-12 col-12 pr-lg-0 ">
+                            <div class="slide-product-detail">
+                                <div class="swiper-container gallery-top">
+                                    <div class="swiper-wrapper">
+                                        <div class="swiper-slide">
+                                            <div class="img-magnifier-container">
+                                                <img asp-append-version="true" id="myimage-1" src="@UIHelper.StoreFilePath(detail.Avatar,false)" width="100%" height="auto" alt="@detail.Title">
+                                            </div>
+                                        </div>
+                                        @{//Cat chuoi anh
+                                            var avatar_array = new List<string>();
+                                            if (!string.IsNullOrEmpty(detail.AvatarArray))
+                                            {
+                                                avatar_array = detail.AvatarArray.Split(',').ToList();
+                                            }
+
+                                            var count_id = 2;
+                                            foreach (var item in avatar_array)
+                                            {
+                                                var getId = "myimage" + count_id;
+                                                count_id++;
+
+                                                <div class="swiper-slide">
+                                                    <div class="img-magnifier-container">
+                                                        <img asp-append-version="true" id="@getId" src="@UIHelper.StoreFilePath(item,false)" width="100%" height="auto" alt="@detail.Title">
+                                                    </div>
+                                                </div>
+                                            }
+                                        }
+
+                                        <div class="swiper-slide">
+                                            <div class="image">
+                                                <img asp-append-version="true" src="@UIHelper.StoreFilePath(detail.Avatar,false)" class="img-fluid w-100" alt="" />
+                                            </div>
+                                        </div>
+                                        <div class="swiper-slide">
+                                            <div class="image">
+                                                @*<img asp-append-version="true" src="~/images/change/product-detail-01.jpg" class="img-fluid w-100 "
+                                                    alt="" />*@
+                                                @*<iframe class="embed-responsive-item" src="@UIHelper.ConvertLinkYoutubeVideo(meta_file.File360)" allowfullscreen></iframe>*@
+                                                <div class="embed-responsive embed-responsive-16by9">
+                                                    <iframe class="embed-responsive-item" src="@UIHelper.ConvertLinkYoutubeVideoOriginal(meta_file.File360)" allowfullscreen></iframe>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="swiper-slide">
+                                            <div class="image">
+                                                @*<img asp-append-version="true" src="~/images/change/product-detail-01.jpg" class=" img-fluid w-100 "
+                                                    alt="" />*@
+                                                <div class="embed-responsive embed-responsive-16by9">
+                                                    <iframe class="embed-responsive-item" src="@UIHelper.ConvertLinkYoutubeVideoOriginal(meta_file.FileVideo)" allowfullscreen></iframe>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="text-center">
+                                    <button class="btn btn-link  btn-sm mb-2" data-toggle="modal"
+                                            data-target="#modal-slide-imge">
+                                        Xem kích thước lớn
+                                    </button>
+                                </div>
+                                <div class="swiper-container gallery-thumbs px-3">
+                                    <div class="swiper-wrapper">
+                                        <div class="swiper-slide">
+                                            <div class="image">
+                                                <img asp-append-version="true" src="@UIHelper.StoreFilePath(detail.Avatar)" class="img-fluid w-100 " alt="@detail.Title" />
+                                            </div>
+                                        </div>
+                                        @foreach (var item in avatar_array)
+                                        {
+                                            <div class="swiper-slide">
+                                                <div class="image">
+                                                    <img asp-append-version="true" src="@UIHelper.StoreFilePath(item)" class="img-fluid w-100" alt="@detail.Title" />
+                                                </div>
+                                            </div>
+                                        }
+                                        <div class="swiper-slide">
+                                            <div class="image p-3">
+                                                <a href="@meta_file.FileDowload" target="_blank">
+                                                    <img asp-append-version="true" src="~/images/download-con-thumb.svg" class="img-fluid w-100" alt="" />
+                                                </a>
+                                            </div>
+                                            Download Brochure
+                                        </div>
+                                        <div class="swiper-slide">
+                                            <div class="image p-3">
+                                                <img asp-append-version="true" src="~/images/change/360do-icon-thumb.svg" class="img-fluid w-100 "
+                                                     alt="" />
+                                            </div>
+                                            Hình 360 độ
+                                        </div>
+                                        <div class="swiper-slide">
+                                            <div class="image p-3">
+                                                <img asp-append-version="true" src="~/images/youtube-icon-thumb.svg" class="img-fluid w-100 "
+                                                     alt="" />
+                                            </div>
+                                            Video
+                                        </div>
+                                    </div>
+                                    <div class="swiper-button-prev" tabindex="0" role="button"
+                                         aria-label="Previous slide">
+                                        <button class="btn btn-link color-828282">
+                                            <i class="fas fa-chevron-left"
+                                               aria-hidden="true"></i>
+                                        </button>
+                                    </div>
+                                    <div class="swiper-button-next" tabindex="0" role="button"
+                                         aria-label="Previous slide">
+                                        <button class="btn btn-link color-828282 ">
+                                            <i class="fas fa-chevron-right"
+                                               aria-hidden="true"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="dacdiem-sp">
+                                <label class="txt-dd-1">Đặc điểm nổi bật</label>
+                                <div class="list-dacdiem">
+                                    @Html.Raw(detail.Description)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-lg-7 col-md-12 col-12 pl-xl-4">
+                            @if (detail.FlashSaleId > 0)
+                            {
+                                <!--thêm-->
+                                <div class="flashsale-timer d-flex flex-wrap mb-2">
+                                    <img src="~/images/change/Flashsale.svg" class="img-fluid mr-3 " />
+                                    <div class="timer d-flex align-self-center ml-auto  " data-end-time="@detail.FlashSaleEndTime.ToString("yyyy-MM-dd")">
+                                        <label class="align-self-center mb-0 mr-2">
+                                            Kết thúc
+                                        </label>
+                                        <div id="hour">
+                                            12
+                                        </div>
+                                        <div id="minute">
+                                            12
+                                        </div>
+                                        <div id="second">
+                                            12
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--thêm end-->
+                            }
+                            <label style="font-size: 14px;" class="d-inline-block">Giá tại</label>
+                            <div class="dropdown d-inline-block select-local">
+                                <a class="btn btn-link dropdown-toggle" href="javascript:;" role="button"
+                                   id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
+                                   aria-expanded="false">
+                                    @default_price_detail.LocationName
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                    @foreach (var item in product_price_details)
+                                    {
+                                        decimal left_pricee = 0;
+                                        decimal right_price = 0;
+                                        if (item.SalePrice > 0 && item.SalePrice < item.Price)
+                                        {
+                                            left_pricee = item.SalePrice;
+                                            right_price = item.Price;
+                                        }
+                                        if (item.SalePrice == 0 || item.SalePrice >= item.Price)
+                                        {
+                                            left_pricee = item.Price;
+                                            right_price = 0;
+                                        }
+                                        if (detail.FlashSaleId > 0)
+                                        {
+                                            left_pricee = detail.ProductPriceInFlashSale;
+                                            right_price = item.Price;
+                                        }
+                                        <a class="dropdown-item location-item" href="javascript:;" data-price="@right_price" data-sale-price="@left_pricee" data-location-id="@item.LocationId" data-product-id="@detail.Id" data-unit="@detail.Unit">@item.LocationName</a>
+                                    }
+
+                                </div>
+                            </div>
+                            <div class="price-product-detail">
+                                <span class="new" id="price-sale">
+                                    @{
+
+                                        decimal left = 0;
+                                        decimal right = 0;
+                                        if (detail.FlashSaleId > 0)
+                                        {
+                                            left = detail.ProductPriceInFlashSale;
+                                            right = default_price_detail.Price;
+                                        }
+                                        if (detail.FlashSaleId <= 0 && (default_price_detail.SalePrice > 0 && default_price_detail.SalePrice < default_price_detail.Price))
+                                        {
+                                            left = default_price_detail.SalePrice;
+                                            right = default_price_detail.Price;
+                                        }
+                                        if (detail.FlashSaleId <= 0 && (default_price_detail.SalePrice == 0 || default_price_detail.SalePrice >= default_price_detail.Price))
+                                        {
+                                            left = default_price_detail.Price;
+                                            right = 0;
+                                        }
+                                    }
+                                    <span id="price-sale-detail" data-sale-price="@left">@UIHelper.FormatNumber(left)</span> <span>/@detail.Unit</span>
+                                    @*@if (detail.FlashSaleId > 0)
+                                        {
+                                            <span id="price-sale-detail" data-sale-price="@detail.ProductPriceInFlashSale">@UIHelper.FormatNumber(detail.ProductPriceInFlashSale)</span> <span>đ/@detail.Unit</span>
+                                        }
+                                        @if (default_price_detail.SalePrice > 0 && detail.FlashSaleId <= 0)
+                                        {
+                                            <span id="price-sale-detail" data-sale-price="@default_price_detail.SalePrice">@UIHelper.FormatNumber(default_price_detail.SalePrice)</span> <span>đ/@detail.Unit</span>
+                                        }
+                                        @if (default_price_detail.SalePrice <= 0 && detail.FlashSaleId <= 0)
+                                        {
+                                            <span id="price-sale-detail" data-sale-price="@default_price_detail.SalePrice">Liên hệ</span>
+
+                                        }*@
+                                </span>
+                                @if (right > 0)
+                                {
+                                    <span class="old" id="price-normal">
+                                        @UIHelper.FormatNumber(right) <span></span>
+                                        @*@if (detail.FlashSaleId > 0)
+                                            {
+                                                <span id="price-sale-detail" data-sale-price="@default_price_detail.SalePrice">@UIHelper.FormatNumber(default_price_detail.SalePrice)</span> <span>đ/@detail.Unit</span>
+                                            }
+                                            @if (default_price_detail.SalePrice > 0 && detail.FlashSaleId <= 0)
+                                            {
+                                                @UIHelper.FormatNumber(default_price_detail.Price) <span>đ</span>
+                                            }*@
+                                    </span>
+                                }
+
+                                <span class="tag"></span>
+                            </div>
+                            <div class="d-flex mb-3">
+                                @if (detail.Quantity != null && detail.Quantity > 0)
+                                {
+                                    <div class="font-weight-600 text-uppercase align-self-center mr-3">
+                                        Còn hàng
+                                    </div>
+                                    <div class="group-amount d-flex align-self-center">
+                                        <button class="btn" id="minus" type="button">
+                                            <i class="fas fa-minus" aria-hidden="true"></i>
+                                        </button>
+                                        <input type="number" class="form-control mx-2" id="quantity" value="1">
+                                        <button class="btn " id="plus" type="button">
+                                            <i class="fas fa-plus" aria-hidden="true"></i>
+                                        </button>
+                                    </div>
+                                }
+                                @if (detail.Quantity == null || detail.Quantity <= 0)
+                                {
+                                    <div class="font-weight-600 text-uppercase align-self-center mr-3">
+                                        Hết hàng
+                                    </div>
+                                }
+                            </div>
+                            @*<div class=" d-none d-lg-block" style="font-size: 11px; line-height: 1;">
+                                    <span class="nhap-dien-tich">Nhập diện tích nhà bạn</span>
+                                </div>*@
+                            @if (promotions.Count() > 0)
+                            {
+                                <div class="box-km mb-3">
+                                    <h6 class="font-weight-600 mb-3">Khuyến mại</h6>
+                                    @foreach (var item in promotions)
+                                    {
+                                        <label class="label-checkbox">
+                                            @Html.Raw(WebHelper.RenderLazyLoadBody(item.Name))
+                                            @if (!string.IsNullOrEmpty(item.Url))
+                                            {
+                                                <a href="@item.Url"> - (<span class="extra-link-promotion">Xem chi tiết</span>)</a>
+                                            }
+                                            <input type="checkbox" class="choose_promotion" checked="checked" data-promotion-id="@item.Id" data-is-discount="@item.IsDiscountPrice" data-type="@item.Type" data-value="@item.Value">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    }
+                                </div>
+                            }
+
+                            <div class="d-flex mb-3">
+                                <div class="mr-2">
+                                    <img asp-append-version="true" src="~/images/change/caculator-icon.svg" class="img-fluid" />
+                                </div>
+                                @{
+                                    var blog_zone = zoneRepository.GetZoneByTreeViewShowMenuMinifies((int)TypeZone.Article, culture_code, 0, 1);
+                                    var blog_parents = blog_zone.Where(r => r.ParentId == 0).OrderBy(r => r.SortOrder).FirstOrDefault();
+                                    if (blog_parents != null)
+                                    {
+                                        <div class="">
+                                            Xem thông tin mới nhất từ
+                                            <a href="@LinkRedirectUrlUtility.BlogLinkUrl(blog_parents.Url)"
+                                               data-id="@detail.Id"
+                                               data-material="@detail.MaterialType"
+                                               data-price="@default_price_detail.Price"
+                                               data-sale-price="@(detail.FlashSaleId > 0 ? detail.ProductPriceInFlashSale : default_price_detail.SalePrice)"
+                                               data-avatar="@UIHelper.StoreFilePath(detail.Avatar)"
+                                               data-spec-name="@(setification_detail.FirstOrDefault() == null ? "DF" :setification_detail.FirstOrDefault().Name )"
+                                               data-spec-value="@(setification_detail.FirstOrDefault() == null ? "Default Value" :setification_detail.FirstOrDefault().Value )"
+                                               data-title="@detail.Title"
+                                               class="btn-link font-weight-600" id="">Nhà bếp vui</a>
+                                        </div>
+                                    }
+                                }
+
+                            </div>
+                            <div class="area_order mb-3">
+                                <div class="row">
+                                    <div class="col-sm-12 col-12">
+                                        <a href="javascript:void(0)" class="btn btn-order w-100  mb-3" id="buy-now" data-product-id="@detail.Id" data-quantit="@detail.Quantity">
+                                            <img asp-append-version="true" src="~/images/Cart.svg"
+                                                 class="img-fluid mr-2" />MUA HÀNG NGAY
+                                        </a>
+                                    </div>
+                                    <div class="col-sm-6 col-12">
+                                        <button href="" class="btn btn-order-2 w-100 mb-3" style="text-transform: initial;font-size: 16px;" id="add-to-cart" @(detail.Quantity <= 0 ? "disabled" : "") data-product-id="@detail.Id">Thêm vào giỏ</button>
+                                    </div>
+                                    <div class="col-sm-6 col-12 pl-sm-2">
+                                        @{
+                                            var hl = bannerAdsRepository.GetConfigByName(culture_code, "Hotline").Replace(".", "");
+                                        }
+                                        <a class="btn btn-primary w-100 mb-3" id="lh-hot-line" href="tel: @hl">
+                                            <p class="mb-0" style="font-size: 12px;">Liên hệ Hotline</p>
+
+                                            <h5 class="m-0" style="font-weight: 600;">@hl</h5>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            @*<div class="area_order mb-3">
+                                    <div class="row">
+                                        <div class="col-12 px-2">
+                                            <a href="" class="btn btn-order w-100 py-3 mb-3">
+                                                <img asp-append-version="true" src="~/images/Cart.svg"
+                                                        class="img-fluid mr-2" />MUA HÀNG NGAY
+                                            </a>
+                                        </div>
+                                        <div class="col-6 px-2">
+                                            <a href="javascript:void(0)" class="btn btn-order-2 w-100 py-3 mb-3" id="add-to-cart" data-product-id="@detail.Id">Thêm vào giỏ hàng</a>
+                                        </div>
+                                        <div class="col-6 px-2">
+                                            <a href="" class="btn btn-order-2 w-100 py-3 mb-3">Liên hệ</a>
+                                        </div>
+                                    </div>
+                                </div>*@
+                            @{
+                                using (MI.Dal.IDbContext.IDbContext _context = new MI.Dal.IDbContext.IDbContext())
+                                {
+                                    var _cb = _context.Product.Where(r => r.ProductComboParentId == detail.Id).FirstOrDefault();
+                                    if (_cb != null)
+                                    {
+                                        <div class="box-km product-suggest mb-3" id="list_combo">
+                                            <h6 class="font-weight-600 mb-3 text-uppercase">@_cb.Name</h6>
+                                            @{var count = 1; }
+
+                                            <div id="_binding_combo">
+                                                @foreach (var item in combo)
+                                                {
+                                                    count++;
+                                                    var link_target = string.Format("/{0}.html", item.Url);
+                                                    <label class="label-checkbox d-flex">
+
+                                                        <div style="position:relative">
+                                                            <div class="image-product mr-2">
+                                                                <img asp-append-version="true" src="@UIHelper.StoreFilePath(item.Avatar)" class="" alt="@item.Title" />
+                                                            </div>
+                                                            @if (!string.IsNullOrEmpty(item.ConfigNote))
+                                                            {
+                                                                <div class="tag-1" style="position:absolute; top: 0; left:0; max-width:50px">
+                                                                    @item.ConfigNote
+                                                                </div>
+                                                            }
+
+                                                        </div>
+
+                                                        <div class="align-self-center mr-2"><a href="@link_target" alt="@item.Title">@item.Title</a></div>
+                                                        <div>
+                                                            <div class="align-self-center font-weight-600 ml-auto nowrap combo-item-price">@UIHelper.FormatNumber(item.ConfigPrice)</div>
+
+                                                            <div class="align-self-center font-weight-200 ml-auto nowrap price-old mr-2">
+                                                                @UIHelper.FormatNumber(item.FlashSaleId > 0 ? item.ProductPriceInFlashSale : item.Price)
+                                                            </div>
+                                                        </div>
+
+                                                        <input class="choose_combo" data-sale-price="@(item.FlashSaleId > 0 ? item.ProductPriceInFlashSale : item.Price)" data-product-id="@item.ProductId" type="checkbox" checked="checked" disabled>
+                                                        <span class="checkmark"></span>
+                                                    </label>
+                                                }
+                                            </div>
+                                            <div class="text-right">
+                                                @{ var tong_tien_combo = combo.Sum(r => r.ConfigPrice); }
+
+                                                @{ decimal tong_tien = 0;
+                                                    foreach (var item in combo)
+                                                    {
+                                                        if (item.FlashSaleId > 0)
+                                                        {
+                                                            tong_tien += item.ProductPriceInFlashSale;
+                                                        }
+                                                        else
+                                                        {
+                                                            tong_tien += item.Price;
+                                                        }
+                                                    }
+                                                    if (detail.FlashSaleId > 0)
+                                                    {
+                                                        tong_tien += detail.ProductPriceInFlashSale;
+                                                    }
+                                                    else
+                                                    {
+                                                        tong_tien += default_price_detail.SalePrice;
+                                                    }
+                                                }
+                                                <div class="mb-3">Tổng dự toán:<span class="font-weight-600 color-EE7D22 mx-2" id="total_combo_price" data-total="@tong_tien">@UIHelper.FormatNumber(tong_tien_combo) đ</span></div>
+                                                <button role="button" class="btn btn-save " id="add-cart-combo-remake" data-combo-id="@_cb.Id">Thêm combo sản phẩm vào giỏ hàng</button>
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                            }
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-lg-12 col-md-5 col-sm-12 col-12 d-none d-md-block">
+                    <a type="button" class="btn border btn-sm w-100 mb-3 py-2 btn-sm btn-link find-showroom">
+                        <i class="fas fa-map-marker-alt mr-2" style="color: #3AB54A;"></i>Tìm showroom Gần bạn nhất
+                    </a>
+                    <div class="policy-new border border-r-4 py-2 px-3 mb-3">
+                        @foreach (var item in lstLink)
+                        {
+                            <div class="item">
+                                <div class="icon"><img asp-append-version="true" src="@UIHelper.StoreFilePath(item.Image, false)" class="img-fluid" /></div>
+                                <div class="text">
+                                    @*@item.Title*@
+                                    @Html.Raw(item.Description)
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+            <!--Sản phẩm tương tự-->
+            <div class="my-4  d-md-block">
+                <div class="row mb-3">
+                    <div class="col-8">
+                        <a href="" class="h5 font-weight-bold ">Sản phẩm tương tự</a>
+                    </div>
+                    @if (same_total > 6)
+                    {
+                        var link_tar = string.Format("/{0}", zone_url);
+                        <div class="col-4 text-right">
+                            <a href="@link_tar" class="link-view-more">
+                                *Xem thêm <i class="fas fa-chevron-right ml-1 small" aria-hidden="true"></i>
+                            </a>
+                        </div>
+                    }
+                </div>
+                <div class="row no-gutters">
+                    @if (product_same_zone != null)
+                    {
+                        foreach (var item in product_same_zone)
+                        {
+                            var link_tar = string.Format("/{0}.html", item.Url);
+                            <div class="col-xl-2 col-md-4 col-sm-4 col-6">
+                                @await Component.InvokeAsync("ItemProduct", new { pr = item, isLazy = false })
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+            <!--Sản phẩm tương tự end-->
+            <div class="row">
+                <div class="col-xl-8 col-lg-8 col-md-7 col-sm-12 col-12">
+                    <div class="d-md-none">
+                        <div class="pb-2 border-bottom h5 font-weight-600 mb-3">
+                            <i class="far fa-clock mr-2"></i> Chi tiết kỹ thuật
+                        </div>
+                        <div class="tech-detail border py-2 border-r-4 px-3 mb-4">
+                            @*<div class="item ">
+                    <div class="label text-uppercase font-weight-600">
+                        @_localizer["Code"]
+                    </div>
+                    <div class=" ml-auto text-right">
+                        @Html.Raw(detail.Code)
+                    </div>
+                </div>*@
+                            <div class="item ">
+                                @**@
+                                <div class="label text-uppercase font-weight-600">
+                                    @_localizer["Unit"]
+                                </div>
+                                <div class="ml-auto text-right">
+                                    @Html.Raw(detail.Unit)
+                                </div>
+                            </div>
+                            @if (setification_detail != null)
+                            {
+                                @foreach (var item in setification_detail)
+                                {
+                                    <div class="item ">
+                                        @*text-uppercase*@
+                                        <div class="label font-weight-600">
+                                            @item.Name
+                                        </div>
+                                        <div class="ml-auto text-right">
+                                            @*@item.Value*@
+                                            @if (!string.IsNullOrEmpty(item.Url))
+                                            {
+                                                @*@Html.Raw("<a href=" + item.Url + ">(<span class=\"extra-link-spec\">Xem chi tiết</span>)</a>")*@
+                                                <a href="@item.Url">@item.Value</a>
+                                            }
+                                            else
+                                            {
+                                                @item.Value
+                                            }
+                                        </div>
+                                    </div>
+                                }
+                            }
+
+                        </div>
+                    </div>
+                    <div class="product-description">
+                        <div class="pb-2 border-bottom h5 font-weight-600 mb-3">
+                            Mô tả sản phẩm
+                        </div>
+                        <div class="content">
+                            @Html.Raw(WebHelper.RenderLazyLoadBody(detail.Content))
+                        </div>
+                    </div>
+                    <div class="text-center my-4">
+                        <button class="btn btn-outline-view-more" onclick="expandProductDes()">
+                            Xem thêm <i class="fal fa-plus ml-2"></i>
+                        </button>
+                    </div>
+
+                    <!--Phụ kiện đi kèm end-->
+                    <!--Đánh giá-->
+                    <div class="row mb-3">
+                        <div class="col-md-8 col-sm-8 col-8 ">
+                            <h5 class="font-weight-600 mb-0">Đánh giá sản phẩm</h5>
+                        </div>
+                        <div class="col-md-4 col-sm-4 col-4 text-right">
+                            <button type="button" class="btn btn-save" data-toggle="modal" data-target="#modal-danh-gia">
+                                Đánh giá ngay
+                            </button>
+                        </div>
+                    </div>
+                    <!--Rating-->
+                    <div class="border-r-4 border py-3 mb-4">
+                        <div class="row">
+                            <div class="col-xl-5 col-lg-5 col-md-5 col-sm-12 col-12">
+                                <div class="star-average p-3 border-right">
+                                    <h2 class="mb-1 font-weight-600">@Math.Round(detail.RateAVG, 1)</h2>
+                                    @*<div class="ratingresult mb-2">*@
+                                    <div class="star-rating d-inline-block text-center">
+                                        @await Component.InvokeAsync("RatingStar", new { object_id = @detail.Id, object_type = (int)TypeRating.Product, hTag = "" })
+                                    </div>
+                                    <div><a href="javascript:;" class="btn-link">@detail.TotalRate đánh giá</a></div>
+                                </div>
+                            </div>
+                            <div class="col-xl-7 col-lg-7 col-md-7 col-12">
+                                <aside class="rating-left">
+                                    @{
+                                        var x = detail.TotalRate == 0 ? 1 : detail.TotalRate;
+                                        var five_star_percent = Math.Round(((double)detail.Five_Star / (double)x) * 100, 1);
+                                        var four_star_percent = Math.Round(((double)detail.Four_Star / (double)x) * 100, 1);
+                                        var three_star_percent = Math.Round(((double)detail.Three_Star / (double)x) * 100, 1);
+                                        var two_star_percent = Math.Round(((double)detail.Two_Star / (double)x) * 100, 1);
+                                        var one_star_percent = Math.Round(((double)detail.One_Star / (double)x) * 100, 1);
+                                    }
+                                    <div class="star-line">
+                                        <span class="star-type left align-self-center">5 </span>
+                                        <div class="star-bar align-self-center">
+                                            <div class="star-barsub" style="width: @(five_star_percent)%;">
+                                            </div>
+                                        </div>
+                                        <span class="star-type right align-self-center ">@(five_star_percent)%</span>
+                                    </div>
+                                    <div class="star-line">
+                                        <span class="star-type left align-self-center">4</span>
+                                        <div class="star-bar align-self-center">
+                                            <div class="star-barsub" style="width: @(four_star_percent)%;">
+                                            </div>
+                                        </div>
+                                        <span class="star-type right align-self-center ">@(four_star_percent)%</span>
+                                    </div>
+                                    <div class="star-line">
+                                        <span class="star-type left align-self-center">3</span>
+                                        <div class="star-bar align-self-center">
+                                            <div class="star-barsub" style="width: @(three_star_percent)%;">
+                                            </div>
+                                        </div>
+                                        <span class="star-type right align-self-center ">@(three_star_percent)%</span>
+                                    </div>
+                                    <div class="star-line">
+                                        <span class="star-type left align-self-center">2</span>
+                                        <div class="star-bar align-self-center">
+                                            <div class="star-barsub" style="width: @(two_star_percent)%;">
+                                            </div>
+                                        </div>
+                                        <span class="star-type right align-self-center ">@(two_star_percent)%</span>
+                                    </div>
+                                    <div class="star-line">
+                                        <span class="star-type left align-self-center">1</span>
+                                        <div class="star-bar align-self-center">
+                                            <div class="star-barsub" style="width: @(one_star_percent)%;">
+                                            </div>
+                                        </div>
+                                        <span class="star-type right align-self-center ">@(one_star_percent)%</span>
+                                    </div>
+                                </aside>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Gửi Comment-->
+                    @await Component.InvokeAsync("Comment", new { object_id = detail.Id, object_type = (int)CommentType.Product })
+
+                    <!--Đánh giá end-->
+                    <div class="fb-comments" data-href="@domain_full" data-numposts="5" data-width="100%"></div>
+                </div>
+                <div class="col-xl-4 col-lg-4 col-md-5 col-sm-12 col-12 ">
+                    <!--Chi tiết kỹ thuật-->
+                    <div class="d-none d-md-block">
+                        <div class="pb-2 border-bottom h5 font-weight-600 mb-3">
+                            <i class="far fa-clock mr-2"></i> Chi tiết kỹ thuật
+                        </div>
+                        <div class="tech-detail border py-2 border-r-4 px-3 mb-4">
+                            @if (setification_detail != null)
+                            {
+                                @foreach (var item in setification_detail)
+                                {
+                                    <div class="item ">
+                                        @*text-uppercase*@
+                                        <div class="label font-weight-600">
+                                            @item.Name
+                                        </div>
+                                        <div class="ml-auto text-right">
+                                            @if (!string.IsNullOrEmpty(item.Url))
+                                            {
+                                                <a href="@item.Url" style="color:#627EFF">@item.Value</a>
+                                            }
+                                            else
+                                            {
+                                                @item.Value
+                                            }
+                                        </div>
+                                    </div>
+                                }
+                            }
+
+                        </div>
+                    </div>
+                    <!--Tin mới-->
+                    <div class="lastest-news ">
+                        <div class="pb-2 border-bottom h5 font-weight-600 mb-3">
+                            <img asp-append-version="true" src="~/images/lastest-ic.svg" class="img-fluid mr-2" /> Tin mới
+                        </div>
+                        <div class="list-right mb-4">
+                            @{
+                                var total_lastest_news = 0;
+                                var lastest_news = articleRepository.GetArticlesInZoneId_Minify_FullFilter(0, (int)TypeZone.AllButProduct, (int)TypeArticle.Blog, 2, culture_code, "", 1, 6, out total_lastest_news);
+                                foreach (var item in lastest_news)
+                                {
+                                    var link_target = string.Format("/{0}.html", item.Url);
+                                    <div class="item">
+                                        <div class="row">
+                                            <div class="col-xl-3 col-md-4 col-sm-3 col-3 pr-0">
+                                                <div class="image">
+                                                    <a href="@link_target" title="@item.Title">
+                                                        <img asp-append-version="true" src="@UIHelper.StoreFilePath(item.Avatar)" class="img-fluid" alt="@item.Title">
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-9 col-md-8 col-sm-9 col-9">
+                                                <h6 class="title">
+                                                    <a href="@link_target" title="@item.Title">@item.Title</a>
+                                                </h6>
+                                                <div class="time">
+                                                    @item.CreatedDate.ToString("dd/MM/yyyy hh:mm")
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            }
+                        </div>
+                    </div>
+                    <!--Sản phẩm ưu chuộng-->
+                    <div class="list-menu-right">
+                        <div class="heading mb-3">
+                            <img asp-append-version="true" src="~/images/icon-spuc.svg" class="img-fluid mr-2" />Sản phẩm ưa chuộng
+                        </div>
+                        <div class="list lastest-news">
+                            @{
+                                var total_best_favor = 0;
+                                var best_favor = productRepository.GetAllProductSortBy(1, cookie_location.LocationId, culture_code, 1, 5, out total_best_favor);
+                                foreach (var item in best_favor)
+                                {
+                                    decimal show_price = 0;
+                                    if (item.SalePrice > 0 && item.SalePrice < item.Price)
+                                    {
+                                        show_price = item.SalePrice;
+                                    }
+                                    if (item.SalePrice == 0 || item.SalePrice >= item.Price)
+                                    {
+                                        show_price = item.Price;
+                                    }
+                                    var link_tar = string.Format("/{0}.html", item.Url);
+                                    <div class="item">
+                                        <div class="row">
+                                            <div class="col-xl-3 col-lg-3 col-md-4 col-sm-3 col-3 pr-0">
+                                                <div class="image">
+                                                    <a href="@link_tar" title="@item.Title">
+                                                        <img asp-append-version="true" src="@UIHelper.StoreFilePath(item.Avatar)" class="img-fluid"
+                                                             alt="@link_tar">
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-9 col-lg-9 col-md-8 col-sm-9 col-9">
+                                                <h6 class="title mb-1">
+                                                    <a href="@link_tar" title="@item.Title">@item.Title</a>
+                                                </h6>
+                                                <div class="price color-EE7D22 font-weight-bold mb-1" style="font-size: 18px;color: #0363CD;">
+                                                    @UIHelper.FormatNumber(item.SalePrice)
+                                                </div>
+                                                <div class="d-flex small">
+                                                    <div class="color-FFAB1B mr-2">
+                                                        @Math.Round(item.Rate, 1)/5<i class="fas fa-star ml-1" aria-hidden="true"></i>
+                                                    </div>
+                                                    <div class="color-828282">
+                                                        @item.CountRate đánh giá
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            }
+                        </div>
+                    </div>
+
+                    <div class="list-menu-right">
+                        <div class="heading mb-3">
+                            <img asp-append-version="true" src="~/images/sale-tag-icon.svg" class="img-fluid mr-2" />Tags
+                        </div>
+                        <div class="list  list-tags-right">
+                            @{
+                                var tags = productRepository.GetTagsInProduct(culture_code);
+                            }
+                            @foreach (var item in tags.Skip(0).Take(50))
+                            {
+                                var l = string.Format("/the/{0}", Utility.bodauTiengViet(item.Name));
+                                <div class="item">
+                                    <a href="@l">@item.Name</a>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Modal đánh giá-->
+    <div class="modal jan-modal fade" id="modal-danh-gia" tabindex="-1" role="dialog"
+         aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <form class="modal-content" id="rating-form" data-type="rating" data-object-id="@detail.Id" data-object-type="@((int)CommentType.Product)" data-lang="@culture_code">
+                <div class="modal-header border-bottom-0">
+                    <h6 class="modal-title font-weight-bold">Đánh giá ngay</h6>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <h6 class="font-weight-600 mb-4">Bạn cảm thấy sản phẩm như thế nào?(chọn sao nhé):</h6>
+                    <div class="star-rating-dynamic h4 text-center mb-4">
+                        <i class="fas fa-star checked"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <div class="mb-4 ">
+                        <div class="form-row p-2 ">
+                            <div class="col-12">
+                                <textarea class="form-control mb-3 txt_content " minlength="50" rows="4" placeholder="Type your topic here">
+                                </textarea>
+                            </div>
+                            <div class="col-2">
+                                <div class="position-relative form-control text-center mb-2 mb-md-0"
+                                     style="font-size: 14px;">
+                                    <img asp-append-version="true" src="images/camera.svg" class="img-fluid">
+                                    <input type="file" class="input-choose-file " accept="image/*">
+                                </div>
+                            </div>
+                            <div class="col">
+                                <input type="text" style="font-size: 14px;height: calc(1.5em + .75rem + 2px);" class="form-control mb-2 mb-md-0 txt_name" placeholder="Tên (bắt buộc)" required>
+                            </div>
+                            <div class="col">
+                                <input type="text" style="font-size: 14px;height: calc(1.5em + .75rem + 2px);" class="form-control mb-2 mb-md-0 txt_phoneOrEmail" placeholder="Email (bắt buộc)" required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn " data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-save" id="btn-save-xn">
+                        Xác nhận
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="modal " id="modal-slide-imge" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-xl  mt-0" role="document">
+            <div class="modal-content px-3">
+                <div class="modal-header border-bottom-0">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="row no-gutters justify-content-center">
+                    <div class="col-xl-7 col-lg-7 col-md-8 col-12">
+                        <div class="slide-product-detail-2  mb-4">
+                            <div class="swiper-container gallery-top-2">
+                                <div class="swiper-wrapper">
+                                    <div class="swiper-slide">
+                                        <div class="image">
+                                            <img asp-append-version="true" src="@UIHelper.StoreFilePath(detail.Avatar,false)" class="img-fluid w-100 "
+                                                 alt="" />
+                                        </div>
+
+                                    </div>
+                                    @foreach (var item in avatar_array)
+                                    {
+                                        <div class="swiper-slide">
+                                            <div class="image">
+                                                <img asp-append-version="true" src="@UIHelper.StoreFilePath(item,false)" class="img-fluid w-100 "
+                                                     alt="" />
+                                            </div>
+
+                                        </div>
+                                    }
+                                    <div class="swiper-slide">
+                                        <div class="image">
+                                            <img asp-append-version="true" src="@UIHelper.StoreFilePath(detail.Avatar,false)" class="img-fluid w-100 "
+                                                 alt="" />
+                                        </div>
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <div class="image">
+                                            <div class="embed-responsive embed-responsive-16by9">
+                                                <iframe class="embed-responsive-item" src="@UIHelper.ConvertLinkYoutubeVideoOriginal(meta_file.File360)" allowfullscreen></iframe>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <div class="image">
+                                            <div class="embed-responsive embed-responsive-16by9">
+                                                <iframe class="embed-responsive-item" src="@UIHelper.ConvertLinkYoutubeVideoOriginal(meta_file.FileVideo)" allowfullscreen></iframe>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="swiper-container gallery-thumbs-2 px-4">
+                                <div class="swiper-wrapper">
+                                    <div class="swiper-slide">
+                                        <div class="image">
+                                            <img asp-append-version="true" src="@UIHelper.StoreFilePath(detail.Avatar)" class="img-fluid w-100 "
+                                                 alt="" />
+                                        </div>
+                                    </div>
+                                    @foreach (var item in avatar_array)
+                                    {
+                                        <div class="swiper-slide">
+                                            <div class="image">
+                                                <img asp-append-version="true" src="@UIHelper.StoreFilePath(item)" class="img-fluid w-100 "
+                                                     alt="@detail.Title" />
+                                            </div>
+
+                                        </div>
+                                    }
+                                    <div class="swiper-slide">
+                                        <div class="image p-3">
+                                            <a href="@meta_file.FileDowload" target="_blank">
+                                                <img asp-append-version="true" src="images/download-con-thumb.svg" class="img-fluid w-100 " alt="" />
+                                            </a>
+                                        </div>
+                                        Download Brochure
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <div class="image p-3">
+                                            <img asp-append-version="true" src="images/change/360do-icon-thumb.svg" class="img-fluid w-100 "
+                                                 alt="" />
+                                        </div>
+                                        Hình 360 độ
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <div class="image p-3">
+                                            <img asp-append-version="true" src="images/youtube-icon-thumb.svg" class="img-fluid w-100 " alt="" />
+                                        </div>
+                                        Video
+                                    </div>
+                                </div>
+                                <div class="swiper-button-prev" tabindex="0" role="button" aria-label="Previous slide">
+                                    <button class="btn btn-link color-828282">
+                                        <i class="fas fa-chevron-left"
+                                           aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="swiper-button-next" tabindex="0" role="button" aria-label="Previous slide">
+                                    <button class="btn btn-link color-828282 ">
+                                        <i class="fas fa-chevron-right"
+                                           aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+

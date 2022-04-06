@@ -1,0 +1,81 @@
+{
+  "_from": "jquery-autocompleter",
+  "_id": "jquery-autocompleter@0.3.0",
+  "_inBundle": false,
+  "_integrity": "sha512-HXCrvhUOJZHJXPfijp8LqPuiih/49JmzJ6M41Y0t/ANyga4h+lMtmrok//db8ljhMpq/HBO0igr3xyYPGkQW/g==",
+  "_location": "/jquery-autocompleter",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "jquery-autocompleter",
+    "name": "jquery-autocompleter",
+    "escapedName": "jquery-autocompleter",
+    "rawSpec": "",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/jquery-autocompleter/-/jquery-autocompleter-0.3.0.tgz",
+  "_shasum": "4015df5272038c0fe152c56f7989dbb02777c1f5",
+  "_spec": "jquery-autocompleter",
+  "_where": "C:\\Users\\HUY\\Desktop\\New folder",
+  "author": {
+    "name": "Artem Fitiskin",
+    "email": "artemfitiskin@gmail.com",
+    "url": "https://github.com/ArtemFitiskin"
+  },
+  "bugs": {
+    "url": "https://github.com/ArtemFitiskin/jquery-autocompleter/issues"
+  },
+  "bundleDependencies": false,
+  "demo": "http://artemfitiskin.github.io/jquery-autocompleter/",
+  "deprecated": false,
+  "description": "Easy customisable and with localStorage cache support.",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-eslint": "^8.2.2",
+    "babel-plugin-external-helpers": "^6.22.0",
+    "babel-preset-env": "^1.6.1",
+    "babelrc-rollup": "^3.0.0",
+    "eslint": "^4.18.2",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-plugin-prettier": "^2.6.0",
+    "prettier": "^1.11.1",
+    "rimraf": "^2.6.2",
+    "rollup": "^0.56.3",
+    "rollup-plugin-babel": "^3.0.3",
+    "rollup-plugin-uglify": "^3.0.0"
+  },
+  "homepage": "http://github.com/ArtemFitiskin/jquery-autocompleter",
+  "id": "autocompleter",
+  "keywords": [
+    "jquery-plugin",
+    "autocomplete",
+    "cache",
+    "ajax",
+    "input",
+    "jquery"
+  ],
+  "license": "MIT",
+  "main": "dist/jquery.autocompleter.js",
+  "name": "jquery-autocompleter",
+  "peerDependencies": {
+    "jquery": ">=1.11.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ArtemFitiskin/jquery-autocompleter.git"
+  },
+  "scripts": {
+    "build": "rollup -c",
+    "format": "prettier --write \"src/**/*.js\"",
+    "lint": "eslint ./src",
+    "prebuild": "rimraf ./dist"
+  },
+  "unpkg": "dist/jquery.autocompleter.min.js",
+  "version": "0.3.0"
+}

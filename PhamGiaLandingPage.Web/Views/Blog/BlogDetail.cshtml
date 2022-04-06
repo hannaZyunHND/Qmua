@@ -1,0 +1,193 @@
+﻿@using MI.Entity.Enums;
+@using PhamGiaLandingPage.Web.Services.Zone.ViewModal
+@using PhamGiaLandingPage.Web.Services.Article.ViewModel
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Http
+@using PhamGiaLandingPage.Web.Services.Article.Repository
+@inject IHttpContextAccessor HttpContextAccessor
+@inject IArticleRepository articleRepository;
+@using PhamGiaLandingPage.Web.Services.BannerAds.Repository
+@using MI.Entity.Models
+@inject IBannerAdsRepository bannerAdsRepository;
+@using Utils
+@{
+    var culture = Context.Features.Get<IRequestCultureFeature>().RequestCulture.Culture.TwoLetterISOLanguageName.ToLower();
+    var culture_code = Context.Features.Get<IRequestCultureFeature>().RequestCulture.Culture.ToString();
+    var base_uri_culture = "/" + culture;
+    var domain = Context.Request.Host.ToString();
+}
+@{
+    ViewData["Title"] = "BlogDetail";
+    Layout = "~/Views/Shared/_LayoutPublicHome.cshtml";
+}
+@{
+
+    var detail = ViewBag.Detail as ArticleDetail;
+
+    var Banner_Blog = new DetailBanerAds();
+    var Banner_Blog_Cache = bannerAdsRepository.GetBannerAds_By_Code(culture_code, "Banner_Blog");
+    if (Banner_Blog_Cache != null)
+    {
+        Banner_Blog = Newtonsoft.Json.JsonConvert.DeserializeObject<DetailBanerAds>(Banner_Blog_Cache.MetaData);
+    }
+}
+@section styles {
+    <style type="text/css">
+        .banner-page {
+            background: url(@UIHelper.StoreFilePath(Banner_Blog.Image)) no-repeat center;
+            min-height: 200px;
+            background-size: cover;
+            display: flex;
+        }
+        .detail-container img{
+            width:100% !important;
+        }
+    </style>
+
+}
+
+<div class="banner-page py-3 mb-4">
+    <div class="container align-self-center">
+        <div class="row justify-content-center">
+            <div class="col-sm-10 col-12 ">
+                <h1 class="text-center">@detail.ZoneName</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row flex-md-row-reverse">
+        <div class="col-xl-3 col-lg-3 col-md-4 col-sm-12 col-12">
+            @await Component.InvokeAsync("MenuRightBlog")
+        </div>
+        <div class="col-xl-9 col-lg-9 col-md-8 col-sm-12 col-12">
+            @await Component.InvokeAsync("Breadcrumb", new { zone_id = detail.ZoneId })
+            <div class="blog-content">
+                <h1 class="title">@detail.Title</h1>
+                <div class="d-flex mb-4">
+                    <div class="author color-828282 mr-4">
+                        <div class="avt align-self-center">
+                            <img asp-append-version="true" src="@UIHelper.StoreFilePath(detail.Avatar)" class="img-fluid" alt="@detail.Title" />
+                        </div>
+                        <div class="align-self-center">
+                            @detail.Author
+                        </div>
+                    </div>
+                    <div class="time mb-0">
+                        @detail.CreatedDate.ToString("dd/MM/yyyy hh:mm")
+                    </div>
+                </div>
+                <div class="detail-container">
+                    @Html.Raw(detail.Body)
+                </div>
+
+                <div class="d-flex facebook-btn justify-content-end my-4">
+                    <div class="small mr-3"><img asp-append-version="true" src="images/eye.svg" class="img-fluid mr-2" />120 lượt xem</div>
+                    <button class="btn mr-2"><i class="fas fa-thumbs-up mr-1"></i>Thích <span>1.4K</span></button>
+                    <button href="" class="btn">Chia sẻ</button>
+                </div>
+                <!--Bài viết liên quan-->
+                <div class="my-3">
+                    <div class="row mb-3  ">
+                        <div class="col-12">
+                            <a href="" class="h5 font-weight-bold ">Bài viết liên quan</a>
+                        </div>
+                    </div>
+                    <div class="row ">
+                        @{
+                            var news_same_zone_total = 0;
+                            var news_same_zone = articleRepository.GetArticlesInZoneId_Minify_FullFilter(detail.ZoneId, (int)TypeZone.AllButProduct, (int)TypeArticle.Blog, 2, culture_code, "", 1, 4, out news_same_zone_total);
+
+                        }
+                        @foreach (var item in news_same_zone)
+                        {
+                            var link_tar = string.Format("{0}/{1}.a{2}.html", base_uri_culture, item.Url, item.Id);
+                            <div class="col-xl-3 col-md-6 col-sm-6 col-6">
+                                <div class="item-blog-km">
+                                    <div class="image mb-3">
+                                        <a href="@link_tar"><img asp-append-version="true" src="@UIHelper.StoreFilePath(item.Avatar)" class="img-fluid" alt="@item.Title" /></a>
+                                    </div>
+                                    <div class="">
+                                        <h5 class="title h6 font-weight-bold">
+                                            <a href="@link_tar" title="@item.Title">@item.Title</a>
+                                        </h5>
+
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+                <!--Tag-->
+                <div class="tags">
+                    <label class="">Từ khóa:</label>
+
+                    @if (!string.IsNullOrEmpty(detail.Tags))
+                    {
+                        var list_tags = detail.Tags.Split(',');
+                        foreach (var item in list_tags)
+                        {
+                            var link_tar = string.Format("{0}/filter-by-{1}.html", base_uri_culture, item);
+                            <a href="@link_tar" class="item btn-link">@item</a>
+                        }
+                    }
+                </div>
+                <!--Gửi Comment-->
+                @await Component.InvokeAsync("Comment", new { object_id = detail.Id, object_type = (int)CommentType.Article })
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="service-home py-3">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-4 col-md-4 col-sm-4 col-12">
+                <div class="d-flex py-3 justify-content-center">
+                    <div class="image align-self-center">
+                        <img asp-append-version="true" src="~/images/shipment-international.svg" class="img-fluid" />
+                    </div>
+                    <div class="px-3 align-self-center">
+                        <label>Vận chuyển</label>
+                        <div class="small">
+                            Free shipping on all order
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4 col-md-4 col-sm-4 col-12">
+                <div class="d-flex py-3 justify-content-center">
+                    <div class="image align-self-center">
+                        <img asp-append-version="true" src="~/images/professions-man-telecommunicator.svg" class="img-fluid" />
+                    </div>
+                    <div class="px-3 align-self-center">
+                        <label>Support 24/7</label>
+                        <div class="small">
+                            Chúng tôi hỗ trợ bạn 24/7
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4 col-md-4 col-sm-4 col-12">
+                <div class="d-flex py-3 justify-content-center">
+                    <div class="image align-self-center">
+                        <img asp-append-version="true" src="~/images/saving-piggy-dollars.svg" class="img-fluid" />
+                    </div>
+                    <div class="px-3 align-self-center">
+                        <label>Dịch vụ đổi trả hàng</label>
+                        <div class="small">
+                            Đổi trả hàng trong vòng 7 ngày
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section scripts {
+    <script type="text/javascript" src="~/js/controller/blogDetailController.js" asp-append-version="true"></script>
+
+}

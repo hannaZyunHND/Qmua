@@ -1,0 +1,66 @@
+﻿@using TemplateKAO.Services.Zone.ViewModal
+@using TemplateKAO.Services.BannerAds.ViewModel
+@using TemplateKAO.Services.Extra.ViewModel
+@using TemplateKAO.Services.BannerAds.Repository
+@using MI.Entity.Models
+@using TemplateKAO.Services.Product.Repository
+@using TemplateKAO.Services.Extra.Repository
+@using Microsoft.AspNetCore.Http
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Utils
+@inject IHttpContextAccessor HttpContextAccessor
+@using TemplateKAO.Utility
+@using TemplateKAO.Services.Product.ViewModel;
+@inject ICookieUtility cookieUtility
+@inject IConfigSEOUtility configSEOUtility
+@inject IProductRepository productRepository
+@inject IBannerAdsRepository bannerAdsRepository
+@inject IExtraRepository extraRepository
+@{
+
+    Layout = "~/Views/Shared/_LayoutPublicHome.cshtml";
+    var cookie_location = cookieUtility.SetCookieDefault();
+    var location_id = cookie_location.LocationId;
+    var location_name = cookie_location.LocationName;
+    var culture = Context.Features.Get<IRequestCultureFeature>().RequestCulture.Culture.TwoLetterISOLanguageName.ToLower();
+    var culture_code = Context.Features.Get<IRequestCultureFeature>().RequestCulture.Culture.ToString();
+    var base_uri_culture = "/" + culture;
+    var domain = Context.Request.Host.ToString();
+    var total = (int)ViewBag.Total;
+    var pageSize = (int)ViewBag.Size;
+    var url = ViewBag.Url;
+    var zone_id = ViewBag.ZoneId;
+    var pageIndex = 1;
+}
+@model List<ProductMinify>;
+<div class="container mb-3">
+    @await Component.InvokeAsync("Breadcrumb", new { zone_id = zone_id })
+</div>
+
+<div class="list-flash-sale bg-fff  ">
+    <div class="container">
+        <div class="row no-gutters _binding_product">
+            @if (Model != null)
+            {
+                foreach (var item in Model)
+                {
+                    var link_tar = string.Format("/{0}.html", item.Url);
+                    <div class="col-xl-2 col-lg-3 col-md-4 col-sm-4 col-6">
+                        @await Component.InvokeAsync("ItemProduct", new { pr = item, isLazy = false })
+                    </div>
+                }
+            }
+        </div>
+        @if (total > pageSize)
+        {
+            <div class="text-center my-5">
+                <a href="javascript:void(0)" class="btn btn-outline-view-more region-view-more" data-index="@pageIndex" data-url="@url">Xem thêm<i class="fas fa-chevron-down ml-2 " aria-hidden="true"></i></a>
+            </div>
+        }
+    </div>
+</div>
+@section scripts{
+
+    <script type="text/javascript" asp-append-version="true" src="~/js/controller/filterProductController.js"></script>
+}

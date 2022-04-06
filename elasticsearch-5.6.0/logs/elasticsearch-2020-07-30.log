@@ -1,0 +1,147 @@
+[2020-07-30T10:25:22,062][INFO ][o.e.n.Node               ] [] initializing ...
+[2020-07-30T10:25:22,901][INFO ][o.e.e.NodeEnvironment    ] [hHj-txf] using [1] data paths, mounts [[Elements (E:)]], net usable_space [309.9gb], net total_space [465.7gb], spins? [unknown], types [NTFS]
+[2020-07-30T10:25:22,902][INFO ][o.e.e.NodeEnvironment    ] [hHj-txf] heap size [1.9gb], compressed ordinary object pointers [true]
+[2020-07-30T10:25:23,993][INFO ][o.e.n.Node               ] node name [hHj-txf] derived from node ID [hHj-txf9QGabFfsXAWjKpw]; set [node.name] to override
+[2020-07-30T10:25:23,995][INFO ][o.e.n.Node               ] version[5.6.0], pid[18388], build[781a835/2017-09-07T03:09:58.087Z], OS[Windows 10/10.0/amd64], JVM[Oracle Corporation/Java HotSpot(TM) 64-Bit Server VM/1.8.0_261/25.261-b12]
+[2020-07-30T10:25:24,027][INFO ][o.e.n.Node               ] JVM arguments [-Xms2g, -Xmx2g, -XX:+UseConcMarkSweepGC, -XX:CMSInitiatingOccupancyFraction=75, -XX:+UseCMSInitiatingOccupancyOnly, -XX:+AlwaysPreTouch, -Xss1m, -Djava.awt.headless=true, -Dfile.encoding=UTF-8, -Djna.nosys=true, -Djdk.io.permissionsUseCanonicalPath=true, -Dio.netty.noUnsafe=true, -Dio.netty.noKeySetOptimization=true, -Dio.netty.recycler.maxCapacityPerThread=0, -Dlog4j.shutdownHookEnabled=false, -Dlog4j2.disable.jmx=true, -Dlog4j.skipJansi=true, -XX:+HeapDumpOnOutOfMemoryError, -Delasticsearch, -Des.path.home=E:\DuAn\vnetcore\elasticsearch-5.6.0]
+[2020-07-30T10:25:32,348][INFO ][o.e.p.PluginsService     ] [hHj-txf] loaded module [aggs-matrix-stats]
+[2020-07-30T10:25:32,349][INFO ][o.e.p.PluginsService     ] [hHj-txf] loaded module [ingest-common]
+[2020-07-30T10:25:32,349][INFO ][o.e.p.PluginsService     ] [hHj-txf] loaded module [lang-expression]
+[2020-07-30T10:25:32,349][INFO ][o.e.p.PluginsService     ] [hHj-txf] loaded module [lang-groovy]
+[2020-07-30T10:25:32,349][INFO ][o.e.p.PluginsService     ] [hHj-txf] loaded module [lang-mustache]
+[2020-07-30T10:25:32,349][INFO ][o.e.p.PluginsService     ] [hHj-txf] loaded module [lang-painless]
+[2020-07-30T10:25:32,350][INFO ][o.e.p.PluginsService     ] [hHj-txf] loaded module [parent-join]
+[2020-07-30T10:25:32,350][INFO ][o.e.p.PluginsService     ] [hHj-txf] loaded module [percolator]
+[2020-07-30T10:25:32,350][INFO ][o.e.p.PluginsService     ] [hHj-txf] loaded module [reindex]
+[2020-07-30T10:25:32,350][INFO ][o.e.p.PluginsService     ] [hHj-txf] loaded module [transport-netty3]
+[2020-07-30T10:25:32,350][INFO ][o.e.p.PluginsService     ] [hHj-txf] loaded module [transport-netty4]
+[2020-07-30T10:25:32,351][INFO ][o.e.p.PluginsService     ] [hHj-txf] no plugins loaded
+[2020-07-30T10:25:52,469][INFO ][o.e.d.DiscoveryModule    ] [hHj-txf] using discovery type [zen]
+[2020-07-30T10:25:55,359][INFO ][o.e.n.Node               ] initialized
+[2020-07-30T10:25:55,363][INFO ][o.e.n.Node               ] [hHj-txf] starting ...
+[2020-07-30T10:25:58,490][INFO ][o.e.t.TransportService   ] [hHj-txf] publish_address {127.0.0.1:9300}, bound_addresses {127.0.0.1:9300}, {[::1]:9300}
+[2020-07-30T10:26:01,803][INFO ][o.e.c.s.ClusterService   ] [hHj-txf] new_master {hHj-txf}{hHj-txf9QGabFfsXAWjKpw}{e_m2kTifQWuftzlTwpMDIw}{127.0.0.1}{127.0.0.1:9300}, reason: zen-disco-elected-as-master ([0] nodes joined)
+[2020-07-30T10:26:03,046][INFO ][o.e.h.n.Netty4HttpServerTransport] [hHj-txf] publish_address {127.0.0.1:9200}, bound_addresses {127.0.0.1:9200}, {[::1]:9200}
+[2020-07-30T10:26:03,046][INFO ][o.e.n.Node               ] [hHj-txf] started
+[2020-07-30T10:26:04,554][INFO ][o.e.g.GatewayService     ] [hHj-txf] recovered [1] indices into cluster_state
+[2020-07-30T10:26:08,295][INFO ][o.e.c.r.a.AllocationService] [hHj-txf] Cluster health status changed from [RED] to [YELLOW] (reason: [shards started [[product_suggest][0]] ...]).
+[2020-07-30T10:49:49,728][INFO ][o.e.c.m.MetaDataDeleteIndexService] [hHj-txf] [product_suggest/kAmLSOlWQyOGQhPOI71SMg] deleting index
+[2020-07-30T10:49:50,237][INFO ][o.e.c.m.MetaDataCreateIndexService] [hHj-txf] [product_suggest] creating index, cause [api], templates [], shards [5]/[1], mappings [productes]
+[2020-07-30T10:49:51,234][INFO ][o.e.c.m.MetaDataDeleteIndexService] [hHj-txf] [product_suggest/BCW41os2RDe5Q8IY_mT9lg] deleting index
+[2020-07-30T10:49:54,874][DEBUG][o.e.a.a.i.d.TransportDeleteIndexAction] [hHj-txf] failed to delete indices [[[product_suggest/BCW41os2RDe5Q8IY_mT9lg]]]
+org.elasticsearch.index.IndexNotFoundException: no such index
+	at org.elasticsearch.cluster.metadata.MetaData.getIndexSafe(MetaData.java:473) ~[elasticsearch-5.6.0.jar:5.6.0]
+	at org.elasticsearch.cluster.metadata.MetaDataDeleteIndexService.lambda$deleteIndices$0(MetaDataDeleteIndexService.java:89) ~[elasticsearch-5.6.0.jar:5.6.0]
+	at java.util.stream.ReferencePipeline$3$1.accept(Unknown Source) ~[?:1.8.0_261]
+	at java.util.HashMap$KeySpliterator.forEachRemaining(Unknown Source) ~[?:1.8.0_261]
+	at java.util.stream.AbstractPipeline.copyInto(Unknown Source) ~[?:1.8.0_261]
+	at java.util.stream.AbstractPipeline.wrapAndCopyInto(Unknown Source) ~[?:1.8.0_261]
+	at java.util.stream.ReduceOps$ReduceOp.evaluateSequential(Unknown Source) ~[?:1.8.0_261]
+	at java.util.stream.AbstractPipeline.evaluate(Unknown Source) ~[?:1.8.0_261]
+	at java.util.stream.ReferencePipeline.collect(Unknown Source) ~[?:1.8.0_261]
+	at org.elasticsearch.cluster.metadata.MetaDataDeleteIndexService.deleteIndices(MetaDataDeleteIndexService.java:89) ~[elasticsearch-5.6.0.jar:5.6.0]
+	at org.elasticsearch.cluster.metadata.MetaDataDeleteIndexService$1.execute(MetaDataDeleteIndexService.java:79) ~[elasticsearch-5.6.0.jar:5.6.0]
+	at org.elasticsearch.cluster.ClusterStateUpdateTask.execute(ClusterStateUpdateTask.java:45) ~[elasticsearch-5.6.0.jar:5.6.0]
+	at org.elasticsearch.cluster.service.ClusterService.executeTasks(ClusterService.java:634) ~[elasticsearch-5.6.0.jar:5.6.0]
+	at org.elasticsearch.cluster.service.ClusterService.calculateTaskOutputs(ClusterService.java:612) ~[elasticsearch-5.6.0.jar:5.6.0]
+	at org.elasticsearch.cluster.service.ClusterService.runTasks(ClusterService.java:571) [elasticsearch-5.6.0.jar:5.6.0]
+	at org.elasticsearch.cluster.service.ClusterService$ClusterServiceTaskBatcher.run(ClusterService.java:263) [elasticsearch-5.6.0.jar:5.6.0]
+	at org.elasticsearch.cluster.service.TaskBatcher.runIfNotProcessed(TaskBatcher.java:150) [elasticsearch-5.6.0.jar:5.6.0]
+	at org.elasticsearch.cluster.service.TaskBatcher$BatchedTask.run(TaskBatcher.java:188) [elasticsearch-5.6.0.jar:5.6.0]
+	at org.elasticsearch.common.util.concurrent.ThreadContext$ContextPreservingRunnable.run(ThreadContext.java:569) [elasticsearch-5.6.0.jar:5.6.0]
+	at org.elasticsearch.common.util.concurrent.PrioritizedEsThreadPoolExecutor$TieBreakingPrioritizedRunnable.runAndClean(PrioritizedEsThreadPoolExecutor.java:247) [elasticsearch-5.6.0.jar:5.6.0]
+	at org.elasticsearch.common.util.concurrent.PrioritizedEsThreadPoolExecutor$TieBreakingPrioritizedRunnable.run(PrioritizedEsThreadPoolExecutor.java:210) [elasticsearch-5.6.0.jar:5.6.0]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source) [?:1.8.0_261]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source) [?:1.8.0_261]
+	at java.lang.Thread.run(Unknown Source) [?:1.8.0_261]
+[2020-07-30T10:49:54,966][INFO ][o.e.c.m.MetaDataCreateIndexService] [hHj-txf] [product_suggest] creating index, cause [api], templates [], shards [5]/[1], mappings [productes]
+[2020-07-30T10:49:55,449][WARN ][o.e.a.b.TransportShardBulkAction] [hHj-txf] unexpected error during the primary phase for action [indices:data/write/bulk[s]], request [BulkShardRequest [[product_suggest][0]] containing [543] requests]
+org.elasticsearch.index.IndexNotFoundException: no such index
+	at org.elasticsearch.cluster.routing.RoutingTable.shardRoutingTable(RoutingTable.java:137) ~[elasticsearch-5.6.0.jar:5.6.0]
+	at org.elasticsearch.action.support.replication.TransportReplicationAction$ReroutePhase.primary(TransportReplicationAction.java:745) [elasticsearch-5.6.0.jar:5.6.0]
+	at org.elasticsearch.action.support.replication.TransportReplicationAction$ReroutePhase.doRun(TransportReplicationAction.java:680) [elasticsearch-5.6.0.jar:5.6.0]
+	at org.elasticsearch.common.util.concurrent.AbstractRunnable.run(AbstractRunnable.java:37) [elasticsearch-5.6.0.jar:5.6.0]
+	at org.elasticsearch.action.support.replication.TransportReplicationAction$ReroutePhase$2.onNewClusterState(TransportReplicationAction.java:835) [elasticsearch-5.6.0.jar:5.6.0]
+	at org.elasticsearch.cluster.ClusterStateObserver$ContextPreservingListener.onNewClusterState(ClusterStateObserver.java:297) [elasticsearch-5.6.0.jar:5.6.0]
+	at org.elasticsearch.cluster.ClusterStateObserver$ObserverClusterStateListener.postAdded(ClusterStateObserver.java:208) [elasticsearch-5.6.0.jar:5.6.0]
+	at org.elasticsearch.cluster.service.ClusterService$1.run(ClusterService.java:401) [elasticsearch-5.6.0.jar:5.6.0]
+	at org.elasticsearch.common.util.concurrent.ThreadContext$ContextPreservingRunnable.run(ThreadContext.java:569) [elasticsearch-5.6.0.jar:5.6.0]
+	at org.elasticsearch.common.util.concurrent.PrioritizedEsThreadPoolExecutor$TieBreakingPrioritizedRunnable.runAndClean(PrioritizedEsThreadPoolExecutor.java:247) [elasticsearch-5.6.0.jar:5.6.0]
+	at org.elasticsearch.common.util.concurrent.PrioritizedEsThreadPoolExecutor$TieBreakingPrioritizedRunnable.run(PrioritizedEsThreadPoolExecutor.java:210) [elasticsearch-5.6.0.jar:5.6.0]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source) [?:1.8.0_261]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source) [?:1.8.0_261]
+	at java.lang.Thread.run(Unknown Source) [?:1.8.0_261]
+[2020-07-30T10:49:55,454][WARN ][o.e.a.b.TransportShardBulkAction] [hHj-txf] unexpected error during the primary phase for action [indices:data/write/bulk[s]], request [BulkShardRequest [[product_suggest][4]] containing [573] requests]
+org.elasticsearch.index.IndexNotFoundException: no such index
+	at org.elasticsearch.cluster.routing.RoutingTable.shardRoutingTable(RoutingTable.java:137) ~[elasticsearch-5.6.0.jar:5.6.0]
+	at org.elasticsearch.action.support.replication.TransportReplicationAction$ReroutePhase.primary(TransportReplicationAction.java:745) [elasticsearch-5.6.0.jar:5.6.0]
+	at org.elasticsearch.action.support.replication.TransportReplicationAction$ReroutePhase.doRun(TransportReplicationAction.java:680) [elasticsearch-5.6.0.jar:5.6.0]
+	at org.elasticsearch.common.util.concurrent.AbstractRunnable.run(AbstractRunnable.java:37) [elasticsearch-5.6.0.jar:5.6.0]
+	at org.elasticsearch.action.support.replication.TransportReplicationAction$ReroutePhase$2.onNewClusterState(TransportReplicationAction.java:835) [elasticsearch-5.6.0.jar:5.6.0]
+	at org.elasticsearch.cluster.ClusterStateObserver$ContextPreservingListener.onNewClusterState(ClusterStateObserver.java:297) [elasticsearch-5.6.0.jar:5.6.0]
+	at org.elasticsearch.cluster.ClusterStateObserver$ObserverClusterStateListener.postAdded(ClusterStateObserver.java:208) [elasticsearch-5.6.0.jar:5.6.0]
+	at org.elasticsearch.cluster.service.ClusterService$1.run(ClusterService.java:401) [elasticsearch-5.6.0.jar:5.6.0]
+	at org.elasticsearch.common.util.concurrent.ThreadContext$ContextPreservingRunnable.run(ThreadContext.java:569) [elasticsearch-5.6.0.jar:5.6.0]
+	at org.elasticsearch.common.util.concurrent.PrioritizedEsThreadPoolExecutor$TieBreakingPrioritizedRunnable.runAndClean(PrioritizedEsThreadPoolExecutor.java:247) [elasticsearch-5.6.0.jar:5.6.0]
+	at org.elasticsearch.common.util.concurrent.PrioritizedEsThreadPoolExecutor$TieBreakingPrioritizedRunnable.run(PrioritizedEsThreadPoolExecutor.java:210) [elasticsearch-5.6.0.jar:5.6.0]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source) [?:1.8.0_261]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source) [?:1.8.0_261]
+	at java.lang.Thread.run(Unknown Source) [?:1.8.0_261]
+[2020-07-30T10:49:55,459][WARN ][o.e.a.b.TransportShardBulkAction] [hHj-txf] unexpected error during the primary phase for action [indices:data/write/bulk[s]], request [BulkShardRequest [[product_suggest][1]] containing [558] requests]
+org.elasticsearch.index.IndexNotFoundException: no such index
+	at org.elasticsearch.cluster.routing.RoutingTable.shardRoutingTable(RoutingTable.java:137) ~[elasticsearch-5.6.0.jar:5.6.0]
+	at org.elasticsearch.action.support.replication.TransportReplicationAction$ReroutePhase.primary(TransportReplicationAction.java:745) [elasticsearch-5.6.0.jar:5.6.0]
+	at org.elasticsearch.action.support.replication.TransportReplicationAction$ReroutePhase.doRun(TransportReplicationAction.java:680) [elasticsearch-5.6.0.jar:5.6.0]
+	at org.elasticsearch.common.util.concurrent.AbstractRunnable.run(AbstractRunnable.java:37) [elasticsearch-5.6.0.jar:5.6.0]
+	at org.elasticsearch.action.support.replication.TransportReplicationAction$ReroutePhase$2.onNewClusterState(TransportReplicationAction.java:835) [elasticsearch-5.6.0.jar:5.6.0]
+	at org.elasticsearch.cluster.ClusterStateObserver$ContextPreservingListener.onNewClusterState(ClusterStateObserver.java:297) [elasticsearch-5.6.0.jar:5.6.0]
+	at org.elasticsearch.cluster.ClusterStateObserver$ObserverClusterStateListener.postAdded(ClusterStateObserver.java:208) [elasticsearch-5.6.0.jar:5.6.0]
+	at org.elasticsearch.cluster.service.ClusterService$1.run(ClusterService.java:401) [elasticsearch-5.6.0.jar:5.6.0]
+	at org.elasticsearch.common.util.concurrent.ThreadContext$ContextPreservingRunnable.run(ThreadContext.java:569) [elasticsearch-5.6.0.jar:5.6.0]
+	at org.elasticsearch.common.util.concurrent.PrioritizedEsThreadPoolExecutor$TieBreakingPrioritizedRunnable.runAndClean(PrioritizedEsThreadPoolExecutor.java:247) [elasticsearch-5.6.0.jar:5.6.0]
+	at org.elasticsearch.common.util.concurrent.PrioritizedEsThreadPoolExecutor$TieBreakingPrioritizedRunnable.run(PrioritizedEsThreadPoolExecutor.java:210) [elasticsearch-5.6.0.jar:5.6.0]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source) [?:1.8.0_261]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source) [?:1.8.0_261]
+	at java.lang.Thread.run(Unknown Source) [?:1.8.0_261]
+[2020-07-30T10:54:03,487][INFO ][o.e.c.m.MetaDataDeleteIndexService] [hHj-txf] [product_suggest/hOFgjuC6SqCBObXuOgmcKQ] deleting index
+[2020-07-30T10:54:03,916][INFO ][o.e.c.m.MetaDataCreateIndexService] [hHj-txf] [product_suggest] creating index, cause [api], templates [], shards [5]/[1], mappings [productes]
+[2020-07-30T10:54:05,703][INFO ][o.e.c.m.MetaDataDeleteIndexService] [hHj-txf] [product_suggest/IP6-UTSQRSCloZnLaJlgyA] deleting index
+[2020-07-30T10:54:07,622][INFO ][o.e.c.m.MetaDataCreateIndexService] [hHj-txf] [product_suggest] creating index, cause [api], templates [], shards [5]/[1], mappings [productes]
+[2020-07-30T10:54:09,041][INFO ][o.e.c.m.MetaDataDeleteIndexService] [hHj-txf] [product_suggest/GmTzteCHS92iG3PcwfFiMw] deleting index
+[2020-07-30T10:54:10,520][INFO ][o.e.c.m.MetaDataCreateIndexService] [hHj-txf] [product_suggest] creating index, cause [api], templates [], shards [5]/[1], mappings [productes]
+[2020-07-30T11:12:26,414][INFO ][o.e.c.m.MetaDataDeleteIndexService] [hHj-txf] [product_suggest/UjUVJpgnSUGraV4RGUDtxw] deleting index
+[2020-07-30T11:12:26,910][INFO ][o.e.c.m.MetaDataCreateIndexService] [hHj-txf] [product_suggest] creating index, cause [api], templates [], shards [5]/[1], mappings [productes]
+[2020-07-30T11:12:30,540][INFO ][o.e.c.m.MetaDataDeleteIndexService] [hHj-txf] [product_suggest/qB2RgFRsS_2IdXetHA-2qQ] deleting index
+[2020-07-30T11:12:30,657][INFO ][o.e.c.m.MetaDataCreateIndexService] [hHj-txf] [product_suggest] creating index, cause [api], templates [], shards [5]/[1], mappings [productes]
+[2020-07-30T11:13:45,267][INFO ][o.e.c.m.MetaDataDeleteIndexService] [hHj-txf] [product_suggest/9gSZib6SRZufo8H7tWFAIQ] deleting index
+[2020-07-30T11:13:45,739][INFO ][o.e.c.m.MetaDataCreateIndexService] [hHj-txf] [product_suggest] creating index, cause [api], templates [], shards [5]/[1], mappings [productes]
+[2020-07-30T11:13:46,449][INFO ][o.e.c.m.MetaDataDeleteIndexService] [hHj-txf] [product_suggest/dtzEUYGWRuWPUWxoKUT8wg] deleting index
+[2020-07-30T11:13:46,645][INFO ][o.e.c.m.MetaDataCreateIndexService] [hHj-txf] [product_suggest] creating index, cause [api], templates [], shards [5]/[1], mappings [productes]
+[2020-07-30T11:13:49,418][INFO ][o.e.c.m.MetaDataDeleteIndexService] [hHj-txf] [product_suggest/CGjFe7WeQca-2R5Zl8n9hQ] deleting index
+[2020-07-30T11:13:53,649][INFO ][o.e.c.m.MetaDataCreateIndexService] [hHj-txf] [product_suggest] creating index, cause [api], templates [], shards [5]/[1], mappings [productes]
+[2020-07-30T11:14:36,459][INFO ][o.e.c.m.MetaDataDeleteIndexService] [hHj-txf] [product_suggest/IakXoL4xQpq87aMZ7eKciA] deleting index
+[2020-07-30T11:14:37,477][INFO ][o.e.c.m.MetaDataCreateIndexService] [hHj-txf] [product_suggest] creating index, cause [api], templates [], shards [5]/[1], mappings [productes]
+[2020-07-30T11:18:04,178][INFO ][o.e.c.m.MetaDataDeleteIndexService] [hHj-txf] [product_suggest/XJnLdY6WQG2DbGFDPEZ2uw] deleting index
+[2020-07-30T11:18:04,593][INFO ][o.e.c.m.MetaDataCreateIndexService] [hHj-txf] [product_suggest] creating index, cause [api], templates [], shards [5]/[1], mappings [productes]
+[2020-07-30T11:18:10,106][INFO ][o.e.c.m.MetaDataDeleteIndexService] [hHj-txf] [product_suggest/KUoY2hEEQuS4MEQdV_yOrg] deleting index
+[2020-07-30T11:18:10,237][INFO ][o.e.c.m.MetaDataCreateIndexService] [hHj-txf] [product_suggest] creating index, cause [api], templates [], shards [5]/[1], mappings [productes]
+[2020-07-30T11:18:12,326][INFO ][o.e.c.m.MetaDataDeleteIndexService] [hHj-txf] [product_suggest/k5HC6maJSUWplOGzfarQmw] deleting index
+[2020-07-30T11:18:12,646][INFO ][o.e.c.m.MetaDataCreateIndexService] [hHj-txf] [product_suggest] creating index, cause [api], templates [], shards [5]/[1], mappings [productes]
+[2020-07-30T11:31:59,293][INFO ][o.e.c.m.MetaDataDeleteIndexService] [hHj-txf] [product_suggest/lVLgUJkuTkaqOh_eTDW41Q] deleting index
+[2020-07-30T11:31:59,829][INFO ][o.e.c.m.MetaDataCreateIndexService] [hHj-txf] [product_suggest] creating index, cause [api], templates [], shards [5]/[1], mappings [productes]
+[2020-07-30T11:32:03,347][INFO ][o.e.c.m.MetaDataDeleteIndexService] [hHj-txf] [product_suggest/gRmzdC7zQY6Se6uA38Rubg] deleting index
+[2020-07-30T11:32:03,479][INFO ][o.e.c.m.MetaDataCreateIndexService] [hHj-txf] [product_suggest] creating index, cause [api], templates [], shards [5]/[1], mappings [productes]
+[2020-07-30T11:32:17,703][INFO ][o.e.c.m.MetaDataDeleteIndexService] [hHj-txf] [product_suggest/tGw1laHiS4aHd_ZLjsy37A] deleting index
+[2020-07-30T11:32:17,849][INFO ][o.e.c.m.MetaDataCreateIndexService] [hHj-txf] [product_suggest] creating index, cause [api], templates [], shards [5]/[1], mappings [productes]
+[2020-07-30T14:54:12,639][INFO ][o.e.c.m.MetaDataDeleteIndexService] [hHj-txf] [product_suggest/HpwU6zZ0Ta66ByIfQP2unA] deleting index
+[2020-07-30T14:54:13,329][INFO ][o.e.c.m.MetaDataCreateIndexService] [hHj-txf] [product_suggest] creating index, cause [api], templates [], shards [5]/[1], mappings [productes]
+[2020-07-30T14:54:15,947][INFO ][o.e.c.m.MetaDataDeleteIndexService] [hHj-txf] [product_suggest/6-54V0dGRQ2kaumdWYVGkA] deleting index
+[2020-07-30T14:54:17,228][INFO ][o.e.c.m.MetaDataCreateIndexService] [hHj-txf] [product_suggest] creating index, cause [api], templates [], shards [5]/[1], mappings [productes]
+[2020-07-30T15:34:10,449][INFO ][o.e.c.m.MetaDataDeleteIndexService] [hHj-txf] [product_suggest/KfmshE19S5SwxnlNM2yUGg] deleting index
+[2020-07-30T15:34:10,834][INFO ][o.e.c.m.MetaDataCreateIndexService] [hHj-txf] [product_suggest] creating index, cause [api], templates [], shards [5]/[1], mappings [productes]
+[2020-07-30T15:34:16,795][INFO ][o.e.c.m.MetaDataDeleteIndexService] [hHj-txf] [product_suggest/Zri3eZvOSvGx2NWTitLhPA] deleting index
+[2020-07-30T15:34:16,915][INFO ][o.e.c.m.MetaDataCreateIndexService] [hHj-txf] [product_suggest] creating index, cause [api], templates [], shards [5]/[1], mappings [productes]
+[2020-07-30T15:34:26,128][INFO ][o.e.c.m.MetaDataDeleteIndexService] [hHj-txf] [product_suggest/MHm5dA3MRLesaG9K7gs7nA] deleting index
+[2020-07-30T15:34:26,271][INFO ][o.e.c.m.MetaDataCreateIndexService] [hHj-txf] [product_suggest] creating index, cause [api], templates [], shards [5]/[1], mappings [productes]
+[2020-07-30T15:34:31,302][INFO ][o.e.c.m.MetaDataDeleteIndexService] [hHj-txf] [product_suggest/NuqGJqdmQniYvGzmo3sWYg] deleting index
+[2020-07-30T15:34:31,420][INFO ][o.e.c.m.MetaDataCreateIndexService] [hHj-txf] [product_suggest] creating index, cause [api], templates [], shards [5]/[1], mappings [productes]

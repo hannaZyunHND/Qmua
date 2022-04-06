@@ -1,0 +1,425 @@
+﻿@using TemplateKAO.Services.Product.ViewModel;
+@using Utils;
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+@using TemplateKAO.Utility
+@inject ICookieUtility cookieUtility
+@model List<ProductMinify>;
+@{
+    var total = ViewBag.Total;
+    var id = ViewBag.Id;
+    var culture = Context.Features.Get<IRequestCultureFeature>().RequestCulture.Culture.TwoLetterISOLanguageName.ToLower();
+    var culture_code = Context.Features.Get<IRequestCultureFeature>().RequestCulture.Culture.ToString();
+    var base_uri_culture = "/" + culture;
+    var domain = Context.Request.Host.ToString();
+    var cookie_location = cookieUtility.SetCookieDefault();
+    var location_id = cookie_location.LocationId;
+    var location_name = cookie_location.LocationName;
+}
+
+@{
+    var list_product = Model;
+    var product_with_big_thumb = list_product.FirstOrDefault();
+    var product_child = list_product.Skip(1).Take(8).OrderBy(r => r.SalePrice);
+
+}
+@if (Model != null)
+{
+    <div class="set-total" data-total="@total" data-id="@id" data-is-rendered="@Model.Count()" style="display:none"></div>
+    <div class="row no-gutters mb-3 mb-md-0">
+        @if (product_with_big_thumb != null)
+        {
+            var link_tar = string.Format("/{0}.html", product_with_big_thumb.Url);
+            <div class="col-lg-5 col-md-12 col-sm-12 col-12">
+                <div class="item-product item-product-large">
+                    <div class="image">
+                        <a href="@link_tar">
+                            <img asp-append-version="true" src="@UIHelper.StoreFilePath(product_with_big_thumb.BigThumb, false)" class="img-fluid" alt="@product_with_big_thumb.Title" />
+                        </a>
+                    </div>
+                    <div class="py-1">
+                        <h5 class="title">
+                            <a href="@link_tar" title="@product_with_big_thumb.Title">
+                                @product_with_big_thumb.Title
+                            </a>
+                        </h5>
+                        @{
+
+                            decimal up_price = 0;
+                            decimal down_price = 0;
+                            if (product_with_big_thumb.SalePrice > 0 && product_with_big_thumb.SalePrice < product_with_big_thumb.Price)
+                            {
+                                up_price = product_with_big_thumb.SalePrice;
+                                down_price = product_with_big_thumb.Price;
+                            }
+                            if (product_with_big_thumb.SalePrice == 0 || product_with_big_thumb.SalePrice >= product_with_big_thumb.Price)
+                            {
+                                up_price = product_with_big_thumb.Price;
+                                down_price = 0;
+                            }
+                        }
+                        @if (product_with_big_thumb.FlashSaleId > 0)
+                        {
+                            <div class="price-new">
+                                @UIHelper.FormatNumber(product_with_big_thumb.ProductPriceInFlashSale) đ
+                            </div>
+
+                            <div class="price-old">
+                                @(product_with_big_thumb.SalePrice <= 0 ? Html.Raw("<pre>&nbsp;</pre>") : Html.Raw(UIHelper.FormatNumber(up_price)))
+                            </div>
+                        }
+                        else
+                        {
+                            if (down_price > 0)
+                            {
+                                <div class="price-new">
+                                    @UIHelper.FormatNumber(up_price)
+                                </div>
+
+                                <div class="price-old">
+                                    @(product_with_big_thumb.Price <= 0 ? Html.Raw("<pre>&nbsp;</pre>") : Html.Raw(UIHelper.FormatNumber(down_price)))
+                                </div>
+                            }
+                            if (down_price == 0)
+                            {
+                                <div class="price-new">
+                                    @UIHelper.FormatNumber(up_price) 
+                                </div>
+
+                                @*<div class="price-old">
+                    @(product_with_big_thumb.Price <= 0 ? Html.Raw("<pre>&nbsp;</pre>") : Html.Raw(UIHelper.FormatNumber(product_with_big_thumb.Price) + "đ"))
+                </div>*@
+                            }
+
+                        }
+
+
+                        <div class="size small mb-1">
+                            @product_with_big_thumb.SpecName: @product_with_big_thumb.SpecValue
+                        </div>
+                        <div class="review d-flex">
+                            <div class="color-FFAB1B mr-2">
+                                @System.Math.Round(product_with_big_thumb.Rate, 1)/5<i class="fas fa-star ml-1"></i>
+                            </div>
+                            <div class="color-828282">
+                                @product_with_big_thumb.CountRate đánh giá
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        }
+        @{
+            var product_child_cut_3 = product_child.Skip(0).Take(3);
+
+        }
+        <div class="col-lg-7 col-md-12 col-sm-12 col-12">
+            <div class="row no-gutters h-100 ">
+                @foreach (var item in product_child_cut_3)
+                {
+                    var link_tar = string.Format("/{0}.html", item.Url);
+                    <div class="col-md-4 col-sm-4 col-6">
+                        <div class="item-product" data-id="@item.ProductId" data-properties="@item.PropertyId">
+                            <div class="tag-1">
+
+                            </div>
+                            @if (item.FlashSaleId > 0)
+                            {
+                                <div class="tag-flashsale">
+                                    <img src="~/images/tag-flash-111x34.svg" class=" img-fluid" />
+                                </div>
+                            }
+                            <div class="image">
+                                <a href="@link_tar">
+                                    <img asp-append-version="true" src="@UIHelper.StoreFilePath(item.Avatar)"
+                                         class="img-fluid  w-100" alt="@item.Title" />
+                                </a>
+                                <div class="tag-2">
+                                    <img asp-append-version="true" src="" class="img-fluid tag-2-thumb" />
+                                </div>
+                            </div>
+                            <h5 class="title">
+                                <a href="@link_tar" title="@item.Title">
+                                    @item.Title
+                                </a>
+                            </h5>
+                            <div class="text-left">
+                                @{
+
+                                    decimal up_price = 0;
+                                    decimal down_price = 0;
+                                    if (item.SalePrice > 0 && item.SalePrice < item.Price)
+                                    {
+                                        up_price = item.SalePrice;
+                                        down_price = item.Price;
+                                    }
+                                    if (item.SalePrice == 0 || item.SalePrice >= item.Price)
+                                    {
+                                        up_price = item.Price;
+                                        down_price = 0;
+                                    }
+                                }
+                                @if (item.FlashSaleId > 0)
+                                {
+                                    <div class="price-new">
+                                        @UIHelper.FormatNumber(item.ProductPriceInFlashSale)
+                                    </div>
+
+                                    <div class="price-old">
+                                        @(item.SalePrice <= 0 ? Html.Raw("<pre>&nbsp;</pre>") : Html.Raw(UIHelper.FormatNumber(up_price)))
+                                    </div>
+                                }
+                                else
+                                {
+                                    if (down_price > 0)
+                                    {
+                                        <div class="price-new">
+                                            @UIHelper.FormatNumber(up_price)
+                                        </div>
+
+                                        <div class="price-old">
+                                            @(item.Price <= 0 ? Html.Raw("<pre>&nbsp;</pre>") : Html.Raw(UIHelper.FormatNumber(down_price)))
+                                        </div>
+                                    }
+                                    if (down_price == 0)
+                                    {
+                                        <div class="price-new">
+                                            @UIHelper.FormatNumber(up_price)
+                                        </div>
+
+                                        @*<div class="price-old">
+                    @(item.Price <= 0 ? Html.Raw("<pre>&nbsp;</pre>") : Html.Raw(UIHelper.FormatNumber(item.Price) + "đ"))
+                </div>*@
+                                    }
+
+                                }
+
+                            </div>
+                            <div class="size small mb-1">
+                                @item.SpecName: @item.SpecValue
+                            </div>
+                            <div class="review d-flex">
+                                <div class="color-FFAB1B mr-2">
+                                    @System.Math.Round(item.Rate, 1)/5<i class="fas fa-star ml-1"></i>
+                                </div>
+                                <div class="color-828282">
+                                    @item.CountRate đánh giá
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="row no-gutters mb-3 mb-md-0 clone-row">
+        @{
+            var product_child_cut_5 = product_child.Skip(3).Take(2);
+            var product_child_cut_7 = product_child.Skip(5).Take(3);
+        }
+
+        <div class="col-lg-5 col-md-12 col-sm-12 col-12">
+            <div class="row no-gutters">
+                @foreach (var item in product_child_cut_5)
+                {
+                    var link_tar = string.Format("/{0}.html", item.Url);
+                    <div class="col-md-6 col-sm-6 col-6">
+                        <div class="item-product px-lg-4" data-id="@item.ProductId" data-properties="@item.PropertyId">
+                            <div class="tag-1">
+
+                            </div>
+                            @if (item.FlashSaleId > 0)
+                            {
+                                <div class="tag-flashsale">
+                                    <img src="~/images/tag-flash-111x34.svg" class=" img-fluid" />
+                                </div>
+                            }
+                            <div class="image">
+                                <a href="@link_tar">
+                                    <img asp-append-version="true" src="@UIHelper.StoreFilePath(item.Avatar, false)"
+                                         class="img-fluid  w-100" alt="@item.Title" />
+                                </a>
+                                <div class="tag-2">
+                                    <img asp-append-version="true" src="" class="img-fluid tag-2-thumb" />
+                                </div>
+                            </div>
+
+                            <h5 class="title">
+                                <a href="@link_tar" title="@item.Title">
+                                    @item.Title
+                                </a>
+                            </h5>
+                            <div class="text-left">
+                                @{
+
+                                    decimal up_price = 0;
+                                    decimal down_price = 0;
+                                    if (item.SalePrice > 0 && item.SalePrice < item.Price)
+                                    {
+                                        up_price = item.SalePrice;
+                                        down_price = item.Price;
+                                    }
+                                    if (item.SalePrice == 0 || item.SalePrice >= item.Price)
+                                    {
+                                        up_price = item.Price;
+                                        down_price = 0;
+                                    }
+                                }
+                                @if (item.FlashSaleId > 0)
+                                {
+                                    <div class="price-new">
+                                        @UIHelper.FormatNumber(item.ProductPriceInFlashSale) 
+                                    </div>
+
+                                    <div class="price-old">
+                                        @(item.SalePrice <= 0 ? Html.Raw("<pre>&nbsp;</pre>") : Html.Raw(UIHelper.FormatNumber(up_price)))
+                                    </div>
+                                }
+                                else
+                                {
+                                    if (down_price > 0)
+                                    {
+                                        <div class="price-new">
+                                            @UIHelper.FormatNumber(up_price)
+                                        </div>
+
+                                        <div class="price-old">
+                                            @(item.Price <= 0 ? Html.Raw("<pre>&nbsp;</pre>") : Html.Raw(UIHelper.FormatNumber(down_price)))
+                                        </div>
+                                    }
+                                    if (down_price == 0)
+                                    {
+                                        <div class="price-new">
+                                            @UIHelper.FormatNumber(up_price)
+                                        </div>
+
+                                        @*<div class="price-old">
+                    @(item.Price <= 0 ? Html.Raw("<pre>&nbsp;</pre>") : Html.Raw(UIHelper.FormatNumber(item.Price) + "đ"))
+                </div>*@
+                                    }
+
+                                }
+
+                            </div>
+                            <div class="size small mb-1">
+                                @item.SpecName: @item.SpecValue
+                            </div>
+                            <div class="review d-flex">
+                                <div class="color-FFAB1B mr-2">
+                                    @System.Math.Round(item.Rate, 1)/5<i class="fas fa-star ml-1"></i>
+                                </div>
+                                <div class="color-828282">
+                                    @item.CountRate đánh giá
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="col-lg-7 col-md-12 col-sm-12 col-12">
+            <div class="row no-gutters h-100 ">
+                @foreach (var item in product_child_cut_7)
+                {
+
+                    var link_tar = string.Format("/{0}.html", item.Url);
+                    <div class="col-md-4 col-sm-4 col-6">
+                        <div class="item-product" data-id="@item.ProductId" data-properties="@item.PropertyId">
+                            <div class="tag-1">
+
+                            </div>
+                            @if (item.FlashSaleId > 0)
+                            {
+                                <div class="tag-flashsale">
+                                    <img src="~/images/tag-flash-111x34.svg" class=" img-fluid" />
+                                </div>
+                            }
+                            <div class="image">
+                                <a href="@link_tar">
+                                    <img asp-append-version="true" src="@UIHelper.StoreFilePath(item.Avatar)"
+                                         class="img-fluid  w-100" alt="@item.Title" />
+                                </a>
+                                <div class="tag-2">
+                                    <img asp-append-version="true" src="" class="img-fluid tag-2-thumb" />
+                                </div>
+                            </div>
+
+                            <h5 class="title">
+                                <a href="@link_tar" title="@item.Title">
+                                    @item.Title
+                                </a>
+                            </h5>
+                            <div class="text-left">
+                                @{
+
+                                    decimal up_price = 0;
+                                    decimal down_price = 0;
+                                    if (item.SalePrice > 0 && item.SalePrice < item.Price)
+                                    {
+                                        up_price = item.SalePrice;
+                                        down_price = item.Price;
+                                    }
+                                    if (item.SalePrice == 0 || item.SalePrice >= item.Price)
+                                    {
+                                        up_price = item.Price;
+                                        down_price = 0;
+                                    }
+                                }
+                                @if (item.FlashSaleId > 0)
+                                {
+                                    <div class="price-new">
+                                        @UIHelper.FormatNumber(item.ProductPriceInFlashSale) 
+                                    </div>
+
+                                    <div class="price-old">
+                                        @(item.SalePrice <= 0 ? Html.Raw("<pre>&nbsp;</pre>") : Html.Raw(UIHelper.FormatNumber(up_price) ))
+                                    </div>
+                                }
+                                else
+                                {
+                                    if (down_price > 0)
+                                    {
+                                        <div class="price-new">
+                                            @UIHelper.FormatNumber(up_price) đ
+                                        </div>
+
+                                        <div class="price-old">
+                                            @(item.Price <= 0 ? Html.Raw("<pre>&nbsp;</pre>") : Html.Raw(UIHelper.FormatNumber(down_price)))
+                                        </div>
+                                    }
+                                    if (down_price == 0)
+                                    {
+                                        <div class="price-new">
+                                            @UIHelper.FormatNumber(up_price) đ
+                                        </div>
+
+                                        @*<div class="price-old">
+                    @(item.Price <= 0 ? Html.Raw("<pre>&nbsp;</pre>") : Html.Raw(UIHelper.FormatNumber(item.Price) + "đ"))
+                </div>*@
+                                    }
+
+                                }
+
+                            </div>
+                            <div class="size small mb-1">
+                                @item.SpecName: @item.SpecValue
+                            </div>
+                            <div class="review d-flex">
+                                <div class="color-FFAB1B mr-2">
+                                    @System.Math.Round(item.Rate, 1)/5<i class="fas fa-star ml-1"></i>
+                                </div>
+                                <div class="color-828282">
+                                    @item.CountRate đánh giá
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+}
+

@@ -1,0 +1,192 @@
+﻿@using MI.Entity.Enums;
+@using TemplateKAO.Services.Zone.ViewModal
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Http
+@using TemplateKAO.Services.Article.Repository
+@inject IHttpContextAccessor HttpContextAccessor
+@inject IArticleRepository articleRepository;
+@using TemplateKAO.Services.Article.ViewModel;
+@using Utils
+@{
+    var culture = Context.Features.Get<IRequestCultureFeature>().RequestCulture.Culture.TwoLetterISOLanguageName.ToLower();
+    var culture_code = Context.Features.Get<IRequestCultureFeature>().RequestCulture.Culture.ToString();
+    var base_uri_culture = "/" + culture;
+    var domain = Context.Request.Host.ToString();
+    List<ZoneByTreeViewMinify> zoneByTreeViewMinifies = new List<ZoneByTreeViewMinify>();
+    List<ArticleMinify> lstArticleMinify = new List<ArticleMinify>();
+    if (ViewBag.ZoneChilds != null)
+    {
+        zoneByTreeViewMinifies = (List<ZoneByTreeViewMinify>)ViewBag.ZoneChilds;
+    }
+    if (ViewBag.Top_newest != null)
+    {
+        lstArticleMinify = (List<ArticleMinify>)ViewBag.Top_newest;
+    }
+    int PageIndex = (int)ViewBag.pageIndex;
+    int PageSize = (int)ViewBag.pageSize;
+    int TotalPage = (int)ViewBag.TotalPage;
+    int Paging = 0;
+    if ((TotalPage % PageSize) == 0)
+    {
+        Paging = TotalPage / PageSize;
+    }
+    else
+    {
+        Paging = (TotalPage / PageSize) + 1;
+    }
+}
+
+@{
+    ViewData["Title"] = "Báo giá";
+    Layout = "~/Views/Shared/_LayoutPublicHome.cshtml";
+    var blog_zone_parent = ViewBag.ZoneParent as ZoneByTreeViewMinify;
+}
+
+
+<div class="container my-3">
+    <nav aria-label="breadcrumb ">
+        <ol class="breadcrumb jan-breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Báo giá</li>
+        </ol>
+    </nav>
+</div>
+
+<div class="container">
+    <div class="row flex-md-row-reverse">
+        <div class="col-xl-3 col-lg-3 col-md-4 col-sm-12 col-12">
+            @await Component.InvokeAsync("MenuRightBlog")
+        </div>
+        <div class="col-xl-9 col-lg-9 col-md-8 col-sm-12 col-12">
+            <div class="row">
+                @if (lstArticleMinify.Count() > 0)
+                {
+                    foreach (var item in lstArticleMinify)
+                    {
+                        var links = string.Format("{0}/{1}.a{2}.html", base_uri_culture, item.Url, item.Id);
+                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                            <div class="item-blog-km">
+                                <div class="image">
+                                    <a href="@links"><img asp-append-version="true" src="~/@item.Avatar" class="img-fluid" alt="" /></a>
+                                </div>
+                                <div class="p-3">
+                                    <h5 class="title">
+                                        <a href="@links" title="">@item.Title</a>
+                                    </h5>
+                                    <div class="time">
+                                        @item.CreatedDate.ToString("dd/MM/yyyy hh:mm:ss")
+                                    </div>
+                                    <div class="des">
+                                        @item.Description
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                        <div class="item-blog-km">
+                            <div class="image">
+                                <a href=""><img asp-append-version="true" src="" class="img-fluid" alt="" /></a>
+                            </div>
+                            <div class="p-3">
+                                <h5 class="title">
+                                    <a href="" title="">Không có dữ liệu phù hợp</a>
+                                </h5>
+                                <div class="time">
+                                </div>
+                                <div class="des">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="jan-pagination text-right mb-4 ">
+                @if (PageIndex > 1)
+                {
+                    <button class="btn btn-pagi btn-paging-pre" title="Preview"><i class="fas fa-chevron-left "></i></button>
+                }
+                else
+                {
+                    <button class="btn btn-pagi" title="Preview"><i class="fas fa-chevron-left "></i></button>
+                }
+                <select class="select-page mr-2 paging-data">
+                    @for (int i = 1; i <= Paging; i++)
+                    {
+                        if (i == PageIndex)
+                        {
+                            <option value="@PageIndex" selected>@PageIndex</option>
+                        }
+                        else
+                        {
+                            <option value="@i">@i</option>
+                        }
+                    }
+                </select>
+                <span class="color-828282"> / @(Paging)</span>
+                @if (PageIndex < Paging)
+                {
+                    <button class="btn btn-pagi btn-paging-next" title="Next"><i class="fas fa-chevron-right "></i></button>
+                }
+                else
+                {
+                    <button class="btn btn-pagi" title="Next"><i class="fas fa-chevron-right "></i></button>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="service-home py-3">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-4 col-md-4 col-sm-4 col-12">
+                <div class="d-flex py-3 justify-content-center">
+                    <div class="image align-self-center">
+                        <img asp-append-version="true" src="/images/shipment-international.svg" class="img-fluid" />
+                    </div>
+                    <div class="px-3 align-self-center">
+                        <label>Vận chuyển</label>
+                        <div class="small">
+                            Free shipping on all order
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4 col-md-4 col-sm-4 col-12">
+                <div class="d-flex py-3 justify-content-center">
+                    <div class="image align-self-center">
+                        <img asp-append-version="true" src="/images/professions-man-telecommunicator.svg" class="img-fluid" />
+                    </div>
+                    <div class="px-3 align-self-center">
+                        <label>Support 24/7</label>
+                        <div class="small">
+                            Chúng tôi hỗ trợ bạn 24/7
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4 col-md-4 col-sm-4 col-12">
+                <div class="d-flex py-3 justify-content-center">
+                    <div class="image align-self-center">
+                        <img asp-append-version="true" src="/images/saving-piggy-dollars.svg" class="img-fluid" />
+                    </div>
+                    <div class="px-3 align-self-center">
+                        <label>Dịch vụ đổi trả hàng</label>
+                        <div class="small">
+                            Đổi trả hàng trong vòng 7 ngày
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@section scripts {
+    <script type="text/javascript" src="~/js/controller/quotationController.js" asp-append-version="true"></script>
+
+}

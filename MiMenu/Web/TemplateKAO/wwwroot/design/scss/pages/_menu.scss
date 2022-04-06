@@ -1,0 +1,276 @@
+.menu{
+  &__overlay{
+    background-color: rgba(#444444,0.54);
+  }
+  &__section1{
+    &__dc{
+      @extend .fz-48;
+      color: #FFFFFF !important;
+    }
+    .uk-breadcrumb{
+      >li{
+        &:nth-child(n+2){
+          &:before{
+            @extend .menu__section1__dc;
+          }
+        }
+        >a{
+          @extend .menu__section1__dc;
+        }
+        >span{
+          @extend .menu__section1__dc;
+        }
+      }
+    }
+  }
+  &__title2{
+    @extend .fz-122;
+    color: #FFFFFF;
+    font-family: $font-Roboto-Bold;
+    //border: 1px solid #000000;
+    text-shadow: 4px 4px 4px rgba(242, 103, 73, 0.5);
+    line-height: (143/122);
+    margin-bottom: 18px;
+  }
+  &__txt1{
+    @extend .fz-16;
+    color: #444444;
+  }
+  &__txt2{
+    @extend .fz-16;
+    color: #828282;
+  }
+  &__card1{
+    box-shadow: 2px 2px 7px rgba(0, 0, 0, 0.25);
+    @include media-breakpoint-up('m'){
+      border-radius: 20px;
+    }
+  }
+  &__titleThucdon{
+    font-family: $font-Roboto-Bold;
+    @extend .fz-24;
+    line-height: (28/24);
+  }
+  &__nav2{
+    &.uk-sticky-below{
+      box-shadow: 0 2px 8px rgba(0,0,0,.08);
+    }
+    &__item{
+      min-height: 57px;
+    }
+    .uk-search-input{
+      @extend .fz-18;
+    }
+    .uk-navbar-item,
+    .uk-navbar-toggle{
+      @extend .menu__nav2__item;
+    }
+    .uk-navbar-nav{
+      >li{
+        &.uk-active{
+          >a{
+            color: $color1;
+          }
+        }
+        >a{
+          white-space: nowrap;
+          text-transform: inherit;
+          color: #444444;
+          @extend .fz-16;
+          @extend .menu__nav2__item;
+        }
+      }
+    }
+  }
+  &__nav1{
+    >li{
+      &.uk-active{
+        >a{
+          color: $color1;
+        }
+      }
+      >a{
+        @extend .fz-16;
+        color: #444444;
+      }
+    }
+  }
+  &__content{
+    margin-left: -15px;
+    margin-right: -15px;
+    @include media-breakpoint-up('m'){
+      margin-left: 0;
+      margin-right: 0;
+    }
+    @include media-breakpoint-up('m'){
+      border-radius: 20px;
+    }
+  }
+  &__boxSearch{
+    .uk-search-input{
+      @extend .fz-16;
+    }
+  }
+  &__title1{
+    background-color: #fff;
+    @extend .fz-20;
+    line-height: (23/20);
+    font-family: $font-Roboto-Bold;
+    color: #444444;
+    padding-bottom: 12px;
+    position: relative;
+    margin-top: 0 !important;
+    @include media-breakpoint-up('m'){
+      margin-bottom: 20px !important;
+    }
+    &:after{
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      background: url(images/line1.png);
+      display: inline-block;
+      width: 110px;
+      height: 5px;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+  }
+  &__overflow{
+    padding-right: 20px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    margin-right: -20px;
+    &::-webkit-scrollbar {
+      width: 7px;
+    }
+    &::-webkit-scrollbar-track {
+      background: #DADADA;
+    }
+    &::-webkit-scrollbar-thumb {
+      background: #9E9E9E;
+      border-radius: 3.5px;
+    }
+    &::-webkit-scrollbar-thumb:hover {
+      background: #a7a7a7;
+    }
+    @include media-breakpoint-up('m'){
+      max-height: 896px;
+    }
+  }
+  &__padding1{
+    //padding-right: 30px;
+  }
+  &__card2{
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25);
+    @include media-breakpoint-up('m'){
+      border-radius: 30px;
+    }
+    &__bg{
+      @include media-breakpoint-up('m'){
+        width: 118px;
+      }
+    }
+    &__link{
+      color: $color1;
+    }
+    &__title{
+      color: #444444;
+      @extend .fz-16;
+      font-family: $font-Roboto-Bold;
+    }
+    &__txt{
+      color: #444444;
+      @extend .fz-16;
+    }
+    &__price{
+      @extend .fz-16;
+      &__new{
+        color: #444444;
+      }
+      &__old{
+        color: rgba(68, 68, 68, 0.54);
+      }
+    }
+  }
+  &__card3{
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25);
+    border-radius: 5px;
+    .form-dat-hang &{
+      @include media-breakpoint-down('s'){
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        right: 0;
+        bottom: 0;
+      }
+    }
+    @include media-breakpoint-up('m'){
+      border-radius: 30px;
+    }
+    .uk-card-header{
+      padding: 15px 20px;
+    }
+    &__table{
+      &__btn{
+        background-color: $color1;
+        color: #ffffff;
+        padding: 0 25px;
+        min-height: 62px;
+        box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25);
+        border-radius: 20px;
+      }
+      &__w1{
+        min-width: 18px;
+      }
+      &__txt1{
+        @extend .fz-16;
+        color: #444444;
+      }
+      &__txt2{
+        @extend .fz-16;
+        color: #444444;
+        font-family: $font-Roboto-Black;
+      }
+    }
+    &__submit{
+      &__txt1{
+        @extend .fz-14;
+      }
+      &__txt2{
+        @extend .fz-14;
+      }
+      &__txt3{
+        @extend .fz-16;
+        font-family: $font-Roboto-Black;
+      }
+      &__txt4{
+        @extend .fz-18;
+        font-family: $font-Roboto-Black;
+      }
+    }
+    &__box1{
+      &__btn{
+        color: #ffffff;
+        @extend .fz-16;
+        right: -8px;
+        background: $color1;
+        font-family: $font-Roboto-Black;
+      }
+      &__close{
+        svg{
+          $x: 10px;
+          width: #{$x};
+          height: #{$x};
+        }
+      }
+      &__input{
+        @extend .fz-16;
+      }
+      &__txt{
+        @extend .fz-16;
+      }
+    }
+  }
+}

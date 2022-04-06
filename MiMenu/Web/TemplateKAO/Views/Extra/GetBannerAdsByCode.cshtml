@@ -1,0 +1,54 @@
+﻿@using TemplateKAO.Services.Product.Repository
+@using TemplateKAO.Services.Zone.Repository
+@using MI.Entity.Enums
+@using TemplateKAO.Services.BannerAds.Repository
+@using TemplateKAO.Services.FlashSale.Repository
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.AspNetCore.Http
+@using TemplateKAO.Services.Article.Repository
+@using Newtonsoft.Json
+@using TemplateKAO.Utility
+@using Microsoft.AspNetCore.Mvc.RazorPages
+@using MI.Entity.Models
+@using TemplateKAO.Services.Extra.ViewModel
+@using TemplateKAO.Services.Extra.Repository
+@using Microsoft.AspNetCore.Http.Extensions
+
+@inject IHttpContextAccessor HttpContextAccessor
+@inject ICookieUtility cookieUtility
+@inject IConfigSEOUtility configSEOUtility
+@inject IArticleRepository articleRepository
+@inject IBannerAdsRepository bannerAdsRepository
+@inject IFlashSaleRepository flashSaleRepository
+@inject IExtraRepository extraRepository
+@inject IZoneRepository zoneRepository
+@using Utils
+
+@{
+    var tn = Newtonsoft.Json.JsonConvert.DeserializeObject<List<DetailBanerAds>>(Model);
+    if (tn != null)
+    {
+        foreach (var item in tn)
+        {
+            <li>
+                <div class="uk-card uk-card-default uk-text-center home__section07__box4">
+                    <div class="home__section07__box4__img uk-flex uk-flex-middle uk-flex-center">
+                        <img src="@UIHelper.StoreFilePath(item.Image, false)" alt="@item.Title">
+                    </div>
+                    <div class="uk-card-body home__section07__box4__body">
+                        <ul class="uk-list home__section07__box4__list">
+                            @{
+                                var ll = UIHelper.ClearHtmlTag(item.Description).Split("|");
+                                foreach (var i in ll)
+                                {
+                                    <li>@Html.Raw(i)</li>
+                                }
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </li>
+        }
+    }
+
+}

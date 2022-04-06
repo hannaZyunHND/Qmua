@@ -1,0 +1,70 @@
+.order{
+  &__boxForm{
+    &__icon1{
+      svg{
+        background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M15 0C12.2386 0 10 2.23858 10 5C10 7.76142 12.2386 10 15 10C17.7615 10 20 7.76142 20 5C20 2.23858 17.7615 0 15 0ZM9.56 13.33C9.22 13.6 9 14.03 9 14.5V20H16C17.1 20 18 19.1 18 18V12.02C17.06 11.69 16.05 11.5 15 11.5C12.97 11.5 11.07 12.2 9.56 13.33ZM9.24 1.99999C8.77 2.89999 8.5 3.91999 8.5 4.99999C8.5 6.79999 9.23 8.41999 10.41 9.58999L0.59 19.41C0.23 19.05 0 18.55 0 18V3.99999C0 2.89999 0.9 1.99999 2 1.99999H9.24Z' fill='%23444444' fill-opacity='0.54'/%3E%3C/svg%3E%0A");
+        background-size: 100%;
+        >*{
+          opacity: 0;
+        }
+      }
+    }
+    &__card1{
+      padding: 15px;
+      margin-left: -15px;
+      margin-right: -15px;
+      @include media-breakpoint-up('m'){
+        padding: 30px;
+        margin-left: 0;
+        margin-right: 0;
+        border-radius: 30px;
+        box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25);
+      }
+    }
+    &__card2{
+      padding: 15px;
+      @include media-breakpoint-up('m'){
+        padding: 35px;
+      }
+      box-shadow: 2px 2px 15px rgba(0, 0, 0, 0.25);
+      border-radius: 10px;
+    }
+    &__title1{
+      @extend .fz-16;
+      color: #000;
+      font-family: $font-Roboto-Medium;
+    }
+    &__title2{
+      @extend .order__boxForm__title1;
+    }
+    &__label1{
+
+    }
+    &__label2{
+      color: #444444;
+      @extend .fz-16;
+      font-family: $font-Roboto-Light;
+      &--c1{
+        font-family: $font-Roboto-Medium;
+      }
+    }
+  }
+  &__modal{
+    &__dialog{
+      @include media-breakpoint-up('m'){
+        width: 451px;
+      }
+    }
+    &__txt{
+      color: #444444;
+      @extend .fz-24;
+      font-family: $font-Roboto-Medium;
+    }
+    &__btn{
+      background: $color1;
+      @extend .fz-24;
+      font-family: $font-Roboto-Medium;
+      border-radius: 20px;
+    }
+  }
+}

@@ -1,0 +1,44 @@
+﻿@using TemplateKAO.Services.Product.ViewModel;
+@using Utils;
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+@using TemplateKAO.Utility
+@inject ICookieUtility cookieUtility
+@model List<ProductMinify>;
+@{
+    var total = ViewBag.Total;
+    var id = ViewBag.Id;
+    var index = ViewBag.Index;
+    var size = ViewBag.Size;
+    var culture = Context.Features.Get<IRequestCultureFeature>().RequestCulture.Culture.TwoLetterISOLanguageName.ToLower();
+    var culture_code = Context.Features.Get<IRequestCultureFeature>().RequestCulture.Culture.ToString();
+    var base_uri_culture = "/" + culture;
+    var domain = Context.Request.Host.ToString();
+    var cookie_location = cookieUtility.SetCookieDefault();
+    var location_id = cookie_location.LocationId;
+    var location_name = cookie_location.LocationName;
+}
+
+@{
+    var list_product = Model;
+    var product_with_big_thumb = list_product.FirstOrDefault();
+    var product_child = list_product.OrderBy(r => r.SalePrice);
+
+}
+@if (Model != null)
+{
+    <div class="paging-container" data-total="@total" data-currentpage="@index" data-size="@size" style="display:none"></div>
+    <div class="set-total" data-total="@total" data-id="@id" data-is-rendered="@Model.Count()" data-index="@index" data-size="@size" style="display:none"></div>
+    <div class="row no-gutters mb-3 mb-md-0">
+        @foreach (var item in Model)
+        {
+            var link_tar = string.Format("/{0}.html", item.Url);
+        <div class="col-md-3 col-sm-3 col-6">
+            @await Component.InvokeAsync("ItemProduct", new { pr = item, isLazy = false })
+        </div>
+        }
+    </div>
+}
+

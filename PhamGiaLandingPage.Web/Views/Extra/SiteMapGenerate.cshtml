@@ -1,0 +1,49 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+@inject PhamGiaLandingPage.Web.Utility.ISiteMapUtility sitemapUtility
+
+@{
+    Layout = null;
+    //HttpContextAccessor.HttpContext.Response.ContentType = "text/xml";
+    //await HttpContextAccessor.HttpContext.Response.WriteAsync("<?xml version='1.0' encoding='UTF-8' ?>");
+    //var domain = Context.Request.Host.ToString();
+    var domain = $"{Context.Request.Scheme}://{Context.Request.Host}";
+    Context.Response.ContentType = "text/xml";
+    await Context.Response.WriteAsync("<?xml version='1.0' encoding='UTF-8' ?>");
+
+    //Response.ContentType = "text/xml";
+    //await Response.WriteAsync("<?xml version='1.0' encoding='UTF-8' ?>");
+}
+@{
+    var list_outer_url = new List<PhamGiaLandingPage.Web.Services.Extra.ViewModel.SiteMapViewModel>();
+    list_outer_url.Add(new PhamGiaLandingPage.Web.Services.Extra.ViewModel.SiteMapViewModel() { Title = "Giỏ hàng", Create = DateTime.Now, Modified = DateTime.Now, Type = "more", Url = "gio-hang" });
+    list_outer_url.Add(new PhamGiaLandingPage.Web.Services.Extra.ViewModel.SiteMapViewModel() { Title = "Dự toán công trình", Create = DateTime.Now, Modified = DateTime.Now, Type = "more", Url = "du-toan-cong-trinh" });
+    list_outer_url.Add(new PhamGiaLandingPage.Web.Services.Extra.ViewModel.SiteMapViewModel() { Title = "Chi nhánh", Create = DateTime.Now, Modified = DateTime.Now, Type = "more", Url = "chi-nhanh" });
+    list_outer_url.Add(new PhamGiaLandingPage.Web.Services.Extra.ViewModel.SiteMapViewModel() { Title = "Flash Sale", Create = DateTime.Now, Modified = DateTime.Now, Type = "more", Url = "flash-sale" });
+    list_outer_url.Add(new PhamGiaLandingPage.Web.Services.Extra.ViewModel.SiteMapViewModel() { Title = "Liên hệ", Create = DateTime.Now, Modified = DateTime.Now, Type = "more", Url = "lien-he" });
+    list_outer_url.Add(new PhamGiaLandingPage.Web.Services.Extra.ViewModel.SiteMapViewModel() { Title = "Vòng quay may mắn", Create = DateTime.Now, Modified = DateTime.Now, Type = "more", Url = "vong-quay-may-man.html" });
+}
+
+
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    @Html.Raw(sitemapUtility.GenerateSiteMap(domain))
+    @foreach (var item in list_outer_url)
+    {
+        /* result += "<url>";
+                result += "<loc>" + u + "</loc>";
+                result += "<lastmod>" + d + "</lastmod>";
+                result += "<changefreq>"+"dayly"+"</changefreq>";
+                result += "<priority>0.9</priority>";
+                result += "</url>";*/
+        <url>
+            <loc>@(domain + "/" + item.Url)</loc>
+            <lastmod>@item.Create</lastmod>
+            <changefreq>daily</changefreq>
+            <priority>0.9</priority>
+        </url>
+    }
+</urlset>
+
